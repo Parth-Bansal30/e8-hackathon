@@ -699,17 +699,17 @@ int main(void)
             for (int f = KWS_FRAMES - n_new; f < KWS_FRAMES; f++) {
                 uint8_t col[KWS_NMEL];
                 for (int b = 0; b < KWS_NMEL; b++) {
-                    const int v = (in[f * KWS_NMEL + b] + 128) * 5 / 4;
-                    col[b] = (uint8_t)(v > 255 ? 255 : v);
+                    const int v = (in[f * KWS_NMEL + b] + 40) * 3;   /* quiet room about -32: dark */
+                    col[b] = (uint8_t)(v < 0 ? 0 : v > 255 ? 255 : v);
                 }
                 ui_spectro_push(col);
             }
-            /* best three alerting sounds */
+            /* best three matches, "Quiet" and "Speech" included */
             bool used[MAX_PROF] = {};
             for (int i = 0; i < 3; i++) {
                 int b = -1;
                 for (int p = 0; p < n_prof; p++)
-                    if (prof[p].alerting && !used[p] && (b < 0 || s[p] > s[b])) b = p;
+                    if (!used[p] && (b < 0 || s[p] > s[b])) b = p;
                 if (b < 0) { top3[i] = {"", 0, false}; continue; }
                 used[b] = true;
                 top3[i].label = prof[b].lk->label;
