@@ -1,0 +1,52 @@
+Whistle added to the teach names and taught by the owner whistling, 2026-10-18 about 2:05-2:15 PM PDT.
+
+Firmware: one line appended to kPresets in firmware/soundsense/main.cpp (index 8, after "My name").
+New names go last, so saved sounds keep their preset index. Release rebuilt and flashed at 14:05,
+ITCM 97.88% (unchanged). This is no longer the v1.0-judged build: a new tag is the owner's call.
+
+- Ready after 1279 ms; 5 saved sounds restored by the new build.
+- Teach: 8 shots at +22.6 to +25.4 dB, all clipped (whistling close); "loud room" on 2-8 (whistles
+  close together). thr 0.822, leave-one-out 0.87-0.97.
+- Test whistles: 9 of 13 accepted (0.84-0.955); the rejected ones were 0.69-0.75.
+- Saved: seq 1260, 301 ms, 0 dropped. 6 taught sounds after three restarts.
+
+Adding another name: append {"id", "Shown name", UI_ICON_CUSTOM, UI_CAT_OTHER, UI_IMPORTANT} to
+kPresets, then run tools/build_flash.sh soundsense release (stop the RTT logger first). On the name
+screen, UP from Keys wraps to the last name.
+
+Board log:
+[TEACH] 'Whistle': make the sound 8 times
+[TEACH] shot 1: too quiet (+9.7 dB)
+[TEACH] shot 1/8: +25.2 dB, clipped
+[TEACH] shot 2/8: +23.9 dB, clipped, loud room
+[TEACH] shot 3/8: +23.6 dB, clipped, loud room
+[TEACH] shot 4/8: +23.5 dB, clipped, loud room
+[TEACH] shot 5/8: +22.6 dB, clipped, loud room
+[TEACH] shot 6/8: +23.3 dB, clipped, loud room
+[TEACH] shot 7/8: +24.1 dB, clipped, loud room
+[TEACH] shot 8/8: +25.4 dB, clipped, loud room
+[TEACH] profile: thr 0.822, leave-one-out 0.90 0.96 0.95 0.97 0.87 0.90 0.95 0.93; make it once more to test, press to save
+[TEACH] test: match 0.686 (thr 0.822) rejected
+[TEACH] test: match 0.949 (thr 0.822) accepted
+[TEACH] test: match 0.747 (thr 0.822) rejected
+[TEACH] test: match 0.874 (thr 0.822) accepted
+[TEACH] test: match 0.715 (thr 0.822) rejected
+[TEACH] test: match 0.716 (thr 0.822) rejected
+[TEACH] test: match 0.839 (thr 0.822) accepted
+[TEACH] test: match 0.861 (thr 0.822) accepted
+[TEACH] test: match 0.916 (thr 0.822) accepted
+[TEACH] test: match 0.955 (thr 0.822) accepted
+[TEACH] test: match 0.894 (thr 0.822) accepted
+[TEACH] test: match 0.875 (thr 0.822) accepted
+[TEACH] test: match 0.837 (thr 0.822) accepted
+[TEACH] saved 'Whistle' thr 0.822; 6 taught
+[STORE] save 1 ok: copy B seq 1260, 4848 bytes, 301 ms (max 301), longest step 115503 us, dropped 0
+[STORE] copy A valid (seq 1259), copy B valid (seq 1260)
+[STORE] loaded 6 taught sounds from copy B, seq 1260, in 2058 us; built-ins off: 0x0
+[S1] ready after 1483 ms: mics left -51 dB, right -54 dB; npu matches the reference, 1.0 ms; saved sounds 6 taught sounds restored; imu knocks can be felt; lights ok
+[STORE] copy A valid (seq 1259), copy B valid (seq 1260)
+[STORE] loaded 6 taught sounds from copy B, seq 1260, in 2058 us; built-ins off: 0x0
+[S1] ready after 1483 ms: mics left -52 dB, right -56 dB; npu matches the reference, 1.0 ms; saved sounds 6 taught sounds restored; imu knocks can be felt; lights ok
+[STORE] copy A valid (seq 1259), copy B valid (seq 1260)
+[STORE] loaded 6 taught sounds from copy B, seq 1260, in 2058 us; built-ins off: 0x0
+[S1] ready after 1483 ms: mics left -36 dB, right -46 dB; npu matches the reference, 1.0 ms; saved sounds 6 taught sounds restored; imu knocks can be felt; lights ok

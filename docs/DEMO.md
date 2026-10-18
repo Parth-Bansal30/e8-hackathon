@@ -64,6 +64,32 @@ numbers are samples; quote the measured ones below.
 6. **Timeline (15 s):** press **LEFT** for today's sounds, with repeats merged and "felt here" marked. Press to go back.
 7. **Stats (15 s):** press **RIGHT** for NPU time, model size and CPU load, all live from the board.
 
+## Live tests at the table (pick any, 10-30 s each)
+
+Physical checks a judge can watch or do themselves. The board holds 6 taught sounds: Doorbell, Keys,
+Microwave, Clap, Phone and Whistle. **Press** (centre) to dismiss an alert. Don't use LEFT on alerts: it
+marks them wrong, which is saved for taught sounds.
+
+| # | Do this | The board shows | If not |
+|---|---|---|---|
+| 1 | **Whistle** the taught note, about 30 cm away | **Whistle** alert | Same pitch as when taught; it was accepted 9 of 13 times in the test |
+| 2 | **Knock** hard with your knuckles, right beside the board, on a hard surface | **Knock · Felt here + heard** | Off the desk pad; louder. A soft knock gives "Maybe: Knock?" |
+| 3 | Play a knock from a **phone held in the air** | **Heard only (TV?)** banner | Keep the phone off the table, or the board feels its speaker |
+| 4 | **Talk** near the board for a few seconds | Home: **Someone is talking nearby** | Talk for 3 s or more, about 1 m away |
+| 5 | **Stay quiet** for 5 s | Home: **Quiet: NPU resting** | Room noise; it's fine to say the NPU only runs above the noise floor |
+| 6 | **Clap** twice, then a loud thing it doesn't know (a pan lid, a book drop) | **Clap** alert; then a yellow **What was that?** banner | Clap is a loose profile (0.50); the banner needs about 15 dB over the room |
+| 7 | Right after test 6's banner, press **UP** | The teach screen opens to teach that sound | Press UP while the banner is still showing |
+| 8 | **Teach the judge's sound:** UP, pick a name, press, make the sound 8 times, once more to test, press to save | 8 green circles, **Test match**, then its alert | Space the sounds 3 s apart. If "unlike" (orange), UP redoes it. Teaching a used name replaces it, so never pick Doorbell |
+| 9 | Play `tools/demo_sound.py alarm` (laptop) or `chime3` (Phone) | **Alarm** (early, about 0.4 s); **Phone** | Volume 75-100% for these. Play the Doorbell at about 44% |
+| 10 | Press **reset** on the board | **Ready** screen: 5 checks green, **6 taught sounds restored**, in 1.3 s | It holds on a red row until you press |
+| 11 | **Turn the blue knob** | A sensitivity notice with a bar | Leave it near the middle afterwards |
+| 12 | DOWN, then **Microphones off**; make a sound | **Mic off**: nothing is heard or kept (privacy) | Turn it back on: DOWN, Microphones |
+| 13 | On any alert, press **DOWN** | **Snoozed for 10 min**; it is still logged in the timeline | To undo: DOWN, Sounds, press that row |
+| 14 | DOWN, **Night mode**, wait 15 s | The screen goes fully dark; an important alert lights it | Turn night mode off afterwards |
+| 15 | **LEFT** on Home, then press; **RIGHT** on Home | Today's timeline; then live stats: NPU 1.0 ms, CPU about 12%, 0 dropped | |
+
+Good order for a 2-minute walk-up: 5, 4, 2, 3, 1, 9, 10, 15.
+
 ## Numbers you can quote (measured on this board, 2026-10-18)
 
 - **Encoder:**

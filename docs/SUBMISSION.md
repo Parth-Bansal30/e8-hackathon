@@ -38,7 +38,7 @@ winners are announced at 5:30 PM PDT. Our own target is still 4:30 PM, with ever
 |---|---|---|
 | Live demonstration on the Alif E8 Dev Kit | At the judging table; the run of show is [VIDEO-SCRIPT.md](VIDEO-SCRIPT.md) / [DEMO.md](DEMO.md) | Rehearsal at the board about 2:45 PM |
 | Public source code repository | github.com/Parth-Bansal30/e8-hackathon is public | Done; `main` has all of `gates` (PR #3, 1:07 PM); the docs below reach it through one more PR |
-| Fixed release version: a commit hash or release tag | Tag `v1.0-judged` = `32177ea`, the commit the board is flashed from | Done (pushed 12:45 PM) |
+| Fixed release version: a commit hash or release tag | Tag `v1.1-judged` = `1d5fe72`, the commit the board is flashed from | Done (pushed about 2:15 PM; replaces `v1.0-judged`) |
 | README with build, deploy and run instructions | README "Build and run" | Done on `gates` |
 | Brief description of the application architecture | README "How it works"; section 2 "How we built it" | Done |
 | Where key models and workloads execute | README "Workload placement"; section 2 | Done |
@@ -59,8 +59,9 @@ Other rules that matter:
 **`main`.** The repo's default branch is `main`, which judges land on. It was 28 commits behind
 `gates` at 9:20 AM; the owner merged `gates` into it at 9:53 AM (PR #1). As agreed at about
 10 AM, the board session tagged its last firmware commit `v1.0-judged` (`32177ea`, pushed 12:45 PM),
-and `gates` was merged into `main` again (PR #2 at 12:48 PM, PR #3 at 1:07 PM). The tag stays
-where it is; later docs changes reach `main` through a PR the owner OKs.
+and `gates` was merged into `main` again (PR #2 at 12:48 PM, PR #3 at 1:07 PM). At about 2 PM the board
+was reflashed with one more teach name (Whistle), so the owner chose a new tag: `v1.1-judged` =
+`1d5fe72`. Docs changes reach `main` through a PR the owner OKs.
 
 ## 1. Form fields, ready to paste
 
@@ -76,14 +77,14 @@ where it is; later docs changes reach `main` through a PR the owner OKs.
 `esc-50`, `speech-commands`
 
 **"Try it out" links** (one per field; "add another link" adds a field):
-- `https://github.com/Parth-Bansal30/e8-hackathon/tree/v1.0-judged` (the judged version; works
-  once the tag is pushed)
+- `https://github.com/Parth-Bansal30/e8-hackathon/tree/v1.1-judged` (the judged version)
 - `https://github.com/Parth-Bansal30/e8-hackathon` (the repo; `main` shows the README with build
   and run steps)
 
-**Judged version (fixed release):** tag `v1.0-judged`, commit `32177ea` (full:
-`32177eaeabfa0ecd9c5577c0500474ee2ca85cb9`). The board is flashed for judging with the release build
-of this commit; the firmware sources haven't changed since `ed20a3e`.
+**Judged version (fixed release):** tag `v1.1-judged`, commit `1d5fe72` (full:
+`1d5fe7236b385e81017fda78b6ea9341573b14b5`). The board is flashed for judging with the release build
+of this commit. It is `v1.0-judged` (`32177ea`) plus one line: a "Whistle" teach name, added at
+about 2 PM. The owner chose a new tag over reflashing, at about 2:15 PM.
 
 **Video demo link:** `<YouTube or Vimeo link, unlisted is fine if the form allows it>`.
 
@@ -101,7 +102,7 @@ wide diagram off, so the architecture image stands in for it (the README keeps b
 ---
 
 **Code:** [github.com/Parth-Bansal30/e8-hackathon](https://github.com/Parth-Bansal30/e8-hackathon).
-**Judged version:** tag [`v1.0-judged`](https://github.com/Parth-Bansal30/e8-hackathon/tree/v1.0-judged) (commit `32177ea`). Build and run steps are in the README.
+**Judged version:** tag [`v1.1-judged`](https://github.com/Parth-Bansal30/e8-hackathon/tree/v1.1-judged) (commit `1d5fe72`). Build and run steps are in the README.
 
 ## Inspiration
 
@@ -346,11 +347,12 @@ started from Arm's alif-ethos-u85-npu-mnist learning path.
 
 - [x] Sign in to Devpost and read the form (10:20 AM; no hackathon-specific questions).
 - [x] Decide `main` and the judged version (tag `v1.0-judged` at the end, then merge again).
-- [x] Tag `v1.0-judged` = `32177ea` (12:45 PM), merge `gates` into `main` (PRs #2 and #3), and
+- [x] Tag `v1.0-judged` = `32177ea` (12:45 PM); after the Whistle reflash, tag `v1.1-judged` = `1d5fe72`
+      (about 2:15 PM, the owner's call). Merge `gates` into `main` (PRs #2 to #4), and
       replace `<hash>` in section 1 and at the top of "About the project" (1:19 PM).
 - [x] Re-check against `gates`: the draft now covers the final firmware (8 examples, teach checks,
       437 ms alerts, Sounds page, Calibrate room, snooze, "still sounding", talking nearby).
-- [ ] Merge PR #4 first: the two images in section 2 load from `main` (architecture, board photos).
+- [x] Merge PR #4 first (merged 24bc7ae): the two images in section 2 load from `main` (architecture, board photos).
 - [ ] **Paste section 2 into the Devpost draft again:** the 10:30 AM paste is out of date (5
       examples, 0.85 s alerts, old feature counts). Same for the elevator pitch.
 - [x] Hand checks (knob, night-mode backlight) passed at 1:25 PM; "Known limits" updated.
@@ -360,8 +362,9 @@ started from Arm's alif-ethos-u85-npu-mnist learning path.
       wrong mark. Clap kept an example unlike the others (T2 flagged it; without it the threshold would
       be 0.72) and then alerted on room sounds. Settings > Forget (two presses each) leaves Doorbell
       (0.85), Microwave (0.835) and Phone (0.85; play `tools/demo_sound.py chime3`).
-- [ ] Edit the video (captions: `demo/captions_*.srt`; cards and overlays: `demo/video/`), upload it to
-      YouTube or Vimeo, and paste the link in section 1 and the form.
+- [ ] Record the video at the board (one take, about 2:30: [VIDEO-SCRIPT.md](VIDEO-SCRIPT.md); board
+      steps: [HANDOFF-video.md](HANDOFF-video.md)), upload it to YouTube (unlisted or public), and paste
+      the link in section 1 and the form.
 - [ ] Upload the 9 gallery images in the [demo/GALLERY.md](demo/GALLERY.md) order (cover first), with
       their captions.
 - [ ] Add the team members (team HashMap) in step 1 of the form.

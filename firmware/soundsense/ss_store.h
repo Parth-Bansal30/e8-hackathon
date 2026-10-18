@@ -24,7 +24,7 @@ extern "C" {
 
 /* One taught sound. Examples are unit-norm embeddings scaled by 127 (ss_store_q8). */
 typedef struct {
-    char key[SS_STORE_KEY];   /* preset key, e.g. "doorbell" (looked up by name at load) */
+    char key[SS_STORE_KEY];   /* preset key, e.g. "doorbell" (looked up by name at load; at most SS_STORE_KEY - 1 chars) */
     uint8_t icon, urgency, cat;   /* as shown; the category sets the LED colour */
     uint8_t n_ex, n_cx;       /* examples, counter-examples */
     float thr;

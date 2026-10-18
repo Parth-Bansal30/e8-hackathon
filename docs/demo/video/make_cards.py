@@ -90,7 +90,7 @@ def end_card():
         d.text((x + 22, 530), small, font=fit(d, small, 24, tw - 44), fill=MUTED)
         x += tw + gx
     d.text((W // 2, 720), REPO, font=F(44, True), fill=SKY, anchor="mm")
-    d.text((W // 2, 785), "Judged version: tag v1.0-judged (commit 32177ea)", font=F(30), fill=INK, anchor="mm")
+    d.text((W // 2, 785), "Judged version: tag v1.1-judged (commit 1d5fe72)", font=F(30), fill=INK, anchor="mm")
     d.text((W // 2, 960), "Team HashMap · measured on the DK-E8, release build, 2026-10-18", font=F(26), fill=MUTED,
            anchor="mm")
     save(im, "end_card.png")

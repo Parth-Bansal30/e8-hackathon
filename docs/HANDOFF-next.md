@@ -401,3 +401,10 @@ Agreed with the owner at about 10 AM; also in SUBMISSION.md.
 **2:10 PM update:** the board holds 5 taught sounds: Doorbell 0.85, Keys 0.50 (1 mark), Microwave 0.835,
 Clap 0.50 (taught by hand) and Phone 0.85. Phone was taught from the laptop: `tools/demo_sound.py chime3`
 alerts as Phone (0.94, 0.95), but a clipped play missed. See `gates/teach_phone.txt`.
+
+**2:15 PM: Whistle added (firmware change, owner's request).**
+- One line appended to `kPresets` in `firmware/soundsense/main.cpp`. The rebuilt release is flashed (ITCM 97.88%, Ready
+  1279 ms), so **the board no longer runs `v1.0-judged`**. Tagging this build (for example `v1.1`) is the owner's call;
+  until then, the hash in SUBMISSION.md stays `32177ea`.
+- Whistle was taught by whistling: thr 0.822, test whistles accepted 9 of 13. The board holds 6 taught sounds (store seq
+  1260). See `gates/teach_whistle.txt`, which also gives the one-line recipe for adding more names.
