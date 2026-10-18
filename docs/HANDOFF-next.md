@@ -1,6 +1,6 @@
 # Handoff: continuing Sound Sense (2026-10-18)
 
-**Updated 12:25 PM PDT.** The board's J-Link is now on the laptop with the et-venv (it has torch,
+**Updated 12:35 PM PDT. Feature work stopped (owner); wrap-up in progress.** The board's J-Link is now on the laptop with the et-venv (it has torch,
 the datasets and the toolchain), so offline work and board work happen on one machine.
 
 Since 10:10 AM:
@@ -268,7 +268,7 @@ To check the result, read variables over J-Link:
 - **The Mac was left muted.** Unmute it (at the current volume, never louder) only when the owner
   OKs a sound test.
 
-## Next steps, in priority order (as of 11:10 AM)
+## Next steps, in priority order (as of 11:10 AM; feature work stopped at 12:30 PM)
 
 ### Silent: can be built and mostly tested without sound
 
@@ -348,8 +348,9 @@ SUBMISSION.md and VIDEO-SCRIPT.md can mention these; all are on the board and te
 
 Agreed with the owner at about 10 AM; also in SUBMISSION.md.
 
-1. Stop feature work. Flash the release build from the final commit and run the Ready screen once.
-2. Update STATUS.md and GATES-results.md, then commit and push `gates`.
+1. **Done at 12:30 PM.** Feature work stopped. The board runs the release build of the final
+   firmware sources (unchanged since `ed20a3e`). Ready screen passes, smoke 16/16, feature test 18/18.
+2. **Done at 12:35 PM.** STATUS.md and GATES-results.md updated, committed and pushed to `gates`.
 3. Tag the commit the board is flashed from: `git tag v1.0-judged <hash> && git push origin v1.0-judged`.
 4. Open a PR `gates` → `main` and merge it with a merge commit, once the owner OKs it. Keep the
    `gates` branch.

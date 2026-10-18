@@ -1,6 +1,6 @@
 # Sound Sense: project status
 
-Snapshot: Sunday 2026-10-18, about 11 AM PDT, branch `gates`. Submission deadline
+Snapshot: Sunday 2026-10-18, about 12:35 PM PDT, branch `gates` (feature work stopped). Submission deadline
 4:30 PM PDT. Feature IDs and priorities come from [SOUND-SENSE.md](SOUND-SENSE.md); the measurements
 behind every "Done" are in [GATES-results.md](GATES-results.md).
 
@@ -14,9 +14,16 @@ behind every "Done" are in [GATES-results.md](GATES-results.md).
 | **P3** (stretch) | 7 | 0 | 0 | 7 |
 
 The must-have product works on the board end to end: listen, recognise, teach, alert, save to
-flash, self-test at boot. The weak spot is accuracy: built-in sounds played from a laptop speaker
-were recognised 54% of the time, and taught sounds were accepted 45% of the time offline at 8
-examples, 38% at 5 (they work well live; the offline test uses unseen clips from strangers' recordings).
+flash, self-test at boot. Settings cover sounds on/off, urgency, renaming, room calibration and
+snooze. The weak spot is accuracy:
+- Built-in sounds played from a laptop speaker were recognised 54% of the time.
+- Taught sounds were accepted 45% of the time offline at 8 examples (38% at 5). The offline test
+  uses unseen clips from strangers' recordings. Live they work well: a tight Doorbell teach was
+  recognised in 4 of 5 trials.
+
+**Final checks at 12:30 PM** (release build flashed from the sources at `ed20a3e`): the full-app
+smoke test passed 16/16 with 0 audio blocks dropped and Ready in 1.28 s, and the feature test passed
+18/18. Not yet checked by eye or hand: night mode turning the backlight off, and the knob.
 
 ## Gates (feasibility tests)
 
