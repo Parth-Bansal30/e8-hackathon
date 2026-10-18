@@ -1,0 +1,20 @@
+=== flashed 07:16:33 (debug)
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 59586 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1077 us, runner 1115 us (mean of 10); model 240224 bytes
+[SS] listening; 9 built-in sounds
+[SS] t=1279 +10.5 dB best 'Dog barking' 0.23 (thr 0.52), 2nd 'Baby crying' 0.16, felt no (0.0 mg) -> unknown
+[SS] t=6480 +4.8 dB best 'Speech' 0.18 (thr 0.50), 2nd 'Water running' 0.15, felt no (0.0 mg) -> quiet
+[SS] t=8425 +7.7 dB best 'Speech' 0.32 (thr 0.50), 2nd 'Quiet' 0.14, felt no (0.0 mg) -> quiet
+[SS] stats t=10000 level -52 dB floor -45 dB, npu 1077 us runner 1117 us feat 648 us, 11.2 inf/s, busy 75%, dropped 0, imu 7572 samples 0 errors, knocks 0, events 0
+[SS] t=9859 +6.4 dB best 'Water running' 0.19 (thr 0.50), 2nd 'Glass breaking' 0.09, felt no (0.0 mg) -> quiet
+[SS] t=11138 +11.5 dB best 'Dog barking' 0.30 (thr 0.52), 2nd 'Water running' 0.20, felt no (0.0 mg) -> unknown
+[SS] t=15503 +8.6 dB best 'Dog barking' 0.21 (thr 0.52), 2nd 'Baby crying' 0.13, felt no (0.0 mg) -> unknown
+[SS] stats t=20001 level -53 dB floor -52 dB, npu 1078 us runner 1117 us feat 648 us, 10.3 inf/s, busy 74%, dropped 0, imu 15630 samples 0 errors, knocks 2, events 0
+[SS] t=19569 +10.0 dB best 'Baby crying' 0.08 (thr 0.57), 2nd 'Knock' 0.06, felt no (0.0 mg) -> unknown
+[SS] t=21798 +7.9 dB best 'Water running' 0.23 (thr 0.50), 2nd 'Dog barking' 0.22, felt no (0.0 mg) -> quiet
+[SS] t=26245 +6.0 dB best 'Dog barking' 0.25 (thr 0.52), 2nd 'Glass breaking' 0.20, felt no (0.0 mg) -> quiet
+[SS] t=28795 +6.2 dB best 'Quiet' 0.32 (thr 0.50), 2nd 'Glass breaking' 0.25, felt no (0.0 mg) -> quiet

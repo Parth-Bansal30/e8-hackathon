@@ -28,6 +28,11 @@ void ss_hbar(int x, int y, int w, int h, float frac, ss_rgb fg, ss_rgb bg);
  * Returns the cycles it took (it moves 1.15 MB). */
 uint32_t ss_present(void);
 
+/* The back buffer itself, for drawing code of its own (ui/gfx.c), and a present of rows y0..y1
+ * (inclusive) only. Returns cycles. */
+uint8_t (*ss_gfx_back(void))[SS_LCD_W][3];
+uint32_t ss_present_rows(int y0, int y1);
+
 #ifdef __cplusplus
 }
 #endif

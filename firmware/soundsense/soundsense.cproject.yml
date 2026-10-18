@@ -1,0 +1,101 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/tools/projmgr/2.6.0/tools/projmgr/schemas/cproject.schema.json
+# Sound Sense: home sound monitor for deaf and hard-of-hearing people (docs/SOUND-SENSE.md).
+# Encoder on the Ethos-U85 through the shared ExecuTorch runner (../mnist_executorch), features from
+# ../app/kws.c, BMI323 knock fusion through the patched driver in vendor/ (so the pack's
+# BSP:External peripherals:BMI323 must NOT be selected), screens from ui/.
+project:
+  groups:
+    - group: App
+      files:
+        - file: main.cpp
+        - file: ss_match.c
+        - file: ss_board.c
+        - file: ss_gfx.c
+        - file: ss_audio.c
+        - file: ss_imu.c
+        - file: ../app/kws.c
+        - file: ../mnist_executorch/executorch_runner.cpp
+    - group: UI
+      files:
+        - file: ui/gfx.c
+        - file: ui/ui.c
+        - file: ui/ui_led.c
+        - file: ui/ui_fonts.c
+    - group: Vendor
+      files:
+        - file: vendor/BMI323_IMU.c
+    - group: SEGGER_RTT
+      files:
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT.c
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT_printf.c
+        - file: ../libs/SEGGER_RTT_V796h/Syscalls/SEGGER_RTT_Syscalls_GCC.c
+
+  output:
+    base-name: $Project$
+    type:
+      - elf
+      - bin
+
+  layers:
+    - layer: ../device/ensemble/alif-ensemble.clayer.yml
+
+  packs:
+    - pack: AlifSemiconductor::Ensemble
+    - pack: ARM::ethos-u-core-driver
+
+  components:
+    - component: ARM::Machine Learning:NPU Support:Ethos-U Driver&Generic U85
+    - component: AlifSemiconductor::Device:SOC Peripherals:CDC
+    - component: AlifSemiconductor::Device:SOC Peripherals:MIPI DSI
+    - component: AlifSemiconductor::Device:SOC Peripherals:MIPI DSI CSI2 DPHY
+    - component: AlifSemiconductor::BSP:External peripherals:ILI9806E LCD panel
+    - component: AlifSemiconductor::Device:SOC Peripherals:PDM
+    - component: AlifSemiconductor::Device:SOC Peripherals:I3C
+
+  define:
+    - C10_USING_CUSTOM_GENERATED_MACROS
+    - ETHOSU
+    - ETHOSU85
+    - BUFFER_SIZE_UP: 8192
+
+  add-path:
+    - .
+    - ui
+    - vendor
+    - ../app
+    - ../npu_display
+    - ../mnist_executorch
+    - ../libs/SEGGER_RTT_V796h/RTT
+    - ../libs/SEGGER_RTT_V796h/Config
+    - ../third_party/executorch/et_bundle/include
+    - ../third_party/executorch/et_bundle/include/executorch/runtime/core/portable_type/c10
+
+  misc:
+    - for-compiler: GCC
+      C-CPP:
+        - -DETHOSU_ARCH=u85
+        - -DETHOSU_MACS=256
+        - -DETHOSU_MODEL=1
+      CPP:
+        - -std=c++17
+        - -fno-rtti
+        - -fno-exceptions
+      Link:
+        - -L$SolutionDir()$/third_party/executorch/et_bundle/lib
+        - -Wl,--whole-archive
+        - -lexecutorch
+        - -lexecutorch_core
+        - -lexecutorch_delegate_ethos_u
+        - -lcortex_m_ops_lib
+        - -Wl,--no-whole-archive
+        - -Wl,--start-group
+        - -lextension_runner_util
+        - -lcortex_m_kernels
+        - -lportable_ops_lib
+        - -lportable_kernels
+        - -lquantized_ops_lib
+        - -lquantized_kernels
+        - -lkernels_util_all_deps
+        - -lcmsis-nn
+        - -lflatccrt
+        - -Wl,--end-group

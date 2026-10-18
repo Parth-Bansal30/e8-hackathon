@@ -92,3 +92,18 @@ uint32_t ss_present(void)
     SCB_CleanDCache();
     return ss_cycles() - t0;
 }
+
+uint8_t (*ss_gfx_back(void))[SS_LCD_W][3] { return back; }
+
+uint32_t ss_present_rows(int y0, int y1)
+{
+    const uint32_t t0 = ss_cycles();
+    if (y0 < 0) y0 = 0;
+    if (y1 >= SS_LCD_H) y1 = SS_LCD_H - 1;
+    if (y1 >= y0) {
+        const size_t n = (size_t)(y1 - y0 + 1) * SS_LCD_W * 3;
+        memcpy(fb[y0], back[y0], n);
+        SCB_CleanDCache_by_Addr(fb[y0], (int32_t)n);
+    }
+    return ss_cycles() - t0;
+}

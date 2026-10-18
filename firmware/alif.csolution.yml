@@ -77,3 +77,4 @@ solution:
     - project: psram_test/psram_test.cproject.yml
     - project: recorder/recorder.cproject.yml
     - project: imu_bench/imu_bench.cproject.yml
+    - project: soundsense/soundsense.cproject.yml
