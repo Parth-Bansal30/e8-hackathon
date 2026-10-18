@@ -1,0 +1,703 @@
+{
+ "checkpoint": {
+  "path": "ss_encoder.pth",
+  "epoch": 30,
+  "cfg": {
+   "ch": 128,
+   "blocks": 5,
+   "stride_block": 2,
+   "emb": 64
+  }
+ },
+ "float": {
+  "a_5way5shot": {
+   "acc": 0.7423333333333333,
+   "ci95": 0.006258683027451774,
+   "episodes": 600,
+   "per_class": {
+    "church_bells": 0.9619377162629758,
+    "clock_tick": 0.6794788273615635,
+    "can_opening": 0.9173864894795127,
+    "mouse_click": 0.5270562770562771,
+    "keyboard_typing": 0.8134575569358178,
+    "door_wood_creaks": 0.3905437352245863,
+    "vacuum_cleaner": 0.7526132404181185,
+    "washing_machine": 0.7686666666666667,
+    "footsteps": 0.7489795918367347,
+    "sneezing": 0.8486021505376344
+   }
+  },
+  "a_10way5shot": {
+   "acc": 0.6164555555555555,
+   "ci95": 0.003024489140700085,
+   "episodes": 600,
+   "per_class": {
+    "church_bells": 0.9368888888888889,
+    "clock_tick": 0.5235555555555556,
+    "can_opening": 0.8578888888888889,
+    "mouse_click": 0.32233333333333336,
+    "keyboard_typing": 0.654,
+    "door_wood_creaks": 0.219,
+    "vacuum_cleaner": 0.5571111111111111,
+    "washing_machine": 0.6311111111111111,
+    "footsteps": 0.6881111111111111,
+    "sneezing": 0.7745555555555556
+   }
+  },
+  "b_rejection": {
+   "taught_ok": 0.47153333333333336,
+   "taught_rej": 0.33848888888888884,
+   "taught_wrong": 0.18997777777777777,
+   "untaught_rej": 0.6161777777777778,
+   "untaught_as_taught": 0.2265111111111111,
+   "untaught_as_builtin": 0.15731111111111112,
+   "bg_rej": 0.9119333333333335,
+   "sp_rej": 0.9952666666666669,
+   "auroc": 0.6783094814814816,
+   "auroc_margin": 0.6945244444444445,
+   "taught_thr": 0.5084939450542132,
+   "ci95": {
+    "taught_ok": 0.007261298618627914,
+    "untaught_rej": 0.007583323097196884,
+    "auroc": 0.0072712379908550125
+   },
+   "episodes": 600,
+   "notes": "taught_ok = accepted as the right taught class; *_rej = no alert (unknown, or matched speech/background); auroc = best-match cosine, taught vs untaught queries, per episode then averaged; auroc_margin = same with (best score - that profile's threshold)"
+  },
+  "c_builtins": {
+   "recognised": 0.8676470588235294,
+   "per_class": {
+    "knock": 1.0,
+    "dog": 0.75,
+    "baby": 0.5,
+    "alarm": 0.875,
+    "glass": 1.0,
+    "siren": 0.875,
+    "water": 0.95
+   },
+   "n_pos": 68,
+   "neg_false_accept": 0.12,
+   "n_neg": 100,
+   "bg_false_accept": 0.0,
+   "speech_false_accept": 0.0,
+   "thresholds": {
+    "knock": 0.6262743592262268,
+    "dog": 0.5,
+    "baby": 0.5,
+    "alarm": 0.5890544772148132,
+    "glass": 0.571395468711853,
+    "siren": 0.5258306980133056,
+    "water": 0.5,
+    "speech": 0.5,
+    "background": 0.5
+   },
+   "confusion_rows_truth": {
+    "knock": {
+     "knock": 8,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 0,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 0
+    },
+    "dog": {
+     "knock": 0,
+     "dog": 6,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 0,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 2
+    },
+    "baby": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 4,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 1,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 3
+    },
+    "alarm": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 7,
+     "glass": 0,
+     "siren": 0,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 1
+    },
+    "glass": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 8,
+     "siren": 0,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 0
+    },
+    "siren": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 1,
+     "glass": 0,
+     "siren": 7,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 0
+    },
+    "water": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 0,
+     "water": 19,
+     "speech": 0,
+     "background": 0,
+     "unknown": 1
+    }
+   }
+  },
+  "c_builtins_ALT_threshold": {
+   "recognised": 0.8382352941176471,
+   "per_class": {
+    "knock": 0.75,
+    "dog": 0.75,
+    "baby": 0.5,
+    "alarm": 0.875,
+    "glass": 1.0,
+    "siren": 0.875,
+    "water": 0.95
+   },
+   "n_pos": 68,
+   "neg_false_accept": 0.04,
+   "n_neg": 100,
+   "bg_false_accept": 0.0,
+   "speech_false_accept": 0.0,
+   "thresholds": {
+    "knock": 0.794121778011322,
+    "dog": 0.622464656829834,
+    "baby": 0.5308945178985596,
+    "alarm": 0.6721556186676025,
+    "glass": 0.6188727736473083,
+    "siren": 0.5691364824771881,
+    "water": 0.6415695786476134,
+    "speech": 0.3,
+    "background": 0.7220106720924377
+   },
+   "confusion_rows_truth": {
+    "knock": {
+     "knock": 6,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 0,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 2
+    },
+    "dog": {
+     "knock": 0,
+     "dog": 6,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 0,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 2
+    },
+    "baby": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 4,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 1,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 3
+    },
+    "alarm": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 7,
+     "glass": 0,
+     "siren": 0,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 1
+    },
+    "glass": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 8,
+     "siren": 0,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 0
+    },
+    "siren": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 7,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 1
+    },
+    "water": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 0,
+     "water": 19,
+     "speech": 0,
+     "background": 0,
+     "unknown": 1
+    }
+   },
+   "rule": "ALTERNATIVE, not the product rule: 10th percentile of leave-one-out similarities - 0.05, clamped to [0.3, 0.85]"
+  },
+  "b_rejection_ALT_builtin_threshold": {
+   "taught_ok": 0.47153333333333336,
+   "taught_rej": 0.37922222222222224,
+   "taught_wrong": 0.14924444444444443,
+   "untaught_rej": 0.6793777777777777,
+   "untaught_as_taught": 0.2265111111111111,
+   "untaught_as_builtin": 0.09411111111111112,
+   "bg_rej": 0.9119333333333335,
+   "sp_rej": 0.9952666666666669,
+   "auroc": 0.6783094814814816,
+   "auroc_margin": 0.7082314074074075,
+   "taught_thr": 0.5084939450542132,
+   "ci95": {
+    "taught_ok": 0.007261298618627914,
+    "untaught_rej": 0.007403271521009651,
+    "auroc": 0.0072712379908550125
+   },
+   "episodes": 600,
+   "notes": "taught_ok = accepted as the right taught class; *_rej = no alert (unknown, or matched speech/background); auroc = best-match cosine, taught vs untaught queries, per episode then averaged; auroc_margin = same with (best score - that profile's threshold)"
+  }
+ },
+ "int8": {
+  "a_5way5shot": {
+   "acc": 0.7413777777777778,
+   "ci95": 0.006270205126636407,
+   "episodes": 600,
+   "per_class": {
+    "church_bells": 0.962168396770473,
+    "clock_tick": 0.6757871878393051,
+    "can_opening": 0.9138427464008859,
+    "mouse_click": 0.5346320346320347,
+    "keyboard_typing": 0.8128364389233954,
+    "door_wood_creaks": 0.39196217494089836,
+    "vacuum_cleaner": 0.745876887340302,
+    "washing_machine": 0.7693333333333333,
+    "footsteps": 0.7480725623582767,
+    "sneezing": 0.844516129032258
+   }
+  },
+  "a_10way5shot": {
+   "acc": 0.6140888888888889,
+   "ci95": 0.0030004316940236892,
+   "episodes": 600,
+   "per_class": {
+    "church_bells": 0.9341111111111111,
+    "clock_tick": 0.5215555555555556,
+    "can_opening": 0.8565555555555555,
+    "mouse_click": 0.3383333333333333,
+    "keyboard_typing": 0.6511111111111111,
+    "door_wood_creaks": 0.21977777777777777,
+    "vacuum_cleaner": 0.5457777777777778,
+    "washing_machine": 0.6294444444444445,
+    "footsteps": 0.6815555555555556,
+    "sneezing": 0.7626666666666667
+   }
+  },
+  "b_rejection": {
+   "taught_ok": 0.46180000000000004,
+   "taught_rej": 0.34831111111111107,
+   "taught_wrong": 0.18988888888888888,
+   "untaught_rej": 0.6278888888888889,
+   "untaught_as_taught": 0.22233333333333336,
+   "untaught_as_builtin": 0.14977777777777776,
+   "bg_rej": 0.9107333333333333,
+   "sp_rej": 0.9954000000000001,
+   "auroc": 0.6733315555555556,
+   "auroc_margin": 0.690730962962963,
+   "taught_thr": 0.5078627336184184,
+   "ci95": {
+    "taught_ok": 0.007134845111656473,
+    "untaught_rej": 0.00718062668116113,
+    "auroc": 0.007308908364333994
+   },
+   "episodes": 600,
+   "notes": "taught_ok = accepted as the right taught class; *_rej = no alert (unknown, or matched speech/background); auroc = best-match cosine, taught vs untaught queries, per episode then averaged; auroc_margin = same with (best score - that profile's threshold)"
+  },
+  "c_builtins": {
+   "recognised": 0.8676470588235294,
+   "per_class": {
+    "knock": 1.0,
+    "dog": 0.75,
+    "baby": 0.5,
+    "alarm": 0.875,
+    "glass": 1.0,
+    "siren": 0.875,
+    "water": 0.95
+   },
+   "n_pos": 68,
+   "neg_false_accept": 0.11,
+   "n_neg": 100,
+   "bg_false_accept": 0.0,
+   "speech_false_accept": 0.0,
+   "thresholds": {
+    "knock": 0.631314468383789,
+    "dog": 0.5,
+    "baby": 0.5,
+    "alarm": 0.5513185381889343,
+    "glass": 0.5984747529029846,
+    "siren": 0.5164722323417663,
+    "water": 0.5,
+    "speech": 0.5,
+    "background": 0.5
+   },
+   "confusion_rows_truth": {
+    "knock": {
+     "knock": 8,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 0,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 0
+    },
+    "dog": {
+     "knock": 0,
+     "dog": 6,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 0,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 2
+    },
+    "baby": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 4,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 2,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 2
+    },
+    "alarm": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 7,
+     "glass": 0,
+     "siren": 0,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 1
+    },
+    "glass": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 8,
+     "siren": 0,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 0
+    },
+    "siren": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 1,
+     "glass": 0,
+     "siren": 7,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 0
+    },
+    "water": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 0,
+     "water": 19,
+     "speech": 0,
+     "background": 0,
+     "unknown": 1
+    }
+   }
+  },
+  "c_builtins_ALT_threshold": {
+   "recognised": 0.8088235294117647,
+   "per_class": {
+    "knock": 0.75,
+    "dog": 0.75,
+    "baby": 0.375,
+    "alarm": 0.875,
+    "glass": 1.0,
+    "siren": 0.875,
+    "water": 0.9
+   },
+   "n_pos": 68,
+   "neg_false_accept": 0.05,
+   "n_neg": 100,
+   "bg_false_accept": 0.0,
+   "speech_false_accept": 0.0,
+   "thresholds": {
+    "knock": 0.7914579927921295,
+    "dog": 0.6190580785274505,
+    "baby": 0.5402259647846221,
+    "alarm": 0.6782582998275757,
+    "glass": 0.6126867473125457,
+    "siren": 0.5655012607574462,
+    "water": 0.6462126851081847,
+    "speech": 0.3,
+    "background": 0.6640181958675384
+   },
+   "confusion_rows_truth": {
+    "knock": {
+     "knock": 6,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 0,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 2
+    },
+    "dog": {
+     "knock": 0,
+     "dog": 6,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 0,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 2
+    },
+    "baby": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 3,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 1,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 4
+    },
+    "alarm": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 7,
+     "glass": 0,
+     "siren": 0,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 1
+    },
+    "glass": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 8,
+     "siren": 0,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 0
+    },
+    "siren": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 7,
+     "water": 0,
+     "speech": 0,
+     "background": 0,
+     "unknown": 1
+    },
+    "water": {
+     "knock": 0,
+     "dog": 0,
+     "baby": 0,
+     "alarm": 0,
+     "glass": 0,
+     "siren": 0,
+     "water": 18,
+     "speech": 0,
+     "background": 0,
+     "unknown": 2
+    }
+   },
+   "rule": "ALTERNATIVE, not the product rule: 10th percentile of leave-one-out similarities - 0.05, clamped to [0.3, 0.85]"
+  },
+  "b_rejection_ALT_builtin_threshold": {
+   "taught_ok": 0.46180000000000004,
+   "taught_rej": 0.3903111111111111,
+   "taught_wrong": 0.1478888888888889,
+   "untaught_rej": 0.6810222222222222,
+   "untaught_as_taught": 0.22233333333333336,
+   "untaught_as_builtin": 0.09664444444444444,
+   "bg_rej": 0.9107333333333333,
+   "sp_rej": 0.9954000000000001,
+   "auroc": 0.6733315555555556,
+   "auroc_margin": 0.7048814814814814,
+   "taught_thr": 0.5078627336184184,
+   "ci95": {
+    "taught_ok": 0.007134845111656473,
+    "untaught_rej": 0.007296985869088435,
+    "auroc": 0.007308908364333994
+   },
+   "episodes": 600,
+   "notes": "taught_ok = accepted as the right taught class; *_rej = no alert (unknown, or matched speech/background); auroc = best-match cosine, taught vs untaught queries, per episode then averaged; auroc_margin = same with (best score - that profile's threshold)"
+  }
+ },
+ "d_int8_vs_float": {
+  "a_5way5shot_delta": -0.0009555555555554873,
+  "a_10way5shot_delta": -0.002366666666666628,
+  "b_taught_ok_delta": -0.009733333333333316,
+  "b_untaught_rej_delta": 0.011711111111111117,
+  "c_recognised_delta": 0.0,
+  "c_false_accept_delta": -0.009999999999999995,
+  "max_abs_gap": 0.011711111111111117,
+  "embedding_cosine_int8_vs_float": {
+   "mean": 0.9889869093894958,
+   "min": 0.9111800789833069,
+   "n": 1368
+  }
+ },
+ "verdict": {
+  "result": "NO-GO",
+  "criteria": {
+   "fewshot_int8_ge_85": false,
+   "taught_accept_ge_90": false,
+   "untaught_reject_ge_80": false,
+   "builtins_recognised_ge_85": true,
+   "builtins_false_accept_le_10": false,
+   "int8_within_2pt_of_float": true
+  }
+ },
+ "e_model": {
+  "params": 105280,
+  "params_bn_folded": 102464,
+  "macs": 26943232,
+  "untrained": false,
+  "epoch": 30,
+  "cfg": {
+   "ch": 128,
+   "blocks": 5,
+   "stride_block": 2,
+   "emb": 64
+  },
+  "pte_bytes": 124720,
+  "top_level_ops": [
+   "<built-in function getitem>",
+   "executorch_call_delegate"
+  ],
+  "compute_ops": [
+   "executorch_call_delegate"
+  ],
+  "all_on_npu": true,
+  "vela": {
+   "total_cycles": 445479,
+   "npu_cycles": 419487,
+   "inference_ms_at_vela_clock": 0.45,
+   "vela_clock_mhz": 1000,
+   "cpu_operators": 0,
+   "npu_operators": 14,
+   "sram_used_kib": 144.27,
+   "dram_used_kib": 114.81
+  },
+  "target": [
+   "ethos-u85-256",
+   "Ethos_U85_SYS_DRAM_Mid",
+   "Shared_Sram"
+  ],
+  "io": {
+   "in_scale": 0.032824743539094925,
+   "in_zp": -33,
+   "out_scale": 0.014501744881272316,
+   "out_zp": -12
+  },
+  "builtin_thresholds": {
+   "knock": 0.631314468383789,
+   "dog": 0.5,
+   "baby": 0.5,
+   "alarm": 0.5513185381889343,
+   "glass": 0.5984747529029846,
+   "siren": 0.5164722323417663,
+   "water": 0.5,
+   "speech": 0.5,
+   "background": 0.5
+  }
+ },
+ "git_head": "b8fa76f",
+ "date": "2026-10-18 05:42 PDT"
+}

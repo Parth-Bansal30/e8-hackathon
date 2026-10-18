@@ -110,7 +110,7 @@ def count_params_macs(model):
 
 
 def load_encoder(path, map_location="cpu"):
-    ck = torch.load(path, map_location=map_location)
+    ck = torch.load(path, map_location=map_location, weights_only=False)  # our own file (holds a class list)
     m = SSEncoder(**ck["cfg"])
     m.load_state_dict(ck["encoder"])
     return m.eval(), ck

@@ -1,0 +1,61 @@
+encoder {'ch': 128, 'blocks': 5, 'stride_block': 2, 'emb': 64} (trained, ss_encoder.pth): 102464 parameters (BN folded), 26.94 M MACs
+Skipping import of cpp extensions due to incompatible torch version 2.9.0 for torchao version 0.14.0         Please see GitHub issue #2919 for more info
+W1018 05:42:00.336000 9320 torch/distributed/elastic/multiprocessing/redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+/Users/parthbansal/alif/executorch-alif/et-venv/lib/python3.12/site-packages/executorch/backends/arm/quantizer/quantization_config.py:82: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  return torch.tensor(act_scale * weight_scale).to(
+
+Network summary for out
+Accelerator configuration               Ethos_U85_256
+System configuration             Ethos_U85_SYS_DRAM_Mid
+Memory mode                               Shared_Sram
+Accelerator clock                                1000 MHz
+Design peak SRAM bandwidth                      29.80 GB/s
+Design peak DRAM bandwidth                      11.18 GB/s
+
+Total SRAM used                                144.27 KiB
+Total DRAM used                                114.81 KiB
+
+CPU operators = 0 (0.0%)
+NPU operators = 14 (100.0%)
+
+Average SRAM bandwidth                           6.66 GB/s
+Input   SRAM bandwidth                           1.71 MB/batch
+Weight  SRAM bandwidth                           0.72 MB/batch
+Output  SRAM bandwidth                           0.48 MB/batch
+Total   SRAM bandwidth                           2.97 MB/batch
+Total   SRAM bandwidth            per input      2.97 MB/inference (batch size 1)
+
+Average DRAM bandwidth                           0.25 GB/s
+Input   DRAM bandwidth                           0.00 MB/batch
+Weight  DRAM bandwidth                           0.11 MB/batch
+Output  DRAM bandwidth                           0.00 MB/batch
+Total   DRAM bandwidth                           0.11 MB/batch
+Total   DRAM bandwidth            per input      0.11 MB/inference (batch size 1)
+
+Neural network macs                          25681832 MACs/batch
+
+Info: The numbers below are internal compiler estimates.
+For performance numbers the compiled network should be run on an FVP Model or FPGA.
+
+Network Tops/s                                   0.12 Tops/s
+
+NPU cycles                                     419487 cycles/batch
+SRAM Access cycles                             119683 cycles/batch
+DRAM Access cycles                             189012 cycles/batch
+On-chip Flash Access cycles                         0 cycles/batch
+Off-chip Flash Access cycles                        0 cycles/batch
+Total cycles                                   445479 cycles/batch
+
+Batch Inference time                 0.45 ms, 2244.77 inferences/s (batch size 1)
+
+int8 IO: input scale=0.032824743539094925 zp=-33  output scale=0.014501744881272316 zp=-12
+wrote /Users/parthbansal/alif/e8-hackathon/model/ss_encoder.pte (124720 bytes)
+wrote /Users/parthbansal/alif/e8-hackathon/model/ss_encoder_io.h
+wrote /Users/parthbansal/alif/e8-hackathon/model/../firmware/soundsense/assets/ss_encoder_io.h
+/Users/parthbansal/alif/e8-hackathon/model/../firmware/soundsense/assets/ss_model_data.h: ss_encoder_pte[124720]
+wrote /Users/parthbansal/alif/e8-hackathon/model/../firmware/soundsense/assets/ss_testvec.h (clip #1760)
+wrote /Users/parthbansal/alif/e8-hackathon/model/../firmware/soundsense/assets/ss_builtin_profiles.h: thresholds knock 0.631, dog 0.500, baby 0.500, alarm 0.551, glass 0.598, siren 0.516, water 0.500, speech 0.500, background 0.500
+test clip: cos(int8, float) = 0.9983; best built-in (int8) dog
+params 102464, MACs 26943232, .pte 124720 bytes
+top-level ops after lowering: ['<built-in function getitem>', 'executorch_call_delegate'] -> compute ops: ['executorch_call_delegate']
+Vela estimate: {'total_cycles': 445479, 'npu_cycles': 419487, 'inference_ms_at_vela_clock': 0.45, 'vela_clock_mhz': 1000, 'cpu_operators': 0, 'npu_operators': 14, 'sram_used_kib': 144.27, 'dram_used_kib': 114.81}

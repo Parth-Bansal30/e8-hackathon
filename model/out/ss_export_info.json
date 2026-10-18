@@ -1,0 +1,51 @@
+{
+ "untrained": false,
+ "epoch": 30,
+ "cfg": {
+  "ch": 128,
+  "blocks": 5,
+  "stride_block": 2,
+  "emb": 64
+ },
+ "pte_bytes": 124720,
+ "top_level_ops": [
+  "<built-in function getitem>",
+  "executorch_call_delegate"
+ ],
+ "compute_ops": [
+  "executorch_call_delegate"
+ ],
+ "all_on_npu": true,
+ "vela": {
+  "total_cycles": 445479,
+  "npu_cycles": 419487,
+  "inference_ms_at_vela_clock": 0.45,
+  "vela_clock_mhz": 1000,
+  "cpu_operators": 0,
+  "npu_operators": 14,
+  "sram_used_kib": 144.27,
+  "dram_used_kib": 114.81
+ },
+ "target": [
+  "ethos-u85-256",
+  "Ethos_U85_SYS_DRAM_Mid",
+  "Shared_Sram"
+ ],
+ "io": {
+  "in_scale": 0.032824743539094925,
+  "in_zp": -33,
+  "out_scale": 0.014501744881272316,
+  "out_zp": -12
+ },
+ "builtin_thresholds": {
+  "knock": 0.631314468383789,
+  "dog": 0.5,
+  "baby": 0.5,
+  "alarm": 0.5513185381889343,
+  "glass": 0.5984747529029846,
+  "siren": 0.5164722323417663,
+  "water": 0.5,
+  "speech": 0.5,
+  "background": 0.5
+ }
+}

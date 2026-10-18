@@ -1,0 +1,20 @@
+checkpoint ss_encoder.pth: epoch 30, cfg {'ch': 128, 'blocks': 5, 'stride_block': 2, 'emb': 64}, 105280 params, 26.94 M MACs; pools: heldout 400, built-in pos 68, neg 100 (33 classes), bg 300, speech 500
+[float] embedded in 6 s
+[float] a: 5w5s 0.7423 +-0.0063  10w5s 0.6165
+[float] b: taught ok 0.4715  untaught rej 0.6162  bg rej 0.9119  speech rej 0.9953  AUROC 0.6783 (margin 0.6945)  mean taught thr 0.508
+[float] c: built-ins recognised 0.8676  neg false accept 0.1200  bg FA 0.0000  speech FA 0.0000
+[float]    per class knock 1.00, dog 0.75, baby 0.50, alarm 0.88, glass 1.00, siren 0.88, water 0.95; thr knock 0.63, dog 0.50, baby 0.50, alarm 0.59, glass 0.57, siren 0.53, water 0.50, speech 0.50, background 0.50
+[float] ALT built-in thresholds: c recognised 0.8382  neg FA 0.0400; b taught ok 0.4715 untaught rej 0.6794; thr knock 0.79, dog 0.62, baby 0.53, alarm 0.67, glass 0.62, siren 0.57, water 0.64, speech 0.30, background 0.72
+Skipping import of cpp extensions due to incompatible torch version 2.9.0 for torchao version 0.14.0         Please see GitHub issue #2919 for more info
+W1018 05:42:20.698000 9350 torch/distributed/elastic/multiprocessing/redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+/Users/parthbansal/alif/executorch-alif/et-venv/lib/python3.12/site-packages/executorch/backends/arm/quantizer/quantization_config.py:82: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  return torch.tensor(act_scale * weight_scale).to(
+[int8] embedded in 11 s
+[int8] a: 5w5s 0.7414 +-0.0063  10w5s 0.6141
+[int8] b: taught ok 0.4618  untaught rej 0.6279  bg rej 0.9107  speech rej 0.9954  AUROC 0.6733 (margin 0.6907)  mean taught thr 0.508
+[int8] c: built-ins recognised 0.8676  neg false accept 0.1100  bg FA 0.0000  speech FA 0.0000
+[int8]    per class knock 1.00, dog 0.75, baby 0.50, alarm 0.88, glass 1.00, siren 0.88, water 0.95; thr knock 0.63, dog 0.50, baby 0.50, alarm 0.55, glass 0.60, siren 0.52, water 0.50, speech 0.50, background 0.50
+[int8] ALT built-in thresholds: c recognised 0.8088  neg FA 0.0500; b taught ok 0.4618 untaught rej 0.6810; thr knock 0.79, dog 0.62, baby 0.54, alarm 0.68, glass 0.61, siren 0.57, water 0.65, speech 0.30, background 0.66
+int8 vs float: max gap 1.17 points; embedding cosine mean 0.9890 min 0.9112
+VERDICT (computed): NO-GO  {'fewshot_int8_ge_85': False, 'taught_accept_ge_90': False, 'untaught_reject_ge_80': False, 'builtins_recognised_ge_85': True, 'builtins_false_accept_le_10': False, 'int8_within_2pt_of_float': True}
+wrote /Users/parthbansal/alif/e8-hackathon/model/out/g1_metrics.json

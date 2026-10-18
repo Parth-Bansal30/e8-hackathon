@@ -165,6 +165,7 @@ def main():
     ap.add_argument("--wd", type=float, default=1e-4)
     ap.add_argument("--ch", type=int, default=128)
     ap.add_argument("--blocks", type=int, default=5)
+    ap.add_argument("--stride_block", type=int, default=2)
     ap.add_argument("--scale", type=float, default=16.0)
     ap.add_argument("--max_batches", type=int, default=0, help="stop each epoch early (timing tests)")
     ap.add_argument("--out", default=os.path.join(HERE, "ss_encoder.pth"))
@@ -177,9 +178,10 @@ def main():
     d = S.Data()
     sampler = Sampler(d)
     feats = K.Features().to(dev)
-    model = S.SSEncoder(ch=args.ch, blocks=args.blocks).to(dev)
+    cfg = dict(ch=args.ch, blocks=args.blocks, stride_block=args.stride_block)
+    model = S.SSEncoder(**cfg).to(dev)
     head = S.CosineHead(len(d.classes), scale=args.scale).to(dev)
-    params, macs = S.count_params_macs(S.SSEncoder(ch=args.ch, blocks=args.blocks))
+    params, macs = S.count_params_macs(S.SSEncoder(**cfg))
     print(f"encoder cfg {model.cfg}: {params} parameters, {macs / 1e6:.2f} M MACs; "
           f"{len(d.classes)} classes; device {dev}", flush=True)
 
@@ -229,7 +231,7 @@ def main():
         fs = few_shot(embed(model, feats, hx, dev), hy, np.random.default_rng(2))
         ck = {"encoder": {k: v.cpu() for k, v in model.state_dict().items()},
               "head": {k: v.cpu() for k, v in head.state_dict().items()},
-              "cfg": model.cfg, "classes": d.classes, "epoch": ep + 1, "args": vars(args)}
+              "cfg": model.cfg, "classes": [(k, str(c)) for k, c in d.classes], "epoch": ep + 1, "args": vars(args)}
         torch.save(ck, args.out)
         print(f"epoch {ep + 1}/{args.epochs}: loss {tot / cnt:.3f}  val acc {'  '.join(accs)}  "
               f"heldout 5w5s (monitor only) {fs:.3f}  lr {sched.get_last_lr()[0]:.2e}  "

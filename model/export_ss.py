@@ -16,9 +16,13 @@ Outputs:
     ../firmware/soundsense/assets/ss_builtin_profiles.h (9 profiles from the int8 model)
 """
 import argparse
+import contextlib
+import json
 import os
+import re
 import subprocess
 import sys
+import tempfile
 
 import numpy as np
 import torch
@@ -117,6 +121,46 @@ def builtin_profiles(embed_fn, d, rng):
     return PROFILE_NAMES, np.stack(protos), np.array(thrs)
 
 
+@contextlib.contextmanager
+def capture_output(buf):
+    """Copy everything written to fds 1 and 2 (Vela prints its summary there) into buf["text"],
+    and still show it."""
+    sys.stdout.flush()
+    sys.stderr.flush()
+    tmp = tempfile.TemporaryFile()
+    saved = os.dup(1), os.dup(2)
+    os.dup2(tmp.fileno(), 1)
+    os.dup2(tmp.fileno(), 2)
+    try:
+        yield buf
+    finally:
+        sys.stdout.flush()
+        sys.stderr.flush()
+        os.dup2(saved[0], 1)
+        os.dup2(saved[1], 2)
+        os.close(saved[0])
+        os.close(saved[1])
+        tmp.seek(0)
+        buf["text"] = tmp.read().decode(errors="replace")
+        tmp.close()
+        sys.stdout.write(buf["text"])
+        sys.stdout.flush()
+
+
+def vela_summary(text):
+    pats = {"total_cycles": r"Total cycles\s+(\d+)", "npu_cycles": r"NPU cycles\s+(\d+)",
+            "inference_ms_at_vela_clock": r"Batch Inference time\s+([\d.]+) ms",
+            "vela_clock_mhz": r"Accelerator clock\s+(\d+) MHz", "cpu_operators": r"CPU operators = (\d+)",
+            "npu_operators": r"NPU operators = (\d+)", "sram_used_kib": r"Total SRAM used\s+([\d.]+) KiB",
+            "dram_used_kib": r"Total DRAM used\s+([\d.]+) KiB"}
+    out = {}
+    for k, p in pats.items():
+        m = re.findall(p, text)
+        if m:
+            out[k] = float(m[-1]) if "." in m[-1] else int(m[-1])
+    return out
+
+
 def q_io(x, qp):
     return np.clip(np.round(x / qp["scale"]) + qp["zero_point"], -128, 127).astype(np.int8)
 
@@ -152,8 +196,11 @@ def main():
     from executorch.exir import EdgeCompileConfig, ExecutorchBackendConfig, to_edge_transform_and_lower
     from executorch.exir.passes.quantize_io_pass import extract_io_quant_params
 
-    edge = to_edge_transform_and_lower(torch.export.export(q, (calib[:1],)), partitioner=[EthosUPartitioner(spec)],
-                                       compile_config=EdgeCompileConfig(_check_ir_validity=False))
+    vela = {}
+    with capture_output(vela):
+        edge = to_edge_transform_and_lower(torch.export.export(q, (calib[:1],)), partitioner=[EthosUPartitioner(spec)],
+                                           compile_config=EdgeCompileConfig(_check_ir_validity=False))
+    vela = vela_summary(vela["text"])
     qp = extract_io_quant_params(edge, input_idxs=(0,), output_idxs=(0,))
     (in_q,), (out_q,) = qp["inputs"].values(), qp["outputs"].values()
     print(f"int8 IO: input scale={in_q['scale']} zp={in_q['zero_point']}  "
@@ -225,9 +272,21 @@ def main():
     print(f"test clip: cos(int8, float) = {float(S.normalize(emb) @ S.normalize(ef)):.4f}; "
           f"best built-in (int8) {names[int((S.normalize(emb) @ protos.T).argmax())]}")
     print(f"params {params}, MACs {macs}, .pte {pte_size} bytes")
-    print("top-level ops after lowering:", ops)
-    if ops != ["executorch_call_delegate"]:
+    compute_ops = [o for o in ops if o != "<built-in function getitem>"]  # getitem unpacks the delegate's outputs
+    print("top-level ops after lowering:", ops, "-> compute ops:", compute_ops)
+    if compute_ops != ["executorch_call_delegate"]:
         print("WARNING: not everything is delegated to the NPU")
+    print("Vela estimate:", vela)
+    info = {"untrained": args.untrained, "epoch": None if args.untrained else S.load_encoder(args.ckpt)[1]["epoch"],
+            "cfg": model.cfg, "pte_bytes": pte_size, "top_level_ops": ops, "compute_ops": compute_ops,
+            "all_on_npu": compute_ops == ["executorch_call_delegate"], "vela": vela,
+            "target": [TARGET, SYSTEM_CONFIG, MEMORY_MODE],
+            "io": {"in_scale": in_q["scale"], "in_zp": in_q["zero_point"], "out_scale": out_q["scale"],
+                   "out_zp": out_q["zero_point"]},
+            "builtin_thresholds": dict(zip(names, map(float, thrs)))}
+    os.makedirs(os.path.join(HERE, "out"), exist_ok=True)
+    with open(os.path.join(HERE, "out", "ss_export_info.json"), "w") as f:
+        json.dump(info, f, indent=1)
 
 
 if __name__ == "__main__":
