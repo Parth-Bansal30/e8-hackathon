@@ -82,7 +82,9 @@ Work stays on branch **`gates`**. Read in this order:
 
 | Area | Status |
 |---|---|
-| App `firmware/soundsense/` | Release build flashed at 12:20 PM, trained built-in profiles: two-stage decision, 8 examples, T2, T6, host command 17, Sounds page (T7: on/off, urgency, rename), "still sounding" (H5), Calibrate room (S5), snooze (A8), talking nearby (H8), cycle counter re-armed in SysTick. Board holds a tight Doorbell (thr 0.85). Smoke 16/16, feature test 18/18. ITCM 97.88% |
+| App `firmware/soundsense/` | Release build flashed at 12:20 PM, trained built-in profiles: two-stage decision, 8 examples, T2, T6, host command 17, Sounds page (T7: on/off, urgency, rename), "still sounding" (H5), Calibrate room (S5), snooze (A8), talking nearby (H8), cycle counter re-armed in SysTick. Board holds a tight Doorbell (thr 0.85). Since the 1:40 PM video recording, the board also holds Keys:
+thr 0.50, with 1 wrong mark from segment 8 (store seq 1256). The owner chose to keep it; Settings > Forget
+Keys removes it (`gates/video_takes.txt`). Smoke 16/16, feature test 18/18. ITCM 97.88% |
 | Gates | G1 SOFT, G2 SOFT, G3 SOFT (short run), C1 GO, C2 GO, C3 rows 1-4 pass (row 5: backlight on/off only, no dimming), C4 GO, C5 done (12.6%, target 10%) |
 | P0 | 16 of 16 done |
 | P1 | 14 done, 1 partial (H7: "My name" not tried on speech), 1 not started (H4 smoke vs CO) |
