@@ -75,6 +75,9 @@ Work stays on branch **`gates`**. Read in this order:
 4. Python tools: run them with the repo venv as `.venv/bin/python tools/...`. The system python3's
    scipy fails on the board laptop with a dyld `__thread_bss` error. To create the venv:
    `/opt/homebrew/bin/python3.12 -m venv .venv && .venv/bin/pip install numpy scipy pillow`.
+   On the laptop with the et-venv there's no `.venv`. Use `/opt/anaconda3/bin/python3` (the default
+   `python3`) for `tools/`. The et-venv's scipy needs numpy 2 and fails to import (`np.long`); use the
+   et-venv only for `model/`.
 
 ## How the app works (firmware/soundsense)
 
@@ -293,11 +296,12 @@ To check the result, read variables over J-Link:
     - Flashed at 10:40 AM from the laptop with the et-venv (the board's J-Link is on it now). The
       Ready screen passes and `[C1]` is unchanged; weak matches wait for 0.8 s as they should
       (`docs/gates/early_rtt.log`).
-    - **Not yet tested with sound.** Once the owner OKs it: `g3_play.py builtin`. Look for
-      `[SS] t=... early` lines and the alert latency on the stats screen.
+    - **Tested with sound at 10:50 AM** (`g3_play.py builtin`, `docs/gates/g3_builtin_early.txt`).
+      Recognition is unchanged (30/56, 54%). 18 of 30 recognised sounds alerted early, median 437 ms
+      from onset to screen, 0 wrong. Knocks fell 5 → 1 because none were felt this time.
     - The IMU `times back` read up to 3 ms after this flash (it was 0 in `c3_rtt.log`). It isn't from
       the early path; flash the previous build to see whether it's new.
-    - Once it's confirmed, update the 0.85 s claims: README (lines 68, 82, 192), DEMO.md "Alert
+    - Confirmed, so the 0.85 s claims need updating (not done yet; ask the owner): README (lines 68, 82, 192), DEMO.md "Alert
       timing", SUBMISSION.md "Alert delay", HANDOFF-submission.md. Tell the submission session.
 
 ## Wrap-up (board session, by about 3:45 PM)

@@ -64,7 +64,7 @@ HANDOFF-next.md item 11, done on the old laptop (et-venv, float encoder as shipp
 - Early check at 0.4 s, margin 0.05: 55% of built-in sounds alert early; false alerts +1.5 points.
 - Margin 0.10 instead: 44% early, and false alerts no higher than today.
 
-**Firmware: written, built and flashed (10:40 AM); silent check passes; not yet tested with sound** (`decide_early()` in `main.cpp`):
+**Firmware: flashed and tested on the board (10:50 AM): clear built-in alerts reach the screen in a median 437 ms, recognition unchanged** (`decide_early()` in `main.cpp`):
 - At 0.4 s after the onset (`EARLY_DELAY`), one extra encoder run (about 1 ms) checks the match.
 - It decides at once only if all of these hold:
   - the best match is an alerting built-in
@@ -80,7 +80,13 @@ HANDOFF-next.md item 11, done on the old laptop (et-venv, float encoder as shipp
   - Quiet room: CPU active 12.0 to 13.1%, 0 audio blocks dropped.
   - Room noises gave 3 decisions; all were weak matches (best 0.20 to 0.41 against a threshold of 0.50), and all waited for 0.8 s as they should.
 - IMU `times back` read 95 µs, then 1.7 ms, then 3.0 ms in the first 40 s (it was 0 in `gates/c3_rtt.log`). The early path didn't cause it: the first two readings came before any sound was decided. It's small next to the ±100 ms felt window. Flashing the previous build would settle whether it's new.
-- Still to do with sound: the `early` lines and the stats screen's alert latency during a G3 built-in run (`g3_play.py builtin`). Compare recognition against the 54% run.
+- **G3 built-in run with the Mac speaker** (same 56 fold-5 clips, volume 88 as found; `gates/g3_builtin_early.txt`, `g3_results.json` entry at 10:51):
+  - Recognised: 30 of 56 (54%), the same as the run before the change.
+  - Per class (before → now): knock 5 → 1, dog 4 → 6, baby 4 → 4, alarm 6 → 6, glass 3 → 2, siren 3 → 3, water 5 → 8.
+  - The knock drop isn't from the early path: none of the knocks were felt this time (5 were before, from the speaker shaking the table), and two knocks that matched "Knock" under the threshold went to "unknown". Possible reasons: a different laptop or placement, or the IMU `times back` above.
+  - Early: 18 of the 30 recognised sounds alerted early (60%; offline said 55%): dog 5, water 6, alarm 5, knock 1, glass 1. Wrong early alerts: 0.
+  - Latency: early decisions came 403 to 442 ms after the onset; on screen a median 437 ms after the onset (403 to 490 ms). The rest still decide at 0.8 s and show about 65 ms later. Mean over recognised sounds: about 0.61 s, down from about 0.87 s.
+  - Draw time: decision to screen took 30 to 75 ms here, against 18 to 20 ms in C3 with fake detections. Not looked into.
 
 ## C4 details
 

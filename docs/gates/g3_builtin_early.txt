@@ -1,0 +1,64 @@
+  knock  5-218980-A-30.wav      -> unknown  best Baby crying 0.40 +22 dB
+  knock  5-218981-A-30.wav      -> unknown  best Glass breaking 0.33 +23 dB
+  knock  5-235644-A-30.wav      -> unknown  best Knock 0.43 +24 dB
+  knock  5-250026-A-30.wav      -> unknown  best Knock 0.59 +20 dB
+  knock  5-250026-B-30.wav      -> unknown  best Water running 0.24 +21 dB
+  knock  5-251426-A-30.wav      -> Knock  best Knock 0.67 +23 dB
+  knock  5-251426-B-30.wav      -> unknown  best Water running 0.45 +22 dB
+  knock  5-256512-A-30.wav      -> unknown  best Dog barking 0.42 +25 dB
+knock: 1/8 recognised (0 as maybe)
+  dog    5-203128-A-0.wav       -> Dog barking  best Dog barking 0.83 +21 dB
+  dog    5-203128-B-0.wav       -> Dog barking  best Dog barking 0.71 +21 dB
+  dog    5-208030-A-0.wav       -> Dog barking  best Dog barking 0.61 +10 dB
+  dog    5-212454-A-0.wav       -> unknown  best Water running 0.44 +12 dB
+  dog    5-213855-A-0.wav       -> Dog barking  best Dog barking 0.62 +22 dB
+  dog    5-217158-A-0.wav       -> Dog barking  best Dog barking 0.60 +20 dB
+  dog    5-231762-A-0.wav       -> Dog barking  best Dog barking 0.63 +20 dB
+  dog    5-9032-A-0.wav         -> unknown  best Dog barking 0.50 +27 dB
+dog: 6/8 recognised (0 as maybe)
+  baby   5-151085-A-20.wav      -> unknown  best Baby crying 0.37 +17 dB
+  baby   5-198411-A-20.wav      -> unknown  best Baby crying 0.27 +17 dB
+  baby   5-198411-B-20.wav      -> Baby crying (maybe)  best Baby crying 0.59 +18 dB
+  baby   5-198411-C-20.wav      -> Baby crying  best Baby crying 0.65 +16 dB
+  baby   5-198411-D-20.wav      -> unknown  best Baby crying 0.19 +17 dB
+  baby   5-198411-E-20.wav      -> Baby crying (maybe)  best Baby crying 0.58 +16 dB
+  baby   5-198411-F-20.wav      -> unknown  best Alarm 0.43 +17 dB
+  baby   5-198411-G-20.wav      -> Baby crying  best Baby crying 0.70 +18 dB
+baby: 4/8 recognised (2 as maybe)
+  alarm  5-210612-A-37.wav      -> Alarm  best Alarm 0.71 +25 dB
+  alarm  5-211408-A-37.wav      -> unknown  best Alarm 0.39 +17 dB
+  alarm  5-219242-A-37.wav      -> Alarm  best Alarm 0.93 +18 dB
+  alarm  5-219242-B-37.wav      -> Alarm  best Alarm 0.94 +19 dB
+  alarm  5-223176-A-37.wav      -> unknown  best Alarm 0.42 +17 dB
+  alarm  5-233645-A-37.wav      -> Alarm  best Alarm 0.92 +19 dB
+  alarm  5-234247-A-37.wav      -> Alarm (maybe)  best Alarm 0.63 +15 dB
+  alarm  5-250629-A-37.wav      -> Alarm  best Alarm 0.91 +21 dB
+alarm: 6/8 recognised (1 as maybe)
+  glass  5-221528-A-39.wav      -> unknown  best Glass breaking 0.47 +25 dB
+  glass  5-221529-A-39.wav      -> unknown  best Water running 0.29 +22 dB
+  glass  5-233605-A-39.wav      -> unknown  best Glass breaking 0.44 +25 dB
+  glass  5-233607-A-39.wav      -> Glass breaking  best Glass breaking 0.64 +20 dB
+  glass  5-257642-A-39.wav      -> unknown  best Glass breaking 0.39 +20 dB
+  glass  5-260432-A-39.wav      -> unknown  best Glass breaking 0.29 +22 dB
+  glass  5-260433-A-39.wav      -> unknown  best Water running 0.26 +25 dB
+  glass  5-260434-A-39.wav      -> Glass breaking  best Glass breaking 0.63 +22 dB
+glass: 2/8 recognised (0 as maybe)
+  siren  5-117118-A-42.wav      -> Siren (maybe)  best Siren 0.59 +16 dB
+  siren  5-117120-A-42.wav      -> unknown  best Baby crying 0.50 +18 dB
+  siren  5-117122-A-42.wav      -> unknown  best Baby crying 0.56 +16 dB
+  siren  5-133989-A-42.wav      -> Siren (maybe)  best Siren 0.59 +14 dB
+  siren  5-133989-B-42.wav      -> unknown  best Glass breaking 0.23 +10 dB
+  siren  5-150409-A-42.wav      -> quiet  best Siren 0.47 +8 dB
+  siren  5-160551-A-42.wav      -> Siren  best Siren 0.72 +20 dB
+  siren  5-184323-A-42.wav      -> unknown  best Alarm 0.47 +9 dB
+siren: 3/8 recognised (2 as maybe)
+  water  5-205589-A-17.wav      -> Water running  best Water running 0.62 +13 dB
+  water  5-205589-B-17.wav      -> Water running  best Water running 0.74 +24 dB
+  water  5-207781-A-17.wav      -> Water running  best Water running 0.61 +23 dB
+  water  5-212730-A-17.wav      -> Water running  best Water running 0.72 +26 dB
+  water  5-212734-A-17.wav      -> Water running  best Water running 0.78 +21 dB
+  water  5-212736-A-17.wav      -> Water running  best Water running 0.62 +17 dB
+  water  5-214362-A-17.wav      -> Water running  best Water running 0.64 +10 dB
+  water  5-215634-A-17.wav      -> Water running  best Water running 0.68 +18 dB
+water: 8/8 recognised (0 as maybe)
+built-ins: 30/56 = 54%
