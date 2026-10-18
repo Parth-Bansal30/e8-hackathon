@@ -75,7 +75,7 @@ Details and logs: [docs/GATES-results.md](docs/GATES-results.md).
 | Board vs Python | Features: 0 of 1960 values differ. Embedding within 1 LSB (cosine 0.9996) |
 | Few-shot accuracy (offline, 10 classes never trained on) | 5-way 5-shot 75.8% int8 (float 75.9%); 10-way 63.0% |
 | Built-in sounds | 88% offline (4% false accepts); 54% live from a laptop speaker (alarm 75%) |
-| Taught sounds | Live: a Doorbell taught from the laptop was recognised in 4 of 5 trials. Offline at 8 examples: 45% accepted, 77% of untaught sounds rejected (38% accepted at 5; borderline, see limits) |
+| Taught sounds | Live: a Doorbell taught from the laptop was recognised in 4 of 5 trials; a Phone taught from a laptop chime (threshold 0.85, test 0.97) alerted at 0.94 and 0.95. Offline at 8 examples: 45% accepted, 77% of untaught sounds rejected (38% accepted at 5; borderline, see limits) |
 | Knock felt | 21 of 22 at 20 cm; IMU FIFO at 805 samples/s, 0 missed |
 | Alert delay | Clear built-in match: on screen a **median 437 ms** after the sound starts (403–490 ms; 18 of 30 recognised sounds live, 0 wrong). Everything else decides 0.8 s after the onset, about 0.87 s. Drawing the alert: 18.4–19.5 ms on the bench, 30–75 ms in the live run |
 | Display | Live view 10.0 fps; urgent strobe plus 10 forced full redraws a second for 12 s: 0 audio blocks dropped |

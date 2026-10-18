@@ -16,7 +16,7 @@ left is checks and media at the board, and the write-up away from it.
     on `gates`.
   - [PR #4](https://github.com/Parth-Bansal30/e8-hackathon/pull/4) is open.
 - Left for the owner, in order (also in SUBMISSION.md section 3):
-  1. Decide on Keys (loose, 0.50).
+  1. Decide on Keys and Clap (both loose at 0.50). The board now holds 5 taught sounds (`0cde373`).
   2. Merge PR #4.
   3. Re-paste the pitch and section 2.
   4. Upload the gallery.

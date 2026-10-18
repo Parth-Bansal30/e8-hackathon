@@ -239,7 +239,9 @@ All on the DK-E8 (M55-HP at 400 MHz, Ethos-U85-256), release build, 2026-10-18. 
   10-way 63.0%.
 - **Taught sounds:** offline, at 8 examples, 45% accepted and 77% of untaught sounds rejected (38%
   accepted at 5 examples), on recordings the encoder never heard. Live, a Doorbell taught from the
-  laptop was recognised in 4 of 5 trials, with no confusions with Siren.
+  laptop was recognised in 4 of 5 trials, with no confusions with Siren. A Phone taught from a laptop
+  chime (8 clean examples, threshold 0.85, test match 0.97) then alerted at 0.94 and 0.95; a third,
+  clipped play scored 0.83 and didn't alert.
 - **Built-in sounds:** 88% offline with 4% false accepts. Live, from a laptop speaker on clips never
   used in training: 54% (alarm 75%).
 - **Boot to Ready:** 1.5 s, self-test included.
@@ -353,9 +355,11 @@ started from Arm's alif-ethos-u85-npu-mnist learning path.
       examples, 0.85 s alerts, old feature counts). Same for the elevator pitch.
 - [x] Hand checks (knob, night-mode backlight) passed at 1:25 PM; "Known limits" updated.
 - [x] Board photos (1:32 PM), video footage (1:33-1:45 PM) and demo rehearsal (1:50 PM) done at the board.
-- [ ] **Before judging, decide on Keys** (taught loose on camera, threshold 0.50): in the rehearsal it was
-      the best match for several knocks, and one reached 0.52, blocked only by the accidental wrong mark.
-      Settings > Forget Keys (two presses) leaves Doorbell (0.85) and Microwave (0.835).
+- [ ] **Before judging, decide on Keys and Clap** (both saved at the loose threshold 0.50). Keys was the
+      best match for several knocks in the rehearsal, and one reached 0.52, blocked only by the accidental
+      wrong mark. Clap kept an example unlike the others (T2 flagged it; without it the threshold would
+      be 0.72) and then alerted on room sounds. Settings > Forget (two presses each) leaves Doorbell
+      (0.85), Microwave (0.835) and Phone (0.85; play `tools/demo_sound.py chime3`).
 - [ ] Edit the video (captions: `demo/captions_*.srt`; cards and overlays: `demo/video/`), upload it to
       YouTube or Vimeo, and paste the link in section 1 and the form.
 - [ ] Upload the 9 gallery images in the [demo/GALLERY.md](demo/GALLERY.md) order (cover first), with
