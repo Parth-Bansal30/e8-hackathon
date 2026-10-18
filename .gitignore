@@ -1,0 +1,22 @@
+# firmware build output (cbuild)
+firmware/out/
+firmware/tmp/
+firmware/**/RTE/_*/
+*.cbuild-idx.yml
+*.cbuild-set.yml
+*.cbuild-run.yml
+*.cbuild.yml
+*.clangd
+
+# prebuilt ExecuTorch runtime, fetched by tools/fetch_et_bundle.sh
+firmware/third_party/executorch/et_bundle/
+
+# model export
+model/mnist_data/
+model/mnist_ethos_u85.pte
+__pycache__/
+*.pyc
+.venv/
+et-venv/
+
+.DS_Store

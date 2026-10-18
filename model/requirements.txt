@@ -1,0 +1,12 @@
+# Export environment for model/export_mnist.py (Python 3.10-3.12, tested on macOS arm64).
+# Install tosa-tools last, then re-pin flatbuffers: tosa-tools pulls in an older flatbuffers
+# that breaks the ExecuTorch Arm backend.
+torch==2.9.0
+torchvision==0.24.0
+torchao==0.14.0
+executorch==1.0.0
+ethos-u-vela==4.4.1
+numpy==1.26.4
+pillow
+tosa-tools @ git+https://git.gitlab.arm.com/tosa/tosa-reference-model.git@bc8794f83563bd375bbfb538c1c1376808baa41b
+flatbuffers==24.3.25

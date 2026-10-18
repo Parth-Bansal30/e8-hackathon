@@ -1,0 +1,90 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/tools/projmgr/2.6.0/tools/projmgr/schemas/cproject.schema.json
+# DK-E8 hardware self-test dashboard (LEDs, joystick, pot, IMU, mics, touch, NPU).
+# Shares the runner with ../mnist_executorch and the assets with ../npu_display.
+project:
+  groups:
+    - group: App
+      files:
+        - file: main.c
+        - file: ../mnist_executorch/executorch_runner.cpp
+        # ADC reference counters; not part of any component in Ensemble pack 2.0.4
+        - file: vendor/sys_ctrl_analog.c   # copied from Ensemble pack 2.0.4 drivers/source
+
+    - group: SEGGER_RTT
+      files:
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT.c
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT_printf.c
+        - file: ../libs/SEGGER_RTT_V796h/Syscalls/SEGGER_RTT_Syscalls_GCC.c
+
+  output:
+    base-name: $Project$
+    type:
+      - elf
+      - bin
+
+  layers:
+    - layer: ../device/ensemble/alif-ensemble.clayer.yml
+
+  packs:
+    - pack: AlifSemiconductor::Ensemble
+    - pack: ARM::ethos-u-core-driver
+
+  components:
+    - component: ARM::Machine Learning:NPU Support:Ethos-U Driver&Generic U85
+    - component: AlifSemiconductor::Device:SOC Peripherals:CDC
+    - component: AlifSemiconductor::Device:SOC Peripherals:MIPI DSI
+    - component: AlifSemiconductor::Device:SOC Peripherals:MIPI DSI CSI2 DPHY
+    - component: AlifSemiconductor::BSP:External peripherals:ILI9806E LCD panel
+    - component: AlifSemiconductor::BSP:External peripherals:GT911 Touch Controller
+    - component: AlifSemiconductor::CMSIS Driver:I2C
+    - component: AlifSemiconductor::Device:SOC Peripherals:ADC
+    - component: AlifSemiconductor::Device:SOC Peripherals:PDM
+    - component: AlifSemiconductor::Device:SOC Peripherals:I3C
+    # Only one IMU driver can be linked; for the ICM-42670P use
+    # 'BSP:External peripherals:ICM42670P Accelerometer' and HW_TEST_IMU_ICM: 1
+    - component: AlifSemiconductor::BSP:External peripherals:BMI323
+
+  define:
+    - C10_USING_CUSTOM_GENERATED_MACROS
+    - ETHOSU
+    - ETHOSU85
+    - BUFFER_SIZE_UP: 4096
+    - HW_TEST_IMU_ICM: 0
+
+  add-path:
+    - .
+    - ../npu_display
+    - ../mnist_executorch
+    - ../libs/SEGGER_RTT_V796h/RTT
+    - ../third_party/executorch/et_bundle/include
+    - ../third_party/executorch/et_bundle/include/executorch/runtime/core/portable_type/c10
+
+  misc:
+    - for-compiler: GCC
+      C-CPP:
+        - -DETHOSU_ARCH=u85
+        - -DETHOSU_MACS=256
+        - -DETHOSU_MODEL=1
+      CPP:
+        - -std=c++17
+        - -fno-rtti
+        - -fno-exceptions
+      Link:
+        - -L$SolutionDir()$/third_party/executorch/et_bundle/lib
+        - -Wl,--whole-archive
+        - -lexecutorch
+        - -lexecutorch_core
+        - -lexecutorch_delegate_ethos_u
+        - -lcortex_m_ops_lib
+        - -Wl,--no-whole-archive
+        - -Wl,--start-group
+        - -lextension_runner_util
+        - -lcortex_m_kernels
+        - -lportable_ops_lib
+        - -lportable_kernels
+        - -lquantized_ops_lib
+        - -lquantized_kernels
+        - -lkernels_util_all_deps
+        - -lcmsis-nn
+        - -lflatccrt
+        - -Wl,--end-group

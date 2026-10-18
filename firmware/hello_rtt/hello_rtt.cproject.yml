@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/tools/projmgr/2.6.0/tools/projmgr/schemas/cproject.schema.json
+project:
+  groups:
+    - group: App
+      files:
+        - file: main.c
+    - group: FaultHandler
+      files:
+        - file: ../libs/common_app_utils/fault_handler/fault_handler.c
+    - group: RTT
+      files:
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT.c
+        - file: ../libs/SEGGER_RTT_V796h/Syscalls/SEGGER_RTT_Syscalls_GCC.c
+          for-compiler: GCC
+        - file: ../libs/SEGGER_RTT_V796h/Syscalls/SEGGER_RTT_Syscalls_KEIL.c
+          for-compiler: AC6
+        - file: ../libs/SEGGER_RTT_V796h/Syscalls/SEGGER_RTT_Syscalls_IAR.c
+          for-compiler: IAR
+
+  output:
+    base-name: $Project$
+    type:
+      - elf
+      - bin
+
+  add-path:
+    - ../libs/common_app_utils/fault_handler
+    - ../libs/SEGGER_RTT_V796h/RTT
+    - ../libs/SEGGER_RTT_V796h/Config
+
+  layers:
+    - layer: ../device/ensemble/alif-ensemble.clayer.yml
+
+  packs:
+    - pack: AlifSemiconductor::Ensemble

@@ -1,0 +1,75 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/tools/projmgr/2.6.0/tools/projmgr/schemas/cproject.schema.json
+project:
+  groups:
+    - group: App
+      files:
+        - file: main.cpp
+        - file: executorch_runner.cpp
+        - file: executorch_runner.h
+        - file: SEGGER_RTT_Conf.h
+        - file: assets/mnist_model_data.h
+
+    - group: SEGGER_RTT
+      files:
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT.c
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT_printf.c
+        - file: ../libs/SEGGER_RTT_V796h/Syscalls/SEGGER_RTT_Syscalls_GCC.c
+
+  output:
+    base-name: $Project$
+    type:
+      - elf
+      - bin
+
+  layers:
+    - layer: ../device/ensemble/alif-ensemble.clayer.yml
+
+  packs:
+    - pack: AlifSemiconductor::Ensemble
+    - pack: ARM::ethos-u-core-driver
+
+  components:
+    - component: ARM::Machine Learning:NPU Support:Ethos-U Driver&Generic U85
+
+  define:
+    - C10_USING_CUSTOM_GENERATED_MACROS
+    - ETHOSU
+    - ETHOSU85
+    - BUFFER_SIZE_UP: 4096
+
+  add-path:
+    - .
+    - assets
+    - ../libs/SEGGER_RTT_V796h/RTT
+    - ../third_party/executorch/et_bundle/include
+    - ../third_party/executorch/et_bundle/include/executorch/runtime/core/portable_type/c10
+
+  misc:
+    - for-compiler: GCC
+      C-CPP:
+        - -DETHOSU_ARCH=u85
+        - -DETHOSU_MACS=256
+        - -DETHOSU_MODEL=1
+      CPP:
+        - -std=c++17
+        - -fno-rtti
+        - -fno-exceptions
+      Link:
+        - -L$SolutionDir()$/third_party/executorch/et_bundle/lib
+        - -Wl,--whole-archive
+        - -lexecutorch
+        - -lexecutorch_core
+        - -lexecutorch_delegate_ethos_u
+        - -lcortex_m_ops_lib
+        - -Wl,--no-whole-archive
+        - -Wl,--start-group
+        - -lextension_runner_util
+        - -lcortex_m_kernels
+        - -lportable_ops_lib
+        - -lportable_kernels
+        - -lquantized_ops_lib
+        - -lquantized_kernels
+        - -lkernels_util_all_deps
+        - -lcmsis-nn
+        - -lflatccrt
+        - -Wl,--end-group
