@@ -282,8 +282,12 @@ To check the result, read variables over J-Link:
 
 ### Not on this laptop
 
-11. **Latency.** The 0.8 s decision delay misses the 0.5 s target. Testing 0.4-0.5 s needs the
-    et-venv encoder and the datasets; do it offline before changing `DECIDE_DELAY`.
+11. **Latency.** Done offline at about 10:45 AM (`model/delay_sweep.py`). Results:
+    [GATES-results.md](GATES-results.md#alert-delay-offline).
+    - Don't just shorten `DECIDE_DELAY`: at 0.45 s the built-ins lose about 9 points.
+    - Next is the firmware for a two-stage decision: an early check at 0.4 s for clear built-in matches
+      (threshold + 0.05), otherwise 0.8 s as today. Offline that alerts 55% of built-in sounds at
+      about 0.45 s.
 
 ## Wrap-up (board session, by about 3:45 PM)
 

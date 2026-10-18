@@ -124,7 +124,7 @@ examples (they work well live; the offline test uses unseen clips from strangers
 | Item | Status | Notes |
 |---|---|---|
 | Submission: README, Devpost write-up, demo video | README done; the rest in a separate session | Brief: [HANDOFF-submission.md](HANDOFF-submission.md) |
-| Alert delay | Open | About 0.85 s against a 0.5 s target. Trying 0.4–0.5 s needs the torch environment and datasets (not on the board laptop) |
+| Alert delay | Offline test done; firmware not changed | About 0.85 s against a 0.5 s target. Offline: a plain 0.45 s delay costs about 9 points on built-ins. A two-stage decision (early at 0.4 s when the match is clear, otherwise 0.8 s) alerts 55% of built-in sounds at about 0.45 s with no loss in recognition and +1.5 points of false alerts. See [GATES-results.md](GATES-results.md#alert-delay-offline) |
 | Built-in accuracy | Open | Needs sound in the room |
 | IMU timestamp bug | Fixed | Backward jumps under stalls 69 ms -> 0; sensor clock measured at +0.68% |
 | 8 examples + T2 checks | Parked until 10:30 AM | HANDOFF-next.md steps 4 and 6 |

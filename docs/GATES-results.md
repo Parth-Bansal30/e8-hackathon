@@ -16,6 +16,60 @@
 | C4 mics | GO for left/right direction (H12) | Spacing 8 cm (ruler). The Mac speaker in line with the pair gave +3.2 samples on the left and −3.6 on the right, steady to ±0.2. That makes the maximum lag 3.4 samples (73 mm) and the channel offset −0.2. Mic 4 is the left mic. Level mic5 − mic4: −4.1 dB on hand claps, 0 to +1 dB from the speaker | See [C4 details](#c4-details) |
 | C5 duty | Done; CPU active 12.6% in a quiet room (target 10%, not a gate), NPU busy 0% | Quiet room, 60 s, release: CPU awake 12.6% (outside WFI), NPU busy 0.00 to 0.05%, 0 to 0.5 encoder runs a second (live view), 0 audio blocks dropped, IMU 805 samples/s with 0 errors. Before: 100% (busy loop), NPU 10 runs/s, ~1%. Steps, each measured: WFI when no audio block waits (E2; the cycle counter keeps counting through WFI, checked at boot) -> 90%; PC sampling over J-Link found 67% in `ARM_LPGPIO_GetValue`: the joystick's low-power GPIO read costs ~130 us, 5 per pass. Polling it every 10 ms with one port read -> 21%; live view skips unchanged rows and scrolls the spectrogram instead of 16,640 fills -> 14%; IMU read every 10 ms instead of 5 (each busy-waits on I3C) -> 12.6%. NPU gate (E1): the live encoder runs only on the home screen while the level is above the noise floor + 6 dB and 300 ms after; sound decisions always run their own inference, so G3 detection can't change. Not measured: continuous speech (no test sounds in the room) | `[SS] stats` lines in `gates/c5_rtt.log` (`active`, `npu busy`, passes/sleeps per second). E3 (CMSIS-DSP FFT) not done |
 
+## Alert delay (offline)
+
+HANDOFF-next.md item 11, done on the old laptop (et-venv, float encoder as shipped). Script: `model/delay_sweep.py`. Results: `model/out/delay_sweep_seed{5,6,7}.json` with logs; the numbers below are the mean of the 3 seeds.
+
+**Method.** Each clip goes through a host port of the board's onset detector (`ss_audio.c`) and main loop (HOLDOFF, the 8 dB gate). The 1 s window the board would encode at each delay is then rerun through the G1 measurements.
+- Room: 1 s of lead-in, pink noise under the clip, and the clip's loudest 20 ms set 10 to 25 dB over it. G3 on the board saw +8 to +22 dB.
+- Teaching: taught sounds are taught and tested at the same delay, since teaching also goes through `decide()`.
+- Built-in profiles: as shipped (each clip's loudest 1 s).
+- Pool size: the built-in pool is small (56 fold-5 clips), so its numbers move by 2 to 4 points between rooms.
+- What transfers to the board: absolute numbers don't (G3 live got 54% where offline gave 85%); the differences between delays are the result.
+
+**One decision at a shorter delay** (just changing `DECIDE_DELAY`). The alert shows about 0.05 s after the delay.
+
+| Delay | Built-ins recognised | Other sounds alerting | 5-way 5-shot | Taught accepted | Untaught rejected | AUROC |
+|---|---|---|---|---|---|---|
+| 0.8 s (today) | 83.8% | 5.1% | 69.9% | 37.9% | 68.8% | 0.634 |
+| 0.6 s | 82.0% | 4.8% | 68.9% | 41.3% | 65.7% | 0.637 |
+| 0.5 s | 77.6% | 5.3% | 69.8% | 44.0% | 64.4% | 0.644 |
+| 0.45 s | 74.7% | 6.6% | 69.2% | 44.9% | 61.7% | 0.639 |
+| 0.4 s | 74.9% | 6.2% | 68.7% | 45.4% | 60.0% | 0.635 |
+| 0.3 s | 66.4% | 4.3% | 67.3% | 47.2% | 56.8% | 0.636 |
+
+- **Built-ins:** 0.5 s costs about 6 points, 0.45 s about 9.
+- **Taught sounds:** separation (AUROC) and few-shot accuracy barely move. The threshold rule trades rejection for acceptance: −7 points of untaught rejection at 0.45 s.
+- **G1 framing for reference:** loudest 1 s, no room: 75.9% few-shot, 85.3% built-ins.
+
+**Two-stage decision.** Decide at 0.4 s when the best match is a built-in clearing its threshold by a margin; otherwise wait for 0.8 s as today.
+- Recognition doesn't change: built-ins (the 56 clips) are recognised 79.5% either way.
+- Wrong at 0.4 s: 0.7% of built-in sounds, i.e. a different built-in than the 0.8 s decision would give.
+
+| Early when | Built-in sounds alerted at ~0.45 s | Mean alert delay (recognised) | Other sounds alerting | Untrained sounds alerting |
+|---|---|---|---|---|
+| Never (today) | 0% | 0.85 s | 5.1% | 4.5% |
+| Over threshold | 64.2% | 0.53 s | 8.9% | 7.0% |
+| Threshold + 0.05 (the alerts that aren't "Maybe") | 54.7% | 0.57 s | 6.6% | 5.8% |
+| Threshold + 0.10 | 43.8% | 0.63 s | 5.3% | 5.3% |
+
+0.45 s and 0.5 s as the early delay came out the same or slightly worse (`two_stage` in the JSON).
+
+**Side finding:** built-in profiles made from windows framed the way the board frames them, instead of the loudest 1 s:
+- At 0.8 s: built-ins 83.8% → 90.2%; other sounds alerting 5.1% → 6.0%; untaught rejection 68.8% → 66.6%.
+- At shorter delays they let through far more false alerts (9.6% at 0.5 s), so this only helps at 0.8 s.
+- It's an `export_ss.py` change (a new `ss_builtin_profiles.h`), but G3 on the board is what should decide it.
+
+**Recommendation:** don't shorten `DECIDE_DELAY`. A two-stage decision gets most built-in alerts to about 0.45 s at no cost in recognition:
+- Early check at 0.4 s, margin 0.05: 55% of built-in sounds alert early; false alerts +1.5 points.
+- Margin 0.10 instead: 44% early, and false alerts no higher than today.
+
+Firmware work, not done:
+- In `main.cpp`, the pending onset gets a second check at 0.4 s: one extra 1 ms inference, built-in profiles only. Teaching, `[CAL]` and taught sounds stay at 0.8 s; the early stage wasn't measured for taught sounds.
+- `snr_of()` reads onset − 0.2 s to onset + 0.8 s, which doesn't exist yet at 0.4 s. The early stage has to measure over its own window.
+- ITCM is 97% full, so watch the size.
+- Then check it on the board: the C3 latency line and a G3 built-in run.
+
 ## C4 details
 
 **Recordings:** [c4_take1.wav](gates/audio/c4_take1.wav) has 16 claps at 1 m: 5 at position A, 6 at the middle position (a short end, about 1 m from the left mic), 5 at position B, plus the start and stop joystick clicks. [c4_take2.wav](gates/audio/c4_take2.wav) has 5 key jingles. Both came out of the PSRAM over J-Link at 64 KB/s. Analysis: `tools/mic_geometry.py`, written to [c4_mic_geometry.json](gates/c4_mic_geometry.json).
