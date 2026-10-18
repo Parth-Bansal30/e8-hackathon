@@ -8,6 +8,11 @@ left is checks and media at the board, and the write-up away from it.
 - **Desk laptop:** no board. It has the toolchain, `.venv` (numpy, scipy, Pillow) and `cc` for
   `tools/ui_sim`.
 
+**Desk status, 1:30 PM:** VIDEO-SCRIPT is at 8 examples (`d131110`), so recording can start.
+SUBMISSION, the gallery, the README and the captions (`docs/demo/captions_*.srt`) are pushed. The desk
+laptop is watching `gates` for the board's hand checks and photos, and opens the PR into `main` at
+about 3:30.
+
 Deadlines: Devpost closes **5:00 PM PDT**; team target **4:30 PM**; everything ready by **3:45 PM**.
 
 ## Rules for both

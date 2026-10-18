@@ -90,7 +90,7 @@ of this commit; the firmware sources haven't changed since `ed20a3e`.
 **Image gallery and thumbnail:** see [demo/GALLERY.md](demo/GALLERY.md). Thumbnail:
 `docs/demo/gallery/01_cover.png`.
 
-**Team:** `<names and Devpost usernames, 2 to 5 people>`.
+**Team:** HashMap. Add every member in the form's step 1 (invite by email or the secret link); teams are 2 to 5 people.
 
 ## 2. About the project (paste into "About the project")
 
@@ -347,6 +347,6 @@ started from Arm's alif-ethos-u85-npu-mnist learning path.
       line of "Known limits".
 - [ ] Record the video, upload it to YouTube or Vimeo, and paste the link.
 - [ ] Upload the gallery images (thumbnail first).
-- [ ] Add the team members.
+- [ ] Add the team members (team HashMap) in step 1 of the form.
 - [ ] Check the preview: the code block and the bold text render.
 - [ ] Submit before 4:30 PM (the page's hard deadline is 5:00 PM PDT).
