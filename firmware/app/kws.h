@@ -30,6 +30,12 @@ void kws_make_input(int8_t *out, float in_scale, int in_zp);
 /* Feature self-test: run the C pipeline on a 1 s clip and quantize it like kws_make_input. */
 void kws_features_of_clip(const int16_t *clip, int8_t *out, float in_scale, int in_zp);
 
+/* Optional raw-audio tap. kws_audio_poll() calls it for every captured block before computing that
+ * block's features: 'stereo' holds n time steps of interleaved samples (mic 4, mic 5), and
+ * done_cycles is the DWT cycle count when the block completed. The default does nothing; an app
+ * that needs raw audio (recorder, onset timing) defines its own. */
+void kws_block_hook(const int16_t *stereo, int n, uint32_t done_cycles);
+
 #ifdef __cplusplus
 }
 #endif

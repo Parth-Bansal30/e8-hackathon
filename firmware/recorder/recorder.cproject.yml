@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/tools/projmgr/2.6.0/tools/projmgr/schemas/cproject.schema.json
+# Sound Sense recorder: both PDM mics into the 64 MB OSPI0 PSRAM (docs/HANDOFF-gates.md C4).
+# Audio front end from ../app/kws.c, board and drawing from ../soundsense, PSRAM driver from
+# ../psram_test/vendor (pack 2.2.1; replaces the pack's OSPI component, so don't add that here).
+project:
+  groups:
+    - group: App
+      files:
+        - file: main.c
+        - file: ../app/kws.c
+        - file: ../soundsense/ss_board.c
+        - file: ../soundsense/ss_gfx.c
+    - group: Vendor
+      files:
+        - file: ../psram_test/vendor/ospi.c
+        - file: ../psram_test/vendor/ospi_psram_xip.c
+        - file: ../psram_test/vendor/APS512XXN_PSRAM.c
+    - group: SEGGER_RTT
+      files:
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT.c
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT_printf.c
+        - file: ../libs/SEGGER_RTT_V796h/Syscalls/SEGGER_RTT_Syscalls_GCC.c
+
+  output:
+    base-name: $Project$
+    type:
+      - elf
+      - bin
+
+  layers:
+    - layer: ../device/ensemble/alif-ensemble.clayer.yml
+
+  packs:
+    - pack: AlifSemiconductor::Ensemble
+
+  components:
+    - component: AlifSemiconductor::Device:SOC Peripherals:CDC
+    - component: AlifSemiconductor::Device:SOC Peripherals:MIPI DSI
+    - component: AlifSemiconductor::Device:SOC Peripherals:MIPI DSI CSI2 DPHY
+    - component: AlifSemiconductor::BSP:External peripherals:ILI9806E LCD panel
+    - component: AlifSemiconductor::Device:SOC Peripherals:PDM
+
+  define:
+    - BUFFER_SIZE_UP: 4096
+    # pack 2.2.1 PSRAM settings, as in ../psram_test
+    - RTE_APS512XXN_PSRAM_WAIT_CYCLES: 4
+    - RTE_APS512XXN_PSRAM_DUAL_OCTAL_MODE_ENABLE: 0
+    - RTE_APS512XXN_PSRAM_OSPI_SS_LINE: 0
+    - SOC_FEAT_AES_HAS_ADDR_CTRL_SHIM: 1
+    - RTE_OSPI0_BUS_SPEED: 100000000
+    - RTE_OSPI0_DFS: 32
+    - RTE_OSPI0_WAIT_CYCLES: 6
+    - RTE_OSPI1_BUS_SPEED: 100000000
+    - RTE_OSPI1_DFS: 32
+    - RTE_OSPI1_WAIT_CYCLES: 3
+
+  add-path:
+    - .
+    - ../app
+    - ../soundsense
+    - ../npu_display
+    - ../psram_test/vendor
+    - ../libs/SEGGER_RTT_V796h/RTT
+    - ../libs/SEGGER_RTT_V796h/Config
