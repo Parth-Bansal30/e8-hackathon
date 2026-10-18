@@ -163,7 +163,7 @@ Prerequisites (macOS shown; Linux works too):
 
 - Alif DK-E8 on the **PRG USB** port
 - [CMSIS-Toolbox 2.15 + Arm GNU 13.3.1](https://github.com/alifsemi/alif_vscode-template)
-- [Alif SETOOLS 1.112](https://alifsemi.com/support/kits/ensemble-e8devkit/), serial port set in `isp_config_data.cfg` (A0 boards: see the [bring-up notes](docs/bringup-notes.md))
+- [Alif SETOOLS 1.112](https://alifsemi.com/support/kits/ensemble-e8devkit/), serial port set in `isp_config_data.cfg` in the SETOOLS folder (A0 boards: see the [bring-up notes](docs/bringup-notes.md))
 - SEGGER J-Link (the on-board J-Link OB) for logs and host control
 
 ```bash
