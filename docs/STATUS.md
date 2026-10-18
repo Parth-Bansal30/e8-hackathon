@@ -9,7 +9,7 @@ behind every "Done" are in [GATES-results.md](GATES-results.md).
 | Priority | Total | Done | Partial | Not started |
 |---|---|---|---|---|
 | **P0** (must-have product) | 16 | **15** | 1 (T2) | 0 |
-| **P1** (makes it good) | 16 | 4 | 4 | 8 |
+| **P1** (makes it good) | 16 | 5 | 4 | 7 |
 | **P2** (nice to have) | 20 | 0 | 4 | 16 |
 | **P3** (stretch) | 7 | 0 | 0 | 7 |
 
@@ -27,7 +27,7 @@ examples (they work well live; the offline test uses unseen clips from strangers
 | G3 live | SOFT, stopped early: built-ins 54% from the laptop speaker | Taught, rejection and false-alarm runs; re-measuring the built-ins on the board. All need sound in the room |
 | C1 NPU | GO: all 14 ops on the NPU, 1.0 ms, matches the host | — |
 | C2 flash | GO: 1,101 saves, 0 audio dropped, restore 2.2 ms | — |
-| C3 alerts/screen | Row 1 (LEDs) passes | Alert delay, strobe rate, spectrogram fps, backlight |
+| C3 alerts/screen | Rows 1-4 pass: alert on screen 19 ms after the decision, strobe + stress 0 dropped, live view 10 fps | Backlight dimming (on/off works) |
 | C4 mics | GO for left/right direction | — |
 | C5 power | Done: CPU active 12.6% in a quiet room (target 10%), NPU idle | Measure during continuous speech (needs sound) |
 
@@ -65,7 +65,7 @@ examples (they work well live; the offline test uses unseen clips from strangers
 | A2 | LED pattern per sound | P0 | Done | Confirmed by eye |
 | A3 | Three urgency levels | P0 | Done | Urgent strobe at 1 flash per second (photosensitivity-safe) |
 | A4 | Acknowledge | P0 | Done | Joystick only; touch isn't wired up |
-| A5 | Urgent alerts repeat and escalate | P1 | Not started | Alerts time out after 15 s |
+| A5 | Urgent alerts repeat and escalate | P1 | Done | Urgent alerts stay until a press; after 30 s the strobe doubles to 2 flashes/s (under 3 Hz) and "No response for N" shows |
 | A6 | Night mode | P1 | Not started | Backlight control untested (C3 row 5) |
 | A7 | "Maybe: doorbell?" | P1 | Done | |
 | A8 | Snooze a sound | P2 | Not started | |

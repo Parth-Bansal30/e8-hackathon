@@ -517,6 +517,15 @@ void ui_alert_draw(const ui_event *e, uint32_t now_ms, int phase)
         else snprintf(line, sizeof line, "%u times", (unsigned)e->count);
         gfx_text_center(L, GFX_W / 2, y, line, ink, 28);
     }
+    if (e->unanswered_ms) {   /* A5: escalated, so the reason and the way out are bigger */
+        char d[16];
+        fmt_dur(d, sizeof d, e->unanswered_ms);
+        snprintf(line, sizeof line, "No response for %s", d);
+        gfx_round_rect(24, GFX_H - 150, GFX_W - 48, 120, 24, ink);
+        gfx_text_center(B, GFX_W / 2, GFX_H - 136, line, bg, gfx_fit_px(B, line, GFX_W - 80, 40));
+        gfx_text_center(B, GFX_W / 2, GFX_H - 84, "Press to dismiss", bg, 32);
+        return;
+    }
     gfx_text_center(L, GFX_W / 2, GFX_H - 70,
                     e->maybe ? "Tap: right / wrong" : "Tap anywhere to dismiss", mix(bg, ink, 0.7f), 24);
 }

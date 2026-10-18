@@ -55,7 +55,8 @@
 #define KEY_QUIET_MS   800                    /* ignore sounds right after a joystick press (its click and shake) */
 #define MERGE_MS       30000                  /* same sound again within this: one entry, count + 1 */
 #define BANNER_MS      6000
-#define ALERT_MS       15000
+#define ALERT_MS       15000                  /* important alerts close after this; urgent ones wait for a press */
+#define ESCALATE_MS    30000                  /* urgent alert with no press: strobe twice as fast, bigger text (A5) */
 #define MAX_EVENTS     32
 #define MAX_TAUGHT     8
 #define SHOTS          5
@@ -395,9 +396,15 @@ static bool redraw = true;
 static ui_home home;
 static ui_guess top3[3];
 static ui_event alert_ev, banner_ev;
-static uint32_t alert_t0, banner_t0;
+static uint32_t alert_t0, alert_last, banner_t0;
 static bool banner_on;
 static int alert_phase, tl_first;
+
+/* C3: time from a decision to the alert on screen, and what drawing costs (draw = into the back buffer,
+ * present = copy of the changed rows to the scanned frame buffer) */
+static uint32_t c3_alert_cyc;                                  /* decision of an alert not yet on screen */
+static uint32_t draw_max_us, present_max_us, n_live, live_max_us;   /* this stats window */
+static uint32_t al_draws, al_draw_max_us, al_present_max_us, al_drop0;   /* this alert */
 
 enum tphase { T_NAMING, T_REC, T_TEST };
 static struct {
@@ -431,9 +438,18 @@ static void teach_save(void)
     redraw = true;
 }
 
+SS_COLD static void alert_end_log(void)
+{
+    printf("[C3] alert '%s' ended after %lu ms: %lu full redraws, longest draw %lu us + present %lu us, "
+           "%lu audio blocks dropped\r\n", alert_ev.label, (unsigned long)(ss_ms() - alert_t0),
+           (unsigned long)al_draws, (unsigned long)al_draw_max_us, (unsigned long)al_present_max_us,
+           (unsigned long)(kws_audio_dropped() - al_drop0));
+}
+
 static void go_home(void)
 {
     if (scr == ALERT) {
+        alert_end_log();
         for (int i = 0; i < n_events; i++)
             if (events[i].label == alert_ev.label) events[i].acked = true;
     }
@@ -549,13 +565,27 @@ static void alert_raise(ui_event *e)
         banner_ev = *e;
         banner_on = true;
         banner_t0 = ss_ms();
-        if (scr == HOME) redraw = true;
+        if (scr == HOME) {
+            redraw = true;
+            c3_alert_cyc = ss_cycles();
+        }
         return;
     }
     if (scr == TEACH) return;
+    /* the same sound again while its alert is up: refresh it, but keep its escalation clock */
+    const bool same = scr == ALERT && alert_ev.label == e->label;
+    if (scr == ALERT && !same) alert_end_log();
+    const uint32_t unanswered = same ? alert_ev.unanswered_ms : 0;
     alert_ev = *e;
-    alert_t0 = ss_ms();
-    alert_phase = 0;
+    alert_ev.unanswered_ms = unanswered;
+    alert_last = ss_ms();
+    c3_alert_cyc = ss_cycles();
+    if (!same) {
+        alert_t0 = alert_last;
+        alert_phase = 0;
+        al_draws = al_draw_max_us = al_present_max_us = 0;
+        al_drop0 = kws_audio_dropped();
+    }
     scr = ALERT;
     redraw = true;
 }
@@ -659,12 +689,34 @@ static void decide(uint32_t onset, uint32_t onset_ms)
 /* ---------- host commands and joystick ---------- */
 
 static uint32_t host_keys;
+static uint32_t stress_until;   /* host command 14: full redraws 10 times a second until then (C3 row 3) */
+
+/* Host command 13: act as if profile (a & 0xff) had just been recognised, with no sound played, to test
+ * alerts silently. Bit 8: "maybe"; bit 9: felt through the table; bit 10: heard only. */
+SS_COLD static void inject(uint32_t a)
+{
+    const int p = (int)(a & 0xffu);
+    if (p >= n_prof || (!prof[p].alerting && p != knock_prof)) {
+        printf("[SS] command 13: profile %d doesn't alert\r\n", p);
+        return;
+    }
+    const ui_felt f = a & 0x200u ? UI_FELT_YES : a & 0x400u ? UI_FELT_HEARD_ONLY : UI_FELT_NA;
+    const uint32_t now = ss_ms();
+    bool merged;
+    ui_event *ev = add_event(prof[p].lk, (a & 0x100u) != 0, f, prof[p].thr + 0.1f, now, &merged);
+    if (p == knock_prof && f == UI_FELT_HEARD_ONLY) ev->urgency = UI_INFO;
+    printf("[SS] t=%lu injected '%s'%s (host command 13, no sound)\r\n", (unsigned long)now, prof[p].lk->label,
+           a & 0x100u ? " maybe" : "");
+    alert_raise(ev);
+    if (scr == HOME) redraw = true;
+}
 
 /* 1 teach preset ss_arg (straight to recording), 2 save the taught sound, 3 home / cancel,
  * 4 forget taught sounds, 5 stats, 6 timeline, 7 clock (ss_arg = ms after midnight now),
  * 8 press joystick keys (ss_arg = SS_JOY_* bits), 9 re-measure built-in ss_arg from the next sounds,
  * 10 finish re-measuring, 11 save to flash ss_arg times back to back (C2 row 1), 12 fill every taught
- * slot with a stand-in (C2 bench, full-size record). */
+ * slot with a stand-in (C2 bench, full-size record), 13 fake a recognised sound (see inject()),
+ * 14 redraw the whole screen 10 times a second for ss_arg seconds (C3 row 3). */
 static void host_command(void)
 {
     const uint32_t c = ss_cmd, a = ss_arg;
@@ -684,6 +736,8 @@ static void host_command(void)
     case 10: cal_finish(); break;
     case 11: store_repeat = a ? a : 1; store_save(); break;
     case 12: store_fill_test(); break;
+    case 13: inject(a); break;
+    case 14: stress_until = ss_ms() + 1000u * (a ? a : 10); break;
     }
 }
 
@@ -863,8 +917,29 @@ static void draw(uint32_t now, bool live_only)
         break;
     }
     }
+    const uint32_t t1 = ss_cycles();
     present_dirty();
-    work_cyc += ss_cycles() - t0;
+    const uint32_t t2 = ss_cycles();
+    work_cyc += t2 - t0;
+    const uint32_t d_us = ss_cyc_to_us(t1 - t0), p_us = ss_cyc_to_us(t2 - t1);
+    if (live_only) {
+        n_live++;
+        if (d_us + p_us > live_max_us) live_max_us = d_us + p_us;
+        return;
+    }
+    if (d_us > draw_max_us) draw_max_us = d_us;
+    if (p_us > present_max_us) present_max_us = p_us;
+    if (scr == ALERT) {
+        al_draws++;
+        if (d_us > al_draw_max_us) al_draw_max_us = d_us;
+        if (p_us > al_present_max_us) al_present_max_us = p_us;
+    }
+    if (c3_alert_cyc && (scr == ALERT || (scr == HOME && banner_on))) {
+        printf("[C3] %s on screen %lu us after the decision (draw %lu us, present %lu us)\r\n",
+               scr == ALERT ? "alert" : "banner", (unsigned long)ss_cyc_to_us(t2 - c3_alert_cyc),
+               (unsigned long)d_us, (unsigned long)p_us);
+        c3_alert_cyc = 0;
+    }
 }
 
 static void set_leds(uint32_t now)
@@ -951,7 +1026,7 @@ int main(void)
     uint32_t pend_sample = 0, pend_ms = 0, last_onset = 0;
     bool any_onset = false;
     uint32_t last_imu = 0, last_live_draw = 0, last_slow = 0, last_log = 0, last_key = 0;
-    uint32_t win_ms0 = ss_ms(), last_loud = 0, last_joy = 0;
+    uint32_t win_ms0 = ss_ms(), last_loud = 0, last_joy = 0, last_stress = 0;
     bool any_loud = false;
 
     for (;;) {
@@ -1053,17 +1128,36 @@ int main(void)
             if (scr == HOME) redraw = true;
         }
         if (scr == ALERT) {
-            if (now - alert_t0 > ALERT_MS) {
+            const bool urgent = alert_ev.urgency == UI_URGENT && !alert_ev.maybe;
+            const uint32_t up = now - alert_t0;
+            if (!urgent && now - alert_last > ALERT_MS) {
+                alert_end_log();
                 scr = HOME;
                 redraw = true;
-            } else if (alert_ev.urgency == UI_URGENT && (int)((now - alert_t0) / 500 % 2) != alert_phase) {
-                alert_phase ^= 1;
-                redraw = true;
+            } else if (urgent) {
+                /* A5: an urgent alert stays until someone presses; after 30 s the strobe goes from one flash a
+                 * second to two (still under 3 Hz, the photosensitivity limit) and the screen says how long */
+                if (up >= ESCALATE_MS && !alert_ev.unanswered_ms)
+                    printf("[SS] urgent '%s' unanswered for %lu s: escalating\r\n", alert_ev.label,
+                           (unsigned long)(up / 1000));
+                if (up >= ESCALATE_MS && up / 1000 != alert_ev.unanswered_ms / 1000) {
+                    alert_ev.unanswered_ms = up;
+                    redraw = true;
+                }
+                const uint32_t half = alert_ev.unanswered_ms ? 250 : 500;
+                if ((int)(up / half % 2) != alert_phase) {
+                    alert_phase ^= 1;
+                    redraw = true;
+                }
             }
         }
         if (now - last_slow >= 250) {
             last_slow = now;
             if (scr == TEACH || (scr == STATS && now % 1000 < 250)) redraw = true;
+        }
+        if ((int32_t)(stress_until - now) > 0 && now - last_stress >= 100) {
+            last_stress = now;
+            redraw = true;
         }
         if (redraw) {
             redraw = false;
@@ -1082,6 +1176,11 @@ int main(void)
             infer_rate = (n_infer - win_infer0) * 1000.0f / (float)(now - win_ms0);
             const uint32_t passes_s = n_iter * 1000u / (now - win_ms0), sleeps_s = n_wfi * 1000u / (now - win_ms0);
             const uint32_t sleep_us = n_wfi ? ss_cyc_to_us(sleep_cyc / n_wfi) : 0;
+            const uint32_t live_fps10 = n_live * 10000u / (now - win_ms0);
+            printf("[SS] draw: full max %lu us + present %lu us; live view %lu.%lu fps, max %lu us\r\n",
+                   (unsigned long)draw_max_us, (unsigned long)present_max_us, (unsigned long)(live_fps10 / 10),
+                   (unsigned long)(live_fps10 % 10), (unsigned long)live_max_us);
+            draw_max_us = present_max_us = n_live = live_max_us = 0;
             work_cyc = sleep_cyc = n_wfi = n_iter = 0;
             win_npu0 = npu_sum_us;
             win_infer0 = n_infer;

@@ -53,6 +53,7 @@ typedef struct {
     uint32_t t_ms;         /* first occurrence, ms since boot */
     uint32_t dur_ms;       /* how long it went on; 0 for a short sound */
     bool acked;
+    uint32_t unanswered_ms;  /* urgent alert on screen this long with no press (A5); 0 until it escalates */
 } ui_event;
 
 typedef struct {

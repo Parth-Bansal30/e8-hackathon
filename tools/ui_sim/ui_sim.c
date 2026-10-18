@@ -269,6 +269,11 @@ int main(void)
     home.top[1] = home.top[2] = (ui_guess){NULL, 0, false};
     ui_home_draw(&home, NOW);
     save("16_home_npu_resting");
+    smoke.unanswered_ms = 75000;                  /* A5: urgent, nobody pressed for 75 s */
+    ui_alert_draw(&smoke, NOW, 0);
+    save("17_alert_escalated_a");
+    ui_alert_draw(&smoke, NOW, 1);
+    save("18_alert_escalated_b");
     home.top[0] = (ui_guess){"Doorbell", 94, true};
     home.top[1] = (ui_guess){"Phone ringing", 31, false};
     home.top[2] = (ui_guess){"Microwave", 12, false};
