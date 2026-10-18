@@ -397,3 +397,7 @@ Agreed with the owner at about 10 AM; also in SUBMISSION.md.
   - The desk laptop opens the docs PR `gates` → `main`.
   - The cables, the board and this laptop go together; the RTT logger can be stopped before
     unplugging.
+
+**2:10 PM update:** the board holds 5 taught sounds: Doorbell 0.85, Keys 0.50 (1 mark), Microwave 0.835,
+Clap 0.50 (taught by hand) and Phone 0.85. Phone was taught from the laptop: `tools/demo_sound.py chime3`
+alerts as Phone (0.94, 0.95), but a clipped play missed. See `gates/teach_phone.txt`.

@@ -1,0 +1,29 @@
+Phone taught from the laptop chime (tools/demo_sound.py chime3), 2026-10-18 about 2:10 PM PDT, Mac volume 100
+(as found), with the owner's OK. Teach screen opened over J-Link (cmd 1 5), saved with cmd 2.
+
+- Teach: 8 of 8 shots at +18.8 to +20.4 dB, none clipped. thr 0.850, leave-one-out 0.93-0.97.
+  Test 0.972. No "Sounds like" warning. Flash save 183 ms, 0 dropped (seq 1259).
+- On Home afterwards: 0.83 on a clipped play (no alert), then 0.94 and 0.95 -> Phone alert (2 of 3).
+  The runner-up was Doorbell 0.57-0.71 or Microwave 0.61.
+- Store now: 5 taught sounds.
+  - Doorbell 0.85, Keys 0.50 (1 mark), Microwave 0.835, Clap 0.50, Phone 0.85.
+  - Clap was taught at the board by hand at about 2:05 PM.
+- Demo: `tools/demo_sound.py chime3` -> Phone.
+
+Board log:
+[TEACH] 'Phone': make the sound 8 times
+[TEACH] shot 1/8: +19.5 dB
+[TEACH] shot 2/8: +19.7 dB
+[TEACH] shot 3/8: +18.8 dB
+[TEACH] shot 4/8: +20.4 dB
+[TEACH] shot 5/8: +19.0 dB
+[TEACH] shot 6/8: +19.6 dB
+[TEACH] shot 7/8: +19.4 dB
+[TEACH] shot 8/8: +19.1 dB
+[TEACH] profile: thr 0.850, leave-one-out 0.97 0.95 0.97 0.93 0.97 0.97 0.94 0.97; make it once more to test, press to save
+[TEACH] test: match 0.972 (thr 0.850) accepted
+[TEACH] saved 'Phone' thr 0.850; 5 taught
+[STORE] save 2 ok: copy A seq 1259, 4056 bytes, 183 ms (max 183), longest step 116508 us, dropped 0
+[SS] t=206816 +22.1 dB clipped best 'Phone' 0.83 (thr 0.85), 2nd 'Doorbell' 0.57, felt no (0.0 mg) -> unknown
+[SS] t=224134 +18.5 dB best 'Phone' 0.94 (thr 0.85), 2nd 'Doorbell' 0.71, felt no (0.0 mg) -> Phone
+[SS] t=232344 +19.2 dB best 'Phone' 0.95 (thr 0.85), 2nd 'Microwave' 0.61, felt no (0.0 mg) -> Phone
