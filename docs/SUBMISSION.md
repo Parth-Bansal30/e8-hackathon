@@ -338,7 +338,7 @@ started from Arm's alif-ethos-u85-npu-mnist learning path.
 - [x] Sign in to Devpost and read the form (10:20 AM; no hackathon-specific questions).
 - [x] Decide `main` and the judged version (tag `v1.0-judged` at the end, then merge again).
 - [x] Tag `v1.0-judged` = `32177ea` (12:45 PM), merge `gates` into `main` (PRs #2 and #3), and
-      replace `<hash>` in section 1 and at the top of "About the project" (1:40 PM).
+      replace `<hash>` in section 1 and at the top of "About the project" (1:19 PM).
 - [x] Re-check against `gates`: the draft now covers the final firmware (8 examples, teach checks,
       437 ms alerts, Sounds page, Calibrate room, snooze, "still sounding", talking nearby).
 - [ ] **Paste section 2 into the Devpost draft again:** the 10:30 AM paste is out of date (5

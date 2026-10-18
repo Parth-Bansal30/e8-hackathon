@@ -3,7 +3,7 @@
 Upload in this order; the first is the thumbnail. All are 1500x1000 (3:2, the ratio Devpost
 recommends) PNGs under 400 KB. Rebuild them with `python3 docs/demo/gallery/make_gallery.py [DejaVu font folder]` after
 `make -C tools/ui_sim` (and copying its `out/` renders to `screens/`) if the screens change.
-Rebuilt at 1:50 PM for the judged firmware (8 examples, 437 ms alerts, Sounds page, snooze).
+Rebuilt at 1:21 PM for the judged firmware (8 examples, 437 ms alerts, Sounds page, snooze).
 
 The phone screens in these images are **UI simulator renders** (`tools/ui_sim`, the firmware's own
 UI code drawn on a laptop), so the values on them are samples. Every number printed *outside* the

@@ -12,7 +12,7 @@ that fits.
 **Every number in the voice-over** comes from [GATES-results.md](GATES-results.md) or the README.
 The Stats page shows live values, which can differ a little from the voice-over; that's expected.
 
-**Matches the judged firmware** (`v1.0-judged` = `32177ea`, updated 1:30 PM): 8 examples per
+**Matches the judged firmware** (`v1.0-judged` = `32177ea`, updated 1:17 PM): 8 examples per
 taught sound, the teach checks ("loud room", "unlike the others", "Sounds like …"), the two-stage
 alert decision, and the settings and snooze added since 10 AM.
 
