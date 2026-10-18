@@ -8,15 +8,21 @@ left is checks and media at the board, and the write-up away from it.
 - **Desk laptop:** no board. It has the toolchain, `.venv` (numpy, scipy, Pillow) and `cc` for
   `tools/ui_sim`.
 
-**Desk status, 1:32 PM:**
-- Done:
-  - VIDEO-SCRIPT is at 8 examples, so recording can start.
-  - SUBMISSION, the gallery, the README and the captions are pushed.
-  - The board's hand checks (`dea8b33`) are folded into SUBMISSION and README.
-- New: video title and end cards and lower-third overlays in `docs/demo/video/`.
-- [PR #4](https://github.com/Parth-Bansal30/e8-hackathon/pull/4) `gates` → `main` is open. Board
-  commits pushed before it's merged go into it automatically.
-- The desk laptop is watching `gates` for the board photos (`docs/demo/board/`) and the rehearsal notes.
+**Status, 1:52 PM: both laptop lists are done.**
+- Board: the hand checks pass, photos, video and rehearsal are done, and the board is packed
+  (`18dde80`).
+- Desk:
+  - SUBMISSION, README, gallery (9 images, with the board photos), captions and video cards are all
+    on `gates`.
+  - [PR #4](https://github.com/Parth-Bansal30/e8-hackathon/pull/4) is open.
+- Left for the owner, in order (also in SUBMISSION.md section 3):
+  1. Decide on Keys (loose, 0.50).
+  2. Merge PR #4.
+  3. Re-paste the pitch and section 2.
+  4. Upload the gallery.
+  5. Add the team.
+  6. Add the video link.
+  7. Check the preview, then submit by 4:30.
 
 Deadlines: Devpost closes **5:00 PM PDT**; team target **4:30 PM**; everything ready by **3:45 PM**.
 

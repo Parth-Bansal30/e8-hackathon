@@ -352,8 +352,14 @@ started from Arm's alif-ethos-u85-npu-mnist learning path.
 - [ ] **Paste section 2 into the Devpost draft again:** the 10:30 AM paste is out of date (5
       examples, 0.85 s alerts, old feature counts). Same for the elevator pitch.
 - [x] Hand checks (knob, night-mode backlight) passed at 1:25 PM; "Known limits" updated.
-- [ ] Record the video, upload it to YouTube or Vimeo, and paste the link.
-- [ ] Upload the gallery images (thumbnail first).
+- [x] Board photos (1:32 PM), video footage (1:33-1:45 PM) and demo rehearsal (1:50 PM) done at the board.
+- [ ] **Before judging, decide on Keys** (taught loose on camera, threshold 0.50): in the rehearsal it was
+      the best match for several knocks, and one reached 0.52, blocked only by the accidental wrong mark.
+      Settings > Forget Keys (two presses) leaves Doorbell (0.85) and Microwave (0.835).
+- [ ] Edit the video (captions: `demo/captions_*.srt`; cards and overlays: `demo/video/`), upload it to
+      YouTube or Vimeo, and paste the link in section 1 and the form.
+- [ ] Upload the 9 gallery images in the [demo/GALLERY.md](demo/GALLERY.md) order (cover first), with
+      their captions.
 - [ ] Add the team members (team HashMap) in step 1 of the form.
 - [ ] Check the preview: the code block and the bold text render.
 - [ ] Submit before 4:30 PM (the page's hard deadline is 5:00 PM PDT).
