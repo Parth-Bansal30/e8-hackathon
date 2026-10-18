@@ -75,6 +75,7 @@ typedef struct {
 typedef struct {
     bool listening;        /* false = mic muted */
     const char *mode;      /* "Home", "Night", "Away" */
+    bool talking;          /* H8: speech heard in the last few seconds */
     float room_db;         /* level of the latest block, dBFS */
     float floor_db;        /* calibrated noise floor, dBFS */
     ui_guess top[3];       /* best matches right now */

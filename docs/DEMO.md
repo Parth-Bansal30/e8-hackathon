@@ -22,7 +22,8 @@ numbers are samples; quote the measured ones below.
   - **LEFT:** timeline.
   - **RIGHT:** stats.
   - **Press:** OK or dismiss.
-  - **On an alert or a timeline row:** LEFT marks it wrong, RIGHT marks it right.
+  - **On an alert or a timeline row:** LEFT marks it wrong, RIGHT marks it right. DOWN on an alert
+    snoozes that sound for 10 min.
   - **While teaching:** LEFT starts over, UP makes a flagged example again, press saves, RIGHT cancels.
 
   Press once and wait for the screen to change; the switches bounce. The app ignores sounds for

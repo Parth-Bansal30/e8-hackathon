@@ -10,7 +10,7 @@ behind every "Done" are in [GATES-results.md](GATES-results.md).
 |---|---|---|---|---|
 | **P0** (must-have product) | 16 | **16** | 0 | 0 |
 | **P1** (makes it good) | 16 | 14 | 1 | 1 (H4) |
-| **P2** (nice to have) | 20 | 0 | 4 | 16 |
+| **P2** (nice to have) | 20 | 2 | 3 | 15 |
 | **P3** (stretch) | 7 | 0 | 0 | 7 |
 
 The must-have product works on the board end to end: listen, recognise, teach, alert, save to
@@ -44,7 +44,7 @@ examples, 38% at 5 (they work well live; the offline test uses unseen clips from
 | H5 | Ongoing sounds ("for 6 min") | P1 | Done | Repeats within 30 s merge with a count and duration. Heard again in the last 15 s: "still sounding" on the alert, home and timeline, cleared 15 s after the last repeat. Tested on the board (`tools/ss_t7_test.py`) |
 | H6 | "What was that?" with teach-this | P1 | Done | A sound 15 dB over the room that matches nothing (and isn't speech or room noise) gets a soft banner, at most once a minute, and a timeline entry; UP opens teaching with that sound as example 1 |
 | H7 | Your name called | P1 | Partial | "My name" can be taught like any sound; not tested on speech |
-| H8 | Talking-nearby indicator | P2 | Partial | "Speech" appears in the live top 3 only |
+| H8 | Talking-nearby indicator | P2 | Done (not seen live yet) | Home: a yellow "Someone is talking nearby" over the live view while Speech is the best match over its threshold (and 3 s after). Rendered in the UI simulator; needs speech in the room to see on the board |
 | H9 | Noise meter | P2 | Partial | Live level bar only |
 | H10 | Teach from one long recording | P2 | Not started | |
 | H11 | Improve a built-in with your examples | P2 | Not started | Developer re-measure command over J-Link only |
@@ -68,7 +68,7 @@ examples, 38% at 5 (they work well live; the offline test uses unseen clips from
 | A5 | Urgent alerts repeat and escalate | P1 | Done | Urgent alerts stay until a press; after 30 s the strobe doubles to 2 flashes/s (under 3 Hz) and "No response for N" shows |
 | A6 | Night mode | P1 | Done | Menu (DOWN) → Night mode. Home screen goes dark 15 s after the last press (backlight off, live view and live encoder off: CPU active 8.4% vs 12.2%); info sounds only logged; important/urgent alerts light it; a press in the dark only wakes it. Backlight off not yet confirmed by eye |
 | A7 | "Maybe: doorbell?" | P1 | Done | |
-| A8 | Snooze a sound | P2 | Not started | |
+| A8 | Snooze a sound | P2 | Done | DOWN on an alert: that sound is logged but doesn't alert for 10 min, with a notice. Settings > Sounds shows "Snoozed" (press to end it). Tested on the board with injected alarms, 4/4 (`tools/ss_t7_test.py`) |
 | A9 | Home / Night / Away modes | P2 | Not started | The screen just says "Home mode" |
 
 **Teaching**

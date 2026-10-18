@@ -42,7 +42,9 @@ delegated to the Ethos-U85.
   **Calibrate room** (10 s, then shows the room level and how loud a sound must be), and forgetting
   one or all taught sounds.
 - **Ongoing sounds:** repeats merge into one entry with a count and how long it went on; a sound
-  heard again in the last 15 s reads "still sounding".
+  heard again in the last 15 s reads "still sounding". DOWN on an alert snoozes that sound for 10 min
+  (still logged).
+- **Someone talking nearby:** the home screen says so while speech is heard.
 - **Live view:** scrolling spectrogram, room level against its noise floor, and the three best
   matches right now.
 - **Stats page,** live from the board: NPU time per run, CPU active %, NPU busy %, save time,
@@ -174,7 +176,7 @@ those if your paths differ. Exact tool versions and a second-machine setup:
 
 **Using it:** the joystick does everything. On the home screen UP teaches a sound, LEFT shows the
 timeline, RIGHT the stats and DOWN the settings menu; press is OK or dismiss. On an alert or a
-timeline row, LEFT marks it wrong and RIGHT marks it right. While teaching, LEFT starts over, UP
+timeline row, LEFT marks it wrong and RIGHT marks it right; DOWN on an alert snoozes that sound for 10 min. While teaching, LEFT starts over, UP
 makes a flagged example again, press saves and RIGHT cancels. The demo run sheet, with laptop-played sounds for a repeatable
 demo, is [docs/DEMO.md](docs/DEMO.md).
 

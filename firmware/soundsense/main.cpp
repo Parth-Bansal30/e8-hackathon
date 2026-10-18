@@ -122,8 +122,17 @@ static float taught_proto[MAX_TAUGHT][SS_EMB];
 static int8_t taught_ex[MAX_TAUGHT][SS_STORE_MAX_EX][SS_EMB];   /* the examples, for the flash copy */
 static uint8_t taught_n_ex[MAX_TAUGHT];
 static_assert(MAX_TAUGHT <= SS_STORE_MAX_PROF && SHOTS <= SS_STORE_MAX_EX, "flash record too small");
-static int knock_prof = -1;
+static int knock_prof = -1, speech_prof = -1;
 static uint32_t builtin_mute;   /* T7: bit i = built-in i turned off in the menu (saved in the flash) */
+
+/* A8: DOWN on an alert snoozes that sound: logged in the timeline, no alert, for SNOOZE_MS */
+#define SNOOZE_MS (10u * 60u * 1000u)
+static uint32_t snooze_until[MAX_PROF];   /* ms; 0 = not snoozed */
+
+static bool snoozed(int p, uint32_t now)
+{
+    return p >= 0 && p < MAX_PROF && snooze_until[p] && (int32_t)(snooze_until[p] - now) > 0;
+}
 
 static void apply_mute(void)
 {
@@ -182,6 +191,7 @@ SS_COLD static void profiles_init(void)
             }
         prof[n_prof] = {lk, builtin_proto[i], builtin_thr[i], ss_builtin_alerting[i] != 0, -1, lk->urg};
         if (!strcmp(ss_builtin_names[i], "knock")) knock_prof = n_prof;
+        if (!strcmp(ss_builtin_names[i], "speech")) speech_prof = n_prof;
         n_prof++;
     }
 }
@@ -201,6 +211,7 @@ SS_COLD static int profile_add(int preset, const float *proto, float thr, const 
     memcpy(taught_ex[slot], ex, (size_t)n * SS_EMB);
     taught_n_ex[slot] = (uint8_t)n;
     prof[SS_NUM_BUILTIN + slot] = {&kPresets[preset], taught_proto[slot], thr, true, preset, kPresets[preset].urg};
+    snooze_until[SS_NUM_BUILTIN + slot] = 0;
     n_cx[SS_NUM_BUILTIN + slot] = 0;
     n_prof = SS_NUM_BUILTIN + n_taught;
     return slot;
@@ -458,7 +469,9 @@ static int alert_phase, tl_first;
 /* Night mode (A6): info sounds are only logged; the home screen goes dark (backlight off, no live view,
  * no live encoder) NIGHT_DARK_MS after the last press or alert; important and urgent alerts light it. */
 static bool night, dark;
-static bool still_shown;   /* H5: the newest event read "still sounding" at the last check */
+static bool still_shown;
+#define TALK_MS 3000   /* H8: "Someone is talking nearby" for this long after Speech was the best match */
+static uint32_t talk_ms;   /* H5: the newest event read "still sounding" at the last check */
 static uint32_t last_wake;
 static bool mic_off;   /* S6: microphones off from the menu: nothing is classified, shown, or kept */
 /* T5: the blue knob. Its position, 0-100% (-1: no reading), and the threshold offset it gives:
@@ -467,8 +480,10 @@ static bool mic_off;   /* S6: microphones off from the menu: nothing is classifi
 static int sens_pct = -1, sens_boot_pct = -1;
 static bool sens_live;
 static float sens_off;
-static uint32_t sens_toast_ms;   /* show the setting on the home screen until then */
+static uint32_t toast_ms;   /* show a notice on the home screen until then (the knob, a snooze) */
 static char sens_text[2][40];
+static const char *toast_t, *toast_d;   /* the notice: title, detail, bar % (-1: none) */
+static int toast_p;
 
 /* C3: time from a decision to the alert on screen, and what drawing costs (draw = into the back buffer,
  * present = copy of the changed rows to the scanned frame buffer) */
@@ -912,9 +927,16 @@ static void classify(const float *e, const float *s, float snr, int clipped, uin
     }
 
     bool merged;
-    ui_event *ev = add_event(lk, maybe, f, score, onset_ms, &merged, e, lk == prof[knock_prof].lk ? knock_prof : b);
+    const int ep = lk == prof[knock_prof].lk ? knock_prof : b;
+    ui_event *ev = add_event(lk, maybe, f, score, onset_ms, &merged, e, ep);
     /* a knock only heard (TV?) is shown as a banner, not a full-screen alert */
     if (lk == prof[knock_prof].lk && f == UI_FELT_HEARD_ONLY) ev->urgency = UI_INFO;
+    if (snoozed(ep, ss_ms())) {   /* A8 */
+        ev->acked = true;
+        printf("[SS] '%s' snoozed: logged, no alert\r\n", lk->label);
+        if (scr == HOME || scr == TIMELINE) redraw = true;
+        return;
+    }
     lat[n_lat++ % 16] = ss_ms() - onset_ms;
     alert_raise(ev);
     if (scr == HOME) redraw = true;
@@ -1037,6 +1059,7 @@ SS_COLD static void taught_forget(int k)
     }
     n_taught--;
     n_prof = SS_NUM_BUILTIN + n_taught;
+    memset(&snooze_until[SS_NUM_BUILTIN], 0, sizeof(uint32_t) * MAX_TAUGHT);
     store_save();
 }
 
@@ -1199,6 +1222,11 @@ SS_COLD static void menu_choose(void)
         break;
     case MI_BUILTIN: {
         const int b = menu.arg[i];
+        if (snoozed(b, ss_ms())) {
+            snooze_until[b] = 0;
+            printf("[SS] '%s' snooze ended\r\n", prof[b].lk->label);
+            break;
+        }
         builtin_mute ^= 1u << b;
         apply_mute();
         store_save();
@@ -1206,6 +1234,11 @@ SS_COLD static void menu_choose(void)
         break;
     }
     case MI_URGENCY: {
+        if (snoozed(SS_NUM_BUILTIN + menu.arg[i], ss_ms())) {
+            snooze_until[SS_NUM_BUILTIN + menu.arg[i]] = 0;
+            printf("[SS] '%s' snooze ended\r\n", prof[SS_NUM_BUILTIN + menu.arg[i]].lk->label);
+            break;
+        }
         profile &p = prof[SS_NUM_BUILTIN + menu.arg[i]];
         p.urg = (ui_urgency)((p.urg + 1) % 3);
         store_save();
@@ -1270,12 +1303,13 @@ SS_COLD static void menu_draw(void)
             break;
         case MI_BUILTIN:
             m.item[i] = prof[menu.arg[i]].lk->label;
-            m.value[i] = prof[menu.arg[i]].alerting ? "On" : "Off";
+            m.value[i] = snoozed(menu.arg[i], ss_ms()) ? "Snoozed" : prof[menu.arg[i]].alerting ? "On" : "Off";
             break;
         case MI_URGENCY:
             snprintf(menu.text[i], sizeof(menu.text[i]), "%s (taught)", prof[SS_NUM_BUILTIN + menu.arg[i]].lk->label);
             m.item[i] = menu.text[i];
-            m.value[i] = kUrgName[prof[SS_NUM_BUILTIN + menu.arg[i]].urg];
+            m.value[i] = snoozed(SS_NUM_BUILTIN + menu.arg[i], ss_ms()) ? "Snoozed"
+                                                                      : kUrgName[prof[SS_NUM_BUILTIN + menu.arg[i]].urg];
             break;
         case MI_FORGET:
             snprintf(menu.text[i], sizeof(menu.text[i]), "Forget %s", prof[SS_NUM_BUILTIN + menu.arg[i]].lk->label);
@@ -1317,6 +1351,12 @@ SS_COLD static void menu_draw(void)
                      (double)(room_db + MIN_SNR_DB));
             m.note = menu.note;
         } else m.note = "Press, then keep quiet for 10 s";
+    } else if ((menu.kind[menu.sel] == MI_BUILTIN || menu.kind[menu.sel] == MI_URGENCY) &&
+               snoozed((menu.kind[menu.sel] == MI_URGENCY ? SS_NUM_BUILTIN : 0) + menu.arg[menu.sel], ss_ms())) {
+        const int p = (menu.kind[menu.sel] == MI_URGENCY ? SS_NUM_BUILTIN : 0) + menu.arg[menu.sel];
+        snprintf(menu.note, sizeof(menu.note), "Snoozed %lu more min. Press to end it",
+                 (unsigned long)((snooze_until[p] - ss_ms()) / 60000u + 1u));
+        m.note = menu.note;
     } else if (menu.kind[menu.sel] == MI_BUILTIN) {
         const profile &p = prof[menu.arg[menu.sel]];
         if (p.alerting) snprintf(menu.note, sizeof(menu.note), "Press to turn %s off", p.lk->label);
@@ -1351,6 +1391,12 @@ SS_COLD static void inject(uint32_t a)
     if (p == knock_prof && f == UI_FELT_HEARD_ONLY) ev->urgency = UI_INFO;
     printf("[SS] t=%lu injected '%s'%s (host command 13, no sound)\r\n", (unsigned long)now, prof[p].lk->label,
            a & 0x100u ? " maybe" : "");
+    if (snoozed(p, now)) {
+        ev->acked = true;
+        printf("[SS] '%s' snoozed: logged, no alert\r\n", prof[p].lk->label);
+        if (scr == HOME || scr == TIMELINE) redraw = true;
+        return;
+    }
     alert_raise(ev);
     if (scr == HOME) redraw = true;
 }
@@ -1390,6 +1436,24 @@ static void host_command(void)
     }
 }
 
+static char snooze_text[2][48];
+
+/* A8: snooze the sound on the alert screen, then home with a notice */
+SS_COLD static void snooze_alert(uint32_t now)
+{
+    int p = -1;
+    for (int i = 0; i < n_events && p < 0; i++)
+        if (events[i].label == alert_ev.label) p = ev_prof[i];
+    go_home();
+    if (p < 0) return;
+    snooze_until[p] = (now + SNOOZE_MS) | 1u;
+    printf("[SS] '%s' snoozed for 10 min\r\n", prof[p].lk->label);
+    snprintf(snooze_text[0], sizeof(snooze_text[0]), "%s snoozed", prof[p].lk->label);
+    snprintf(snooze_text[1], sizeof(snooze_text[1]), "No alerts for 10 min; still in the timeline");
+    toast_t = snooze_text[0], toast_d = snooze_text[1], toast_p = -1;
+    toast_ms = now + 3000;
+}
+
 static void on_keys(uint32_t k)
 {
     switch (scr) {
@@ -1416,6 +1480,10 @@ static void on_keys(uint32_t k)
         redraw = true;
         break;
     case ALERT:   /* LEFT: wrong sound, RIGHT: right (T4); the alert's event is the newest with its label */
+        if (k & SS_JOY_DOWN && !alert_ev.maybe) {   /* A8 */
+            snooze_alert(ss_ms());
+            break;
+        }
         if (k & (SS_JOY_LEFT | SS_JOY_RIGHT) && !alert_ev.unanswered_ms)
             for (int i = 0; i < n_events; i++)
                 if (events[i].label == alert_ev.label) {
@@ -1546,6 +1614,7 @@ static void draw(uint32_t now, bool live_only)
     case HOME:
         home.listening = !mic_off;
         home.mode = night ? "Night" : "Home";
+        home.talking = talk_ms && now - talk_ms < TALK_MS;
         home.room_db = ss_audio_block_db();
         home.floor_db = ss_audio_floor_db();
         for (int i = 0; i < 3; i++) home.top[i] = top3[i];
@@ -1555,7 +1624,7 @@ static void draw(uint32_t now, bool live_only)
             ui_home_update_live(&home);
         } else {
             ui_home_draw(&home, now);
-            if (sens_toast_ms) ui_toast_draw(sens_text[0], sens_text[1], sens_pct);
+            if (toast_ms) ui_toast_draw(toast_t, toast_d, toast_p);
             else if (banner_on) ui_banner_draw(&banner_ev, now);
         }
         break;
@@ -1758,13 +1827,14 @@ int main(void)
                          sens_off < -0.02f ? "More alerts" : sens_off > 0.02f ? "Fewer alerts" : "As taught",
                          (double)sens_off);
                 printf("[SS] knob: sensitivity %d%%, thresholds %+.3f\r\n", pct, (double)sens_off);
-                sens_toast_ms = now + 2500;
+                toast_ms = now + 2500;
+                toast_t = sens_text[0], toast_d = sens_text[1], toast_p = pct;
                 last_wake = now;
                 if (scr == HOME || scr == MENU) redraw = true;
             }
         }
-        if (sens_toast_ms && (int32_t)(now - sens_toast_ms) >= 0) {
-            sens_toast_ms = 0;
+        if (toast_ms && (int32_t)(now - toast_ms) >= 0) {
+            toast_ms = 0;
             if (scr == HOME) redraw = true;
         }
         if (keys && now - last_key >= 250) {
@@ -1828,6 +1898,7 @@ int main(void)
                     if (!used[p] && (b < 0 || s[p] > s[b])) b = p;
                 if (b < 0) { top3[i] = {"", 0, false}; continue; }
                 used[b] = true;
+                if (i == 0 && b == speech_prof && s[b] >= prof[b].thr) talk_ms = now | 1u;   /* H8 */
                 top3[i].label = prof[b].lk->label;
                 top3[i].score = (uint8_t)(s[b] < 0 ? 0 : s[b] * 100);
                 top3[i].over_threshold = s[b] >= prof[b].thr;

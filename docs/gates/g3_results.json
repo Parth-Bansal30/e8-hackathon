@@ -2436,5 +2436,32 @@
    }
   ],
   "time": "11:58:55"
+ },
+ {
+  "test": "calibrate",
+  "measured": {
+   "knock": {
+    "thr": 0.5
+   },
+   "dog": {
+    "thr": 0.5
+   },
+   "baby": {
+    "thr": 0.5
+   },
+   "alarm": {
+    "thr": 0.5
+   },
+   "glass": {
+    "thr": 0.5
+   },
+   "siren": {
+    "thr": 0.5
+   },
+   "water": {
+    "thr": 0.5
+   }
+  },
+  "time": "12:05:29"
  }
 ]

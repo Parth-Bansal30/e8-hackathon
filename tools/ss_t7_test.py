@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""T7, H5 and S5 on the board, no sound: the Sounds page (built-ins on/off, taught urgency and name),
-"still sounding", and "Calibrate room" (it measures the room as it is).
+"""T7, H5, S5 and A8 on the board, no sound: the Sounds page (built-ins on/off, taught urgency and name),
+"still sounding", "Calibrate room" (it measures the room as it is), and snoozing an alert.
 
 Needs the release build flashed, one taught sound in slot 0 (profile 9), and the RTT logger running.
 Leaves the settings as it found them (built-ins, the taught sound's urgency and name).
@@ -223,6 +223,29 @@ c = re.findall(r"\[S5\] room calibrated: floor (-?[\d.]+) dB[^\r\n]*", log_since
 fl = re.findall(r"\[S5\] room calibrated[^\r\n]*", log_since(n6))
 check("room calibrated after 10 s", bool(c) and -90 < float(c[-1]) < -20 and get("_ZL11room_cal_on") & 0xFF == 0,
       fl[-1] if fl else "no result line")
+# 8. A8: DOWN on an alert snoozes that sound for 10 min: logged, no alert; a press on its Sounds row ends it
+SN = b.addr("_ZL12snooze_until")
+cmd(3)
+cmd(13, 3)                                   # Alarm (profile 3)
+time.sleep(0.6)
+n7 = os.path.getsize(LOG)
+keys(DOWN)
+sn = rd(SN + 4 * 3)[0]
+check("DOWN on an alert snoozes it", get("_ZL3scr") == 1 and sn != 0, f"screen {get('_ZL3scr')}, snooze_until {sn}")
+cmd(13, 3)
+time.sleep(0.6)
+ln = re.findall(r"\[SS\] 'Alarm' snoozed[^\r\n]*", log_since(n7))
+check("a snoozed alarm is logged, not alerted", get("_ZL3scr") == 1 and any("no alert" in x for x in ln),
+      ln[-1] if ln else "no log line")
+open_sounds() and goto(3) and keys(PRESS)
+check("a press on its Sounds row ends the snooze", rd(SN + 4 * 3)[0] == 0 and mute() == mute0,
+      f"snooze_until {rd(SN + 4 * 3)[0]}, builtin_mute 0x{mute():x}")
+cmd(3)
+cmd(13, 3)
+time.sleep(0.6)
+check("it alerts again", get("_ZL3scr") == 2)
+keys(PRESS)
+
 cmd(3)
 print(f"{sum(results)}/{len(results)} checks pass")
 print("T7 TEST", "PASS" if all(results) else "FAIL")

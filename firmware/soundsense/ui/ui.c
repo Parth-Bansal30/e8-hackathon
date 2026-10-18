@@ -424,16 +424,29 @@ static void draw_recent(const ui_home *h, uint32_t now_ms)
 /* What the live parts showed last, so an update can skip what hasn't changed (C5: in a quiet room the
  * top matches and the level rarely change, and redrawing them 10 times a second cost ~10% CPU). */
 static ui_guess shown_top[3];
-static int shown_db = 9999, shown_fx = -1, shown_loud = -1;
+static int shown_db = 9999, shown_fx = -1, shown_loud = -1, shown_talk = -1;
+
+/* The line above the spectrogram: the mode, or (H8) a yellow "Someone is talking nearby" */
+static void draw_mode(const ui_home *h)
+{
+    gfx_fill(28, LIVE_Y + 6, 424, 34, PANEL);
+    if (h->talking) {
+        gfx_round_rect(28, LIVE_Y + 6, 300, 34, 17, YELLOW);
+        gfx_text(B, 44, LIVE_Y + 12, "Someone is talking nearby", INK, 20);
+        return;
+    }
+    char mode[32];
+    snprintf(mode, sizeof mode, "Now hearing  " UI_DOT "  %s mode", h->mode ? h->mode : "Home");
+    gfx_text(L, 32, LIVE_Y + 14, mode, MUTED, 20);
+}
 
 void ui_home_draw(const ui_home *h, uint32_t now_ms)
 {
     gfx_fill(0, 0, GFX_W, GFX_H, BG);
     header("Sound Sense", h->listening ? "Listening" : "Mic off", h->listening ? GREEN : VERMILLION);
     gfx_round_rect(16, LIVE_Y, 448, TOP_Y + 96 - LIVE_Y, 18, PANEL);
-    char mode[32];
-    snprintf(mode, sizeof mode, "Now hearing  " UI_DOT "  %s mode", h->mode ? h->mode : "Home");
-    gfx_text(L, 32, LIVE_Y + 14, mode, MUTED, 20);
+    draw_mode(h);
+    shown_talk = h->talking;
     draw_spectro();
     draw_top(h);
     draw_level(h);
@@ -456,6 +469,10 @@ static bool same_top(const ui_home *h)
 void ui_home_update_live(const ui_home *h)
 {
     scroll_spectro();
+    if (h->talking != shown_talk) {
+        draw_mode(h);
+        shown_talk = h->talking;
+    }
     if (!same_top(h)) {
         draw_top(h);
         memcpy(shown_top, h->top, sizeof(shown_top));
@@ -535,8 +552,8 @@ void ui_alert_draw(const ui_event *e, uint32_t now_ms, int phase)
         gfx_text_center(B, GFX_W / 2, GFX_H - 84, "Press to dismiss", bg, 32);
         return;
     }
-    gfx_text_center(L, GFX_W / 2, GFX_H - 70, e->maybe ? "RIGHT it was   LEFT it wasn't   PRESS ok"
-                                                       : "PRESS ok   LEFT wrong sound", mix(bg, ink, 0.7f), 24);
+    const char *keys = e->maybe ? "RIGHT it was   LEFT it wasn't   PRESS ok" : "PRESS ok   LEFT wrong   DOWN snooze 10 min";
+    gfx_text_center(L, GFX_W / 2, GFX_H - 70, keys, mix(bg, ink, 0.7f), gfx_fit_px(L, keys, 440, 24));
 }
 
 void ui_banner_draw(const ui_event *e, uint32_t now_ms)
@@ -561,6 +578,7 @@ UI_COLD void ui_toast_draw(const char *title, const char *detail, int pct)
     gfx_text(B, 32, 24, title, TEXT, 30);
     gfx_text(L, 32, 64, detail, MUTED, 20);
     const int x = 32, w = GFX_W - 64, y = 96;
+    if (pct < 0) return;                   /* a notice without a bar (snooze) */
     gfx_round_rect(x, y, w, 12, 6, PANEL);
     if (pct > 0) gfx_round_rect(x, y, w * (pct > 100 ? 100 : pct) / 100, 12, 6, YELLOW);
 }

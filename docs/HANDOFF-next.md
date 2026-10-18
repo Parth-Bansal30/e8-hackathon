@@ -1,6 +1,6 @@
 # Handoff: continuing Sound Sense (2026-10-18)
 
-**Updated 12:05 PM PDT.** The board's J-Link is now on the laptop with the et-venv (it has torch,
+**Updated 12:25 PM PDT.** The board's J-Link is now on the laptop with the et-venv (it has torch,
 the datasets and the toolchain), so offline work and board work happen on one machine.
 
 Since 10:10 AM:
@@ -21,6 +21,11 @@ Since 10:10 AM:
   - H5: "still sounding".
   - S5: Settings > Calibrate room (10 s, median level).
   - Board tests: smoke 16/16, `tools/ss_t7_test.py` 14/14.
+- 12:05-12:15 PM, with sound: built-in calibration tried and **not kept** (thresholds all at 0.50,
+  more wrong alerts; the owner stopped the test after 2 of 7 classes). The board is back on the trained
+  profiles; the measured header is in `docs/gates/ss_board_profiles_cal1.h`.
+- 12:15-12:25 PM, no sound: A8 snooze (DOWN on an alert, 10 min) and H8 "Someone is talking nearby".
+  Smoke 16/16, `ss_t7_test.py` 18/18. **The owner asked for no more sound testing.**
 - 12 PM, with sound (owner's OK, Mac volume 44 as found): demo teach rehearsal. Doorbell re-taught
   tight (threshold 0.85), 4 of 5 trials recognised, no Siren confusions. The board now holds this
   Doorbell profile.
@@ -77,10 +82,11 @@ Work stays on branch **`gates`**. Read in this order:
 
 | Area | Status |
 |---|---|
-| App `firmware/soundsense/` | Release build flashed at 11:47 AM: two-stage decision, 8 examples, T2, T6, host command 17, Sounds page (T7: on/off, urgency, rename), "still sounding" (H5), Calibrate room (S5), cycle counter re-armed in SysTick. Smoke test 16/16, T7 test 14/14. ITCM 97.69% |
+| App `firmware/soundsense/` | Release build flashed at 12:20 PM, trained built-in profiles: two-stage decision, 8 examples, T2, T6, host command 17, Sounds page (T7: on/off, urgency, rename), "still sounding" (H5), Calibrate room (S5), snooze (A8), talking nearby (H8), cycle counter re-armed in SysTick. Board holds a tight Doorbell (thr 0.85). Smoke 16/16, feature test 18/18. ITCM 97.88% |
 | Gates | G1 SOFT, G2 SOFT, G3 SOFT (short run), C1 GO, C2 GO, C3 rows 1-4 pass (row 5: backlight on/off only, no dimming), C4 GO, C5 done (12.6%, target 10%) |
 | P0 | 16 of 16 done |
 | P1 | 14 done, 1 partial (H7: "My name" not tried on speech), 1 not started (H4 smoke vs CO) |
+| P2 | 2 done (A8 snooze, H8 talking nearby), 3 partial, 15 not started |
 | Not yet checked by eye or hand | Night mode turning the backlight off; turning the knob (T5) |
 
 ## Setting up a new machine
@@ -222,7 +228,7 @@ To check the result, read variables over J-Link:
 | `tools/build_flash.sh <project> [debug\|release] [noflash]` | Build (and flash). The log goes to `/tmp/build_<project>.log`; read it when cbuild's error is vague ("read .../firmware: is a directory" was an ITCM overflow). |
 | `tools/jlink.py <elf> get\|set\|cmd\|rtt\|reset` | Read and write variables, send a host command, follow RTT, reset |
 | `tools/ss_smoke.py` | Full-app smoke test over J-Link, no sound: resets the board, 16 checks, about 1 minute |
-| `tools/ss_t7_test.py` | Sounds page (on/off, urgency, rename), "still sounding" and Calibrate room on the board, no sound, 14 checks, about 3 minutes; restores the settings. `--set 0 1`: all built-ins on, taught sound Important |
+| `tools/ss_t7_test.py` | Sounds page (on/off, urgency, rename), "still sounding", Calibrate room and snooze on the board, no sound, 18 checks, about 4 minutes; restores the settings. `--set 0 1`: all built-ins on, taught sound Important |
 | `tools/c3_ui.py [log]` | C3 rows 2-4 without sound: fake detections plus the board's own timing |
 | `tools/pc_profile.py [elf] [samples]` | Statistical CPU profile (DWT PC sampling). WFI sleep shows inside `main`. |
 | `tools/ss_screen.py` | Screenshot of the frame buffer over J-Link (12 s; tears during redraws) |
@@ -241,7 +247,7 @@ To check the result, read variables over J-Link:
 - **Time differences use `since(t, now)`**, never `now - t`. The loop reads `now` once at the top,
   and a decision stamps its times after a >1 ms inference, so `now - t` wrapped and closed banners
   at once (fixed 10-18).
-- **ITCM is 97.7% full** (256,080 of 256 KB; all `.text` lands there). New boot-only or rare code
+- **ITCM is 97.9% full** (256,576 of 256 KB; all `.text` lands there). New boot-only or rare code
   goes to MRAM:
   - mark the function `SS_COLD` (`ss_board.h`) or `UI_COLD` (`ui/ui.c`), or
   - add an object pattern to the MRAM section of the shared linker script
@@ -324,6 +330,19 @@ To check the result, read variables over J-Link:
     - README and DEMO.md now give the measured numbers (median 437 ms for a clear built-in match,
       else about 0.87 s). SUBMISSION.md, VIDEO-SCRIPT.md, HANDOFF-submission.md and make_gallery.py
       still say about 0.85 s; that's for the submission session (note given at 11 AM).
+
+## For the submission session (changes since the 11 AM note)
+
+SUBMISSION.md and VIDEO-SCRIPT.md can mention these; all are on the board and tested without sound:
+- **Settings > Sounds:** turn each built-in on or off; set a taught sound to Info, Important or Urgent;
+  rename it (RIGHT, from the preset names). Saved in the flash.
+- **Settings > Calibrate room:** 10 s, then it shows the room level and how loud a sound must be.
+- **Snooze:** DOWN on an alert stops alerts for that sound for 10 min; it is still logged.
+- **"Still sounding"** on a sound heard again within 15 s; **"Someone is talking nearby"** on the home
+  screen when speech is heard.
+- Demo teach rehearsal: Doorbell from the laptop taught tight (threshold 0.85), 4 of 5 trials recognised.
+- New screens in `docs/demo/screens/` 26-30; `02_alert_doorbell.png` now shows "DOWN snooze 10 min".
+- Unchanged: built-ins 54% from a laptop speaker (calibrating on the board was tried and not kept).
 
 ## Wrap-up (board session, by about 3:45 PM)
 

@@ -1,0 +1,23 @@
+volume at start: 100
+  knock  5-218980-A-30.wav      -> Knock  best Knock 0.85 +14 dB
+  knock  5-218981-A-30.wav      -> Water running  best Water running 0.70 +17 dB
+  knock  5-235644-A-30.wav      -> none
+  knock  5-250026-A-30.wav      -> Siren  best Siren 0.61 +17 dB
+  knock  5-250026-B-30.wav      -> Glass breaking  best Glass breaking 0.68 +24 dB
+  knock  5-251426-A-30.wav      -> Knock  best Knock 0.67 +22 dB
+  knock  5-251426-B-30.wav      -> Dog barking  best Dog barking 0.57 +21 dB
+  knock  5-256512-A-30.wav      -> Knock (maybe)  best Knock 0.48 +23 dB
+knock: 3/8 recognised (1 as maybe)
+  dog    5-203128-A-0.wav       -> Dog barking  best Dog barking 0.74 +22 dB
+  dog    5-203128-B-0.wav       -> Dog barking  best Dog barking 0.74 +21 dB
+  dog    5-208030-A-0.wav       -> Water running  best Water running 0.58 +14 dB
+  dog    5-212454-A-0.wav       -> Water running  best Water running 0.61 +9 dB
+  dog    5-213855-A-0.wav       -> Water running  best Water running 0.62 +8 dB
+  dog    5-217158-A-0.wav       -> quiet  best Water running 0.69 +5 dB
+  dog    5-231762-A-0.wav       -> quiet  best Baby crying 0.58 +5 dB
+  dog    5-9032-A-0.wav         -> Baby crying  best Baby crying 0.61 +16 dB
+dog: 2/8 recognised (0 as maybe)
+  baby   5-151085-A-20.wav      -> Baby crying (maybe)  best Baby crying 0.54 +8 dB
+  baby   5-198411-A-20.wav      -> quiet  best Baby crying 0.67 +5 dB
+  baby   5-198411-B-20.wav      -> Baby crying  best Baby crying 0.55 +10 dB
+  baby   5-198411-C-20.wav      -> none

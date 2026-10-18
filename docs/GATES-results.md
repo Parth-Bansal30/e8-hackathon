@@ -146,6 +146,41 @@ Done at 11 AM. Offline numbers come from `model/shots_eval.py` (G1 pools, float 
   For the demo, play at a steady level, and turn the knob up (thresholds down by as much as 0.10) if
   one misses.
 
+## Built-in calibration on the board (G3 row 7): tried, not kept
+
+At 12:05 PM, with the owner's OK (`gates/g3_calibrate.txt`, `gates/g3_builtin_cal.txt`):
+- `g3_play.py calibrate --n 10`: 7 to 12 board examples per built-in from ESC-50 folds 1-4 through
+  the Mac speaker. The Mac volume was 38 at the start; the owner changed it during the session (81,
+  then 100 for the test).
+  - Every measured threshold came out at the 0.50 floor: the clips in a class vary too much for
+    the leave-one-out rule.
+  - Knock's measured profile was far from the trained one (cosine 0.18). Dog, siren and alarm were
+    close (0.83, 0.81 and 0.94).
+- Gotcha: adding `assets/ss_board_profiles.h` doesn't rebuild `main.cpp` (the dependency file only
+  lists headers that existed). The first flash still had the trained profiles; touch `main.cpp`.
+- Test on fold 5, stopped by the owner after 2 of 7 classes (16 clips):
+  - Knock 3/8 (1/8 with the trained profiles), Dog 2/8 (6/8 before).
+  - 7 of the 16 alerted as the wrong sound (5 of them Water running), because every threshold sat at 0.50.
+- **Not kept:** the board is back on the trained profiles (flashed 12:15 PM). The owner watched the
+  trained profiles catch sounds well live. The measured header is kept in
+  `gates/ss_board_profiles_cal1.h`, out of the build.
+
+## Snooze (A8) and "Someone is talking nearby" (H8)
+
+Built and flashed at 12:20 PM, no sound. Board tests: smoke 16/16, `tools/ss_t7_test.py` 18/18
+(`gates/t7_test.txt`). ITCM 97.88% (5.4 KB free).
+- **Snooze:** DOWN on an alert (not on a "Maybe") snoozes that sound for 10 min. Its detections still go
+  into the timeline (marked read) but raise no alert, banner or lights. A notice says "Alarm snoozed:
+  no alerts for 10 min; still in the timeline". Settings > Sounds shows "Snoozed" on that row, and a
+  press ends the snooze. Forgetting or re-teaching a taught sound clears its snooze.
+  - Tested with injected alarms: DOWN snoozed (screen home); a second alarm was logged ("snoozed:
+    logged, no alert") and the screen stayed home; a press on the Alarm row ended it; the next alarm
+    alerted.
+- **Talking nearby:** while Speech is the best match over its threshold, and for 3 s after, the line over
+  the spectrogram turns into a yellow "Someone is talking nearby". It's redrawn only when it changes.
+  Rendered in the UI simulator (`demo/screens/29_home_talking.png`); seeing it on the board needs speech
+  in the room.
+
 ## Full-app smoke test
 
 `tools/ss_smoke.py`, no sound, about 1 minute. It resets the board, then drives every screen and path

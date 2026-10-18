@@ -352,6 +352,16 @@ int main(void)
     ui_timeline_draw(tl2, N_EVENTS, NOW, 0);
     save("28_timeline_still_sounding");
 
+    /* H8: someone talking nearby; A8: a sound just snoozed */
+    home.talking = true;
+    home.top[0] = (ui_guess){"Speech", 71, true};
+    ui_home_draw(&home, NOW);
+    save("29_home_talking");
+    home.talking = false;
+    ui_home_draw(&home, NOW);
+    ui_toast_draw("Alarm snoozed", "No alerts for 10 min; still in the timeline", -1);
+    save("30_snoozed");
+
     write_png("out/sheet.png", &sheet[0][0][0], SHEET_W, SHEET_H);
     led_trace();
     return 0;
