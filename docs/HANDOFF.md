@@ -22,7 +22,7 @@ Snapshot date: 2026-10-18. Reference machine: MacBook Air M2 (8 GB), macOS 26.6.
 | ICM-42670P IMU | not tested | |
 | Camera | **no camera module in the kit**; capture test written for one | `cam_test` |
 | Mic gain | fixed: 0x800 instead of Alif's demo value 0x0D (+44 dB) | `hw_test`, `app/kws.c` |
-| **Final project: voice + motion controller** | in progress, see §7 | `model/*kws*`, `firmware/app/kws.*` |
+| **Final project: voice + motion controller** | keyword model trained; keyword app **built and flashed but not tested**, see §7 | `model/*kws*`, `firmware/app` |
 
 ---
 
@@ -249,7 +249,7 @@ cp mnist_int8io_io.h ../firmware/npu_display/assets/model_io.h
 
 Expect float 98.00% / int8 98.05% on the host and a 105,696-byte .pte.
 
-### Keyword spotting (trained and exported; not on the board yet)
+### Keyword spotting (trained and exported; board app built but not tested)
 
 The trained checkpoint `kws_model.pth` and the exported `kws_ethos_u85.pte` / `_io.h` are
 committed. Only retrain if you change the model or the features; `python export_kws.py`
@@ -319,7 +319,9 @@ The dataset, cache and training log are git-ignored.
    - Wrote the feature, model, training and export scripts, and checked that the model lowers
      entirely to the NPU.
    - Trained it: 94.9% test accuracy, and int8 loses nothing (94.53% vs 94.50% float).
-   - Wrote the board-side capture and feature code (`firmware/app/kws.c`, not built yet).
+   - Wrote the board-side capture and feature code (`firmware/app/kws.c`).
+   - Turned `firmware/app` into the live keyword app. It builds and was flashed once, but
+     work stopped before anyone looked at the screen or the log. **Untested.**
 10. **Reproducibility:** pinned `ethos-u-core-driver@1.26.5`, made the scripts find the
     toolchain on their own, added `model/requirements-lock.txt`, and wrote this document.
 
@@ -328,13 +330,30 @@ The dataset, cache and training log are git-ignored.
 ## 7. Next steps (the plan for the final app)
 
 1. ~~Train and export KWS~~ (done, see §5).
-2. Build `firmware/app` with KWS:
-   - Add `kws.c` and the PDM component to `app.cproject.yml`.
-   - Convert the .pte with `tools/pte2h.py`.
-   - Run inference every ~100 ms on the latest 1 s of audio.
-   - Smooth the scores and show the detected word on the LCD.
-3. Feature self-test on the board: run the C features on a test clip and compare with Python.
-   They should match within 1 int8 step.
+2. **Test the keyword app (built, flashed once, never checked).** What's in it:
+   - `main.cpp`:
+     - 16 kHz PDM capture.
+     - One log-mel frame every 20 ms.
+     - An inference every 100 ms on the latest 1 s of audio.
+     - Scores averaged over 3 runs; a word is reported above 70%.
+     - Screen: the word, per-class bars, mic level and timings.
+   - `kws_testclip.h`: a boot self-test that runs the C features on a Speech Commands "yes"
+     clip and compares them with Python.
+   - `assets/kws_model_data.h` and `assets/kws_io.h`: the model, from `tools/pte2h.py`, and
+     its int8 IO parameters.
+
+   To test:
+   - Run `tools/build_flash.sh app`, then `tools/rtt_dump.sh firmware/out/app/E8-HP/debug/app.elf`.
+   - The first log line, `[KWS] self-test: …`, should show inputs within 1 LSB of Python and
+     predict `'yes'`. If it doesn't, the C features don't match `model/kws_common.py`; fix
+     that before trying live speech.
+   - Then say the keywords about 30 cm from the board and watch for `[KWS] … 'word' NN%` lines.
+     `dropped` in the status line should stay at 0.
+   - Things that might need tuning:
+     - **Mic channel:** only mic 4 (left of the pair) is used.
+     - **Detection threshold:** 0.70.
+     - **Speed:** the debug build redraws slowly; try `release`.
+     - **The runner reloads the program on every call:** compare `runner` against `NPU` time.
 4. Gesture model:
    - Record labeled BMI323 windows from the board over RTT (shake, flick left/right, tilt, idle).
    - Train a small 1D CNN and export it the same way.

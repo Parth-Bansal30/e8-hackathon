@@ -1,11 +1,12 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/tools/projmgr/2.6.0/tools/projmgr/schemas/cproject.schema.json
-# Final hackathon app (placeholder): board bring-up + display + ExecuTorch on the Ethos-U85.
-# Shares the ExecuTorch runner with ../mnist_executorch and the fonts/stand-in model with ../npu_display.
+# Final hackathon app: voice + motion controller. Stage 1: live keyword spotting from the PDM mics
+# on the Ethos-U85. Shares the ExecuTorch runner with ../mnist_executorch and the fonts with ../npu_display.
 project:
   groups:
     - group: App
       files:
         - file: main.cpp
+        - file: kws.c
         - file: ../mnist_executorch/executorch_runner.cpp
 
     - group: SEGGER_RTT
@@ -33,6 +34,7 @@ project:
     - component: AlifSemiconductor::Device:SOC Peripherals:MIPI DSI
     - component: AlifSemiconductor::Device:SOC Peripherals:MIPI DSI CSI2 DPHY
     - component: AlifSemiconductor::BSP:External peripherals:ILI9806E LCD panel
+    - component: AlifSemiconductor::Device:SOC Peripherals:PDM
 
   define:
     - C10_USING_CUSTOM_GENERATED_MACROS

@@ -112,8 +112,9 @@ void kws_features_of_clip(const int16_t *clip, int8_t *out, float in_scale, int 
 /* ---- streaming capture ---- */
 
 /* PDM channels 4 and 5 (PDM_D2) interleave 16-bit samples: 2 per time step. Blocks are one
- * hop (20 ms); the driver fills one block while the main loop reads the other. */
-#define NBLK 4
+ * hop (20 ms). The driver fills one while the main loop catches up on the others; 16 blocks
+ * (320 ms) cover a full screen redraw plus an inference. */
+#define NBLK 16
 static int16_t pcm[NBLK][2 * KWS_HOP];
 static volatile uint32_t blk_written, blk_read, dropped;
 static volatile bool pdm_error;
