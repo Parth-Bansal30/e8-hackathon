@@ -8,21 +8,22 @@
 | C1 NPU | pending | | |
 | C2 flash | pending | | |
 | C3 UI | pending | | |
-| C4 mics | Direction probably feasible; which way the mic pair points is not settled | Spacing 8 cm (ruler), so at most 3.7 samples of lag. Measured lags (+ = mic 5 later): A −1.0, middle +2.2, B −1.7 samples, each within ±0.3. Front-clap level mic5 − mic4 −4.1 dB | See [C4 details](#c4-details) |
+| C4 mics | Direction feasible; needs one calibration constant per board | Spacing 8 cm (ruler), so at most 3.7 samples of lag. Clapping 1 m off the left mic, in line with the pair, gave +2.2 samples; positions A and B to the side gave −1.0 and −1.7. That fits a constant offset between the channels of −1.35 samples and a measured maximum of 3.55. Mic 4 is the left mic. Front-clap level mic5 − mic4 −4.1 dB | See [C4 details](#c4-details); the right-side claps (expected about −4.9) are still to do |
 | C5 duty | pending | | |
 
 ## C4 details
 
-**Recordings:** [c4_take1.wav](gates/audio/c4_take1.wav) has 16 claps at 1 m: 5 past mic hole A, 6 at the middle position, 5 past hole B, plus the start and stop joystick clicks. [c4_take2.wav](gates/audio/c4_take2.wav) has 5 key jingles. Both came out of the PSRAM over J-Link at 64 KB/s. Analysis: `tools/mic_geometry.py`, written to [c4_mic_geometry.json](gates/c4_mic_geometry.json).
+**Recordings:** [c4_take1.wav](gates/audio/c4_take1.wav) has 16 claps at 1 m: 5 at position A, 6 at the middle position (1 m off the left mic, in line with the pair), 5 at position B, plus the start and stop joystick clicks. [c4_take2.wav](gates/audio/c4_take2.wav) has 5 key jingles. Both came out of the PSRAM over J-Link at 64 KB/s. Analysis: `tools/mic_geometry.py`, written to [c4_mic_geometry.json](gates/c4_mic_geometry.json).
 
 **Mic positions:** the DK-E8 user guide (Figures 2A/2B) puts the two microphones on the underside, one at the middle of each long edge, each with a sound hole through the board. The ruler gives 8 cm between them.
 
-**Lags:** each position gives a repeatable lag, but the pattern doesn't match that layout:
-- If the mics were on the A–B line with no timing offset, A and B would show opposite lags of about ±3.7 samples and the middle position about 0.
-- Instead A and B are both negative (−1.0 and −1.7) and the middle position is +2.2.
-- One explanation fits every number: the pair points toward the middle position, and channel 5 runs about 1.35 samples (84 µs) ahead of channel 4. The middle position is then 3.55 samples from the offset, close to the 3.7 maximum for 8 cm. A and B sit near broadside, at ±0.35.
-- The two channels' PDM phase settings differ (`0x1F` and `0x03` in `kws.c`). That alone is too small to explain 84 µs, so the offset is a hypothesis.
-- **To settle it:** confirm where the person stood for each group, and record one set of claps from the far side of the middle position. The prediction there is about −4.9 samples.
+**Lags:** each position gives a repeatable lag (within ±0.3 samples). Positive means mic 5 hears it later.
+- **Middle position** (6 claps): about 1 m off the *left* microphone, in line with the pair, as the person at the board confirmed. Lag +2.2, so mic 4 is the left mic, as `docs/HANDOFF.md` says.
+- **A and B** (5 claps each): roughly to the side of the pair. Lags −1.0 and −1.7.
+- **Reading:** taking −1.35 samples (84 µs) as a constant offset between the two channels fits all three positions. A and B then come out at ±0.35, close to broadside. The left end comes out at +3.55, which matches the 8 cm spacing (3.7 at most). Without an offset, the left end would mean 4.7 cm of spacing, which contradicts the ruler.
+- The two channels' PDM phase settings differ (`0x1F` and `0x03` in `kws.c`). That is too small to cause 84 µs on its own, so where the offset comes from is open. It only needs measuring once per board.
+- **Confirmation still to do:** 5 claps 1 m off the *right* mic, in line with the pair. The offset reading predicts about −4.9 samples; without an offset it would be about −2.2. The result also gives the offset directly, as (left + right) / 2, and the maximum lag, as (left − right) / 2.
+- **H12 (left/right):** feasible. After subtracting the offset, the lag runs over about ±3.6 samples, against ±0.3 of spread at one position.
 
 **Levels:** mic 5 reads 4.1 dB below mic 4 on the middle claps (median), although its gain register is higher (`0xBB0` against `0x800`, +3.3 dB). Its acoustic path is therefore about 7 dB less sensitive.
 
