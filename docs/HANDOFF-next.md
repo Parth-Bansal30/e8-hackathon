@@ -1,6 +1,6 @@
 # Handoff: continuing Sound Sense (2026-10-18)
 
-**Updated 1:05 PM PDT. Feature work stopped (owner). Tagged `v1.0-judged` = `32177ea`; PR #2 merged into `main` (`ae723fa`); screen tour done, board store back to its pre-tour content.** The board's J-Link is now on the laptop with the et-venv (it has torch,
+**Updated 2:00 PM PDT: board packed for judging.** Firmware frozen at `v1.0-judged` = `32177ea` (the 12:14 release build is flashed; Ready 1279 ms, all rows pass). Board laptop list from HANDOFF-split.md is done: hand checks pass, photos in `demo/board/`, video recorded, rehearsal run.** The board's J-Link is now on the laptop with the et-venv (it has torch,
 the datasets and the toolchain), so offline work and board work happen on one machine.
 
 Since 10:10 AM:
@@ -374,3 +374,26 @@ Agreed with the owner at about 10 AM; also in SUBMISSION.md.
      content as before the tour: Doorbell taught, threshold 0.85, Important; all built-ins on.
 7. Give the submission session the hash **`32177ea`** (full: `32177eaeabfa0ecd9c5577c0500474ee2ca85cb9`). It
    replaces `<hash>` in SUBMISSION.md section 1 and in "About the project".
+
+## Packed for judging (2:00 PM, board laptop)
+
+- **Board:**
+  - Release build of `32177ea`; Ready after 1279 ms, all rows pass.
+  - Store seq 1257, 3 taught sounds: Doorbell (thr 0.85, Important, 0 wrong marks), Keys (thr 0.50,
+    1 wrong mark, kept by the owner), Microwave (thr 0.835, 0 marks).
+  - All built-ins on, night mode off. The knob is near the middle (47%), so the board runs as taught
+    until it's turned.
+- **For the live demo** (also in DEMO.md):
+  - Play the Doorbell at Mac volume about 44, the level it was taught at. At 100 it was only "Maybe",
+    or missed.
+  - Knock loud, right beside the board, off the desk pad.
+  - Mark only built-in rows wrong.
+- **Done today on this laptop:**
+  - Hand checks (`gates/hand_checks.txt`) and board photos (`demo/board/`, the Stats one is portrait).
+  - Video takes (`gates/video_takes.txt`; the footage stays off git) and the rehearsal
+    (`gates/demo_rehearsal.txt`).
+- **Left for the owner:**
+  - Edit and upload the video, and submit on Devpost.
+  - The desk laptop opens the docs PR `gates` → `main`.
+  - The cables, the board and this laptop go together; the RTT logger can be stopped before
+    unplugging.

@@ -5515,3 +5515,39 @@
 [SS] 'Keys' vetoed: 0.71 to a sound marked wrong
 [C3] alert on screen 130264 us after the decision (draw 126724 us, present 3539 us)
 [C3] alert 'Knock' ended after 242 ms: 1 full redraws, longest draw 126724 us + present 3539 us, 0 audio blocks dropped
+[SS] draw: full max 126738 us + present 3551 us; live view 0.8 fps, max 14466 us
+[SS] stats t=510067 level -53 dB floor -51 dB, npu 1004 us runner 1032 us feat 302 us, 1.1 inf/s, busy 13%, active 18.7% (3603 passes/s, 3556 sleeps/s, 228 us each), npu busy 0.11%, dropped 0, imu 410191 samples 0 errors (times back 256 us, clock +6931 ppm), knocks 300, events 22, saves 2
+[TEACH] 'My name': make the sound 8 times
+[TEACH] shot 1/8: +26.1 dB
+[TEACH] shot 2/8: +24.8 dB
+[TEACH] shot 3/8: +23.1 dB
+[TEACH] shot 4/8: +22.2 dB
+[TEACH] shot 5/8: +23.2 dB
+[SS] draw: full max 35889 us + present 3775 us; live view 0.0 fps, max 0 us
+[SS] stats t=520067 level -52 dB floor -42 dB, npu 1008 us runner 1035 us feat 303 us, 0.5 inf/s, busy 16%, active 22.4% (3461 passes/s, 3414 sleeps/s, 227 us each), npu busy 0.05%, dropped 0, imu 418246 samples 0 errors (times back 256 us, clock +6841 ppm), knocks 303, events 22, saves 2
+[TEACH] shot 6/8: +21.8 dB
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11880 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1025 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 1257), copy B valid (seq 1256)
+[STORE] loaded 3 taught sounds from copy A, seq 1257, in 1050 us; built-ins off: 0x0
+[S1] mics: left -51.9 dB (peak 256), right -58.0 dB (peak 187) over 8000 samples
+[S1] ready after 1279 ms: mics left -52 dB, right -58 dB; npu matches the reference, 1.0 ms; saved sounds 3 taught sounds restored; imu knocks can be felt; lights ok
+[C5] cycle counter through WFI: 100% of wall time -> sleeping between audio blocks
+[SS] listening; 9 built-in sounds
+[SS] knob at 47%: sensitivity as taught until it's turned
+[SS] t=3264 skipped (joystick)
+[SS] t=7674 +19.4 dB best 'Dog barking' 0.26 (thr 0.52), 2nd 'Baby crying' 0.14, felt no (0.0 mg) -> unknown
+[SS] t=7674 what was that? +19.4 dB, matches nothing; UP teaches it
+[C3] banner on screen 55095 us after the decision (draw 51547 us, present 3547 us)
+[SS] draw: full max 53223 us + present 3599 us; live view 7.5 fps, max 14751 us
+[SS] stats t=10000 level -52 dB floor -51 dB, npu 1008 us runner 1035 us feat 303 us, 2.5 inf/s, busy 11%, active 13.9% (3803 passes/s, 3753 sleeps/s, 229 us each), npu busy 0.26%, dropped 0, imu 7625 samples 0 errors (times back 114 us, clock +6827 ppm), knocks 8, events 1, saves 0
+[TEACH] 'Clap': make the sound 8 times
+[TEACH] example 1 is the sound just heard
+[TEACH] shot 1/8: +19.4 dB
+[SS] draw: full max 37480 us + present 3715 us; live view 0.0 fps, max 0 us
+[SS] stats t=20000 level -48 dB floor -49 dB, npu 1008 us runner 1036 us feat 305 us, 0.4 inf/s, busy 20%, active 26.1% (3252 passes/s, 3207 sleeps/s, 230 us each), npu busy 0.04%, dropped 0, imu 15678 samples 0 errors (times back 114 us, clock +6621 ppm), knocks 40, events 1, saves 0
+[TEACH] shot 2/8: +25.7 dB

@@ -1,6 +1,6 @@
 # Sound Sense: project status
 
-Snapshot: Sunday 2026-10-18, about 1:30 PM PDT, branch `gates` (feature work stopped). Submission deadline
+Snapshot: Sunday 2026-10-18, about 2:00 PM PDT, branch `gates` (feature work stopped). Submission deadline
 4:30 PM PDT. Feature IDs and priorities come from [SOUND-SENSE.md](SOUND-SENSE.md); the measurements
 behind every "Done" are in [GATES-results.md](GATES-results.md).
 
@@ -25,6 +25,10 @@ snooze. The weak spot is accuracy:
 smoke test passed 16/16 with 0 audio blocks dropped and Ready in 1.28 s, and the feature test passed
 18/18. **Hand checks at 1:25 PM pass:** night mode turns the backlight off (seen by the owner), and
 turning the knob shows the notice with its bar. The knob is left in the middle (50%).
+
+**Video recorded and demo rehearsed at 1:35-1:55 PM.** Then the board was packed for judging: Ready passes, and
+3 taught sounds are stored (Doorbell 0.85, Keys, Microwave). Play the Doorbell at about volume 44 (see
+[GATES-results.md](GATES-results.md#video-recording-and-demo-rehearsal-135-155-pm)).
 
 **Screen tour at 1 PM** (`tools/ss_tour.py`, no sound): all 30 screens and states reached on the board,
 0 audio blocks dropped. It found one hazard. LEFT on an injected alert of a taught sound saves that
