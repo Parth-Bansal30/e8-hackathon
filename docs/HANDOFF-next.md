@@ -1,6 +1,6 @@
 # Handoff: continuing Sound Sense (2026-10-18)
 
-**Updated 11:55 AM PDT.** The board's J-Link is now on the laptop with the et-venv (it has torch,
+**Updated 12:05 PM PDT.** The board's J-Link is now on the laptop with the et-venv (it has torch,
 the datasets and the toolchain), so offline work and board work happen on one machine.
 
 Since 10:10 AM:
@@ -21,6 +21,9 @@ Since 10:10 AM:
   - H5: "still sounding".
   - S5: Settings > Calibrate room (10 s, median level).
   - Board tests: smoke 16/16, `tools/ss_t7_test.py` 14/14.
+- 12 PM, with sound (owner's OK, Mac volume 44 as found): demo teach rehearsal. Doorbell re-taught
+  tight (threshold 0.85), 4 of 5 trials recognised, no Siren confusions. The board now holds this
+  Doorbell profile.
 
 Done between 9 and 10:10 AM, without playing any sound:
 
@@ -270,8 +273,8 @@ To check the result, read variables over J-Link:
      submission session.
    - Tested live at 11:10 AM with the doorbell clip at volume 69; see
      [GATES-results.md](GATES-results.md#teaching-8-examples-t2-t6). Two bugs fixed. The
-     second teach was loose (threshold 0.50, Siren confusions), so the demo should teach louder or
-     use keys.
+     second teach was loose (threshold 0.50, Siren confusions). The 12 PM rehearsal at volume 44 was
+     tight (threshold 0.85, 4 of 5 trials); the board keeps that profile.
 2. **Done: T2** (see 1).
 3. **Done: T6** (see 1).
 4. **Checks by eye and hand, no sound.** Ask the owner to look or turn:

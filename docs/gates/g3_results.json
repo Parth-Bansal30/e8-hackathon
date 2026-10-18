@@ -2330,5 +2330,111 @@
   "total": 5,
   "n": 9,
   "time": "11:13:38"
+ },
+ {
+  "test": "teach",
+  "sound": "doorbell",
+  "lines": [
+   "[TEACH] shot 1/8: +17.9 dB",
+   "[TEACH] shot 2/8: +16.1 dB",
+   "[TEACH] shot 3/8: +16.0 dB",
+   "[TEACH] shot 4/8: +15.9 dB",
+   "[TEACH] shot 5/8: +15.3 dB",
+   "[TEACH] shot 6/8: +15.4 dB",
+   "[TEACH] shot 7/8: +14.5 dB",
+   "[TEACH] shot 8/8: +14.3 dB",
+   "[TEACH] profile: thr 0.850, leave-one-out 0.95 0.97 0.95 0.95 0.97 0.97 0.95 0.96; make it once more to test, press to save"
+  ],
+  "saved": "[TEACH] saved 'Doorbell' thr 0.850; 1 taught",
+  "time": "11:58:18"
+ },
+ {
+  "test": "trials",
+  "sound": "doorbell",
+  "n": 5,
+  "accepted": 4,
+  "rows": [
+   {
+    "got": "Doorbell",
+    "d": {
+     "t": 443853,
+     "snr": 16.4,
+     "clipped": false,
+     "best": "Doorbell",
+     "score": 0.96,
+     "thr": 0.85,
+     "second": "Siren",
+     "score2": 0.4,
+     "felt": "yes",
+     "maybe": false,
+     "result": "Doorbell"
+    }
+   },
+   {
+    "got": "Doorbell",
+    "d": {
+     "t": 449754,
+     "snr": 15.3,
+     "clipped": false,
+     "best": "Doorbell",
+     "score": 0.96,
+     "thr": 0.85,
+     "second": "Siren",
+     "score2": 0.45,
+     "felt": "yes",
+     "maybe": false,
+     "result": "Doorbell"
+    }
+   },
+   {
+    "got": "Doorbell",
+    "d": {
+     "t": 455667,
+     "snr": 15.0,
+     "clipped": false,
+     "best": "Doorbell",
+     "score": 0.95,
+     "thr": 0.85,
+     "second": "Siren",
+     "score2": 0.42,
+     "felt": "no",
+     "maybe": false,
+     "result": "Doorbell"
+    }
+   },
+   {
+    "got": "Doorbell",
+    "d": {
+     "t": 461539,
+     "snr": 14.3,
+     "clipped": false,
+     "best": "Doorbell",
+     "score": 0.95,
+     "thr": 0.85,
+     "second": "Siren",
+     "score2": 0.43,
+     "felt": "no",
+     "maybe": false,
+     "result": "Doorbell"
+    }
+   },
+   {
+    "got": "unknown",
+    "d": {
+     "t": 467618,
+     "snr": 10.4,
+     "clipped": false,
+     "best": "Doorbell",
+     "score": 0.82,
+     "thr": 0.85,
+     "second": "Siren",
+     "score2": 0.56,
+     "felt": "no",
+     "maybe": false,
+     "result": "unknown"
+    }
+   }
+  ],
+  "time": "11:58:55"
  }
 ]

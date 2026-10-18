@@ -134,6 +134,18 @@ Done at 11 AM. Offline numbers come from `model/shots_eval.py` (G1 pools, float 
 - **Reading:** a loose teach gives a 0.50 threshold that lets other sounds in. For the demo, teach
   louder (about 75%, DEMO.md) or with a distinctive real sound such as keys, and redo any shot T2 flags.
 
+**Demo rehearsal at 12:00 PM, Mac volume 44 as found** (`gates/g3_teach_rehearsal.txt`; `g3_play.py teach doorbell`, then `trials doorbell --n 5`):
+- **Teach:** 8 of 8 shots taken (+14.3 to +17.9 dB), tight: leave-one-out 0.95-0.97, threshold 0.85
+  (the maximum). No "unlike" or "Sounds like" warnings. Saved, replacing the loose 0.50 profile.
+- **5 trials:** 4 alerted as Doorbell (0.95-0.96). The 5th was quieter (+10.4 dB) and scored 0.82
+  against 0.85, so nothing showed (not a wrong alert). Siren came second at 0.40-0.56, under its 0.59
+  threshold: no Siren confusions this time.
+- Trials 1-2 were also felt through the table (23 mg): the laptop speaker shakes it.
+- **Reading:** this time the clips came out tighter at volume 44 than at 69 earlier, possibly from the laptop's
+  position. A tight teach gives a strict 0.85 threshold: a doorbell 10 dB over the room can miss.
+  For the demo, play at a steady level, and turn the knob up (thresholds down by as much as 0.10) if
+  one misses.
+
 ## Full-app smoke test
 
 `tools/ss_smoke.py`, no sound, about 1 minute. It resets the board, then drives every screen and path

@@ -2080,3 +2080,164 @@
 [SS] stats t=180000 level -52 dB floor -50 dB, npu 1000 us runner 1026 us feat 302 us, 0.0 inf/s, busy 6%, active 12.5% (3827 passes/s, 3777 sleeps/s, 231 us each), npu busy 0.00%, dropped 0, imu 144533 samples 0 errors (times back 364 us, clock +6883 ppm), knocks 0, events 1, saves 10
 [SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8301 us
 [SS] stats t=190000 level -50 dB floor -51 dB, npu 1000 us runner 1026 us feat 303 us, 0.0 inf/s, busy 7%, active 12.8% (3787 passes/s, 3737 sleeps/s, 233 us each), npu busy 0.00%, dropped 0, imu 152587 samples 0 errors (times back 364 us, clock +6829 ppm), knocks 0, events 1, saves 10
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8297 us
+[SS] stats t=200000 level -50 dB floor -51 dB, npu 1000 us runner 1026 us feat 302 us, 0.0 inf/s, busy 6%, active 12.4% (3803 passes/s, 3753 sleeps/s, 233 us each), npu busy 0.00%, dropped 0, imu 160640 samples 0 errors (times back 364 us, clock +6587 ppm), knocks 0, events 1, saves 10
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8298 us
+[SS] stats t=210000 level -52 dB floor -51 dB, npu 1000 us runner 1026 us feat 302 us, 0.0 inf/s, busy 6%, active 12.5% (3800 passes/s, 3750 sleeps/s, 233 us each), npu busy 0.00%, dropped 0, imu 168694 samples 0 errors (times back 364 us, clock +6671 ppm), knocks 0, events 1, saves 10
+[SS] t=218226 +6.2 dB best 'Water running' 0.42 (thr 0.50), 2nd 'Doorbell' 0.36, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8318 us
+[SS] stats t=220000 level -50 dB floor -50 dB, npu 1008 us runner 1035 us feat 303 us, 0.2 inf/s, busy 6%, active 12.6% (3809 passes/s, 3759 sleeps/s, 232 us each), npu busy 0.02%, dropped 0, imu 176748 samples 0 errors (times back 364 us, clock +6657 ppm), knocks 0, events 1, saves 10
+[SS] t=221050 +11.4 dB best 'Doorbell' 0.52 (thr 0.50), 2nd 'Water running' 0.41, felt no (0.0 mg) -> maybe Doorbell
+[C3] alert on screen 126525 us after the decision (draw 122680 us, present 3534 us)
+[SS] draw: full max 122680 us + present 3534 us; live view 1.8 fps, max 15911 us
+[SS] stats t=230000 level -51 dB floor -51 dB, npu 1007 us runner 1034 us feat 302 us, 0.8 inf/s, busy 3%, active 9.5% (3907 passes/s, 3857 sleeps/s, 234 us each), npu busy 0.08%, dropped 0, imu 184803 samples 0 errors (times back 364 us, clock +6623 ppm), knocks 0, events 2, saves 10
+[C3] alert 'Doorbell' ended after 15001 ms: 1 full redraws, longest draw 122680 us + present 3534 us, 0 audio blocks dropped
+[SS] t=238693 +5.4 dB best 'Baby crying' 0.21 (thr 0.57), 2nd 'Glass breaking' 0.13, felt no (0.0 mg) -> quiet
+[SS] draw: full max 44857 us + present 3540 us; live view 2.9 fps, max 14972 us
+[SS] stats t=240000 level -51 dB floor -50 dB, npu 1008 us runner 1036 us feat 303 us, 0.5 inf/s, busy 3%, active 9.3% (3921 passes/s, 3871 sleeps/s, 234 us each), npu busy 0.05%, dropped 0, imu 192857 samples 0 errors (times back 364 us, clock +6752 ppm), knocks 0, events 2, saves 10
+[SS] t=248532 +4.2 dB best 'Water running' 0.40 (thr 0.50), 2nd 'Doorbell' 0.20, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8331 us
+[SS] stats t=250000 level -50 dB floor -49 dB, npu 1007 us runner 1035 us feat 303 us, 0.2 inf/s, busy 7%, active 12.9% (3872 passes/s, 3822 sleeps/s, 227 us each), npu busy 0.02%, dropped 0, imu 200910 samples 0 errors (times back 364 us, clock +6878 ppm), knocks 0, events 2, saves 10
+[SS] t=249831 +5.1 dB best 'Alarm' 0.26 (thr 0.58), 2nd 'Siren' 0.24, felt no (0.0 mg) -> quiet
+[SS] t=251382 +4.9 dB best 'Alarm' 0.29 (thr 0.58), 2nd 'Water running' 0.27, felt no (0.0 mg) -> quiet
+[SS] t=253154 +7.3 dB best 'Alarm' 0.33 (thr 0.58), 2nd 'Water running' 0.29, felt no (0.0 mg) -> quiet
+[SS] t=254354 +5.7 dB best 'Water running' 0.28 (thr 0.50), 2nd 'Doorbell' 0.25, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 14050 us
+[SS] stats t=260000 level -50 dB floor -50 dB, npu 1008 us runner 1036 us feat 303 us, 1.1 inf/s, busy 8%, active 13.8% (3769 passes/s, 3719 sleeps/s, 231 us each), npu busy 0.11%, dropped 0, imu 208964 samples 0 errors (times back 364 us, clock +6929 ppm), knocks 0, events 2, saves 10
+[SS] t=261120 +11.1 dB best 'Doorbell' 0.44 (thr 0.50), 2nd 'Water running' 0.40, felt no (0.0 mg) -> unknown
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 14844 us
+[SS] stats t=270000 level -52 dB floor -50 dB, npu 1005 us runner 1033 us feat 303 us, 0.6 inf/s, busy 7%, active 12.9% (3743 passes/s, 3693 sleeps/s, 235 us each), npu busy 0.06%, dropped 0, imu 217011 samples 0 errors (times back 364 us, clock +6896 ppm), knocks 0, events 2, saves 10
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8301 us
+[SS] stats t=280000 level -52 dB floor -50 dB, npu 1005 us runner 1033 us feat 303 us, 0.0 inf/s, busy 6%, active 12.6% (3744 passes/s, 3694 sleeps/s, 236 us each), npu busy 0.00%, dropped 0, imu 225064 samples 0 errors (times back 364 us, clock +6845 ppm), knocks 0, events 2, saves 10
+[SS] t=285518 +9.8 dB best 'Water running' 0.43 (thr 0.50), 2nd 'Doorbell' 0.39, felt yes (30.5 mg) -> maybe Knock
+[C3] alert on screen 125556 us after the decision (draw 122030 us, present 3526 us)
+[SS] t=288555 +8.7 dB best 'Doorbell' 0.54 (thr 0.50), 2nd 'Water running' 0.35, felt no (0.0 mg) -> maybe Doorbell
+[C3] alert 'Knock' ended after 3041 ms: 1 full redraws, longest draw 122030 us + present 3526 us, 0 audio blocks dropped
+[C3] alert on screen 126229 us after the decision (draw 122685 us, present 3543 us)
+[SS] draw: full max 122685 us + present 3543 us; live view 6.3 fps, max 14176 us
+[SS] stats t=290000 level -49 dB floor -48 dB, npu 1004 us runner 1031 us feat 303 us, 0.7 inf/s, busy 7%, active 13.5% (3719 passes/s, 3670 sleeps/s, 235 us each), npu busy 0.07%, dropped 0, imu 233119 samples 0 errors (times back 364 us, clock +7024 ppm), knocks 1, events 4, saves 10
+[SS] t=292249 +27.3 dB clipped best 'Doorbell' 0.43 (thr 0.50), 2nd 'Alarm' 0.21, felt yes (38.7 mg) -> maybe Knock
+[C3] alert 'Doorbell' ended after 3681 ms: 1 full redraws, longest draw 122685 us + present 3543 us, 0 audio blocks dropped
+[C3] alert on screen 126799 us after the decision (draw 123266 us, present 3532 us)
+[SS] t=293783 +5.3 dB best 'Baby crying' 0.30 (thr 0.57), 2nd 'Water running' 0.28, felt no (0.0 mg) -> quiet
+[SS] t=295691 +7.0 dB best 'Doorbell' 0.23 (thr 0.50), 2nd 'Quiet' 0.21, felt no (0.0 mg) -> quiet
+[SS] t=297368 +27.0 dB clipped best 'Doorbell' 0.47 (thr 0.50), 2nd 'Baby crying' 0.44, felt yes (333.3 mg) -> maybe Knock
+[C3] alert on screen 129464 us after the decision (draw 125630 us, present 3524 us)
+[SS] draw: full max 125630 us + present 3532 us; live view 0.0 fps, max 0 us
+[SS] stats t=300000 level -51 dB floor -45 dB, npu 1008 us runner 1034 us feat 303 us, 0.8 inf/s, busy 3%, active 9.5% (3980 passes/s, 3931 sleeps/s, 230 us each), npu busy 0.08%, dropped 0, imu 241175 samples 0 errors (times back 364 us, clock +6811 ppm), knocks 18, events 5, saves 10
+[SS] t=306604 +8.1 dB best 'Water running' 0.41 (thr 0.50), 2nd 'Doorbell' 0.37, felt no (0.0 mg) -> unknown
+[SS] draw: full max 0 us + present 0 us; live view 0.0 fps, max 0 us
+[SS] stats t=310000 level -52 dB floor -52 dB, npu 1004 us runner 1030 us feat 303 us, 0.2 inf/s, busy 0%, active 6.7% (4140 passes/s, 4090 sleeps/s, 228 us each), npu busy 0.02%, dropped 0, imu 249229 samples 0 errors (times back 364 us, clock +6614 ppm), knocks 18, events 5, saves 10
+[C3] alert 'Knock' ended after 20121 ms: 3 full redraws, longest draw 125630 us + present 3532 us, 0 audio blocks dropped
+[SS] t=313548 +23.2 dB best 'Doorbell' 0.63 (thr 0.50), 2nd 'Glass breaking' 0.30, felt no (0.0 mg) -> Doorbell
+[C3] alert on screen 45908 us after the decision (draw 42389 us, present 3519 us)
+[SS] t=314853 +12.5 dB best 'Doorbell' 0.43 (thr 0.50), 2nd 'Dog barking' 0.40, felt yes (142.5 mg) -> maybe Knock
+[C3] alert 'Doorbell' ended after 1300 ms: 1 full redraws, longest draw 42389 us + present 3519 us, 0 audio blocks dropped
+[C3] alert on screen 130749 us after the decision (draw 127033 us, present 3715 us)
+[SS] t=316575 +6.6 dB best 'Alarm' 0.64 (thr 0.58), 2nd 'Siren' 0.52, felt no (0.0 mg) -> quiet
+[SS] draw: full max 127033 us + present 3715 us; live view 1.1 fps, max 14602 us
+[SS] stats t=320000 level -53 dB floor -46 dB, npu 1008 us runner 1035 us feat 303 us, 1.0 inf/s, busy 5%, active 11.9% (3929 passes/s, 3881 sleeps/s, 227 us each), npu busy 0.10%, dropped 0, imu 257285 samples 0 errors (times back 364 us, clock +6967 ppm), knocks 19, events 7, saves 10
+[SS] t=323589 +6.4 dB best 'Glass breaking' 0.33 (thr 0.50), 2nd 'Doorbell' 0.22, felt no (0.0 mg) -> quiet
+[SS] t=327450 +7.9 dB best 'Doorbell' 0.52 (thr 0.50), 2nd 'Dog barking' 0.27, felt no (0.0 mg) -> quiet
+[SS] t=328680 +18.3 dB best 'Doorbell' 0.34 (thr 0.50), 2nd 'Glass breaking' 0.17, felt yes (599.1 mg) -> maybe Knock
+[C3] alert on screen 130248 us after the decision (draw 126724 us, present 3523 us)
+[SS] draw: full max 126724 us + present 3523 us; live view 0.0 fps, max 0 us
+[SS] stats t=330000 level -52 dB floor -50 dB, npu 1008 us runner 1035 us feat 303 us, 0.6 inf/s, busy 2%, active 8.1% (4032 passes/s, 3982 sleeps/s, 230 us each), npu busy 0.06%, dropped 0, imu 265332 samples 0 errors (times back 364 us, clock +6630 ppm), knocks 21, events 7, saves 10
+[SS] t=330266 +6.9 dB best 'Glass breaking' 0.56 (thr 0.50), 2nd 'Doorbell' 0.34, felt no (0.0 mg) -> quiet
+[SS] t=331931 +25.5 dB best 'Glass breaking' 0.51 (thr 0.50), 2nd 'Knock' 0.35, felt yes (809.5 mg) -> maybe Glass breaking
+[C3] alert 'Knock' ended after 17084 ms: 2 full redraws, longest draw 127033 us + present 3715 us, 0 audio blocks dropped
+[C3] alert on screen 110506 us after the decision (draw 106975 us, present 3530 us)
+[SS] t=333316 early, 405 ms after the onset
+[SS] t=333316 +27.5 dB best 'Glass breaking' 0.55 (thr 0.50), 2nd 'Doorbell' 0.44, felt yes (171.1 mg) -> Glass breaking
+[C3] alert on screen 34030 us after the decision (draw 31180 us, present 2850 us)
+[SS] t=335191 +7.4 dB best 'Doorbell' 0.21 (thr 0.50), 2nd 'Glass breaking' 0.19, felt no (0.0 mg) -> quiet
+[SS] t=336418 +7.9 dB best 'Doorbell' 0.38 (thr 0.50), 2nd 'Glass breaking' 0.31, felt yes (46.6 mg) -> quiet
+[SS] t=337650 +12.9 dB best 'Water running' 0.45 (thr 0.50), 2nd 'Glass breaking' 0.17, felt yes (63.0 mg) -> maybe Knock
+[C3] alert 'Glass breaking' ended after 5720 ms: 12 full redraws, longest draw 106975 us + present 3548 us, 0 audio blocks dropped
+[C3] alert on screen 125999 us after the decision (draw 122453 us, present 3546 us)
+[SS] draw: full max 122453 us + present 3548 us; live view 0.0 fps, max 0 us
+[SS] stats t=340000 level -43 dB floor -44 dB, npu 1007 us runner 1035 us feat 303 us, 1.1 inf/s, busy 7%, active 13.1% (3827 passes/s, 3778 sleeps/s, 230 us each), npu busy 0.11%, dropped 0, imu 273391 samples 0 errors (times back 364 us, clock +7187 ppm), knocks 45, events 9, saves 10
+[SS] t=339687 +25.4 dB best 'Doorbell' 0.66 (thr 0.50), 2nd 'Glass breaking' 0.28, felt no (0.0 mg) -> Doorbell
+[C3] alert 'Knock' ended after 2041 ms: 1 full redraws, longest draw 122453 us + present 3546 us, 0 audio blocks dropped
+[C3] alert on screen 46229 us after the decision (draw 42705 us, present 3523 us)
+[SS] t=341503 +11.5 dB best 'Knock' 0.25 (thr 0.62), 2nd 'Quiet' 0.22, felt yes (331.4 mg) -> maybe Knock
+[C3] alert 'Doorbell' ended after 1821 ms: 1 full redraws, longest draw 42705 us + present 3523 us, 0 audio blocks dropped
+[C3] alert on screen 126195 us after the decision (draw 122660 us, present 3534 us)
+[SS] t=346156 +11.7 dB best 'Doorbell' 0.38 (thr 0.50), 2nd 'Glass breaking' 0.32, felt yes (55.6 mg) -> maybe Knock
+[C3] alert on screen 129372 us after the decision (draw 125839 us, present 3532 us)
+[SS] draw: full max 125839 us + present 3534 us; live view 0.0 fps, max 0 us
+[SS] stats t=350000 level -53 dB floor -54 dB, npu 1004 us runner 1031 us feat 303 us, 0.6 inf/s, busy 3%, active 9.7% (3929 passes/s, 3880 sleeps/s, 232 us each), npu busy 0.06%, dropped 0, imu 281441 samples 0 errors (times back 364 us, clock +6841 ppm), knocks 53, events 11, saves 10
+[SS] t=350891 +5.8 dB best 'Doorbell' 0.42 (thr 0.50), 2nd 'Glass breaking' 0.10, felt no (0.0 mg) -> quiet
+[SS] t=355816 +13.0 dB best 'Glass breaking' 0.44 (thr 0.50), 2nd 'Doorbell' 0.40, felt yes (31.7 mg) -> maybe Knock
+[C3] alert on screen 130458 us after the decision (draw 126937 us, present 3520 us)
+[SS] draw: full max 126937 us + present 3520 us; live view 0.0 fps, max 0 us
+[SS] stats t=360000 level -54 dB floor -54 dB, npu 1004 us runner 1030 us feat 303 us, 0.4 inf/s, busy 2%, active 8.0% (4093 passes/s, 4044 sleeps/s, 227 us each), npu busy 0.04%, dropped 0, imu 289494 samples 0 errors (times back 364 us, clock +6590 ppm), knocks 55, events 11, saves 10
+[SS] t=367075 +12.7 dB best 'Knock' 0.50 (thr 0.62), 2nd 'Doorbell' 0.39, felt yes (38.6 mg) -> maybe Knock
+[C3] alert on screen 131572 us after the decision (draw 128057 us, present 3513 us)
+[SS] t=369021 +19.2 dB best 'Knock' 0.45 (thr 0.62), 2nd 'Doorbell' 0.43, felt yes (31.9 mg) -> maybe Knock
+[C3] alert on screen 129707 us after the decision (draw 126194 us, present 3512 us)
+[SS] draw: full max 128057 us + present 3513 us; live view 0.0 fps, max 0 us
+[SS] stats t=370000 level -55 dB floor -53 dB, npu 1004 us runner 1030 us feat 306 us, 0.4 inf/s, busy 3%, active 9.2% (4038 passes/s, 3989 sleeps/s, 227 us each), npu busy 0.04%, dropped 0, imu 297548 samples 0 errors (times back 364 us, clock +6609 ppm), knocks 70, events 11, saves 10
+[SS] t=370414 +18.5 dB best 'Doorbell' 0.43 (thr 0.50), 2nd 'Knock' 0.34, felt yes (30.5 mg) -> maybe Knock
+[C3] alert on screen 130479 us after the decision (draw 126945 us, present 3533 us)
+[SS] t=373450 +11.0 dB best 'Doorbell' 0.53 (thr 0.50), 2nd 'Glass breaking' 0.34, felt no (0.0 mg) -> maybe Doorbell
+[C3] alert 'Knock' ended after 31939 ms: 6 full redraws, longest draw 128057 us + present 3534 us, 0 audio blocks dropped
+[C3] alert on screen 125719 us after the decision (draw 122185 us, present 3534 us)
+[SS] t=375807 +5.3 dB best 'Quiet' 0.23 (thr 0.50), 2nd 'Doorbell' 0.18, felt no (0.0 mg) -> quiet
+[SS] draw: full max 126945 us + present 3534 us; live view 0.0 fps, max 0 us
+[SS] stats t=380000 level -54 dB floor -54 dB, npu 1004 us runner 1030 us feat 303 us, 0.6 inf/s, busy 3%, active 9.2% (4022 passes/s, 3973 sleeps/s, 228 us each), npu busy 0.06%, dropped 0, imu 305607 samples 0 errors (times back 364 us, clock +6969 ppm), knocks 73, events 12, saves 10
+[SS] t=381283 +12.9 dB best 'Doorbell' 0.37 (thr 0.50), 2nd 'Dog barking' 0.29, felt yes (23.8 mg) -> maybe Knock
+[C3] alert 'Doorbell' ended after 7840 ms: 1 full redraws, longest draw 122185 us + present 3534 us, 0 audio blocks dropped
+[C3] alert on screen 126183 us after the decision (draw 122667 us, present 3515 us)
+[SS] t=383087 +18.3 dB best 'Doorbell' 0.40 (thr 0.50), 2nd 'Knock' 0.32, felt yes (31.3 mg) -> maybe Knock
+[C3] alert on screen 130609 us after the decision (draw 127090 us, present 3518 us)
+[TEACH] 'Doorbell': make the sound 8 times
+[TEACH] shot 1/8: +17.9 dB
+[SS] draw: full max 127090 us + present 3761 us; live view 0.0 fps, max 0 us
+[SS] stats t=390000 level -54 dB floor -45 dB, npu 1005 us runner 1033 us feat 302 us, 0.5 inf/s, busy 11%, active 17.2% (3701 passes/s, 3654 sleeps/s, 226 us each), npu busy 0.05%, dropped 0, imu 313656 samples 0 errors (times back 364 us, clock +6922 ppm), knocks 86, events 13, saves 10
+[TEACH] shot 2/8: +16.1 dB
+[TEACH] shot 3/8: +16.0 dB
+[SS] draw: full max 34019 us + present 3789 us; live view 0.0 fps, max 0 us
+[SS] stats t=400000 level -55 dB floor -41 dB, npu 1001 us runner 1029 us feat 303 us, 0.2 inf/s, busy 15%, active 22.1% (3510 passes/s, 3464 sleeps/s, 224 us each), npu busy 0.02%, dropped 0, imu 321711 samples 0 errors (times back 364 us, clock +7009 ppm), knocks 100, events 13, saves 10
+[TEACH] shot 4/8: +15.9 dB
+[SS] draw: full max 34418 us + present 3792 us; live view 0.0 fps, max 0 us
+[SS] stats t=410000 level -32 dB floor -44 dB, npu 1018 us runner 1046 us feat 303 us, 0.1 inf/s, busy 15%, active 21.6% (3535 passes/s, 3488 sleeps/s, 224 us each), npu busy 0.01%, dropped 0, imu 329766 samples 0 errors (times back 364 us, clock +6982 ppm), knocks 110, events 13, saves 10
+[TEACH] shot 5/8: +15.3 dB
+[TEACH] shot 6/8: +15.4 dB
+[SS] draw: full max 34957 us + present 3735 us; live view 0.0 fps, max 0 us
+[SS] stats t=420000 level -52 dB floor -52 dB, npu 1001 us runner 1033 us feat 303 us, 0.2 inf/s, busy 16%, active 22.0% (3499 passes/s, 3451 sleeps/s, 225 us each), npu busy 0.02%, dropped 0, imu 337819 samples 0 errors (times back 364 us, clock +6744 ppm), knocks 112, events 13, saves 10
+[TEACH] shot 7/8: +14.5 dB
+[TEACH] shot 8/8: +14.3 dB
+[TEACH] profile: thr 0.850, leave-one-out 0.95 0.97 0.95 0.95 0.97 0.97 0.95 0.96; make it once more to test, press to save
+[SS] draw: full max 35535 us + present 3782 us; live view 0.0 fps, max 0 us
+[SS] stats t=430000 level -53 dB floor -49 dB, npu 1000 us runner 1029 us feat 303 us, 0.2 inf/s, busy 16%, active 22.5% (3500 passes/s, 3454 sleeps/s, 224 us each), npu busy 0.02%, dropped 0, imu 345874 samples 0 errors (times back 364 us, clock +7231 ppm), knocks 113, events 13, saves 10
+[TEACH] saved 'Doorbell' thr 0.850; 1 taught
+[STORE] save 11 ok: copy B seq 1226, 824 bytes, 192 ms (max 192), longest step 125380 us, dropped 0
+[SS] t=435634 +2.5 dB best 'Glass breaking' 0.21 (thr 0.50), 2nd 'Quiet' 0.11, felt no (0.0 mg) -> quiet
+[SS] draw: full max 53805 us + present 3536 us; live view 7.0 fps, max 10394 us
+[SS] stats t=440000 level -55 dB floor -54 dB, npu 1005 us runner 1032 us feat 303 us, 0.2 inf/s, busy 9%, active 16.6% (3684 passes/s, 3636 sleeps/s, 229 us each), npu busy 0.02%, dropped 0, imu 353923 samples 0 errors (times back 516 us, clock +6732 ppm), knocks 113, events 13, saves 11
+[SS] t=443853 +16.4 dB best 'Doorbell' 0.96 (thr 0.85), 2nd 'Siren' 0.40, felt yes (23.7 mg) -> Doorbell
+[C3] alert on screen 48229 us after the decision (draw 44473 us, present 3756 us)
+[SS] draw: full max 44473 us + present 3756 us; live view 4.6 fps, max 15082 us
+[SS] stats t=450000 level -32 dB floor -48 dB, npu 1005 us runner 1033 us feat 302 us, 1.0 inf/s, busy 4%, active 10.7% (3956 passes/s, 3906 sleeps/s, 228 us each), npu busy 0.10%, dropped 0, imu 361980 samples 0 errors (times back 516 us, clock +6794 ppm), knocks 115, events 14, saves 11
+[SS] t=449754 +15.3 dB best 'Doorbell' 0.96 (thr 0.85), 2nd 'Siren' 0.45, felt yes (22.7 mg) -> Doorbell
+[C3] alert on screen 51841 us after the decision (draw 47880 us, present 3651 us)
+[SS] t=455667 +15.0 dB best 'Doorbell' 0.95 (thr 0.85), 2nd 'Siren' 0.42, felt no (0.0 mg) -> Doorbell
+[C3] alert on screen 52167 us after the decision (draw 48518 us, present 3648 us)
+[SS] draw: full max 48518 us + present 3651 us; live view 0.0 fps, max 0 us
+[SS] stats t=460000 level -51 dB floor -52 dB, npu 1004 us runner 1030 us feat 303 us, 0.4 inf/s, busy 1%, active 8.4% (4130 passes/s, 4081 sleeps/s, 224 us each), npu busy 0.04%, dropped 0, imu 370030 samples 0 errors (times back 516 us, clock +6680 ppm), knocks 115, events 14, saves 11
+[SS] t=461539 +14.3 dB best 'Doorbell' 0.95 (thr 0.85), 2nd 'Siren' 0.43, felt no (0.0 mg) -> Doorbell
+[C3] alert on screen 52551 us after the decision (draw 48588 us, present 3592 us)
+[SS] t=466382 +5.1 dB best 'Quiet' 0.25 (thr 0.50), 2nd 'Glass breaking' 0.09, felt no (0.0 mg) -> quiet
+[SS] t=467618 +10.4 dB best 'Doorbell' 0.82 (thr 0.85), 2nd 'Siren' 0.56, felt no (0.0 mg) -> unknown
+[SS] draw: full max 48588 us + present 3592 us; live view 0.0 fps, max 0 us
+[SS] stats t=470000 level -54 dB floor -51 dB, npu 1009 us runner 1035 us feat 303 us, 0.6 inf/s, busy 1%, active 7.8% (4140 passes/s, 4090 sleeps/s, 225 us each), npu busy 0.06%, dropped 0, imu 378085 samples 0 errors (times back 516 us, clock +6882 ppm), knocks 117, events 14, saves 11
+[SS] t=472717 +1.8 dB best 'Quiet' 0.34 (thr 0.50), 2nd 'Glass breaking' 0.11, felt no (0.0 mg) -> quiet
+[C3] alert 'Doorbell' ended after 32684 ms: 5 full redraws, longest draw 48588 us + present 3756 us, 0 audio blocks dropped
+[SS] draw: full max 53251 us + present 3537 us; live view 2.6 fps, max 10351 us
+[SS] stats t=480000 level -54 dB floor -54 dB, npu 1004 us runner 1031 us feat 303 us, 0.2 inf/s, busy 3%, active 9.2% (3971 passes/s, 3921 sleeps/s, 231 us each), npu busy 0.02%, dropped 0, imu 386142 samples 0 errors (times back 516 us, clock +6789 ppm), knocks 122, events 14, saves 11
+[SS] t=483068 +13.8 dB best 'Glass breaking' 0.05 (thr 0.50), 2nd 'Baby crying' 0.04, felt no (0.0 mg) -> unknown
+[SS] draw: full max 0 us + present 0 us; live view 9.9 fps, max 14943 us
+[SS] stats t=490000 level -54 dB floor -54 dB, npu 1007 us runner 1035 us feat 303 us, 1.1 inf/s, busy 8%, active 13.8% (3719 passes/s, 3669 sleeps/s, 234 us each), npu busy 0.11%, dropped 0, imu 394197 samples 0 errors (times back 516 us, clock +6952 ppm), knocks 124, events 14, saves 11
+[SS] t=489447 +8.5 dB best 'Glass breaking' 0.49 (thr 0.50), 2nd 'Alarm' 0.16, felt yes (46.5 mg) -> maybe Knock
+[C3] alert on screen 125992 us after the decision (draw 122453 us, present 3538 us)
