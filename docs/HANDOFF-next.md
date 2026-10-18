@@ -1,112 +1,298 @@
-# Handoff: continuing Sound Sense on another machine (2026-10-18)
+# Handoff: continuing Sound Sense (2026-10-18)
 
-**Updated ~9 AM on the board laptop (M1).** Done here since the first version: C2 flash save (GO),
-S1 Ready screen, C5 duty cycle (CPU active 12.6% quiet), new tools, README rewrite. Full feature
-status: [STATUS.md](STATUS.md). Submission brief for a separate session:
-[HANDOFF-submission.md](HANDOFF-submission.md).
+**Updated 10:10 AM PDT on the board laptop (M1).** Since 9 AM, done without playing any sound:
 
-Branch **`gates`** (pushed; never push to `main`). Read in this order: this file,
-[GATES-results.md](GATES-results.md) (what was measured), [HANDOFF-gates.md](HANDOFF-gates.md)
-(test specs C2/C3/C5), [SOUND-SENSE.md](SOUND-SENSE.md) (feature list, P0/P1),
-[HANDOFF.md](HANDOFF.md) (toolchain setup), [DEMO.md](DEMO.md) (demo run sheet).
+- C3 rows 1-4 pass.
+- A5 urgent alerts escalate.
+- A6 night mode.
+- T4 marking sounds right or wrong.
+- H6 "What was that?"
+- S6 microphones off and privacy note.
+- T5 sensitivity on the knob.
+- T7 forgetting taught sounds.
+- The IMU timestamp fix.
+- A bug fix: banners and alerts were closing at once.
+
+`gates` was merged into `main` at 9:53 AM ([PR #1](https://github.com/Parth-Bansal30/e8-hackathon/pull/1), merge `f59e2a2`).
+
+Full feature status: [STATUS.md](STATUS.md). The submission session's files are
+[HANDOFF-submission.md](HANDOFF-submission.md) and [SUBMISSION.md](SUBMISSION.md).
+
+Work stays on branch **`gates`**. Read in this order:
+
+1. This file.
+2. [GATES-results.md](GATES-results.md): what was measured.
+3. [HANDOFF-gates.md](HANDOFF-gates.md): test specs C2, C3 and C5.
+4. [SOUND-SENSE.md](SOUND-SENSE.md): the feature list, P0 and P1.
+5. [HANDOFF.md](HANDOFF.md): toolchain setup.
+6. [DEMO.md](DEMO.md): the demo run sheet.
+
+## Deadline
+
+- Devpost closes at **5:00 PM PDT**; the team target is **4:30 PM**.
+- The submission session needs the judged tag, so the board session freezes by about **3:45 PM**.
+  See "Wrap-up" at the end.
 
 ## Rules from the project owner
 
-- Ask before: repartitioning MRAM, changing SETOOLS config, deleting datasets or caches, pushing to `main`.
-- Commit and push `gates` after each test. One MPS training at a time. Don't overwrite existing
-  models or `firmware/app`; reuse `firmware/app/kws.c` instead of copying it.
-- If a test runs 1.5x over its time box, stop, record what you have, move on.
+- Ask before:
+  - repartitioning MRAM
+  - changing SETOOLS config
+  - deleting datasets or caches
+  - pushing or merging into `main` (always through a PR the owner has OK'd)
+- Commit and push `gates` after each test.
+- One MPS training at a time.
+- Don't overwrite existing models or `firmware/app`. Reuse `firmware/app/kws.c` instead of copying it.
+- Don't commit `firmware/.vscode/` changes or `docs/HANDOFF-gates-dream-canvas.md`.
+- If a test runs 1.5x over its time box, stop, record what you have and move on.
+- **No sound in the room without asking first.** Never raise the Mac volume. Test silently where
+  you can, with the host commands below.
 
 ## State
 
 | Area | Status |
 |---|---|
-| App `firmware/soundsense/` | Runs on the board (release build flashed). Listen, match, teach (5 examples), alerts, LEDs, timeline, stats, knock felt vs heard |
-| Gates | G1 SOFT, G2 SOFT, G3 SOFT (short run), C1 GO, C2 GO, C4 GO, C5 done (12.6%, target 10%), C3 LEDs only (rows 2-5 pending) |
-| P0 features | About 15 of 16 done. Done since: S2 flash save (C2), S1 "Ready" self-test screen, S4 duty cycle (C5). Partial: H1 accuracy (54% from a laptop speaker), T2 checks |
+| App `firmware/soundsense/` | Release build flashed (`cbb51cc` firmware; later commits are docs only) |
+| Gates | G1 SOFT, G2 SOFT, G3 SOFT (short run), C1 GO, C2 GO, C3 rows 1-4 pass (row 5: backlight on/off only, no dimming), C4 GO, C5 done (12.6%, target 10%) |
+| P0 | 15 of 16 done. T2 is partial: "too quiet" and "clipped" are checked; "unlike the others" and "background too loud" aren't |
+| P1 | 10 done, 4 partial (H5, H7, S5, T7), 2 not started (H4 smoke vs CO, T6 similar-sound warning) |
+| Not yet checked by eye or hand | Night mode turning the backlight off; turning the knob (T5) |
 
-## Setting up the new machine
+## Setting up a new machine
 
-1. Toolchain, SETOOLS, J-Link: as in [HANDOFF.md](HANDOFF.md). `tools/fetch_et_bundle.sh` for the ExecuTorch libs.
-2. Not in git (gitignored), fetch again if needed: `model/esc50/` (ESC-50-master), `model/speech_commands/`,
-   `model/ss_cache/`, `firmware/third_party/executorch/et_bundle/`. Torch lives in the et-venv
-   (`~/alif/executorch-alif/et-venv` on the old laptop); the system python3 only needs numpy, scipy, Pillow.
-3. Build and flash: `tools/build_flash.sh soundsense release` (about 45 s). Debug is -O0 and 3x slower to draw.
+1. Toolchain, SETOOLS and J-Link: as in [HANDOFF.md](HANDOFF.md). Fetch the ExecuTorch libs with
+   `tools/fetch_et_bundle.sh`.
+2. These are gitignored; fetch them again if needed:
+   - `model/esc50/` (ESC-50-master)
+   - `model/speech_commands/`
+   - `model/ss_cache/`
+   - `firmware/third_party/executorch/et_bundle/`
 
-4. Python tools: if the system python3's scipy fails to load (it does on the board laptop's macOS:
-   a dyld `__thread_bss` error), use a venv: `/opt/homebrew/bin/python3.12 -m venv .venv &&
-   .venv/bin/pip install numpy scipy pillow`, then run tools as `.venv/bin/python tools/...`.
-
-The two helpers that lived in the old laptop's temp folder are now in git:
-`tools/build_flash.sh soundsense release noflash` (build only) and `tools/rtt_log.sh` (follow the
-log into `docs/gates/ss_rtt.log`).
+   Torch lives in the et-venv (`~/alif/executorch-alif/et-venv` on the old laptop). It is **not on
+   the board laptop**.
+3. Build and flash with `tools/build_flash.sh soundsense release`, about 45 s. Add `noflash` to
+   build only. Debug builds are -O0 and draw 3x slower.
+4. Python tools: run them with the repo venv as `.venv/bin/python tools/...`. The system python3's
+   scipy fails on the board laptop with a dyld `__thread_bss` error. To create the venv:
+   `/opt/homebrew/bin/python3.12 -m venv .venv && .venv/bin/pip install numpy scipy pillow`.
 
 ## How the app works (firmware/soundsense)
 
-- Boot: the **Ready** screen (S1) checks the mics (level, silent, clipped, left/right mismatch), runs the
-  NPU on a test vector against the host's embedding, restores taught sounds from flash, checks the IMU
-  and lights, then goes home after 2.5 s. A failure stays on screen (red LED blink) until a key.
-- `main.cpp`: everything app-level. Every 100 ms the live view runs the encoder (NPU, about 1 ms), but
-  only on the home screen while the level is over the floor + 6 dB and 300 ms after (E1); otherwise
-  the top 3 reads "Quiet: NPU resting". The loop sleeps in WFI whenever no audio block waits (E2). Each
-  sound onset (`ss_audio.c`) is classified once, **0.8 s later** (onset 0.2 s into the 1 s window),
-  by cosine against built-in and taught profiles (`ss_match.c`; same rule as `model/ss_common.py`).
-  A knock is "felt" if the IMU (`ss_imu.c`) saw one within ±100 ms.
-- Screens and LEDs come from `ui/` (render all screens on a laptop: `make -C tools/ui_sim`).
-- Host control over J-Link: `tools/jlink.py <elf> set ss_arg N` then `set ss_cmd C`. C: 1 teach preset N
-  (0 Keys, 1 Doorbell, 2 Clap, 3 Microwave, ...), 2 save, 3 home, 4 forget taught, 5 stats, 6 timeline,
-  7 clock (N = ms after midnight), 8 press keys (N = SS_JOY_* bits), 9 re-measure built-in N, 10 finish,
-  11 N back-to-back flash saves (capped at 1000), 12 fill the record with 8 stand-in sounds (thr 0.99, never match).
-- Taught sounds: `ss_store.c` keeps two copies (A 0x00100000, B 0x00110000) of an `SSND` record with CRC32 in the
-  OSPI1 flash. A save writes the older copy one 4 KB sector erase per main-loop pass (longest step 124 ms,
-  inside the 320 ms audio ring), then programs and reads back. Teach-save and "forget" both save.
-  Boot loads the valid copy with the highest sequence number.
-- RTT log lines: `[S1]` ready/self-test, `[C1]` NPU check, `[STORE]` restore and each save, `[SS] t=... best '...'
-  score (thr) ... felt ... -> result`, `[TEACH]`, `[CAL]`, and `[SS] stats` every 10 s (`active` = CPU awake %,
-  passes/sleeps per second, `npu busy`, dropped blocks, IMU samples/errors, saves).
+**Boot.** The **Ready** screen (S1) runs these checks, then goes home after 2.5 s:
+
+- the mics: level, silent, clipped, left/right mismatch
+- the NPU, on a test vector against the host's embedding
+- restoring taught sounds from flash
+- the IMU and the lights
+
+A failure stays on screen (red LED blink) until a key is pressed.
+
+**`main.cpp`** holds everything at app level.
+
+- **Live view.** Every 100 ms the encoder runs on the NPU (about 1 ms), but only:
+  - on the home screen
+  - while the level is over the floor + 6 dB, and for 300 ms after (E1)
+
+  Otherwise the top 3 reads "Quiet: NPU resting". The loop sleeps in WFI whenever no audio block
+  is waiting (E2).
+- **Decisions.** Each sound onset (`ss_audio.c`) is classified once, **0.8 s later**.
+  - `classify()` compares the sound by cosine against the built-in and taught profiles
+    (`ss_match.c`).
+  - The threshold is moved by the knob offset.
+  - The result is vetoed when the sound is closer to a counter-example (T4) than to the profile.
+  - A loud sound that matches nothing goes to `what_was_that()` (H6).
+  - A knock is "felt" if the IMU (`ss_imu.c`) saw one within ±100 ms.
+- **Screens.** READY 0, HOME 1, ALERT 2, TIMELINE 3, STATS 4, TEACH 5, MENU 6 (the `scr` variable).
+  Drawing comes from `ui/`. To render every screen on a laptop: `make -C tools/ui_sim`, which
+  produces 25 PNGs in `docs/demo/screens/`.
+- **Joystick on the board.** The bits are DOWN=1 (A), LEFT=2 (B), RIGHT=4 (C), UP=8 (D), PRESS=16.
+
+  | Screen | UP | DOWN | LEFT | RIGHT | PRESS |
+  |---|---|---|---|---|---|
+  | Home | Teach (or teach the "What was that?" sound when that banner shows) | Menu | Timeline | Stats | — |
+  | Alert | — | — | Wrong sound | Right sound | OK, dismiss |
+  | Timeline | Pick row | Pick row | Mark wrong | Mark right | Back |
+  | Menu | Move | Move | Home | Home | Choose (forgetting asks twice) |
+
+  The menu has these rows:
+  - Night mode
+  - Microphones
+  - Sensitivity (shows the knob value)
+  - Privacy
+  - Forget each taught sound
+  - Forget all
+  - Back
+- **Taught sounds.** `ss_store.c` keeps two copies of an `SSND` record with CRC32 in the OSPI1
+  flash: A at 0x00100000 and B at 0x00110000.
+  - A save writes the older copy, one 4 KB sector erase per main-loop pass.
+  - Each record holds up to 10 examples (`SS_STORE_MAX_EX`) and the counter-examples.
+  - Teaching, forgetting and marking all save.
+- **RTT log lines.**
+
+  | Line | What it reports |
+  |---|---|
+  | `[S1]` | Ready screen and self-test |
+  | `[C1]` | NPU check |
+  | `[STORE]` | Restore at boot and each save |
+  | `[SS] t=... best '...' score (thr) ... -> result` | Each decision |
+  | `[TEACH]`, `[CAL]` | Teaching and re-measuring built-ins |
+  | `[C3] alert on screen N us after the decision` | Alert timing |
+  | `[SS] knob:` | Knob turned |
+  | `[SS] screen dark (night mode)` | Night mode turned the screen off |
+  | `[SS] stats` (every 10 s) | CPU active %, NPU busy, dropped blocks, IMU `times back` and clock ppm, saves |
+  | `[SS] draw` | Draw timing |
+
+### Host control over J-Link (silent testing)
+
+To send a command: `tools/jlink.py <elf> set ss_arg N`, then `set ss_cmd C`. Python scripts use
+`g3_play.command(C, N)`.
+
+| C | What it does |
+|---|---|
+| 1 | Teach preset N: starts recording, so it needs real sound. Presets: 0 Keys, 1 Doorbell, 2 Clap, 3 Microwave, ... |
+| 2 | Save the taught sound |
+| 3 | Home, or cancel |
+| 4 | Forget all taught sounds |
+| 5 | Stats screen |
+| 6 | Timeline screen |
+| 7 | Set the clock: N = ms after midnight |
+| 8 | Press keys: N = the joystick bits above |
+| 9 | Re-measure built-in N |
+| 10 | Finish |
+| 11 | N back-to-back flash saves (capped at 1000) |
+| 12 | Fill the record with 8 stand-in taught sounds (thr 0.99, never match) |
+| 13 | **Fake a detection** of profile N & 0xff. Flags: 0x100 maybe, 0x200 felt, 0x400 heard only |
+| 14 | **Full redraws 10 times a second** for N seconds (stress test) |
+| 15 | **Run the boot test clip** (a dog bark) through the real `classify()` path |
+| 16 | **Mark timeline row** N & 0xff wrong, or right with 0x100 |
+
+Profile indices: knock 0, dog 1, baby 2, alarm 3, glass 4, siren 5, water 6, speech 7,
+background 8. Taught sounds start at 9.
+
+To check the result, read variables over J-Link:
+
+| Symbol | What it is |
+|---|---|
+| `_ZL3scr` | Current screen |
+| `_ZL9banner_on` | Banner showing |
+| `_ZL5night` | Night mode |
+| `_ZL7mic_off` | Microphones off |
+| `_ZL8sens_pct` | Knob position |
+| `_ZL8sens_off` | Threshold offset from the knob |
+| `_ZL12seed_pending` | "What was that?" sound waiting to seed teaching |
 
 ## Tools
 
-- `tools/g3_play.py`: G3 with the Mac speaker (`builtin`, `teach`, `trials`, `reject`, `noise`, `calibrate`). Reads the RTT log file, so the logger must run.
-- `tools/demo_sound.py`: one demo sound per command (`alarm`, `doorbell --times 5`, ...).
-- `tools/ss_screen.py`: screenshot of the board's frame buffer over J-Link (12 s; tears while the screen redraws).
-- `tools/g2_report.py`, `tools/g2_raw.py`, `tools/mic_calib.py`, `tools/mic_geometry.py`, `tools/teach_preview.py`: earlier gates.
-- `tools/rtt_log.sh [project] [debug|release] [log]`: follow the RTT log into a file (default `docs/gates/ss_rtt.log`).
-- `tools/build_flash.sh <project> [debug|release] [noflash]`: the build log goes to `/tmp/build_<project>.log`
-  (read it when cbuild's error is vague; "read .../firmware: is a directory" was really an ITCM overflow).
-- `tools/jlink.py <elf> reset`: reset and run without a power pull.
-- `tools/c2_power.py`: C2 power-pull and save-cycle bench (watches the log for boots and `[STORE]` lines).
-- `tools/pc_profile.py [elf] [samples]`: statistical CPU profile over J-Link (DWT PC sampling, mapped with nm).
-  It found the 130 µs joystick reads. WFI sleep shows up inside `main`.
+| Tool | Use |
+|---|---|
+| `tools/rtt_log.sh soundsense release <log>` | Follow the RTT log into a file. Start it before any script that reads the log. |
+| `tools/build_flash.sh <project> [debug\|release] [noflash]` | Build (and flash). The log goes to `/tmp/build_<project>.log`; read it when cbuild's error is vague ("read .../firmware: is a directory" was an ITCM overflow). |
+| `tools/jlink.py <elf> get\|set\|rtt\|reset` | Read and write variables, follow RTT, reset |
+| `tools/c3_ui.py [log]` | C3 rows 2-4 without sound: fake detections plus the board's own timing |
+| `tools/pc_profile.py [elf] [samples]` | Statistical CPU profile (DWT PC sampling). WFI sleep shows inside `main`. |
+| `tools/ss_screen.py` | Screenshot of the frame buffer over J-Link (12 s; tears during redraws) |
+| `tools/g3_play.py` | G3 with the Mac speaker: `builtin`, `teach`, `trials`, `reject`, `noise`, `calibrate`. **Needs sound.** |
+| `tools/demo_sound.py` | One demo sound per command. **Needs sound.** |
+| `tools/c2_power.py` | Flash bench with power pulls |
+| `tools/g2_report.py`, `tools/g2_raw.py`, `tools/mic_calib.py`, `tools/mic_geometry.py`, `tools/teach_preview.py` | Earlier gates |
 
 ## Gotchas learned the hard way
 
-- **Don't rebuild while a logger or test runs:** a new ELF moves `_SEGGER_RTT`, and the logger reads garbage.
-- The RTT logger and J-Link commands share the probe; calls fail now and then. `g3_play.command()` retries.
-- The Mac was left **muted**: unmute before any speaker test or demo.
-- The laptop on the same table makes laptop knocks "felt"; lift it for heard-only.
-- Joystick switches bounce: the app has a 250 ms lock-out and ignores sounds for 0.8 s after a press.
-- IMU frame times now come from the BMI323 sensor clock (fixed 10-18): the old "newest frame = read time" timing jumped back up to 69 ms after stalls. `[SS] stats` prints `times back` (should stay 0) and the sensor clock offset (+0.68%). `ss_imu_old_timing` = 1 over J-Link brings the old timing back for comparison.
-- **ITCM is 97.6% full** (all `.text` lands there). New boot-only or rare code goes to MRAM: mark the function
-  `SS_COLD` (`ss_board.h`) or `UI_COLD` (`ui/ui.c`), or add an object pattern to the MRAM section of the shared
-  `firmware/device/ensemble/RTE/Device/AE822FA0E5597LS0_M55_HP/linker_gnu_mram.ld.src` (the OSPI driver and
-  `ss_store.c` are there already).
-- **LPGPIO reads are slow** (~130 µs each, low-power domain). The joystick reads the whole port once, every 10 ms.
-  Don't poll LPGPIO pins in the hot loop.
-- **The IMU poll busy-waits on I3C**: it runs every 10 ms (the FIFO holds plenty), not every pass.
-- The mics surge at start-up: the S1 mic check waits 200 ms before measuring.
-- Don't play test sounds in the board laptop's room without asking, and never raise the Mac volume.
+- **Don't rebuild while a logger or test runs.** A new ELF moves `_SEGGER_RTT`, and the logger
+  reads garbage. Stop it first: `pkill -f rtt_log.sh; pkill -f 'jlink.py.*rtt'`.
+- **`g3_play.command()` retries.** It can send a key press twice, or say "board did not take
+  command" when the board did take it. Wrap it in try/except and check the result by reading
+  `_ZL3scr` and similar, not by trusting the return.
+- **Time differences use `since(t, now)`**, never `now - t`. The loop reads `now` once at the top,
+  and a decision stamps its times after a >1 ms inference, so `now - t` wrapped and closed banners
+  at once (fixed 10-18).
+- **ITCM is 97.0% full** (254,224 of 256 KB; all `.text` lands there). New boot-only or rare code
+  goes to MRAM:
+  - mark the function `SS_COLD` (`ss_board.h`) or `UI_COLD` (`ui/ui.c`), or
+  - add an object pattern to the MRAM section of the shared linker script
+    `firmware/device/ensemble/RTE/Device/AE822FA0E5597LS0_M55_HP/linker_gnu_mram.ld.src`.
+    The OSPI and ADC drivers and `ss_store.c` are there already.
+- **IMU frame times come from the BMI323 sensor clock**, anchored when a read drains the FIFO.
+  The sensor runs 0.68% fast, so cycles per tick are re-measured every 5 s. `[SS] stats` prints
+  `times back` (should stay at 0). Setting `ss_imu_old_timing` = 1 brings the old timing back for
+  comparison.
+- **The knob only applies after it's turned.** The ADC can read 0% at boot. The board starts as
+  taught, wherever the knob was left.
+- **LPGPIO reads are slow** (~130 µs each). The joystick reads the whole port once every 10 ms.
+  The IMU poll busy-waits on I3C, so it also runs every 10 ms.
+- **The joystick switches bounce.** The app has a 250 ms lock-out and ignores sounds for 0.8 s
+  after a press.
+- **The mics surge at start-up.** The S1 mic check waits 200 ms before measuring.
+- **The laptop on the same table makes knocks "felt".** Lift it to test heard-only knocks.
+- **The Mac was left muted.** Unmute it (at the current volume, never louder) only when the owner
+  OKs a sound test.
 
-## Next steps, in priority order
+## Next steps, in priority order (as of 10:10 AM)
 
-1. ~~C2 / S2: save taught sounds in flash.~~ Done (GO, `3043843`, `82367a8`).
-2. **Built-in accuracy (H1).** Needs sound in the room. On-board re-measuring (`g3_play.py calibrate --n 10`) failed only because
-   the Mac was muted halfway; rerun it with sound on, check each class gets about 10 examples in
-   `[CAL]` lines, then rerun `g3_play.py builtin`. It writes `assets/ss_board_profiles.h`, which the
-   firmware picks up at build time. Compare against the trained-profile run (54%, `docs/gates/g3_builtin_trained.txt`).
-3. **G3 rows not measured:** taught (`teach doorbell`, `trials doorbell --n 10`), rejection (`reject`), false alarms (`noise --minutes 10`).
-4. **G1 SOFT says 8 examples per taught sound:** the teach screen only fits 5 circles (84 px each); make them smaller first.
-5. **Latency:** the 0.8 s decision delay misses the 0.5 s target. Test 0.4-0.5 s offline with the et-venv encoder before changing `DECIDE_DELAY`.
-6. T2 checks (show "unlike the others" from the leave-one-out scores, "background too loud"), C3 rows 2-5,
-   the IMU timestamp fix, then P1: A5 (urgent alerts repeat), H6 ("What was that?"), T4, T7, A6.
-   Done: S1 "Ready" screen, C5 duty cycle with E1/E2 (`c6bf638`).
+### Silent: can be built and mostly tested without sound
+
+1. **8 examples per taught sound.** G1 is SOFT; taught-sound acceptance was 38% offline at 5
+   examples. To do:
+   - Make the teach screen's circles smaller; it fits 5 at 84 px today.
+   - Change `SHOTS` from 5 to 8 (`main.cpp:62`). The flash record holds 10, so a "right" mark in
+     T4 can then add only 2 more.
+   - Update the "5 times" / "5 examples" text in SUBMISSION.md, VIDEO-SCRIPT.md, DEMO.md and the
+     README, and tell the submission session.
+   - Trying it live needs sound.
+2. **T2 checks (the last partial P0).**
+   - "Unlike the others": the leave-one-out score of each example against the rest. Warn on the
+     example and offer to redo it.
+   - "Background too loud": the room floor during the shot.
+
+   Host command 1 records real sound. A silent test would need a new command that feeds the boot
+   test clip in as a teach shot (like command 15).
+3. **T6 similar-sound warning** (P1). When teaching finishes, compare the new profile against
+   every other profile. If one is close, say so ("Sounds like Doorbell").
+4. **Checks by eye and hand, no sound.** Ask the owner to look or turn:
+   - Night mode on, then wait 15 s on the home screen: the backlight should go off.
+   - Turn the blue R79 knob: a notice with a bar should show, and an `[SS] knob:` log line should
+     appear.
+5. **Docs pass.** Add these to DEMO.md (its joystick list has only UP, LEFT, RIGHT and Press) and
+   the README:
+   - the controls: DOWN opens the menu; LEFT/RIGHT on an alert or timeline row mark it wrong or
+     right; night mode; microphones off
+   - host commands 13-16
+6. **Smaller P1 gaps, if there's time:**
+   - H5 "still sounding"
+   - S5 explicit 10 s calibration
+   - T7 rename, urgency, and built-ins on/off
+   - C3 row 5 PWM dimming: needs the RTE UTIMER4 driver and masking its per-cycle IRQs
+   - H4 smoke vs CO (a bigger job)
+
+### Needs sound in the room (ask the owner first; current volume only)
+
+7. **Built-in accuracy (H1).**
+   1. Run `g3_play.py calibrate --n 10`. Check that each class gets about 10 examples in the
+      `[CAL]` lines.
+   2. Rerun `g3_play.py builtin`.
+
+   This writes `assets/ss_board_profiles.h`, which the firmware picks up at build time. Compare
+   against the 54% run (`docs/gates/g3_builtin_trained.txt`).
+8. **G3 rows not measured:**
+   - taught: `teach doorbell`, then `trials doorbell --n 10`
+   - rejection: `reject`
+   - false alarms: `noise --minutes 10`
+9. **G2:** re-measure knock alignment after the IMU timestamp fix (real knocks on the table).
+10. **C5:** CPU load during continuous speech.
+
+### Not on this laptop
+
+11. **Latency.** The 0.8 s decision delay misses the 0.5 s target. Testing 0.4-0.5 s needs the
+    et-venv encoder and the datasets; do it offline before changing `DECIDE_DELAY`.
+
+## Wrap-up (board session, by about 3:45 PM)
+
+Agreed with the owner at about 10 AM; also in SUBMISSION.md.
+
+1. Stop feature work. Flash the release build from the final commit and run the Ready screen once.
+2. Update STATUS.md and GATES-results.md, then commit and push `gates`.
+3. Tag the commit the board is flashed from: `git tag v1.0-judged <hash> && git push origin v1.0-judged`.
+4. Open a PR `gates` → `main` and merge it with a merge commit, once the owner OKs it. Keep the
+   `gates` branch.
+5. Give the submission session the hash. It replaces `<hash>` in SUBMISSION.md section 1 and in
+   "About the project".
