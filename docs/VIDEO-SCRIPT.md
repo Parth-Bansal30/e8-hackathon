@@ -188,7 +188,10 @@ Same shots, shorter. Cut between teach examples instead of showing every pause.
 
 ## After recording
 
-- Export at 1080p. Add the captions (the VO lines above).
+- Export at 1080p. Add the captions: [demo/captions_4min.srt](demo/captions_4min.srt) or
+  [demo/captions_3min.srt](demo/captions_3min.srt), made from the VO lines above by
+  `docs/demo/make_captions.py` and timed to the script's slots. Nudge them to the real footage, or
+  rerun the script after changing a VO line.
 - Upload to YouTube (or Vimeo). "Unlisted" lets judges watch with the link; whether it's
   unlisted or public is the owner's call. Paste the link into the Devpost form and into
   SUBMISSION.md section 1.
