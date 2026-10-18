@@ -1,5 +1,10 @@
 # Handoff: continuing Sound Sense on another machine (2026-10-18)
 
+**Updated ~9 AM on the board laptop (M1).** Done here since the first version: C2 flash save (GO),
+S1 Ready screen, C5 duty cycle (CPU active 12.6% quiet), new tools, README rewrite. Full feature
+status: [STATUS.md](STATUS.md). Submission brief for a separate session:
+[HANDOFF-submission.md](HANDOFF-submission.md).
+
 Branch **`gates`** (pushed; never push to `main`). Read in this order: this file,
 [GATES-results.md](GATES-results.md) (what was measured), [HANDOFF-gates.md](HANDOFF-gates.md)
 (test specs C2/C3/C5), [SOUND-SENSE.md](SOUND-SENSE.md) (feature list, P0/P1),
@@ -17,7 +22,7 @@ Branch **`gates`** (pushed; never push to `main`). Read in this order: this file
 | Area | Status |
 |---|---|
 | App `firmware/soundsense/` | Runs on the board (release build flashed). Listen, match, teach (5 examples), alerts, LEDs, timeline, stats, knock felt vs heard |
-| Gates | G1 SOFT, G2 SOFT, G3 SOFT (short run), C1 GO, C4 GO, C3 LEDs only. C2, C5, C3 rows 2-5 pending |
+| Gates | G1 SOFT, G2 SOFT, G3 SOFT (short run), C1 GO, C2 GO, C4 GO, C5 done (12.6%, target 10%), C3 LEDs only (rows 2-5 pending) |
 | P0 features | About 15 of 16 done. Done since: S2 flash save (C2), S1 "Ready" self-test screen, S4 duty cycle (C5). Partial: H1 accuracy (54% from a laptop speaker), T2 checks |
 
 ## Setting up the new machine
@@ -28,27 +33,37 @@ Branch **`gates`** (pushed; never push to `main`). Read in this order: this file
    (`~/alif/executorch-alif/et-venv` on the old laptop); the system python3 only needs numpy, scipy, Pillow.
 3. Build and flash: `tools/build_flash.sh soundsense release` (about 45 s). Debug is -O0 and 3x slower to draw.
 
-Two helper scripts lived only in the old laptop's temp folder; recreate them if wanted:
+4. Python tools: if the system python3's scipy fails to load (it does on the board laptop's macOS:
+   a dyld `__thread_bss` error), use a venv: `/opt/homebrew/bin/python3.12 -m venv .venv &&
+   .venv/bin/pip install numpy scipy pillow`, then run tools as `.venv/bin/python tools/...`.
 
-```
-# build without flashing: same PATH setup as tools/build_flash.sh, then
-cbuild alif.csolution.yml --context soundsense.release+E8-HP --packs     # run in firmware/
-
-# follow the board's log (RTT) into a file
-while true; do tools/jlink.py firmware/out/soundsense/E8-HP/release/soundsense.elf rtt >> docs/gates/ss_rtt.log; sleep 2; done
-```
+The two helpers that lived in the old laptop's temp folder are now in git:
+`tools/build_flash.sh soundsense release noflash` (build only) and `tools/rtt_log.sh` (follow the
+log into `docs/gates/ss_rtt.log`).
 
 ## How the app works (firmware/soundsense)
 
-- `main.cpp`: everything app-level. Every 100 ms the live view runs the encoder (NPU, about 1 ms). Each
+- Boot: the **Ready** screen (S1) checks the mics (level, silent, clipped, left/right mismatch), runs the
+  NPU on a test vector against the host's embedding, restores taught sounds from flash, checks the IMU
+  and lights, then goes home after 2.5 s. A failure stays on screen (red LED blink) until a key.
+- `main.cpp`: everything app-level. Every 100 ms the live view runs the encoder (NPU, about 1 ms), but
+  only on the home screen while the level is over the floor + 6 dB and 300 ms after (E1); otherwise
+  the top 3 reads "Quiet: NPU resting". The loop sleeps in WFI whenever no audio block waits (E2). Each
   sound onset (`ss_audio.c`) is classified once, **0.8 s later** (onset 0.2 s into the 1 s window),
   by cosine against built-in and taught profiles (`ss_match.c`; same rule as `model/ss_common.py`).
   A knock is "felt" if the IMU (`ss_imu.c`) saw one within ±100 ms.
 - Screens and LEDs come from `ui/` (render all screens on a laptop: `make -C tools/ui_sim`).
 - Host control over J-Link: `tools/jlink.py <elf> set ss_arg N` then `set ss_cmd C`. C: 1 teach preset N
   (0 Keys, 1 Doorbell, 2 Clap, 3 Microwave, ...), 2 save, 3 home, 4 forget taught, 5 stats, 6 timeline,
-  7 clock (N = ms after midnight), 8 press keys (N = SS_JOY_* bits), 9 re-measure built-in N, 10 finish.
-- RTT log lines: `[C1]` self-test at boot, `[SS] t=... best '...' score (thr) ... felt ... -> result`, `[TEACH]`, `[CAL]`, stats every 10 s.
+  7 clock (N = ms after midnight), 8 press keys (N = SS_JOY_* bits), 9 re-measure built-in N, 10 finish,
+  11 N back-to-back flash saves (capped at 1000), 12 fill the record with 8 stand-in sounds (thr 0.99, never match).
+- Taught sounds: `ss_store.c` keeps two copies (A 0x00100000, B 0x00110000) of an `SSND` record with CRC32 in the
+  OSPI1 flash. A save writes the older copy one 4 KB sector erase per main-loop pass (longest step 124 ms,
+  inside the 320 ms audio ring), then programs and reads back. Teach-save and "forget" both save.
+  Boot loads the valid copy with the highest sequence number.
+- RTT log lines: `[S1]` ready/self-test, `[C1]` NPU check, `[STORE]` restore and each save, `[SS] t=... best '...'
+  score (thr) ... felt ... -> result`, `[TEACH]`, `[CAL]`, and `[SS] stats` every 10 s (`active` = CPU awake %,
+  passes/sleeps per second, `npu busy`, dropped blocks, IMU samples/errors, saves).
 
 ## Tools
 
@@ -56,6 +71,13 @@ while true; do tools/jlink.py firmware/out/soundsense/E8-HP/release/soundsense.e
 - `tools/demo_sound.py`: one demo sound per command (`alarm`, `doorbell --times 5`, ...).
 - `tools/ss_screen.py`: screenshot of the board's frame buffer over J-Link (12 s; tears while the screen redraws).
 - `tools/g2_report.py`, `tools/g2_raw.py`, `tools/mic_calib.py`, `tools/mic_geometry.py`, `tools/teach_preview.py`: earlier gates.
+- `tools/rtt_log.sh [project] [debug|release] [log]`: follow the RTT log into a file (default `docs/gates/ss_rtt.log`).
+- `tools/build_flash.sh <project> [debug|release] [noflash]`: the build log goes to `/tmp/build_<project>.log`
+  (read it when cbuild's error is vague; "read .../firmware: is a directory" was really an ITCM overflow).
+- `tools/jlink.py <elf> reset`: reset and run without a power pull.
+- `tools/c2_power.py`: C2 power-pull and save-cycle bench (watches the log for boots and `[STORE]` lines).
+- `tools/pc_profile.py [elf] [samples]`: statistical CPU profile over J-Link (DWT PC sampling, mapped with nm).
+  It found the 130 µs joystick reads. WFI sleep shows up inside `main`.
 
 ## Gotchas learned the hard way
 
@@ -65,17 +87,26 @@ while true; do tools/jlink.py firmware/out/soundsense/E8-HP/release/soundsense.e
 - The laptop on the same table makes laptop knocks "felt"; lift it for heard-only.
 - Joystick switches bounce: the app has a 250 ms lock-out and ignores sounds for 0.8 s after a press.
 - IMU timestamp bug in `ss_imu_poll`: frame times can jump back 15-54 ms. Fix: time frames from the BMI323 sensor clock (25.6 kHz, 32 ticks per frame). The ±100 ms pairing window hides it for now.
+- **ITCM is 97.6% full** (all `.text` lands there). New boot-only or rare code goes to MRAM: mark the function
+  `SS_COLD` (`ss_board.h`) or `UI_COLD` (`ui/ui.c`), or add an object pattern to the MRAM section of the shared
+  `firmware/device/ensemble/RTE/Device/AE822FA0E5597LS0_M55_HP/linker_gnu_mram.ld.src` (the OSPI driver and
+  `ss_store.c` are there already).
+- **LPGPIO reads are slow** (~130 µs each, low-power domain). The joystick reads the whole port once, every 10 ms.
+  Don't poll LPGPIO pins in the hot loop.
+- **The IMU poll busy-waits on I3C**: it runs every 10 ms (the FIFO holds plenty), not every pass.
+- The mics surge at start-up: the S1 mic check waits 200 ms before measuring.
+- Don't play test sounds in the board laptop's room without asking, and never raise the Mac volume.
 
 ## Next steps, in priority order
 
-1. **C2 / S2: save taught sounds in flash.** Spec in HANDOFF-gates.md §C2: `ss_store.c`, OSPI driver as
-   `firmware/flash_test`, copies A/B at 0x00100000 / 0x00110000, `SSND` record with CRC32. Load at boot,
-   save on teach. Test with power pulls. The S4 stats tile `save_ms` is waiting for it.
-2. **Built-in accuracy (H1).** On-board re-measuring (`g3_play.py calibrate --n 10`) failed only because
+1. ~~C2 / S2: save taught sounds in flash.~~ Done (GO, `3043843`, `82367a8`).
+2. **Built-in accuracy (H1).** Needs sound in the room. On-board re-measuring (`g3_play.py calibrate --n 10`) failed only because
    the Mac was muted halfway; rerun it with sound on, check each class gets about 10 examples in
    `[CAL]` lines, then rerun `g3_play.py builtin`. It writes `assets/ss_board_profiles.h`, which the
    firmware picks up at build time. Compare against the trained-profile run (54%, `docs/gates/g3_builtin_trained.txt`).
 3. **G3 rows not measured:** taught (`teach doorbell`, `trials doorbell --n 10`), rejection (`reject`), false alarms (`noise --minutes 10`).
 4. **G1 SOFT says 8 examples per taught sound:** the teach screen only fits 5 circles (84 px each); make them smaller first.
 5. **Latency:** the 0.8 s decision delay misses the 0.5 s target. Test 0.4-0.5 s offline with the et-venv encoder before changing `DECIDE_DELAY`.
-6. T2 checks (show "unlike the others" from the leave-one-out scores, "background too loud"), S1 "Ready" screen, C3 rows 2-5, C5 duty cycle, the IMU timestamp fix, then P1 (E1/E2 power saving first).
+6. T2 checks (show "unlike the others" from the leave-one-out scores, "background too loud"), C3 rows 2-5,
+   the IMU timestamp fix, then P1: A5 (urgent alerts repeat), H6 ("What was that?"), T4, T7, A6.
+   Done: S1 "Ready" screen, C5 duty cycle with E1/E2 (`c6bf638`).

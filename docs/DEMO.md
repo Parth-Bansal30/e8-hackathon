@@ -8,7 +8,9 @@ numbers are samples; quote the measured ones below.
 ## Before you start (5 minutes)
 
 - **Firmware:** the board runs the release build. If in doubt, run
-  `tools/build_flash.sh soundsense release` (about 45 s). The screen should say **Listening**.
+  `tools/build_flash.sh soundsense release` (about 45 s). After a reset the **Ready** screen
+  checks the mics, NPU, saved sounds, vibration sensor and lights (1.5 s), then the home screen
+  says **Listening**. A red row means something failed; it stays on screen until you press.
 - **Placement:** put the board flat on the table where you'll knock. Put the laptop on the same table, 0.5 to 1 m away.
 - **Mac sound:** unmute the Mac and set the volume to about 75%. (It was muted at the last check.)
 - **Sound check:** in a terminal at the repo root, run `tools/demo_sound.py alarm`. A full-screen **Alarm** should appear.
@@ -28,7 +30,9 @@ numbers are samples; quote the measured ones below.
 2. **Live view (20 s):** walk through the home screen:
    - the spectrogram, scrolling 10 times a second;
    - the room level against its noise floor;
-   - the three best matches right now.
+   - the three best matches right now. In a quiet room this reads **Quiet: NPU resting**: the
+     encoder only runs when the room is louder than its floor, to save power. Talk or clap and the
+     matches come back.
 3. **Built-in alert (30 s):**
    - Run `tools/demo_sound.py alarm`. A full-screen **Alarm** appears and the LEDs blink. Press to dismiss.
    - Optional: `glass` (an urgent orange screen that strobes once a second, safe for photosensitivity) or `baby`.
@@ -42,6 +46,8 @@ numbers are samples; quote the measured ones below.
    - Jingle keys 5 times, about 2 s apart. Each circle turns green and shows its dB over the room.
    - Jingle once more: it shows **Test match: xx%**. Press to **Save**.
    - Jingle the keys again: **Keys** alert.
+   - Optional: press reset. The Ready screen shows **Saved sounds: 1 taught sound restored**, and keys still
+     alert. Taught sounds live in the flash.
 
    **Repeatable version with the laptop:** on the name screen, press DOWN once to pick **Doorbell**, then press to start. Then:
    - run `tools/demo_sound.py doorbell --times 5` and wait for 5 green circles;
@@ -57,7 +63,11 @@ numbers are samples; quote the measured ones below.
   - 219k parameters, 43 M MACs, a 240 KB model, all 14 operators on the Ethos-U85.
   - 1.0 ms per run (1.03 ms through the ExecuTorch runner), 10 runs a second.
 - **Accuracy against the Python reference:** the log-mel features match exactly (0 of 1960 values differ), and the embedding is within 1 LSB.
-- **Load:** the whole app, drawing included, keeps the CPU 21% busy (release build), with 0 audio blocks dropped.
+- **Power:** in a quiet room the CPU is awake 12.6% of the time (it sleeps between audio blocks)
+  and the NPU is idle; it was 100% before the power work. 0 audio blocks dropped.
+- **Saving:** a taught sound is saved to flash in about 250 ms, in the background, without
+  dropping audio (1,101 test saves). Restored at boot in 2.2 ms.
+- **Boot:** ready 1.5 s after reset, self-test included.
 - **Knock sensing:** accelerometer read at 800 Hz through its FIFO. Knocks 20 cm away were felt 21 of 22 times.
 - **Alert timing:** the alert appears about 0.85 s after the sound starts. The board waits 0.8 s so the whole sound is in the window.
 - **Built-ins from a laptop speaker,** on clips never used in training: 54% overall, alarm 75%. Taught sounds work live.
@@ -65,7 +75,9 @@ numbers are samples; quote the measured ones below.
 ## Known limits (be upfront if asked)
 
 - **Built-ins vs taught sounds:** the built-ins are weaker through a laptop speaker and an unfamiliar room. Teaching is the strong part: 5 examples, on the device.
-- **No saving yet:** taught sounds live in RAM, so a power cut forgets them (flash storage, C2, isn't done). Don't unplug between teaching and showing.
+- **Taught sounds at 5 examples:** offline, a taught sound was accepted 38% of the time on
+  recordings it had never heard; live with the same keys or doorbell it works. 8 examples per sound
+  is the planned fix.
 - **Knock range:** knocks are felt within about 20 cm of the board on this table, hence "place me on the table by the door".
 
 ## If something goes wrong
@@ -75,7 +87,8 @@ numbers are samples; quote the measured ones below.
   - Move the laptop closer.
   - The room level bar on the home screen should jump when the sound plays.
 - **Wrong label:** the low-confidence path shows "Maybe: …?". That's the cue to teach it.
-- **Frozen or blank screen:** press reset or power-cycle; it boots in about 3 s.
+- **Frozen or blank screen:** press reset or power-cycle; it is ready in about 1.5 s, and taught
+  sounds come back from the flash.
 - **Teach without the joystick (over J-Link):**
 
   ```
