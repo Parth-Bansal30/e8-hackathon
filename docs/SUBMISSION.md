@@ -362,8 +362,9 @@ started from Arm's alif-ethos-u85-npu-mnist learning path.
       wrong mark. Clap kept an example unlike the others (T2 flagged it; without it the threshold would
       be 0.72) and then alerted on room sounds. Settings > Forget (two presses each) leaves Doorbell
       (0.85), Microwave (0.835) and Phone (0.85; play `tools/demo_sound.py chime3`).
-- [ ] Edit the video (captions: `demo/captions_*.srt`; cards and overlays: `demo/video/`), upload it to
-      YouTube or Vimeo, and paste the link in section 1 and the form.
+- [ ] Record the video at the board (one take, about 2:30: [VIDEO-SCRIPT.md](VIDEO-SCRIPT.md); board
+      steps: [HANDOFF-video.md](HANDOFF-video.md)), upload it to YouTube (unlisted or public), and paste
+      the link in section 1 and the form.
 - [ ] Upload the 9 gallery images in the [demo/GALLERY.md](demo/GALLERY.md) order (cover first), with
       their captions.
 - [ ] Add the team members (team HashMap) in step 1 of the form.
