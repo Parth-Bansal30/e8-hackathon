@@ -101,6 +101,19 @@ static int knock_prof = -1;
 
 static const look kFallback = {"?", "Sound", UI_ICON_UNKNOWN, UI_CAT_OTHER, UI_INFO};
 
+/* Built-in profiles in RAM, so they can be re-measured on the board (G3 row 7): the trained ones,
+ * replaced by assets/ss_board_profiles.h where that has a board measurement. */
+static float builtin_proto[SS_NUM_BUILTIN][SS_EMB];
+static float builtin_thr[SS_NUM_BUILTIN];
+#if __has_include("assets/ss_board_profiles.h")
+#include "assets/ss_board_profiles.h"
+#else
+#define SS_NUM_BOARD 0
+static const char *const ss_board_names[1] = {""};
+static const float ss_board_thr[1] = {0};
+static const float ss_board_proto[1][SS_EMB] = {};
+#endif
+
 static void profiles_init(void)
 {
     n_prof = 0;
@@ -108,7 +121,15 @@ static void profiles_init(void)
         const look *lk = &kFallback;
         for (const look &l : kBuiltin)
             if (!strcmp(l.key, ss_builtin_names[i])) lk = &l;
-        prof[n_prof] = {lk, ss_builtin_proto[i], ss_builtin_thr[i], ss_builtin_alerting[i] != 0, -1};
+        memcpy(builtin_proto[i], ss_builtin_proto[i], sizeof(builtin_proto[i]));
+        builtin_thr[i] = ss_builtin_thr[i];
+        for (int k = 0; k < SS_NUM_BOARD; k++)
+            if (!strcmp(ss_board_names[k], ss_builtin_names[i])) {
+                memcpy(builtin_proto[i], ss_board_proto[k], sizeof(builtin_proto[i]));
+                builtin_thr[i] = ss_board_thr[k];
+                printf("[SS] '%s': board-measured profile, thr %.3f\r\n", ss_builtin_names[i], (double)builtin_thr[i]);
+            }
+        prof[n_prof] = {lk, builtin_proto[i], builtin_thr[i], ss_builtin_alerting[i] != 0, -1};
         if (!strcmp(ss_builtin_names[i], "knock")) knock_prof = n_prof;
         n_prof++;
     }
@@ -424,6 +445,33 @@ static void alert_raise(ui_event *e)
 }
 
 /* Classify the sound whose onset was at sample `onset`: called once the window holds it 0.2 s in. */
+/* Re-measuring a built-in on the board: embeddings of the next sounds replace its profile. */
+#define CAL_MAX 16
+static int cal_idx = -1, cal_n;
+static float cal_emb[CAL_MAX][SS_EMB];
+
+static void cal_finish(void)
+{
+    if (cal_idx < 0) return;
+    const int i = cal_idx;
+    cal_idx = -1;
+    if (cal_n < 3) {
+        printf("[CAL] '%s': only %d examples, profile unchanged\r\n", ss_builtin_names[i], cal_n);
+        return;
+    }
+    float proto[SS_EMB], loo[CAL_MAX];
+    const float thr = ss_make_profile(cal_emb, cal_n, proto, loo);
+    const float was = ss_dot(proto, ss_builtin_proto[i]);
+    memcpy(builtin_proto[i], proto, sizeof(proto));
+    builtin_thr[i] = thr;
+    prof[i].thr = thr;
+    printf("[CAL] '%s' from %d board examples: thr %.3f (trained %.3f), cos to the trained profile %.3f\r\n",
+           ss_builtin_names[i], cal_n, (double)thr, (double)ss_builtin_thr[i], (double)was);
+    printf("[CAL] proto %s %.4f", ss_builtin_names[i], (double)thr);
+    for (int k = 0; k < SS_EMB; k++) printf(" %.5f", (double)proto[k]);
+    printf("\r\n");
+}
+
 static void decide(uint32_t onset, uint32_t onset_ms)
 {
     static int8_t in[IN_LEN];
@@ -441,6 +489,14 @@ static void decide(uint32_t onset, uint32_t onset_ms)
 
     if (scr == TEACH) {
         if (tc.ph != T_NAMING) teach_shot(e, snr, clipped);
+        return;
+    }
+    if (cal_idx >= 0) {
+        if (snr >= MIN_SNR_DB && cal_n < CAL_MAX) {
+            memcpy(cal_emb[cal_n++], e, sizeof(e));
+            printf("[CAL] '%s' example %d: +%.1f dB, cos to the trained profile %.2f\r\n", ss_builtin_names[cal_idx],
+                   cal_n, (double)snr, (double)ss_dot(e, ss_builtin_proto[cal_idx]));
+        }
         return;
     }
     if ((int32_t)(onset_ms - last_key_ms) > -300 && (int32_t)(onset_ms - last_key_ms) < KEY_QUIET_MS) {
@@ -490,7 +546,8 @@ static uint32_t host_keys;
 
 /* 1 teach preset ss_arg (straight to recording), 2 save the taught sound, 3 home / cancel,
  * 4 forget taught sounds, 5 stats, 6 timeline, 7 clock (ss_arg = ms after midnight now),
- * 8 press joystick keys (ss_arg = SS_JOY_* bits). */
+ * 8 press joystick keys (ss_arg = SS_JOY_* bits), 9 re-measure built-in ss_arg from the next sounds,
+ * 10 finish re-measuring. */
 static void host_command(void)
 {
     const uint32_t c = ss_cmd, a = ss_arg;
@@ -505,6 +562,9 @@ static void host_command(void)
     case 6: scr = TIMELINE; tl_first = 0; redraw = true; break;
     case 7: ui_set_clock(a - ss_ms()); redraw = true; break;
     case 8: host_keys |= a; break;
+    case 9: cal_finish(); cal_idx = (int)(a % SS_NUM_BUILTIN); cal_n = 0;
+            printf("[CAL] '%s': measuring\r\n", ss_builtin_names[cal_idx]); break;
+    case 10: cal_finish(); break;
     }
 }
 
