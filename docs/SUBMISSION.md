@@ -398,8 +398,8 @@ started from Arm's alif-ethos-u85-npu-mnist learning path.
 - [x] Re-check against `gates`: the draft now covers the final firmware (8 examples, teach checks,
       437 ms alerts, Sounds page, Calibrate room, snooze, "still sounding", talking nearby).
 - [x] Merge PR #4 first (merged 24bc7ae): the two images in section 2 load from `main` (architecture, board photos).
-- [ ] **Paste section 2 into the Devpost draft again:** the 10:30 AM paste is out of date (5
-      examples, 0.85 s alerts, old feature counts). Same for the elevator pitch.
+- [x] Paste section 2 into the Devpost draft again, with the elevator pitch (checked at 4:20 PM: the
+      draft has `v1.2-judged` = `0d8b0f1`, 437 ms alerts, 8 examples and the Team section).
 - [x] Hand checks (knob, night-mode backlight) passed at 1:25 PM; "Known limits" updated.
 - [x] Board photos (1:32 PM), video footage (1:33-1:45 PM) and demo rehearsal (1:50 PM) done at the board.
 - [ ] **Before judging, decide on Keys and Clap** (both saved at the loose threshold 0.50). Keys was the
@@ -412,6 +412,7 @@ started from Arm's alif-ethos-u85-npu-mnist learning path.
       the link in section 1 and the form.
 - [ ] Upload the 9 gallery images in the [demo/GALLERY.md](demo/GALLERY.md) order (cover first), with
       their captions.
-- [ ] Add the team members (team HashMap) in step 1 of the form.
+- [x] Add the team members (team HashMap): Sanket Shah and Parth Bansal both show under "Created by"
+      (4:20 PM). Each still has an empty "Describe your contribution" box on the project page.
 - [ ] Check the preview: the code block and the bold text render.
 - [ ] Submit before 4:30 PM (the page's hard deadline is 5:00 PM PDT).
