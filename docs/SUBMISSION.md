@@ -11,8 +11,22 @@ Video script and shot list: [VIDEO-SCRIPT.md](VIDEO-SCRIPT.md). Gallery images a
 ## 0. What the Devpost page asks for
 
 Read in a browser on 2026-10-18 at about 9:20 AM PDT (Overview, Rules, Schedule, Updates,
-Resources). The submission form itself needs a Devpost login, so its exact fields and any
-hackathon-specific questions still need checking (see section 3).
+Resources). The submission form was read at about 10:20 AM, after a draft project was created
+(devpost.com/software/1491064, submission 1245518; not submitted).
+
+**The form has four steps and no hackathon-specific questions:**
+1. **Manage team:** invite teammates by email or a secret invite link. Teams are 2 to 5 people, so
+   add everyone.
+2. **Project overview:** *Project name*, *Elevator pitch* (200 characters max), thumbnail (JPG, PNG
+   or GIF, 5 MB max, 3:2 recommended). Starred fields are required.
+3. **Project details:** *About the project* (Markdown, with LaTeX; images by URL), *Built with* (up
+   to 25 tags), "Try it out" links (several allowed), image gallery (up to 15 images, JPG, PNG or
+   GIF, 5 MB each, 3:2 recommended), video demo link (YouTube or Vimeo, optional).
+4. **Submit:** a required checkbox agreeing to the Official Rules and Devpost's Terms of Service for
+   the whole team, then "Submit project".
+
+Since there's no field for the judged commit or tag, it goes in two places: a "Try it out" link to
+the tag, and a line at the top of "About the project" (both in this draft).
 
 **Dates (from the page's schedule):** submissions close **Sunday 2026-10-18, 5:00 PM PDT**, and
 winners are announced at 5:30 PM PDT. Our own target is still 4:30 PM, with everything ready by
@@ -23,8 +37,8 @@ winners are announced at 5:30 PM PDT. Our own target is still 4:30 PM, with ever
 | Requirement (page wording, shortened) | Where we cover it | State |
 |---|---|---|
 | Live demonstration on the Alif E8 Dev Kit | At the judging table; the run of show is [VIDEO-SCRIPT.md](VIDEO-SCRIPT.md) / [DEMO.md](DEMO.md) | Ready to rehearse |
-| Public source code repository | github.com/Parth-Bansal30/e8-hackathon is public | **Default branch `main` is out of date (see below)** |
-| Fixed release version: a commit hash or release tag | Section 1, "Judged version" | **Owner to decide** |
+| Public source code repository | github.com/Parth-Bansal30/e8-hackathon is public | Done; merge `gates` into `main` again at the end |
+| Fixed release version: a commit hash or release tag | Tag `v1.0-judged` on the board session's last commit | At the end |
 | README with build, deploy and run instructions | README "Build and run" | Done on `gates` |
 | Brief description of the application architecture | README "How it works"; section 2 "How we built it" | Done |
 | Where key models and workloads execute | README "Workload placement"; section 2 | Done |
@@ -35,20 +49,17 @@ Other rules that matter:
 - Everything in English.
 - Own work; open-source use is allowed if its licences are followed and the project builds on it.
   Our credits are in the README ("Credits and licenses").
-- The page doesn't mention a demo video. Devpost forms usually have an optional video field
-  (YouTube, Vimeo or Youku link). The script is ready if the form asks for one.
+- The page doesn't require a demo video; the form has an optional YouTube or Vimeo link, embedded
+  at the top of the project page. Worth adding: judges who miss the live demo see it there.
 - **Judging criteria (from the page):** Functionality & Reliability 20, Performance & Efficiency
   20, Effective Use of the E8 Architecture 15, Multimodal & Sensor Integration 15, Innovation &
   Use-case Value 10, Technical Ambition & Integration 10, Engineering Quality & Demo 10. Each judge
   scores 1 to 5 per category, weighted. This matches the rubric in the brief.
 
-**The `main` problem.** The repo's default branch is `main`, which is 28 commits behind `gates` and
-still shows the old spec-only README. A judge who opens the repo link lands on `main`. Pick one
-(owner's call):
-1. Merge `gates` into `main` before submitting (best: the repo page then shows the real README), or
-2. Link Devpost to the judged commit or tag directly (`.../tree/<tag>`), so judges skip `main`.
-
-Doing both is safest.
+**`main`.** The repo's default branch is `main`, which judges land on. It was 28 commits behind
+`gates` at 9:20 AM; the owner merged `gates` into it at 9:53 AM (PR #1). Plan, agreed with the
+owner at about 10 AM: when the board session is done, tag its last commit `v1.0-judged`, push the
+tag, and merge `gates` into `main` once more.
 
 ## 1. Form fields, ready to paste
 
@@ -63,14 +74,15 @@ Doing both is safest.
 `executorch`, `pytorch`, `vela`, `cmsis`, `c`, `c++`, `python`, `numpy`, `bmi323`, `segger-rtt`,
 `esc-50`, `speech-commands`
 
-**"Try it out" links:**
-- Code: `https://github.com/Parth-Bansal30/e8-hackathon/tree/<judged tag or commit>`
-- Build and run: the README at that link, "Build and run".
+**"Try it out" links** (one per field; "add another link" adds a field):
+- `https://github.com/Parth-Bansal30/e8-hackathon/tree/v1.0-judged` (the judged version; works
+  once the tag is pushed)
+- `https://github.com/Parth-Bansal30/e8-hackathon` (the repo; `main` shows the README with build
+  and run steps)
 
-**Judged version (fixed release):** `<to fill in>`. Use the commit the board was flashed from for
-judging. On the board laptop: `git rev-parse HEAD`, after the last firmware change is committed and
-pushed. A tag is easier for judges to read, for example `git tag v1.0-judged <hash>` and
-`git push origin v1.0-judged`. That publishes the tag, so it's the owner's call.
+**Judged version (fixed release):** tag `v1.0-judged`, commit `<hash>`, both set when the board
+session is done (agreed with the owner). The tag goes on the commit the board is flashed from for
+judging.
 
 **Video demo link:** `<YouTube or Vimeo link, unlisted is fine if the form allows it>`.
 
@@ -86,6 +98,9 @@ tables because we haven't checked that Devpost renders them; the README has the 
 tables.
 
 ---
+
+**Code:** [github.com/Parth-Bansal30/e8-hackathon](https://github.com/Parth-Bansal30/e8-hackathon).
+**Judged version:** tag `v1.0-judged` (commit `<hash>`). Build and run steps are in the README.
 
 ## Inspiration
 
@@ -142,6 +157,8 @@ Sound Sense runs entirely on the Alif Ensemble E8 DevKit (Cortex-M55 + Ethos-U85
 ## How we built it
 
 ### Architecture
+
+![Architecture](https://raw.githubusercontent.com/Parth-Bansal30/e8-hackathon/main/docs/demo/gallery/02_architecture.png)
 
 ```
  PDM mics (16 kHz) ──> log-mel, 40 bands / 20 ms (M55) ──> 49x40 patch (~1 s) ──int8──> encoder (Ethos-U85)
@@ -301,12 +318,11 @@ started from Arm's alif-ethos-u85-npu-mnist learning path.
 
 ## 3. Before you submit (owner)
 
-- [ ] Sign in to Devpost and open the submission form. Check for fields this draft doesn't cover
-      (hackathon questions such as repo URL or commit hash, team, student status for the all-student
-      prize).
-- [ ] Decide `main` (merge `gates`, link the tag, or both).
-- [ ] Fill in the judged commit or tag (section 1).
-- [ ] Record and upload the video if the form asks for one; paste the link.
+- [x] Sign in to Devpost and read the form (10:20 AM; no hackathon-specific questions).
+- [x] Decide `main` and the judged version (tag `v1.0-judged` at the end, then merge again).
+- [ ] When the board session is done: tag, push the tag, merge `gates` into `main`, and replace
+      `<hash>` in section 1 and at the top of "About the project".
+- [ ] Record the video, upload it to YouTube or Vimeo, and paste the link.
 - [ ] Upload the gallery images (thumbnail first).
 - [ ] Add the team members.
 - [ ] Check the preview: the code block and the bold text render.
