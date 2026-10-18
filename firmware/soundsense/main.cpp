@@ -113,6 +113,7 @@ struct profile {
     float thr;
     bool alerting;
     int preset;   /* taught: index into kPresets; built-in: -1 */
+    ui_urgency urg;   /* T7: taught sounds' urgency can be changed in the menu */
 };
 
 static profile prof[MAX_PROF];
@@ -122,6 +123,13 @@ static int8_t taught_ex[MAX_TAUGHT][SS_STORE_MAX_EX][SS_EMB];   /* the examples,
 static uint8_t taught_n_ex[MAX_TAUGHT];
 static_assert(MAX_TAUGHT <= SS_STORE_MAX_PROF && SHOTS <= SS_STORE_MAX_EX, "flash record too small");
 static int knock_prof = -1;
+static uint32_t builtin_mute;   /* T7: bit i = built-in i turned off in the menu (saved in the flash) */
+
+static void apply_mute(void)
+{
+    for (int i = 0; i < SS_NUM_BUILTIN; i++)
+        prof[i].alerting = ss_builtin_alerting[i] && !(builtin_mute >> i & 1u);
+}
 
 /* T4: sounds the user marked "wrong" for a profile. A sound closer to one of them than to the profile
  * itself doesn't count as that profile. Kept in flash for taught sounds; for built-ins until restart. */
@@ -172,7 +180,7 @@ SS_COLD static void profiles_init(void)
                 builtin_thr[i] = ss_board_thr[k];
                 printf("[SS] '%s': board-measured profile, thr %.3f\r\n", ss_builtin_names[i], (double)builtin_thr[i]);
             }
-        prof[n_prof] = {lk, builtin_proto[i], builtin_thr[i], ss_builtin_alerting[i] != 0, -1};
+        prof[n_prof] = {lk, builtin_proto[i], builtin_thr[i], ss_builtin_alerting[i] != 0, -1, lk->urg};
         if (!strcmp(ss_builtin_names[i], "knock")) knock_prof = n_prof;
         n_prof++;
     }
@@ -192,7 +200,7 @@ SS_COLD static int profile_add(int preset, const float *proto, float thr, const 
     if (n > SS_STORE_MAX_EX) n = SS_STORE_MAX_EX;
     memcpy(taught_ex[slot], ex, (size_t)n * SS_EMB);
     taught_n_ex[slot] = (uint8_t)n;
-    prof[SS_NUM_BUILTIN + slot] = {&kPresets[preset], taught_proto[slot], thr, true, preset};
+    prof[SS_NUM_BUILTIN + slot] = {&kPresets[preset], taught_proto[slot], thr, true, preset, kPresets[preset].urg};
     n_cx[SS_NUM_BUILTIN + slot] = 0;
     n_prof = SS_NUM_BUILTIN + n_taught;
     return slot;
@@ -208,13 +216,14 @@ SS_COLD static void store_save(void)
 {
     if (!store_ok) return;
     memset(&store_img, 0, sizeof(store_img));
+    store_img.builtin_mute = builtin_mute;
     store_img.n_prof = n_taught;
     for (int k = 0; k < n_taught; k++) {
         const profile &p = prof[SS_NUM_BUILTIN + k];
         ss_store_prof &s = store_img.prof[k];
         strncpy(s.key, p.lk->key, SS_STORE_KEY - 1);
         s.icon = (uint8_t)p.lk->icon;
-        s.urgency = (uint8_t)p.lk->urg;
+        s.urgency = (uint8_t)p.urg;
         s.cat = (uint8_t)p.lk->cat;
         s.thr = p.thr;
         memcpy(s.proto, p.proto, sizeof(s.proto));
@@ -263,12 +272,15 @@ SS_COLD static int store_load(void)
             continue;
         }
         const int slot = profile_add(preset, s.proto, s.thr, s.ex, s.n_ex);
+        if (s.urgency <= UI_URGENT) prof[SS_NUM_BUILTIN + slot].urg = (ui_urgency)s.urgency;
         n_cx[SS_NUM_BUILTIN + slot] = s.n_cx;
         memcpy(cx[SS_NUM_BUILTIN + slot], s.cx, sizeof(s.cx));
     }
+    builtin_mute = store_img.builtin_mute;
+    apply_mute();
     const ss_store_stats *st = ss_store_get_stats();
-    printf("[STORE] loaded %d taught sounds from copy %c, seq %lu, in %lu us\r\n", n_taught, 'A' + st->copy,
-           (unsigned long)st->seq, (unsigned long)st->load_us);
+    printf("[STORE] loaded %d taught sounds from copy %c, seq %lu, in %lu us; built-ins off: 0x%lx\r\n", n_taught,
+           'A' + st->copy, (unsigned long)st->seq, (unsigned long)st->load_us, (unsigned long)builtin_mute);
     return 1;
 }
 
@@ -396,7 +408,7 @@ static ui_event *add_event(const look *lk, bool maybe, ui_felt felt, float score
     e->label = lk->label;
     e->icon = lk->icon;
     e->cat = lk->cat;
-    e->urgency = lk->urg;
+    e->urgency = p >= 0 && p < n_prof ? prof[p].urg : lk->urg;
     e->maybe = maybe;
     e->felt = felt;
     e->confidence = (uint8_t)(score < 0 ? 0 : score > 1 ? 100 : score * 100);
@@ -446,6 +458,7 @@ static int alert_phase, tl_first;
 /* Night mode (A6): info sounds are only logged; the home screen goes dark (backlight off, no live view,
  * no live encoder) NIGHT_DARK_MS after the last press or alert; important and urgent alerts light it. */
 static bool night, dark;
+static bool still_shown;   /* H5: the newest event read "still sounding" at the last check */
 static uint32_t last_wake;
 static bool mic_off;   /* S6: microphones off from the menu: nothing is classified, shown, or kept */
 /* T5: the blue knob. Its position, 0-100% (-1: no reading), and the threshold offset it gives:
@@ -879,7 +892,7 @@ static void classify(const float *e, const float *s, float snr, int clipped, uin
     if (loud && over && prof[b].alerting && b != knock_prof) {
         lk = prof[b].lk;
         maybe = s[b] < thr + MAYBE_MARGIN;
-    } else if (loud && ((b == knock_prof && over) || felt == UI_FELT_YES)) {
+    } else if (loud && prof[knock_prof].alerting && ((b == knock_prof && over) || felt == UI_FELT_YES)) {
         /* a knock: the encoder says so, or the table felt it (then "maybe" unless both agree) */
         lk = prof[knock_prof].lk;
         f = felt;
@@ -1035,17 +1048,36 @@ SS_COLD static void taught_forget_all(void)
     printf("[SS] taught sounds cleared\r\n");
 }
 
-enum mitem { MI_NIGHT, MI_MIC, MI_SENS, MI_PRIVACY, MI_FORGET, MI_FORGET_ALL, MI_BACK };
+enum mitem { MI_NIGHT, MI_MIC, MI_SENS, MI_PRIVACY, MI_SOUNDS, MI_FORGET, MI_FORGET_ALL, MI_BACK, MI_BUILTIN, MI_URGENCY };
 static struct {
     mitem kind[UI_MENU_MAX];
     int arg[UI_MENU_MAX];
     int n, sel, confirm;   /* confirm: row waiting for a second press (forgetting), or -1 */
-    char text[UI_MENU_MAX][32], note[48];
+    int page;              /* 0 settings, 1 sounds (T7: built-ins on/off, taught sounds' urgency) */
+    char text[UI_MENU_MAX][32], note[64];
 } menu;
+
+static const char *const kUrgName[] = {"Info", "Important", "Urgent"};
 
 SS_COLD static void menu_build(void)
 {
     menu.n = 0;
+    if (menu.page == 1) {
+        for (int i = 0; i < SS_NUM_BUILTIN; i++)
+            if (ss_builtin_alerting[i]) {
+                menu.kind[menu.n] = MI_BUILTIN;
+                menu.arg[menu.n++] = i;
+            }
+        for (int k = 0; k < n_taught; k++) {
+            menu.kind[menu.n] = MI_URGENCY;
+            menu.arg[menu.n++] = k;
+        }
+        menu.kind[menu.n] = MI_BACK;
+        menu.arg[menu.n++] = 0;
+        if (menu.sel >= menu.n) menu.sel = menu.n - 1;
+        menu.confirm = -1;
+        return;
+    }
     menu.kind[menu.n] = MI_NIGHT;
     menu.arg[menu.n++] = 0;
     menu.kind[menu.n] = MI_MIC;
@@ -1053,6 +1085,8 @@ SS_COLD static void menu_build(void)
     menu.kind[menu.n] = MI_SENS;
     menu.arg[menu.n++] = 0;
     menu.kind[menu.n] = MI_PRIVACY;
+    menu.arg[menu.n++] = 0;
+    menu.kind[menu.n] = MI_SOUNDS;
     menu.arg[menu.n++] = 0;
     for (int k = 0; k < n_taught; k++) {
         menu.kind[menu.n] = MI_FORGET;
@@ -1071,9 +1105,23 @@ SS_COLD static void menu_build(void)
 SS_COLD static void menu_open(void)
 {
     menu.sel = 0;
+    menu.page = 0;
     menu_build();
     scr = MENU;
     redraw = true;
+}
+
+/* Back: from the sounds page to settings (on the Sounds row), from settings to home */
+SS_COLD static void menu_back(void)
+{
+    if (menu.page == 1) {
+        menu.page = 0;
+        menu_build();
+        for (int j = 0; j < menu.n; j++)
+            if (menu.kind[j] == MI_SOUNDS) menu.sel = j;
+        return;
+    }
+    scr = HOME;
 }
 
 SS_COLD static void menu_choose(void)
@@ -1091,6 +1139,26 @@ SS_COLD static void menu_choose(void)
     case MI_SENS:
     case MI_PRIVACY:
         break;
+    case MI_SOUNDS:
+        menu.page = 1;
+        menu.sel = 0;
+        menu_build();
+        return;
+    case MI_BUILTIN: {
+        const int b = menu.arg[i];
+        builtin_mute ^= 1u << b;
+        apply_mute();
+        store_save();
+        printf("[SS] '%s' %s\r\n", prof[b].lk->label, prof[b].alerting ? "on" : "off: not shown or logged");
+        break;
+    }
+    case MI_URGENCY: {
+        profile &p = prof[SS_NUM_BUILTIN + menu.arg[i]];
+        p.urg = (ui_urgency)((p.urg + 1) % 3);
+        store_save();
+        printf("[SS] '%s' urgency: %s\r\n", p.lk->label, kUrgName[p.urg]);
+        break;
+    }
     case MI_FORGET:
     case MI_FORGET_ALL:
         if (menu.confirm != i) {   /* forgetting can't be undone: press twice */
@@ -1102,8 +1170,8 @@ SS_COLD static void menu_choose(void)
         menu_build();
         return;
     case MI_BACK:
-        scr = HOME;
-        break;
+        menu_back();
+        return;
     }
     menu.confirm = -1;
 }
@@ -1111,7 +1179,7 @@ SS_COLD static void menu_choose(void)
 SS_COLD static void menu_draw(void)
 {
     ui_menu m = {};
-    m.title = "Settings";
+    m.title = menu.page == 1 ? "Sounds" : "Settings";
     m.n = menu.n;
     m.sel = menu.sel;
     for (int i = 0; i < menu.n; i++) {
@@ -1130,6 +1198,24 @@ SS_COLD static void menu_draw(void)
             break;
         case MI_PRIVACY:
             m.item[i] = "Privacy";
+            break;
+        case MI_SOUNDS: {
+            int on = 0, all = 0;
+            for (int b = 0; b < SS_NUM_BUILTIN; b++)
+                if (ss_builtin_alerting[b]) { all++; on += prof[b].alerting; }
+            snprintf(menu.text[i], sizeof(menu.text[i]), "%d of %d on", on, all);
+            m.item[i] = "Sounds";
+            m.value[i] = menu.text[i];
+            break;
+        }
+        case MI_BUILTIN:
+            m.item[i] = prof[menu.arg[i]].lk->label;
+            m.value[i] = prof[menu.arg[i]].alerting ? "On" : "Off";
+            break;
+        case MI_URGENCY:
+            snprintf(menu.text[i], sizeof(menu.text[i]), "%s (taught)", prof[SS_NUM_BUILTIN + menu.arg[i]].lk->label);
+            m.item[i] = menu.text[i];
+            m.value[i] = kUrgName[prof[SS_NUM_BUILTIN + menu.arg[i]].urg];
             break;
         case MI_FORGET:
             snprintf(menu.text[i], sizeof(menu.text[i]), "Forget %s", prof[SS_NUM_BUILTIN + menu.arg[i]].lk->label);
@@ -1162,6 +1248,17 @@ SS_COLD static void menu_draw(void)
         m.note = sens_pct < 0 ? "The knob isn't answering" : sens_text[1];
     } else if (menu.kind[menu.sel] == MI_PRIVACY) {
         m.note = "Nothing is recorded or sent. Sound is kept 1 s";
+    } else if (menu.kind[menu.sel] == MI_SOUNDS) {
+        m.note = "Turn sounds on or off, set urgency";
+    } else if (menu.kind[menu.sel] == MI_BUILTIN) {
+        const profile &p = prof[menu.arg[menu.sel]];
+        if (p.alerting) snprintf(menu.note, sizeof(menu.note), "Press to turn %s off", p.lk->label);
+        else snprintf(menu.note, sizeof(menu.note), "Off: not shown or logged. Press for on");
+        m.note = menu.note;
+    } else if (menu.kind[menu.sel] == MI_URGENCY) {
+        static const char *const what[] = {"Info: a banner, no full screen", "Important: full screen for 15 s",
+                                           "Urgent: stays until you press"};
+        m.note = what[prof[SS_NUM_BUILTIN + menu.arg[menu.sel]].urg];
     }
     ui_menu_draw(&m);
 }
@@ -1246,7 +1343,7 @@ static void on_keys(uint32_t k)
     case MENU:
         if (k & SS_JOY_UP) { if (menu.sel > 0) menu.sel--; menu.confirm = -1; }
         else if (k & SS_JOY_DOWN) { if (menu.sel + 1 < menu.n) menu.sel++; menu.confirm = -1; }
-        else if (k & (SS_JOY_LEFT | SS_JOY_RIGHT)) scr = HOME;
+        else if (k & (SS_JOY_LEFT | SS_JOY_RIGHT)) menu_back();
         else if (k & SS_JOY_CENTER) menu_choose();
         redraw = true;
         break;
@@ -1678,6 +1775,12 @@ int main(void)
         if (banner_on && since(banner_t0, now) > BANNER_MS) {
             banner_on = false;
             if (scr == HOME) redraw = true;
+        }
+        /* H5: "still sounding" ends UI_STILL_MS after the last repeat: redraw the screens that say it */
+        const bool still = n_events && ui_still_sounding(&events[0], now);
+        if (still != still_shown) {
+            still_shown = still;
+            if (scr == ALERT || scr == TIMELINE || (scr == HOME && !dark)) redraw = true;
         }
         if (scr == ALERT) {
             const bool urgent = alert_ev.urgency == UI_URGENT && !alert_ev.maybe;

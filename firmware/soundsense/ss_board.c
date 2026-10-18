@@ -10,7 +10,15 @@
 #include "se_services_port.h"
 
 static volatile uint32_t g_ms;
-void SysTick_Handler(void) { g_ms++; }
+/* A J-Link detach (the RTT logger, every host command) clears TRCENA and stops the cycle counter until
+ * ss_cycles() re-arms it. Re-arm it every 1 ms here, so a detach during a 50-125 ms full redraw costs at
+ * most 1 ms of cycle time instead of the whole draw (IMU times went back by up to 108 ms). */
+void SysTick_Handler(void)
+{
+    g_ms++;
+    DCB->DEMCR |= DCB_DEMCR_TRCENA_Msk;
+    DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+}
 uint32_t ss_ms(void) { return g_ms; }
 
 void ss_halt(const char *why)

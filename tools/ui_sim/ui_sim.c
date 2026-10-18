@@ -332,6 +332,26 @@ int main(void)
     gfx_dirty_rows(&y0, &y1);
     printf("live update touches rows %d..%d (%d of %d)\n", y0, y1, y1 - y0 + 1, GFX_H);
 
+    /* T7: the Sounds page: built-ins on/off, taught sounds' urgency */
+    ui_menu snd = {.title = "Sounds", .n = 10, .sel = 6};
+    const char *bi[] = {"Knock", "Dog barking", "Baby crying", "Alarm", "Glass breaking", "Siren", "Water running"};
+    for (int i = 0; i < 7; i++) snd.item[i] = bi[i], snd.value[i] = i == 6 ? "Off" : "On";
+    snd.item[7] = "Doorbell (taught)", snd.value[7] = "Important";
+    snd.item[8] = "Keys (taught)", snd.value[8] = "Urgent";
+    snd.item[9] = "Back";
+    snd.note = "Off: not shown or logged. Press for on";
+    ui_menu_draw(&snd);
+    save("26_menu_sounds");
+    /* H5: an alarm heard again 4 s ago: still sounding */
+    ui_event alarm = {"Alarm", UI_ICON_ALARM, UI_CAT_SAFETY, UI_IMPORTANT, false, UI_FELT_NA, 87, 9, NOW - 3 * MIN, 3 * MIN - 4000, false, 0, 0};
+    ui_alert_draw(&alarm, NOW, 0);
+    save("27_alert_still_sounding");
+    ui_event tl2[N_EVENTS];
+    memcpy(tl2, events, sizeof(tl2));
+    tl2[0] = alarm;
+    ui_timeline_draw(tl2, N_EVENTS, NOW, 0);
+    save("28_timeline_still_sounding");
+
     write_png("out/sheet.png", &sheet[0][0][0], SHEET_W, SHEET_H);
     led_trace();
     return 0;

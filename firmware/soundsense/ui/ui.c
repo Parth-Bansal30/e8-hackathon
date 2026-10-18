@@ -121,6 +121,7 @@ static void fmt_detail(char *b, size_t n, const ui_event *e, uint32_t now_ms, bo
         snprintf(part, sizeof part, "%sfor %s", b[0] ? SEP : "", d);
         strncat(b, part, n - strlen(b) - 1);
     }
+    if (ui_still_sounding(e, now_ms)) strncat(b, b[0] ? SEP "still sounding" : "still sounding", n - strlen(b) - 1);
     if (e->felt == UI_FELT_YES) strncat(b, b[0] ? SEP "felt here" : "felt here", n - strlen(b) - 1);
     if (e->felt == UI_FELT_HEARD_ONLY) strncat(b, b[0] ? SEP "heard only" : "heard only", n - strlen(b) - 1);
 }
@@ -409,13 +410,13 @@ static void draw_recent(const ui_home *h, uint32_t now_ms)
     for (int i = 0; i < h->n_recent && i < 3; i++) {
         const ui_event *e = &h->recent[i];
         const int y = RECENT_Y + 32 + i * 76;
-        char label[48], detail[64];
+        char label[48], detail[96];
         gfx_round_rect(16, y, 448, 68, 16, PANEL);
         badge(e->icon, e->cat, 52, y + 34, 24);
         snprintf(label, sizeof label, e->maybe ? "Maybe: %s?" : "%s", e->label);
         gfx_text(B, 90, y + 8, label, e->maybe ? MUTED : TEXT, 26);
         fmt_detail(detail, sizeof detail, e, now_ms, true);
-        gfx_text(L, 90, y + 40, detail, MUTED, 18);
+        gfx_text(L, 90, y + 40, detail, MUTED, gfx_fit_px(L, detail, 340, 18));
         if (!e->acked) gfx_circle(444, (float)(y + 34), 7, ui_cat_color(e->cat));
     }
 }
@@ -520,9 +521,10 @@ void ui_alert_draw(const ui_event *e, uint32_t now_ms, int phase)
     if (e->count > 1 || e->dur_ms >= 10000) {
         char d[16];
         fmt_dur(d, sizeof d, e->dur_ms);
-        if (e->dur_ms >= 10000) snprintf(line, sizeof line, "%u times, for %s", (unsigned)e->count, d);
-        else snprintf(line, sizeof line, "%u times", (unsigned)e->count);
-        gfx_text_center(L, GFX_W / 2, y, line, ink, 28);
+        const char *still = ui_still_sounding(e, now_ms) ? ", still sounding" : "";
+        if (e->dur_ms >= 10000) snprintf(line, sizeof line, "%u times, for %s%s", (unsigned)e->count, d, still);
+        else snprintf(line, sizeof line, "%u times%s", (unsigned)e->count, still);
+        gfx_text_center(L, GFX_W / 2, y, line, ink, gfx_fit_px(L, line, 440, 28));
     }
     if (e->unanswered_ms) {   /* A5: escalated, so the reason and the way out are bigger */
         char d[16];
@@ -544,12 +546,12 @@ void ui_banner_draw(const ui_event *e, uint32_t now_ms)
     gfx_round_rect(12, 12, GFX_W - 24, 112, 22, bg);
     gfx_circle(70, 68, 40, mix(bg, ink, 0.16f));
     ui_icon_draw(e->icon, 70, 68, 52, ink, mix(bg, ink, 0.16f));
-    char label[48], detail[64];
+    char label[48], detail[96];
     snprintf(label, sizeof label, e->maybe ? "Maybe: %s?" : "%s", e->label);
     gfx_text(B, 128, 30, label, ink, gfx_fit_px(B, label, 320, 40));
     fmt_detail(detail, sizeof detail, e, now_ms, true);
     if (e->icon == UI_ICON_UNKNOWN) snprintf(detail, sizeof detail, "Matches nothing. UP: teach it");   /* H6 */
-    gfx_text(L, 128, 80, detail, mix(bg, ink, 0.8f), 20);
+    gfx_text(L, 128, 80, detail, mix(bg, ink, 0.8f), gfx_fit_px(L, detail, 330, 20));
 }
 
 UI_COLD void ui_toast_draw(const char *title, const char *detail, int pct)
@@ -574,7 +576,7 @@ UI_COLD void ui_timeline_draw(const ui_event *ev, int n, uint32_t now_ms, int fi
     for (int i = first, row = 0; i < n && row < 8; i++, row++) {
         const ui_event *e = &ev[i];
         const int y = 92 + row * 82;
-        char when[24], label[48], detail[64];
+        char when[24], label[48], detail[96];
         gfx_round_rect(16, y, 448, 74, 16, row == 0 ? PANEL2 : PANEL);
         gfx_round_rect(16, y, 8, 74, 4, e->urgency == UI_URGENT ? VERMILLION
                                          : e->urgency == UI_IMPORTANT ? TEXT : FAINT);
@@ -594,7 +596,7 @@ UI_COLD void ui_timeline_draw(const ui_event *ev, int n, uint32_t now_ms, int fi
         if (!detail[0]) snprintf(detail, sizeof detail, "%u%% sure", e->confidence);
         if (e->fixed == 2) gfx_text(B, 186, y + 42, "Marked wrong", VERMILLION, 18);
         else if (e->fixed == 1) gfx_text(B, 186, y + 42, "Marked right", GREEN, 18);
-        else gfx_text(L, 186, y + 42, detail, MUTED, 18);
+        else gfx_text(L, 186, y + 42, detail, MUTED, gfx_fit_px(L, detail, 250, 18));
         if (!e->acked) gfx_circle(444, (float)(y + 37), 7, ui_cat_color(e->cat));
     }
     footer("UP / DOWN pick   LEFT wrong   RIGHT right   PRESS back");

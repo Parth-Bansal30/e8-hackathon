@@ -79,7 +79,7 @@ HANDOFF-next.md item 11, done on the old laptop (et-venv, float encoder as shipp
   - `[C1]`: 0 of 1960 inputs differ, output within 1 LSB, cosine 0.9996, "dog" 0.79, NPU 1.0 ms. Same as before.
   - Quiet room: CPU active 12.0 to 13.1%, 0 audio blocks dropped.
   - Room noises gave 3 decisions; all were weak matches (best 0.20 to 0.41 against a threshold of 0.50), and all waited for 0.8 s as they should.
-- IMU `times back` read 95 µs, then 1.7 ms, then 3.0 ms in the first 40 s (it was 0 in `gates/c3_rtt.log`). The early path didn't cause it: the first two readings came before any sound was decided. It's small next to the ±100 ms felt window. Flashing the previous build would settle whether it's new.
+- IMU `times back` read 95 µs, then 1.7 ms, then 3.0 ms in the first 40 s. The early path didn't cause it. **Found and fixed at 11:40 AM:** see [IMU times back](#imu-times-back-with-j-link-attached).
 - **G3 built-in run with the Mac speaker** (same 56 fold-5 clips, volume 88 as found; `gates/g3_builtin_early.txt`, `g3_results.json` entry at 10:51):
   - Recognised: 30 of 56 (54%), the same as the run before the change.
   - Per class (before → now): knock 5 → 1, dog 4 → 6, baby 4 → 4, alarm 6 → 6, glass 3 → 2, siren 3 → 3, water 5 → 8.
@@ -151,6 +151,53 @@ timeline. The firmware was fine. `tools/jlink.py` wrote `ss_arg` and `ss_cmd` in
 sessions and ignored a write that failed while the RTT logger held the probe, so the board took
 command 8 with the previous argument (0: no key). `Board.command()` (CLI: `jlink.py <elf> cmd C N`)
 now writes both in one session, and every write is checked. `g3_play.py` and `c2_power.py` use it.
+
+## IMU times back with J-Link attached
+
+`times back` (the largest backward step between IMU sample times) was not new: `gates/c3_rtt.log`
+already had 44 and 108 ms. Every jump came after a long full-screen draw (alert, teach: 50-125 ms),
+and the sensor clock reading spiked at the same time (+20,000 and +42,000 ppm against a steady +6,700).
+
+**Cause:** a J-Link detach clears DEMCR.TRCENA, which stops the DWT cycle counter until
+`ss_cycles()` sets it again. The RTT logger and every host command attach and detach. A detach
+during a draw stopped the counter for the rest of the draw, so cycle time fell behind real time.
+
+**Fix:** `SysTick_Handler` re-arms the counter every 1 ms, so a detach costs at most 1 ms.
+
+**Test:** 30 s of forced full redraws (host command 14) with the logger running (`gates/imu_back.txt`):
+
+| | times back, max | sensor clock reading |
+|---|---|---|
+| Before | 31.8 ms | +6,516 to +13,583 ppm |
+| After | 0.55 ms | +6,592 to +7,041 ppm |
+
+Without a debugger attached this never happened. Felt-knock matching (±100 ms) was only at risk
+when a detach landed between a knock and its conversion to milliseconds.
+
+## Sounds page (T7) and "still sounding" (H5)
+
+Settings > **Sounds** (`tools/ss_t7_test.py`, no sound, 10/10 pass at 11:55 AM; `gates/t7_test.txt`;
+board screenshot `gates/t7_board_sounds.png`):
+- Each built-in that alerts can be turned off: it is then not shown or logged, and doesn't start
+  "What was that?". A knock that is off isn't alerted when felt either. Saved in the flash record's
+  `builtin_mute` (already in the format, so earlier saves still load).
+  - Tested: Dog barking off, then the boot test clip (a dog, 0.79) gave "unknown" and no banner.
+    Still off after a reset (`[STORE] ... built-ins off: 0x2`). Back on.
+- Each taught sound's urgency cycles Info / Important / Urgent; it's saved and restored with the sound.
+  - Tested: Doorbell to Urgent, then an injected Doorbell alert was urgent. Back to Important.
+- LEFT or RIGHT on the Sounds page goes back to Settings, on the Sounds row.
+- The Settings menu now holds 16 rows (it was 12; 4 settings + 8 taught + forget all + back was
+  already 14, which would have overflowed with 8 taught sounds).
+
+**"Still sounding" (H5):** a sound repeated and heard again within 15 s shows "still sounding" on the
+alert ("9 times, for 2 min, still sounding"), on the home list and in the timeline. The screen is
+redrawn when that stops being true. Tested: two injected alarms 2 s apart showed it, and it cleared
+15 s later. Detail lines now shrink to fit their row.
+
+The first run of the test failed 4 checks: a real sound in the room raised an alert just after a
+reset and ate a key press, so the test turned off Water running instead of Dog barking. The test
+now reads the menu selection from the board and moves to the row it wants. It also restores the
+settings it found (`--set 0 1` puts back all built-ins on and the taught sound at Important).
 
 ## C4 details
 

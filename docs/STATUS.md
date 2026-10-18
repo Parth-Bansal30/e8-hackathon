@@ -9,7 +9,7 @@ behind every "Done" are in [GATES-results.md](GATES-results.md).
 | Priority | Total | Done | Partial | Not started |
 |---|---|---|---|---|
 | **P0** (must-have product) | 16 | **16** | 0 | 0 |
-| **P1** (makes it good) | 16 | 11 | 4 | 1 (H4) |
+| **P1** (makes it good) | 16 | 12 | 3 | 1 (H4) |
 | **P2** (nice to have) | 20 | 0 | 4 | 16 |
 | **P3** (stretch) | 7 | 0 | 0 | 7 |
 
@@ -41,7 +41,7 @@ examples, 38% at 5 (they work well live; the offline test uses unseen clips from
 | H2 | Teach your own sound | P0 | Done | Works live; 8 examples: offline acceptance 45% (38% at 5), untaught rejection 77% |
 | H3 | Reject unknown sounds | P0 | Done | 79% offline; live run not measured |
 | H4 | Smoke vs CO from the beep pattern | P1 | Not started | |
-| H5 | Ongoing sounds ("for 6 min") | P1 | Partial | Repeats within 30 s merge with a count and duration; no "still sounding" |
+| H5 | Ongoing sounds ("for 6 min") | P1 | Done | Repeats within 30 s merge with a count and duration. Heard again in the last 15 s: "still sounding" on the alert, home and timeline, cleared 15 s after the last repeat. Tested on the board (`tools/ss_t7_test.py`) |
 | H6 | "What was that?" with teach-this | P1 | Done | A sound 15 dB over the room that matches nothing (and isn't speech or room noise) gets a soft banner, at most once a minute, and a timeline entry; UP opens teaching with that sound as example 1 |
 | H7 | Your name called | P1 | Partial | "My name" can be taught like any sound; not tested on speech |
 | H8 | Talking-nearby indicator | P2 | Partial | "Speech" appears in the live top 3 only |
@@ -81,7 +81,7 @@ examples, 38% at 5 (they work well live; the offline test uses unseen clips from
 | T4 | Fix mistakes from the timeline | P1 | Done | Timeline (selected top row) or alert: LEFT = wrong, RIGHT = right. Wrong keeps the sound's embedding as a counter-example: a sound closer to it than to the profile is vetoed (saved in flash for taught sounds; built-ins until restart). Right on a taught sound adds an example and rebuilds its profile and threshold. Tested silently with the boot test clip (host command 15) |
 | T5 | Sensitivity on the knob | P1 | Done (not checked by hand) | The blue R79 knob moves every threshold by up to ±0.10 (one setting for all sounds, not per sound); a notice with a bar shows when it's turned; menu shows the value. Wherever the knob was left, the board starts as taught until it's turned. The ADC read 0% at boot; turning it hasn't been tried yet |
 | T6 | Similar-sound warning | P1 | Done | "Sounds like X (NN%): may mix up" when the new profile is within cosine 0.70 of any other; saving still allowed, no merge. Tested on the board (the dog test clip vs "Dog barking", 0.79) |
-| T7 | Manage sounds (rename, delete, factory reset) | P1 | Partial | Menu: forget one taught sound or all of them (press twice to confirm), saved to flash. No rename, urgency or built-in on/off |
+| T7 | Manage sounds (rename, delete, factory reset) | P1 | Partial | Settings > Sounds: each built-in on or off (off: not shown or logged), each taught sound Info / Important / Urgent; both saved in the flash and restored at boot. Forget one taught sound or all (press twice). Tested on the board, 10/10 (`tools/ss_t7_test.py`). No rename |
 
 **Timeline**
 
@@ -127,5 +127,6 @@ examples, 38% at 5 (they work well live; the offline test uses unseen clips from
 | Alert delay | Two-stage decision on the board: clear built-in alerts in a median 437 ms | On the board, G3 built-ins: 18 of 30 recognised sounds alerted early, median 437 ms from onset to screen, 0 wrong; recognition unchanged at 54%. Others still about 0.87 s. Offline: a plain 0.45 s delay costs about 9 points on built-ins. A two-stage decision (early at 0.4 s when the match is clear, otherwise 0.8 s) alerts 55% of built-in sounds at about 0.45 s with no loss in recognition and +1.5 points of false alerts. See [GATES-results.md](GATES-results.md#alert-delay-offline) |
 | Built-in accuracy | Open | Needs sound in the room |
 | IMU timestamp bug | Fixed | Backward jumps under stalls 69 ms -> 0; sensor clock measured at +0.68% |
+| IMU `times back` while J-Link is attached | Fixed | Every J-Link detach stops the cycle counter until it is re-armed; a detach during a long draw lost up to the whole draw (times went back up to 108 ms, clock reading spiked to +4%). Re-armed every 1 ms in SysTick now: 30 s of full redraws with the logger running, 0.55 ms max (was 31.8 ms). Only happens with a debugger attached |
 | 8 examples + T2 checks + T6 | Done; tested live | Doorbell clip from the Mac at volume 69. The first teach found two bugs, both fixed: "loud room" fired during the sound itself, and T2 missed two stray shots. The second teach was loose (threshold 0.50): 1 of 5 doorbells recognised (Siren confusions), 5 of 9 untaught sounds rejected. Teach louder or with a distinctive sound |
 | Full-app smoke test | 16/16 pass, 0 audio blocks dropped | `tools/ss_smoke.py`, no sound. The first run's 2 failures were a J-Link tool bug (stale `ss_arg`), fixed in `tools/jlink.py` |

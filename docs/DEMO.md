@@ -17,7 +17,8 @@ numbers are samples; quote the measured ones below.
 - **Room:** sounds must be about 8 dB over the room's background, and teaching needs 10 dB. A quiet corner helps.
 - **Joystick** (directions as you face the screen):
   - **UP:** teach a sound (or teach the "What was that?" sound while its banner shows).
-  - **DOWN:** settings menu: night mode, microphones off, sensitivity (the knob), privacy, forget sounds.
+  - **DOWN:** settings menu: night mode, microphones off, sensitivity (the knob), privacy, Sounds
+    (built-ins on/off, taught sounds' urgency), forget sounds.
   - **LEFT:** timeline.
   - **RIGHT:** stats.
   - **Press:** OK or dismiss.

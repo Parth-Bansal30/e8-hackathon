@@ -41,6 +41,9 @@ typedef enum {
 
 typedef enum { UI_FELT_NA, UI_FELT_YES, UI_FELT_HEARD_ONLY } ui_felt;
 
+/* H5: a repeating sound heard again within this is shown as "still sounding" */
+#define UI_STILL_MS 15000
+
 typedef struct {
     const char *label;     /* "Doorbell" */
     ui_icon icon;
@@ -56,6 +59,12 @@ typedef struct {
     uint32_t unanswered_ms;  /* urgent alert on screen this long with no press (A5); 0 until it escalates */
     uint8_t fixed;           /* T4: 1 marked right, 2 marked wrong */
 } ui_event;
+
+/* H5: repeated, and heard again within UI_STILL_MS of now */
+static inline bool ui_still_sounding(const ui_event *e, uint32_t now_ms)
+{
+    return e->count > 1 && now_ms - (e->t_ms + e->dur_ms) < UI_STILL_MS;
+}
 
 typedef struct {
     const char *label;
@@ -136,7 +145,7 @@ void ui_timeline_draw(const ui_event *ev, int n, uint32_t now_ms, int first);
 void ui_teach_draw(const ui_teach *t);
 void ui_stats_draw(const ui_stats *s);
 /* A list to pick from (settings, managing sounds): UP/DOWN moves `sel`, press chooses. */
-#define UI_MENU_MAX 12
+#define UI_MENU_MAX 16   /* settings: 5 rows + 8 taught + forget all + back */
 typedef struct {
     const char *title;
     const char *item[UI_MENU_MAX];   /* "Night mode" */

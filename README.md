@@ -37,8 +37,11 @@ delegated to the Ethos-U85.
 - **"What was that?":** a loud sound that matches nothing gets a soft banner and a timeline entry;
   UP teaches it, starting from that sound.
 - **Settings menu** (DOWN): night mode (the screen goes dark and only important and urgent sounds
-  light it), microphones off, a privacy note, sensitivity on the knob, and forgetting one or all
-  taught sounds.
+  light it), microphones off, a privacy note, sensitivity on the knob, **Sounds** (turn each built-in
+  on or off; set each taught sound to Info, Important or Urgent; saved in the flash), and forgetting
+  one or all taught sounds.
+- **Ongoing sounds:** repeats merge into one entry with a count and how long it went on; a sound
+  heard again in the last 15 s reads "still sounding".
 - **Live view:** scrolling spectrogram, room level against its noise floor, and the three best
   matches right now.
 - **Stats page,** live from the board: NPU time per run, CPU active %, NPU busy %, save time,
@@ -72,7 +75,7 @@ Details and logs: [docs/GATES-results.md](docs/GATES-results.md).
 | Flash save | 223–266 ms over 101 saves (median 252), longest 304 ms over 1,000 more; across all 1,101: 0 audio blocks dropped, 0 failed read-backs. Restore 2.2 ms |
 | Power | CPU active **12.6%** in a quiet room (was 100%); NPU busy 0.00% when quiet |
 | Boot to Ready | 1.5 s |
-| Memory | ITCM 97.3% (all hot code), MRAM 1.05 MB of 2 MB (model, fonts, cold code) |
+| Memory | ITCM 97.5% (all hot code), MRAM 1.06 MB of 2 MB (model, fonts, cold code) |
 
 ## How it works
 
