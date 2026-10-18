@@ -23,7 +23,7 @@ examples (they work well live; the offline test uses unseen clips from strangers
 | Gate | Result | Left to do |
 |---|---|---|
 | G1 encoder | SOFT (borderline): 5-way 5-shot 75.8% int8 | 8 examples per taught sound |
-| G2 knock felt | SOFT: felt at 20 cm (21 of 22), not at 50 cm | IMU timestamp fix |
+| G2 knock felt | SOFT: felt at 20 cm (21 of 22), not at 50 cm | Re-measure alignment after the timestamp fix (needs knocks) |
 | G3 live | SOFT, stopped early: built-ins 54% from the laptop speaker | Taught, rejection and false-alarm runs; re-measuring the built-ins on the board. All need sound in the room |
 | C1 NPU | GO: all 14 ops on the NPU, 1.0 ms, matches the host | — |
 | C2 flash | GO: 1,101 saves, 0 audio dropped, restore 2.2 ms | — |
@@ -54,7 +54,7 @@ examples (they work well live; the offline test uses unseen clips from strangers
 
 | ID | Feature | Pri | Status | Notes |
 |---|---|---|---|---|
-| F1 | Knock felt vs heard only | P1 | Done | A heard-only knock is a banner ("TV?"), not a full alert; timestamp bug open |
+| F1 | Knock felt vs heard only | P1 | Done | A heard-only knock is a banner ("TV?"), not a full alert; IMU timestamp bug fixed (frame times from the sensor clock) |
 | F2–F5 | Vibration signatures, moved-device check, tap to dismiss, vibration-only events | P2–P3 | Not started | |
 
 **Alerts**
@@ -126,5 +126,5 @@ examples (they work well live; the offline test uses unseen clips from strangers
 | Submission: README, Devpost write-up, demo video | README done; the rest in a separate session | Brief: [HANDOFF-submission.md](HANDOFF-submission.md) |
 | Alert delay | Open | About 0.85 s against a 0.5 s target. Trying 0.4–0.5 s needs the torch environment and datasets (not on the board laptop) |
 | Built-in accuracy | Open | Needs sound in the room |
-| IMU timestamp bug | Open | About 20 min: time frames from the BMI323 sensor clock |
+| IMU timestamp bug | Fixed | Backward jumps under stalls 69 ms -> 0; sensor clock measured at +0.68% |
 | 8 examples + T2 checks | Parked until 10:30 AM | HANDOFF-next.md steps 4 and 6 |

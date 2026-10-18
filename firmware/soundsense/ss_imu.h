@@ -31,12 +31,17 @@ typedef struct {
     uint32_t read_cyc;       /* total cycles spent reading the FIFO */
     uint32_t read_cyc_max;
     uint32_t fill_max;       /* highest FIFO fill level seen, in words */
+    uint32_t back_max_us;    /* largest step backwards between consecutive frame times (should be ~0) */
+    int32_t clock_ppm;       /* sensor clock vs the CPU clock, parts per million (+ = sensor fast) */
     float noise_mg;          /* current noise level of the high-passed magnitude */
     float acc_mg[3];         /* latest raw acceleration */
 } ss_imu_stats;
 
 /* Start the I3C bus, the BMI323 (800 Hz, +-4 g, high performance) and its FIFO. 0 on success. */
 int ss_imu_init(void);
+
+/* 1: time frames the old way (newest frame of each read = the read time), to compare; set over J-Link. */
+extern volatile uint32_t ss_imu_old_timing;
 
 /* Read whatever the FIFO holds and run the detector on it. Call every few ms (the FIFO holds
  * about 300 ms). Returns the number of new frames, or < 0 on an I3C error. */

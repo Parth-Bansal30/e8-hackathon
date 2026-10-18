@@ -86,7 +86,7 @@ log into `docs/gates/ss_rtt.log`).
 - The Mac was left **muted**: unmute before any speaker test or demo.
 - The laptop on the same table makes laptop knocks "felt"; lift it for heard-only.
 - Joystick switches bounce: the app has a 250 ms lock-out and ignores sounds for 0.8 s after a press.
-- IMU timestamp bug in `ss_imu_poll`: frame times can jump back 15-54 ms. Fix: time frames from the BMI323 sensor clock (25.6 kHz, 32 ticks per frame). The ±100 ms pairing window hides it for now.
+- IMU frame times now come from the BMI323 sensor clock (fixed 10-18): the old "newest frame = read time" timing jumped back up to 69 ms after stalls. `[SS] stats` prints `times back` (should stay 0) and the sensor clock offset (+0.68%). `ss_imu_old_timing` = 1 over J-Link brings the old timing back for comparison.
 - **ITCM is 97.6% full** (all `.text` lands there). New boot-only or rare code goes to MRAM: mark the function
   `SS_COLD` (`ss_board.h`) or `UI_COLD` (`ui/ui.c`), or add an object pattern to the MRAM section of the shared
   `firmware/device/ensemble/RTE/Device/AE822FA0E5597LS0_M55_HP/linker_gnu_mram.ld.src` (the OSPI driver and

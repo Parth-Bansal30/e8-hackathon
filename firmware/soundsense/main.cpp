@@ -1461,13 +1461,15 @@ int main(void)
             win_ms0 = now;
             const ss_imu_stats *is = ss_imu_get_stats();
             printf("[SS] stats t=%lu level %d dB floor %d dB, npu %lu us runner %lu us feat %lu us, %.1f inf/s, "
-                   "busy %.0f%%, active %.1f%% (%lu passes/s, %lu sleeps/s, %lu us each), npu busy %.2f%%, dropped %lu, imu %lu samples %lu errors, knocks %lu, events %d, saves %lu\r\n",
+                   "busy %.0f%%, active %.1f%% (%lu passes/s, %lu sleeps/s, %lu us each), npu busy %.2f%%, dropped %lu, imu %lu samples %lu errors (times back %lu us, clock %+ld ppm), knocks %lu, events %d, saves %lu\r\n",
                    (unsigned long)now, (int)ss_audio_block_db(), (int)ss_audio_floor_db(), (unsigned long)npu_us,
                    (unsigned long)runner_us, (unsigned long)feat_us, (double)infer_rate, (double)cpu_pct,
                    (double)active_pct, (unsigned long)passes_s, (unsigned long)sleeps_s, (unsigned long)sleep_us,
                    (double)npu_pct,
                    (unsigned long)kws_audio_dropped(), (unsigned long)(imu_ok ? is->samples : 0),
-                   (unsigned long)(imu_ok ? is->errors : 0), (unsigned long)n_knocks, n_events,
+                   (unsigned long)(imu_ok ? is->errors : 0), (unsigned long)(imu_ok ? is->back_max_us : 0),
+                   (long)(imu_ok ? is->clock_ppm : 0),
+                   (unsigned long)n_knocks, n_events,
                    (unsigned long)ss_store_get_stats()->saves);
         }
 

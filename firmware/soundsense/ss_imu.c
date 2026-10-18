@@ -19,8 +19,14 @@ extern ARM_DRIVER_IMU BMI323;
 
 static ss_imu_stats st;
 static ss_imu_tap_fn tap;
-static bool started, have_time;
+static bool started, have_time, have_anchor, have_cyc;
 static uint16_t last_time;
+static uint32_t ext_time;                 /* sensor time unwrapped, in ticks of 1/25600 s */
+static uint32_t anchor_ext, anchor_cyc;   /* a frame's sensor time and its DWT time */
+static uint32_t base_ext, base_cyc;       /* an older anchor, to measure the sensor clock against DWT */
+static float cyc_per_tick;                /* DWT cycles per sensor-time tick: nominal 15625, but the sensor runs fast */
+static uint32_t last_cyc;
+volatile uint32_t ss_imu_old_timing;
 static float lp[3], hp_a, noise_a;
 static uint32_t warmup;            /* frames before the noise level is trusted */
 static uint32_t refract;           /* frames left in the refractory period */
@@ -53,7 +59,23 @@ void ss_imu_reset_stats(void)
     const float noise = st.noise_mg;
     memset(&st, 0, sizeof(st));
     st.noise_mg = noise;
-    have_time = false;
+    have_time = have_anchor = have_cyc = false;
+}
+
+/* New anchor; every 5 s of sensor time, re-measure the sensor clock against the DWT clock (the anchors'
+ * jitter of under one frame is 0.03% over 5 s; DWT wraps after 10.7 s at 400 MHz). */
+static void set_anchor(uint32_t ext, uint32_t cyc)
+{
+    if (!have_anchor) {
+        base_ext = ext, base_cyc = cyc;
+        cyc_per_tick = (float)SystemCoreClock / SS_IMU_TIME_HZ;
+    } else if (ext - base_ext >= 5u * SS_IMU_TIME_HZ) {
+        cyc_per_tick = (float)(cyc - base_cyc) / (float)(ext - base_ext);
+        st.clock_ppm = (int32_t)(1e6f * ((float)SystemCoreClock / SS_IMU_TIME_HZ / cyc_per_tick - 1.0f));
+        base_ext = ext, base_cyc = cyc;
+    }
+    anchor_ext = ext, anchor_cyc = cyc;
+    have_anchor = true;
 }
 
 static void detect(const int16_t *xyz, uint32_t cyc)
@@ -110,19 +132,45 @@ int ss_imu_poll(void)
     if (t1 - t0 > st.read_cyc_max) st.read_cyc_max = t1 - t0;
     if (fill > st.fill_max) st.fill_max = fill;
 
-    /* The newest frame was sampled within one period before the read started. */
+    /* Frame times come from the sensor's own clock (16-bit sensor time in each frame, unwrapped), tied
+     * to the DWT clock by an anchor: when a read empties the FIFO, its newest frame was sampled within
+     * one period before the fill level was read (t0). A read that leaves frames behind (after a long
+     * stall: more than MAX_FRAMES waiting) is timed from the last anchor, so times never jump back. */
     const uint32_t per = SystemCoreClock / SS_IMU_ODR_HZ;
+    const bool drained = (uint32_t)n == fill / SS_IMU_FRAME_WORDS;
+    uint32_t ext0 = have_time ? ext_time : (uint16_t)fr[3];   /* unwrapped sensor time of the newest frame */
+    uint16_t prev = have_time ? last_time : (uint16_t)fr[3];
+    for (int32_t k = 0; k < n; k++) {
+        const uint16_t t = (uint16_t)fr[k * SS_IMU_FRAME_WORDS + 3];
+        ext0 += (uint16_t)(t - prev);
+        prev = t;
+    }
+    if (n > 0 && drained) set_anchor(ext0, t0 - per / 2);
     for (int32_t k = 0; k < n; k++) {
         const int16_t *f = &fr[k * SS_IMU_FRAME_WORDS];
         const uint16_t t = (uint16_t)f[3];
         if (have_time) {
             const uint16_t d = (uint16_t)(t - last_time);
             if (d > TIME_PER_FRAME + TIME_PER_FRAME / 2) st.missed += (d + TIME_PER_FRAME / 2) / TIME_PER_FRAME - 1;
+            ext_time += d;
+        } else {
+            ext_time = t;
         }
         have_time = true;
         last_time = t;
         st.samples++;
-        const uint32_t cyc = t0 - (uint32_t)(n - 1 - k) * per;
+        const int32_t dt = (int32_t)(ext_time - anchor_ext);   /* ticks after the anchor frame */
+        uint32_t cyc;
+        if (ss_imu_old_timing || !have_anchor || dt > 100000 || dt < -100000)
+            cyc = t0 - (uint32_t)(n - 1 - k) * per;
+        else
+            cyc = anchor_cyc + (uint32_t)(int32_t)((float)dt * cyc_per_tick);
+        if (have_cyc && (int32_t)(cyc - last_cyc) < 0) {
+            const uint32_t back = ss_cyc_to_us(last_cyc - cyc);
+            if (back > st.back_max_us) st.back_max_us = back;
+        }
+        have_cyc = true;
+        last_cyc = cyc;
         detect(f, cyc);
         if (tap) tap(f, t, cyc);
     }
