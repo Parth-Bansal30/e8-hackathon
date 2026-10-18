@@ -205,17 +205,26 @@ static const ss_rgb kBg = {16, 20, 32}, kText = {235, 238, 245}, kMuted = {140, 
                     kGood = {60, 200, 110}, kWarn = {240, 190, 60}, kPanel = {28, 34, 52};
 static char stats_line[3][64];
 
+/* The person's script: joystick centre moves to the next trial (shown on screen). */
+static const char *const trial_name[] = {
+    "warm-up (press centre to start)", "20 knocks, 20 cm away", "20 knocks, 50 cm away", "20 knocks, 100 cm away",
+    "phone 30 cm above table: knock sounds", "phone lying on table: knock sounds", "typing on this table, 60 s",
+    "cup put down 10 times", "walk past 5 times", "done: thank you",
+};
+#define N_TRIAL_NAMES (sizeof(trial_name) / sizeof(trial_name[0]))
+
 static void draw(void)
 {
     char buf[64];
     ss_fill(0, 0, SS_LCD_W, SS_LCD_H, kBg);
     ss_text(SS_FONT_SMALL, 20, 16, "Sound Sense: knock bench (G2)", kText, 1);
     snprintf(buf, sizeof(buf), "trial %lu", (unsigned long)bench_trial);
-    ss_text(SS_FONT_SMALL, 20, 70, buf, kText, 2);
+    ss_text(SS_FONT_SMALL, 20, 56, buf, kText, 2);
+    ss_text(SS_FONT_SMALL, 20, 112, bench_trial < N_TRIAL_NAMES ? trial_name[bench_trial] : "", kWarn, 1);
     snprintf(buf, sizeof(buf), "felt+heard %lu", (unsigned long)bench_both);
-    ss_text(SS_FONT_SMALL, 20, 150, buf, kGood, 2);
+    ss_text(SS_FONT_SMALL, 20, 160, buf, kGood, 2);
     snprintf(buf, sizeof(buf), "heard only %lu", (unsigned long)bench_heard);
-    ss_text(SS_FONT_SMALL, 20, 220, buf, kText, 2);
+    ss_text(SS_FONT_SMALL, 20, 225, buf, kText, 2);
     snprintf(buf, sizeof(buf), "felt only  %lu", (unsigned long)bench_felt);
     ss_text(SS_FONT_SMALL, 20, 290, buf, kWarn, 2);
     ss_text(SS_FONT_SMALL, 20, 380, last_msg, kText, 1);
@@ -250,6 +259,9 @@ int main(void)
     ss_audio_set_tap(audio_tap);
     if (kws_audio_start() != 0) ss_halt("microphone start");
     printf("[G2] listening\r\n");
+    led_check_step = 0;   /* C3: run the LED check once at boot */
+    led_check_t = ss_ms();
+    printf("[C3] LED check start\r\n");
 
     uint32_t last_draw = 0, last_stats = ss_ms(), last_imu = 0;
     uint32_t stat_cyc0 = ss_cycles(), stat_samples0 = 0, stat_read0 = 0, stat_missed0 = 0;
@@ -304,7 +316,10 @@ int main(void)
         if (joy) {
             static const char *const nm[5] = {"A", "B", "C", "D", "centre"};
             for (int i = 0; i < 5; i++) if (joy & (1u << i)) printf("[G2] joystick %s\r\n", nm[i]);
-            if (joy & SS_JOY_CENTER) new_trial(bench_trial + 1);
+            if (joy & SS_JOY_CENTER) {
+                new_trial(bench_trial + 1);
+                if (bench_trial < N_TRIAL_NAMES) printf("[G2] trial %lu is: %s\r\n", (unsigned long)bench_trial, trial_name[bench_trial]);
+            }
         }
 
         if (t - last_stats >= STATS_MS) {

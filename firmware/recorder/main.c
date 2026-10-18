@@ -2,9 +2,10 @@
  * 64 MB OSPI0 PSRAM, about 16 minutes. Used to compare our mics with the training data, to measure
  * the mic spacing (docs/HANDOFF-gates.md C4) and to capture teaching sounds for G3.
  *
- * Control: joystick centre starts and stops. The host can also drive it over J-Link by writing
- * rec_cmd (1 = start a new take at offset 0, 2 = stop); rec_bytes is the length of the take.
- * tools/pull_audio.sh reads the take and tools/raw2wav.py turns it into a stereo wav.
+ * Control: joystick centre starts and stops a take. Takes are appended one after another; the host
+ * reads rec_take_off[i] / rec_take_len[i] over J-Link. The host can also write rec_cmd (1 = start a
+ * new take, 2 = stop, 3 = forget all takes). tools/pull_audio.sh reads a take and tools/raw2wav.py
+ * turns it into a stereo wav.
  *
  * Audio comes from ../app/kws.c through its kws_block_hook; the PSRAM driver and init from
  * ../psram_test (pack 2.2.1 driver, vendored), so this project must not link the pack's OSPI. */
@@ -32,8 +33,10 @@
 /* Host interface (read and written over J-Link; see tools/pull_audio.sh) */
 volatile uint32_t rec_cmd;       /* 1 start, 2 stop; cleared when taken */
 volatile uint32_t rec_state;     /* 0 idle, 1 recording */
-volatile uint32_t rec_bytes;     /* bytes in the current/last take, from RAM_BASE */
-volatile uint32_t rec_takes;     /* takes started since boot */
+volatile uint32_t rec_bytes;     /* bytes used in the PSRAM, from RAM_BASE (all takes) */
+volatile uint32_t rec_takes;     /* takes recorded */
+#define MAX_TAKES 64
+volatile uint32_t rec_take_off[MAX_TAKES], rec_take_len[MAX_TAKES];
 volatile uint32_t rec_dropped;   /* audio blocks the capture dropped (kws_audio_dropped) */
 
 static float lvl_db[2] = {-120.0f, -120.0f}, peak_db[2] = {-120.0f, -120.0f};
@@ -128,11 +131,14 @@ void kws_block_hook(const int16_t *stereo, int n, uint32_t done_cycles)
     memcpy(dst, stereo, len);
     SCB_CleanDCache_by_Addr(dst, (int32_t)len);   /* J-Link reads the RAM, not the cache */
     rec_bytes += len;
+    rec_take_len[rec_takes - 1] += len;
 }
 
 static void start_take(void)
 {
-    rec_bytes = 0;
+    if (rec_takes >= MAX_TAKES) return;
+    rec_take_off[rec_takes] = rec_bytes;
+    rec_take_len[rec_takes] = 0;
     rec_takes++;
     peak_db[0] = peak_db[1] = -120.0f;
     rec_state = 1;
@@ -142,9 +148,10 @@ static void start_take(void)
 static void stop_take(void)
 {
     rec_state = 0;
+    const uint32_t n = rec_take_len[rec_takes - 1];
     printf("[REC] take %lu stopped: %lu bytes (%lu.%01lu s), peaks %d / %d dBFS, dropped %lu\r\n",
-           (unsigned long)rec_takes, (unsigned long)rec_bytes, (unsigned long)(rec_bytes / 64000u),
-           (unsigned long)(rec_bytes % 64000u / 6400u), (int)peak_db[0], (int)peak_db[1],
+           (unsigned long)rec_takes, (unsigned long)n, (unsigned long)(n / 64000u),
+           (unsigned long)(n % 64000u / 6400u), (int)peak_db[0], (int)peak_db[1],
            (unsigned long)kws_audio_dropped());
 }
 
@@ -159,7 +166,7 @@ static void draw(void)
     ss_fill(0, 0, SS_LCD_W, SS_LCD_H, kBg);
     ss_text(SS_FONT_SMALL, 20, 20, "Sound Sense recorder", kText, 1);
     ss_text(SS_FONT_SMALL, 20, 56, "joystick centre: start / stop", kMuted, 1);
-    const uint32_t s10 = rec_bytes / 6400u;   /* tenths of a second */
+    const uint32_t s10 = (rec_takes ? rec_take_len[rec_takes - 1] : 0) / 6400u;   /* tenths of a second */
     snprintf(buf, sizeof(buf), "%s  take %lu", rec_state ? "RECORDING" : "idle", (unsigned long)rec_takes);
     ss_text(SS_FONT_SMALL, 20, 140, buf, rec_state ? kRec : kMuted, 2);
     snprintf(buf, sizeof(buf), "%lu:%02lu.%lu", (unsigned long)(s10 / 600), (unsigned long)(s10 / 10 % 60),
@@ -199,8 +206,9 @@ int main(void)
         const uint32_t cmd = rec_cmd;
         if (cmd) {
             rec_cmd = 0;
-            if (cmd == 1) start_take();
+            if (cmd == 1 && !rec_state) start_take();
             else if (cmd == 2 && rec_state) stop_take();
+            else if (cmd == 3 && !rec_state) rec_bytes = rec_takes = 0;
         }
         if (ss_joy_pressed() & SS_JOY_CENTER) {
             if (rec_state) stop_take();
