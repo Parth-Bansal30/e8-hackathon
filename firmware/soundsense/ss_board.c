@@ -5,6 +5,7 @@
 
 #include "Driver_IO.h"
 #include "board_config.h"
+#include "gpio.h"
 #include "se_services_port.h"
 
 static volatile uint32_t g_ms;
@@ -61,12 +62,14 @@ int ss_joy_init(void)
     return 0;
 }
 
+/* One read of the port for all five switches: each LPGPIO read crosses into the slow low-power domain
+ * (about 130 us, measured by PC sampling), so five driver calls cost five times that. */
 uint32_t ss_joy_state(void)
 {
+    const uint32_t port = ((GPIO_Type *)LPGPIO_BASE)->GPIO_EXT_PORTA;
     uint32_t m = 0;
     for (int i = 0; i < 5; i++) {
-        uint32_t v = joy_idle[i];
-        joy_drv->GetValue(joy_pin[i], &v);
+        const uint32_t v = (port >> joy_pin[i]) & 1u ? GPIO_PIN_STATE_HIGH : GPIO_PIN_STATE_LOW;
         if (v != joy_idle[i]) m |= 1u << i;
     }
     return m;

@@ -18,7 +18,7 @@ Branch **`gates`** (pushed; never push to `main`). Read in this order: this file
 |---|---|
 | App `firmware/soundsense/` | Runs on the board (release build flashed). Listen, match, teach (5 examples), alerts, LEDs, timeline, stats, knock felt vs heard |
 | Gates | G1 SOFT, G2 SOFT, G3 SOFT (short run), C1 GO, C4 GO, C3 LEDs only. C2, C5, C3 rows 2-5 pending |
-| P0 features | About 13 of 16 done. Missing: S2 flash save; partial: H1 accuracy (54% from a laptop speaker), T2 checks, S1 "Ready" screen, S4 duty cycle |
+| P0 features | About 15 of 16 done. Done since: S2 flash save (C2), S1 "Ready" self-test screen, S4 duty cycle (C5). Partial: H1 accuracy (54% from a laptop speaker), T2 checks |
 
 ## Setting up the new machine
 

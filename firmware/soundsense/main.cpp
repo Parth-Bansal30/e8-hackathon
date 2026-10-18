@@ -9,6 +9,11 @@
  *
  * Taught sounds are saved in the OSPI flash (ss_store.c) after each teach and loaded at boot.
  *
+ * Boot self-test (S1) on the "Ready" screen: microphones, NPU against the stored reference, saved
+ * sounds, vibration sensor, LEDs. Power (C5): the main loop sleeps (WFI) when no audio block is
+ * waiting, and the live view's encoder runs only while the room is above its noise floor + 6 dB
+ * (and 300 ms after); sound decisions always run.
+ *
  * Joystick, as read facing the screen: UP teach a sound, LEFT timeline, RIGHT stats, press = OK.
  * Host control over J-Link: ss_cmd / ss_arg, see host_command(). Logs go to RTT ([SS], [TEACH],
  * [C1] lines).
@@ -55,6 +60,9 @@
 #define MAX_TAUGHT     8
 #define SHOTS          5
 #define MAX_PROF       (SS_NUM_BUILTIN + MAX_TAUGHT)
+#define GATE_DB        6.0f                   /* live encoder only above the noise floor + this */
+#define GATE_HOLD_MS   300                    /* ... and for this long after */
+#define READY_MS       2500                   /* "Ready" screen, then home (stays on a failure) */
 
 extern "C" {
 volatile uint32_t ss_cmd, ss_arg;   /* host commands, written over J-Link */
@@ -120,7 +128,7 @@ static const float ss_board_thr[1] = {0};
 static const float ss_board_proto[1][SS_EMB] = {};
 #endif
 
-static void profiles_init(void)
+SS_COLD static void profiles_init(void)
 {
     n_prof = 0;
     for (int i = 0; i < SS_NUM_BUILTIN; i++) {
@@ -187,7 +195,7 @@ static void store_save(void)
 
 /* C2 bench: every taught slot filled with a stand-in (a built-in's profile under a preset's name,
  * threshold 0.99 so it never alerts) for a full-size record. Command 4 forgets them. */
-static void store_fill_test(void)
+SS_COLD static void store_fill_test(void)
 {
     int8_t ex[SHOTS][SS_EMB];
     for (int k = 0; k < MAX_TAUGHT; k++) {
@@ -199,17 +207,18 @@ static void store_fill_test(void)
     store_save();
 }
 
-static void store_load(void)
+/* 1 restored, 0 nothing saved yet, -1 the flash doesn't answer. */
+SS_COLD static int store_load(void)
 {
     const int ir = ss_store_init();
     store_ok = ir == 0;
     if (!store_ok) {
         printf("[STORE] flash init failed (%d): taught sounds won't be kept\r\n", ir);
-        return;
+        return -1;
     }
     if (ss_store_load(&store_img) != 0) {
         printf("[STORE] nothing saved yet (%lu us)\r\n", (unsigned long)ss_store_get_stats()->load_us);
-        return;
+        return 0;
     }
     for (int i = 0; i < store_img.n_prof; i++) {
         const ss_store_prof &s = store_img.prof[i];
@@ -225,6 +234,7 @@ static void store_load(void)
     const ss_store_stats *st = ss_store_get_stats();
     printf("[STORE] loaded %d taught sounds from copy %c, seq %lu, in %lu us\r\n", n_taught, 'A' + st->copy,
            (unsigned long)st->seq, (unsigned long)st->load_us);
+    return 1;
 }
 
 /* One step of a running save, between other work (one sector erase blocks about 82 ms). */
@@ -243,6 +253,7 @@ static void store_step(void)
 /* ---------- encoder ---------- */
 
 static uint32_t npu_us, runner_us, feat_us, n_infer;
+static uint64_t npu_sum_us;   /* for NPU busy % (C5) */
 
 static bool infer(const int8_t *in, int8_t *out)
 {
@@ -250,6 +261,7 @@ static bool infer(const int8_t *in, int8_t *out)
     if (executorch_run_inference(in, IN_LEN, out, SS_EMB) != 0) return false;
     runner_us = ss_cyc_to_us(ss_cycles() - t0);
     npu_us = ss_cyc_to_us(executorch_last_execute_cycles());
+    npu_sum_us += npu_us;
     n_infer++;
     return true;
 }
@@ -270,8 +282,9 @@ static int best_of(const float *s, int *second)
     return b;
 }
 
-/* Boot self-test (C1): C features vs Python on a known clip, the NPU output vs the host, timing. */
-static void self_test(void)
+/* Boot self-test (C1): C features vs Python on a known clip, the NPU output vs the host, timing.
+ * True if it matches: features within 1 LSB, output within 2 LSB, and the expected best match. */
+SS_COLD static bool self_test(char *detail, size_t len)
 {
     static int8_t in[IN_LEN];
     int8_t out[SS_EMB];
@@ -308,6 +321,12 @@ static void self_test(void)
            (unsigned long)f_us, off_in, IN_LEN, max_in, max_out, (double)ss_dot(e, ref), ss_builtin_names[b],
            (double)s[b], SS_TEST_NAME, (unsigned long)(npu_sum / 10), (unsigned long)(run_sum / 10),
            ss_encoder_pte_len);
+    const bool ok = max_in <= 1 && max_out <= 2 && !strcmp(ss_builtin_names[b], SS_TEST_NAME);
+    const uint32_t tenths = (npu_sum + 500) / 1000;   /* mean of 10 runs, in 0.1 ms */
+    if (ok) snprintf(detail, len, "matches the reference, %lu.%lu ms", (unsigned long)(tenths / 10),
+                     (unsigned long)(tenths % 10));
+    else snprintf(detail, len, "differs: features %d, output %d LSB", max_in, max_out);
+    return ok;
 }
 
 /* ---------- events ---------- */
@@ -369,8 +388,8 @@ static ui_felt felt_at(uint32_t t, float *mg)
 
 /* ---------- screens ---------- */
 
-enum screen { HOME, ALERT, TIMELINE, STATS, TEACH };
-static screen scr = HOME;
+enum screen { READY, HOME, ALERT, TIMELINE, STATS, TEACH };
+static screen scr = READY;
 static bool redraw = true;
 
 static ui_home home;
@@ -436,6 +455,9 @@ static void present_dirty(void)
 static uint32_t lat[16], n_lat;
 static uint32_t work_cyc, win_infer0;
 static float cpu_pct, infer_rate;
+static float active_pct = 100.0f, npu_pct;   /* C5: CPU outside WFI, NPU executing, % of wall time */
+static uint32_t sleep_cyc, n_wfi, n_iter;    /* this stats window: cycles in WFI, WFIs, loop passes */
+static uint64_t win_npu0;
 
 static void stats_fill(ui_stats *s)
 {
@@ -452,9 +474,9 @@ static void stats_fill(ui_stats *s)
         s->latency_med_ms = v[n / 2];
         s->latency_p90_ms = v[(n * 9) / 10 < n ? (n * 9) / 10 : n - 1];
     }
-    s->cpu_active_pct = cpu_pct;
+    s->cpu_active_pct = active_pct;
     s->infer_per_s = infer_rate;
-    s->npu_busy_pct = infer_rate * npu_us / 10000.0f;
+    s->npu_busy_pct = npu_pct;
     s->model_kb = ss_encoder_pte_len / 1024;
     s->emb_dim = SS_EMB;
     s->n_builtin = SS_NUM_BUILTIN;
@@ -544,7 +566,7 @@ static void alert_raise(ui_event *e)
 static int cal_idx = -1, cal_n;
 static float cal_emb[CAL_MAX][SS_EMB];
 
-static void cal_finish(void)
+SS_COLD static void cal_finish(void)
 {
     if (cal_idx < 0) return;
     const int i = cal_idx;
@@ -668,6 +690,9 @@ static void host_command(void)
 static void on_keys(uint32_t k)
 {
     switch (scr) {
+    case READY:
+        go_home();
+        break;
     case HOME:
         if (k & SS_JOY_UP) teach_open(0, false);
         else if (k & SS_JOY_LEFT) { scr = TIMELINE; tl_first = 0; redraw = true; }
@@ -701,12 +726,98 @@ static void on_keys(uint32_t k)
     }
 }
 
+/* ---------- boot self-test (S1) ---------- */
+
+static ui_ready ready;
+static uint32_t ready_t;
+static bool ready_fail;
+
+SS_COLD static void ready_set(int i, const char *name, ui_check_state st, const char *detail)
+{
+    ready.item[i].name = name;
+    ready.item[i].state = st;
+    snprintf(ready.item[i].detail, sizeof(ready.item[i].detail), "%s", detail);
+    if (i >= ready.n) ready.n = i + 1;
+    if (st == UI_CHECK_FAIL) ready_fail = true;
+}
+
+/* Both mics over 0.5 s, after 0.2 s to settle: alive (not digital silence), not pinned at full scale, within 20 dB of each
+ * other. Channel 0 is mic 4 (left), channel 1 mic 5 (right). */
+static struct { float ss[2]; int peak[2]; uint32_t n; } micq;
+
+static void mic_tap(const int16_t *st, int n, uint32_t)
+{
+    for (int i = 0; i < n; i++)
+        for (int c = 0; c < 2; c++) {
+            const int v = st[2 * i + c], a = v < 0 ? -v : v;
+            micq.ss[c] += (float)v * (float)v;
+            if (a > micq.peak[c]) micq.peak[c] = a;
+        }
+    micq.n += (uint32_t)n;
+}
+
+SS_COLD static ui_check_state mic_check(char *detail, size_t len)
+{
+    memset(&micq, 0, sizeof(micq));
+    const uint32_t t0 = ss_ms();
+    uint32_t t_imu = t0;
+    while (ss_ms() - t0 < 700) {
+        if (ss_ms() - t0 >= 200) ss_audio_set_tap(mic_tap);   /* after the mics' start-up surge */
+        kws_audio_poll();
+        if (imu_ok && ss_ms() - t_imu >= 5) {   /* its FIFO holds about 300 ms */
+            t_imu = ss_ms();
+            ss_imu_poll();
+        }
+    }
+    ss_audio_set_tap(NULL);
+    ss_onset o;
+    ss_knock k;
+    while (ss_audio_onset(&o)) {}   /* start-up noises aren't sounds to report */
+    while (ss_imu_knock(&k)) {}
+    if (micq.n == 0) { snprintf(detail, len, "no audio from the microphones"); return UI_CHECK_FAIL; }
+    float db[2];
+    for (int c = 0; c < 2; c++) db[c] = 10.0f * log10f(micq.ss[c] / micq.n / (32768.0f * 32768.0f) + 1e-12f);
+    printf("[S1] mics: left %.1f dB (peak %d), right %.1f dB (peak %d) over %lu samples\r\n", (double)db[0],
+           micq.peak[0], (double)db[1], micq.peak[1], (unsigned long)micq.n);
+    static const char *const side[2] = {"left", "right"};
+    for (int c = 0; c < 2; c++)
+        if (db[c] < -90.0f) { snprintf(detail, len, "%s mic silent", side[c]); return UI_CHECK_FAIL; }
+    for (int c = 0; c < 2; c++)
+        if (db[c] > -6.0f) { snprintf(detail, len, "%s mic stuck loud (%d dB)", side[c], (int)db[c]); return UI_CHECK_WARN; }
+    const float d = db[0] - db[1];
+    if (d > 20.0f || d < -20.0f) {
+        snprintf(detail, len, "%s mic %d dB quieter", side[d > 0], (int)(d > 0 ? d : -d));
+        return UI_CHECK_WARN;
+    }
+    snprintf(detail, len, "left %d dB, right %d dB", (int)lrintf(db[0]), (int)lrintf(db[1]));
+    return UI_CHECK_OK;
+}
+
+/* ---------- power (C5) ---------- */
+
+/* The cycle counter times everything (onsets, knocks, latency), so the loop only sleeps if it keeps
+ * counting through WFI. */
+SS_COLD static bool dwt_runs_in_wfi(void)
+{
+    const uint32_t m0 = ss_ms();
+    while (ss_ms() == m0) {}
+    const uint32_t c0 = ss_cycles(), m1 = ss_ms();
+    while (ss_ms() - m1 < 20) __WFI();
+    const float ratio = (float)(ss_cycles() - c0) / ((float)(ss_ms() - m1) * (SystemCoreClock / 1000u));
+    printf("[C5] cycle counter through WFI: %.0f%% of wall time -> %s\r\n", (double)(ratio * 100.0f),
+           ratio > 0.9f ? "sleeping between audio blocks" : "no sleep (timing would drift)");
+    return ratio > 0.9f;
+}
+
 /* ---------- drawing ---------- */
 
 static void draw(uint32_t now, bool live_only)
 {
     const uint32_t t0 = ss_cycles();
     switch (scr) {
+    case READY:
+        ui_ready_draw(&ready);
+        break;
     case HOME:
         home.listening = true;
         home.mode = "Home";
@@ -762,6 +873,7 @@ static void set_leds(uint32_t now)
     if (scr == ALERT) ui_led_pattern(alert_ev.urgency, alert_ev.cat, alert_ev.maybe, now - alert_t0, led);
     else if (banner_on) ui_led_pattern(UI_INFO, banner_ev.cat, banner_ev.maybe, now - banner_t0, led);
     else if (scr == TEACH && tc.ph != T_NAMING) led[0].g = (now / 500) & 1;   /* slow green: recording */
+    else if (scr == READY && ready_fail) led[0].r = led[1].r = (now / 500) & 1;   /* slow red: not ready */
     static uint32_t shown[2] = {~0u, ~0u};
     for (int i = 0; i < 2; i++) {
         const uint32_t c = (led[i].r ? SS_LED_RED : 0) | (led[i].g ? SS_LED_GREEN : 0) | (led[i].b ? SS_LED_BLUE : 0);
@@ -776,22 +888,59 @@ int main(void)
     ss_board_init();
     ss_gfx_init();
     ss_joy_init();
-    if (ss_led_init() != 0) printf("[SS] LED init failed\r\n");
+    const bool led_ok = ss_led_init() == 0;
+    if (!led_ok) printf("[SS] LED init failed\r\n");
     printf("\r\n[SS] Sound Sense starting\r\n");
 
-    if (executorch_init(ss_encoder_pte, ss_encoder_pte_len) != 0) ss_halt("executorch_init");
+    /* the "Ready" screen fills in as the checks run (S1) */
+    ui_init(ss_gfx_back());
+    ready_set(0, "Microphones", UI_CHECK_RUNNING, "");
+    ready_set(1, "Neural processor", UI_CHECK_RUNNING, "");
+    ready_set(2, "Saved sounds", UI_CHECK_RUNNING, "");
+    ready_set(3, "Vibration sensor", UI_CHECK_RUNNING, "");
+    ready_set(4, "Display and lights", led_ok ? UI_CHECK_OK : UI_CHECK_WARN, led_ok ? "ok" : "lights not answering");
+    draw(ss_ms(), false);
+
+    char d[48];
+    if (executorch_init(ss_encoder_pte, ss_encoder_pte_len) != 0) {
+        ready_set(1, "Neural processor", UI_CHECK_FAIL, "runtime didn't start");
+        draw(ss_ms(), false);
+        ss_halt("executorch_init");
+    }
     executorch_set_verbose(0);
     profiles_init();
-    self_test();
-    store_load();
+    const bool npu_ok = self_test(d, sizeof(d));
+    ready_set(1, "Neural processor", npu_ok ? UI_CHECK_OK : UI_CHECK_FAIL, d);
+    draw(ss_ms(), false);
+
+    const int sr = store_load();
+    snprintf(d, sizeof(d), "%d taught sound%s restored", n_taught, n_taught == 1 ? "" : "s");
+    ready_set(2, "Saved sounds", sr < 0 ? UI_CHECK_WARN : UI_CHECK_OK,
+              sr < 0 ? "flash not answering: won't be kept" : n_taught ? d : "nothing taught yet");
+    draw(ss_ms(), false);
 
     const int ir = ss_imu_init();
     imu_ok = ir == 0;
     if (!imu_ok) printf("[SS] IMU init failed (%d): knocks can't be felt\r\n", ir);
+    ready_set(3, "Vibration sensor", imu_ok ? UI_CHECK_OK : UI_CHECK_WARN,
+              imu_ok ? "knocks can be felt" : "not found: knocks heard only");
+    draw(ss_ms(), false);
 
-    ui_init(ss_gfx_back());
     ss_audio_init();
-    if (kws_audio_start() != 0) ss_halt("microphone start");
+    if (kws_audio_start() != 0) {
+        ready_set(0, "Microphones", UI_CHECK_FAIL, "didn't start");
+        draw(ss_ms(), false);
+        ss_halt("microphone start");
+    }
+    const ui_check_state mic = mic_check(d, sizeof(d));
+    ready_set(0, "Microphones", mic, d);
+    ready.done = true;
+    ready.boot_ms = ready_t = ss_ms();
+    draw(ss_ms(), false);
+    printf("[S1] %s after %lu ms: mics %s; npu %s; saved sounds %s; imu %s; lights %s\r\n",
+           ready_fail ? "NOT READY" : "ready", (unsigned long)ready.boot_ms, ready.item[0].detail,
+           ready.item[1].detail, ready.item[2].detail, ready.item[3].detail, ready.item[4].detail);
+    const bool use_wfi = dwt_runs_in_wfi();
     printf("[SS] listening; %d built-in sounds\r\n", SS_NUM_BUILTIN);
 
     static int8_t in[IN_LEN];
@@ -802,14 +951,21 @@ int main(void)
     uint32_t pend_sample = 0, pend_ms = 0, last_onset = 0;
     bool any_onset = false;
     uint32_t last_imu = 0, last_live_draw = 0, last_slow = 0, last_log = 0, last_key = 0;
-    uint32_t win_ms0 = ss_ms();
+    uint32_t win_ms0 = ss_ms(), last_loud = 0, last_joy = 0;
+    bool any_loud = false;
 
     for (;;) {
-        frames += kws_audio_poll();
+        n_iter++;
+        const int got = kws_audio_poll();
+        frames += got;
         const uint32_t now = ss_ms();
+        if (got && ss_audio_block_db() > ss_audio_floor_db() + GATE_DB) {
+            last_loud = now;
+            any_loud = true;
+        }
         host_command();
 
-        if (imu_ok && now - last_imu >= 5) {
+        if (imu_ok && now - last_imu >= 10) {   /* FIFO holds ~300 ms; each read busy-waits on I3C (C5) */
             last_imu = now;
             ss_imu_poll();
             ss_knock k;
@@ -820,9 +976,14 @@ int main(void)
             }
         }
 
-        /* joystick, with a 250 ms lock-out against switch bounce */
-        uint32_t keys = ss_joy_pressed() | host_keys;
+        /* joystick every 10 ms (a low-power GPIO read is slow: reading it every pass kept the CPU 2/3 busy),
+         * with a 250 ms lock-out against switch bounce */
+        uint32_t keys = host_keys;
         host_keys = 0;
+        if (now - last_joy >= 10) {
+            last_joy = now;
+            keys |= ss_joy_pressed();
+        }
         if (keys && now - last_key >= 250) {
             last_key = now;
             last_key_ms = now;
@@ -843,17 +1004,21 @@ int main(void)
             decide(pend_sample, pend_ms);
         }
 
-        /* live view: encoder every 100 ms, spectrogram columns, best three matches */
+        /* live view: spectrogram columns every 100 ms; the encoder and best three matches only on the
+         * home screen while the room is above its noise floor (E1) */
         if (frames >= LIVE_EVERY) {
             const int n_new = frames > KWS_FRAMES ? KWS_FRAMES : frames;
             frames = 0;
             const uint32_t t0 = ss_cycles();
             kws_make_input(in, SS_IN_SCALE, SS_IN_ZP);
             feat_us = ss_cyc_to_us(ss_cycles() - t0);
-            if (!infer(in, out)) ss_halt("inference");
+            const bool npu_on = scr == HOME && any_loud && now - last_loud < GATE_HOLD_MS;
+            if (npu_on) {
+                if (!infer(in, out)) ss_halt("inference");
+                ss_embed(out, e);
+                score_all(e, s);
+            }
             work_cyc += ss_cycles() - t0;
-            ss_embed(out, e);
-            score_all(e, s);
             for (int f = KWS_FRAMES - n_new; f < KWS_FRAMES; f++) {
                 uint8_t col[KWS_NMEL];
                 for (int b = 0; b < KWS_NMEL; b++) {
@@ -864,7 +1029,8 @@ int main(void)
             }
             /* best three matches, "Quiet" and "Speech" included */
             bool used[MAX_PROF] = {};
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 3 && !npu_on; i++) top3[i] = {i ? NULL : "Quiet: NPU resting", 0, false};
+            for (int i = 0; i < 3 && npu_on; i++) {
                 int b = -1;
                 for (int p = 0; p < n_prof; p++)
                     if (!used[p] && (b < 0 || s[p] > s[b])) b = p;
@@ -881,6 +1047,7 @@ int main(void)
         }
 
         /* timeouts, the urgent strobe (one flash a second) and slow refreshes */
+        if (scr == READY && !ready_fail && now - ready_t > READY_MS) go_home();
         if (banner_on && now - banner_t0 > BANNER_MS) {
             banner_on = false;
             if (scr == HOME) redraw = true;
@@ -908,19 +1075,35 @@ int main(void)
 
         if (now - last_log >= 10000) {
             last_log = now;
-            cpu_pct = 100.0f * work_cyc / ((float)(now - win_ms0) * (SystemCoreClock / 1000u));
+            const float win_cyc = (float)(now - win_ms0) * (SystemCoreClock / 1000u);
+            cpu_pct = 100.0f * work_cyc / win_cyc;
+            active_pct = 100.0f * (1.0f - sleep_cyc / win_cyc);
+            npu_pct = 100.0f * (float)(npu_sum_us - win_npu0) / ((float)(now - win_ms0) * 1000.0f);
             infer_rate = (n_infer - win_infer0) * 1000.0f / (float)(now - win_ms0);
-            work_cyc = 0;
+            const uint32_t passes_s = n_iter * 1000u / (now - win_ms0), sleeps_s = n_wfi * 1000u / (now - win_ms0);
+            const uint32_t sleep_us = n_wfi ? ss_cyc_to_us(sleep_cyc / n_wfi) : 0;
+            work_cyc = sleep_cyc = n_wfi = n_iter = 0;
+            win_npu0 = npu_sum_us;
             win_infer0 = n_infer;
             win_ms0 = now;
             const ss_imu_stats *is = ss_imu_get_stats();
             printf("[SS] stats t=%lu level %d dB floor %d dB, npu %lu us runner %lu us feat %lu us, %.1f inf/s, "
-                   "busy %.0f%%, dropped %lu, imu %lu samples %lu errors, knocks %lu, events %d, saves %lu\r\n",
+                   "busy %.0f%%, active %.1f%% (%lu passes/s, %lu sleeps/s, %lu us each), npu busy %.2f%%, dropped %lu, imu %lu samples %lu errors, knocks %lu, events %d, saves %lu\r\n",
                    (unsigned long)now, (int)ss_audio_block_db(), (int)ss_audio_floor_db(), (unsigned long)npu_us,
                    (unsigned long)runner_us, (unsigned long)feat_us, (double)infer_rate, (double)cpu_pct,
+                   (double)active_pct, (unsigned long)passes_s, (unsigned long)sleeps_s, (unsigned long)sleep_us,
+                   (double)npu_pct,
                    (unsigned long)kws_audio_dropped(), (unsigned long)(imu_ok ? is->samples : 0),
                    (unsigned long)(imu_ok ? is->errors : 0), (unsigned long)n_knocks, n_events,
                    (unsigned long)ss_store_get_stats()->saves);
+        }
+
+        /* nothing waiting: sleep until the next interrupt (SysTick every 1 ms, or the mics) (E2) */
+        if (use_wfi && !got && !redraw && !ss_store_busy()) {
+            const uint32_t c0 = ss_cycles();
+            __WFI();
+            sleep_cyc += ss_cycles() - c0;
+            n_wfi++;
         }
     }
 }

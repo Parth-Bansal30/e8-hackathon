@@ -95,6 +95,21 @@ typedef struct {
     uint32_t save_ms, uptime_s, dropped;
 } ui_stats;
 
+/* Boot self-test (S1): one row per check, then "Ready" or the reason it isn't. */
+typedef enum { UI_CHECK_RUNNING, UI_CHECK_OK, UI_CHECK_WARN, UI_CHECK_FAIL } ui_check_state;
+#define UI_READY_MAX 6
+typedef struct {
+    const char *name;      /* "Microphones" */
+    char detail[48];       /* "left -52 dB, right -50 dB" */
+    ui_check_state state;
+} ui_check;
+typedef struct {
+    ui_check item[UI_READY_MAX];
+    int n;
+    bool done;             /* every check finished */
+    uint32_t boot_ms;      /* power-on to ready */
+} ui_ready;
+
 void ui_init(uint8_t (*canvas)[GFX_W][3]);
 
 /* Wall clock (L5): time of day, in ms after midnight, at boot. Until set, times are relative. */
@@ -113,6 +128,8 @@ void ui_banner_draw(const ui_event *e, uint32_t now_ms);
 void ui_timeline_draw(const ui_event *ev, int n, uint32_t now_ms, int first);
 void ui_teach_draw(const ui_teach *t);
 void ui_stats_draw(const ui_stats *s);
+/* Any failed check: "Not ready" and the first failure; else "Ready" once done (warnings shown). */
+void ui_ready_draw(const ui_ready *r);
 
 /* Shared pieces, also handy for other screens. */
 gfx_color ui_cat_color(ui_category c);

@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include <stddef.h>
+#include <string.h>
 
 static uint8_t (*cv)[GFX_W][3];
 static int dirty_y0 = GFX_H, dirty_y1 = -1;
@@ -68,6 +69,13 @@ void gfx_fill(int x, int y, int w, int h, gfx_color c)
     if (!clip(&x0, &y0, &x1, &y1)) return;
     for (int j = y0; j < y1; j++)
         for (int i = x0; i < x1; i++) put(i, j, c);
+}
+
+void gfx_scroll_left(int x, int y, int w, int h, int dx)
+{
+    int x0 = x, y0 = y, x1 = x + w, y1 = y + h;
+    if (dx <= 0 || !clip(&x0, &y0, &x1, &y1) || dx >= x1 - x0) return;
+    for (int j = y0; j < y1; j++) memmove(cv[j][x0], cv[j][x0 + dx], (size_t)(x1 - x0 - dx) * 3);
 }
 
 /* Coverage of pixel (px, py) by a rounded rectangle (signed-distance with a 1 px ramp). */

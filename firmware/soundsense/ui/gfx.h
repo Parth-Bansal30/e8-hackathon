@@ -42,6 +42,8 @@ void gfx_dirty_reset(void);
 bool gfx_dirty_rows(int *y0, int *y1);
 
 void gfx_fill(int x, int y, int w, int h, gfx_color c);
+/* Move the pixels of a box dx px to the left (scrolling); the right dx columns keep their old pixels. */
+void gfx_scroll_left(int x, int y, int w, int h, int dx);
 void gfx_round_rect(int x, int y, int w, int h, int r, gfx_color c);
 void gfx_round_frame(int x, int y, int w, int h, int r, int t, gfx_color c);
 void gfx_circle(float cx, float cy, float r, gfx_color c);

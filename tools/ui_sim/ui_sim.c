@@ -252,6 +252,27 @@ int main(void)
     ui_timeline_draw(events, N_EVENTS, NOW, 0);
     save("13_timeline_clock");
 
+    /* boot self-test (S1): all good, then a failure */
+    ui_ready ready = {.n = 5, .done = true, .boot_ms = 2140};
+    ready.item[0] = (ui_check){"Microphones", "left -52 dB, right -50 dB", UI_CHECK_OK};
+    ready.item[1] = (ui_check){"Neural processor", "matches the reference, 1.0 ms", UI_CHECK_OK};
+    ready.item[2] = (ui_check){"Saved sounds", "3 taught sounds restored", UI_CHECK_OK};
+    ready.item[3] = (ui_check){"Vibration sensor", "knocks can be felt", UI_CHECK_OK};
+    ready.item[4] = (ui_check){"Display and lights", "ok", UI_CHECK_OK};
+    ui_ready_draw(&ready);
+    save("14_ready");
+    ready.item[0] = (ui_check){"Microphones", "right mic silent", UI_CHECK_FAIL};
+    ready.item[3] = (ui_check){"Vibration sensor", "not found: knocks heard only", UI_CHECK_WARN};
+    ui_ready_draw(&ready);
+    save("15_not_ready");
+    home.top[0] = (ui_guess){"Quiet: NPU resting", 0, false};
+    home.top[1] = home.top[2] = (ui_guess){NULL, 0, false};
+    ui_home_draw(&home, NOW);
+    save("16_home_npu_resting");
+    home.top[0] = (ui_guess){"Doorbell", 94, true};
+    home.top[1] = (ui_guess){"Phone ringing", 31, false};
+    home.top[2] = (ui_guess){"Microwave", 12, false};
+
     gfx_dirty_reset();
     ui_home_update_live(&home);
     int y0, y1;

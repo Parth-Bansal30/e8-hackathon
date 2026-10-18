@@ -316,19 +316,36 @@ static void make_lut(void)
     }
 }
 
+static uint32_t spec_pushed, spec_shown;   /* columns pushed in total, and as of the last draw */
+
 void ui_spectro_push(const uint8_t col[40])
 {
     memcpy(spec[spec_head], col, 40);
     spec_head = (spec_head + 1) % SPEC_COLS;
+    spec_pushed++;
 }
 
-static void draw_spectro(void)
+
+static void draw_spectro_cols(int c0)
 {
-    for (int c = 0; c < SPEC_COLS; c++) {
+    for (int c = c0; c < SPEC_COLS; c++) {
         const uint8_t *col = spec[(spec_head + c) % SPEC_COLS];   /* oldest on the left */
         for (int b = 0; b < 40; b++)
             gfx_fill(SPEC_X + c, SPEC_Y + (39 - b) * SPEC_BAND_PX, 1, SPEC_BAND_PX, lut[col[b]]);
     }
+    spec_shown = spec_pushed;
+}
+
+static void draw_spectro(void) { draw_spectro_cols(0); }
+
+/* Live update: scroll what's on screen and draw only the new columns (a full redraw is 16,640 fills). */
+static void scroll_spectro(void)
+{
+    const uint32_t n = spec_pushed - spec_shown;
+    if (n == 0) return;
+    if (n >= SPEC_COLS) { draw_spectro(); return; }
+    gfx_scroll_left(SPEC_X, SPEC_Y, SPEC_COLS, 40 * SPEC_BAND_PX, (int)n);
+    draw_spectro_cols(SPEC_COLS - (int)n);
 }
 
 /* ---------- home ---------- */
@@ -345,6 +362,10 @@ static void draw_top(const ui_home *h)
         gfx_fill(SPEC_X, y, SPEC_COLS, 30, PANEL);
         const ui_guess *g = &h->top[i];
         if (!g->label) continue;
+        if (!g->score && !g->over_threshold) {   /* a note, not a match ("NPU resting") */
+            gfx_text(i == 0 ? B : L, SPEC_X, y + 3, g->label, MUTED, 22);
+            continue;
+        }
         char pct[8];
         snprintf(pct, sizeof pct, "%u%%", (unsigned)g->score);
         const gfx_color c = g->over_threshold ? GREEN : FAINT;
@@ -392,6 +413,11 @@ static void draw_recent(const ui_home *h, uint32_t now_ms)
     }
 }
 
+/* What the live parts showed last, so an update can skip what hasn't changed (C5: in a quiet room the
+ * top matches and the level rarely change, and redrawing them 10 times a second cost ~10% CPU). */
+static ui_guess shown_top[3];
+static int shown_db = 9999, shown_fx = -1, shown_loud = -1;
+
 void ui_home_draw(const ui_home *h, uint32_t now_ms)
 {
     gfx_fill(0, 0, GFX_W, GFX_H, BG);
@@ -403,15 +429,35 @@ void ui_home_draw(const ui_home *h, uint32_t now_ms)
     draw_spectro();
     draw_top(h);
     draw_level(h);
+    shown_top[0].label = NULL, shown_db = 9999;   /* the next live update redraws both */
     draw_recent(h, now_ms);
     footer("UP teach   LEFT timeline   RIGHT stats");
 }
 
+
+static bool same_top(const ui_home *h)
+{
+    for (int i = 0; i < 3; i++) {
+        const ui_guess *a = &h->top[i], *b = &shown_top[i];
+        if (a->score != b->score || a->over_threshold != b->over_threshold) return false;
+        if (a->label != b->label && (!a->label || !b->label || strcmp(a->label, b->label))) return false;
+    }
+    return true;
+}
+
 void ui_home_update_live(const ui_home *h)
 {
-    draw_spectro();
-    draw_top(h);
-    draw_level(h);
+    scroll_spectro();
+    if (!same_top(h)) {
+        draw_top(h);
+        memcpy(shown_top, h->top, sizeof(shown_top));
+    }
+    const int db = (int)lrintf(h->room_db), fx = (int)(200 * (h->floor_db + 80.0f) / 80.0f);
+    const int loud = h->room_db > h->floor_db + 10.0f;
+    if (db != shown_db || fx != shown_fx || loud != shown_loud) {
+        draw_level(h);
+        shown_db = db, shown_fx = fx, shown_loud = loud;
+    }
 }
 
 /* ---------- alerts ---------- */
@@ -646,6 +692,71 @@ void ui_stats_draw(const ui_stats *s)
     tile(0, 4, v[8], "ms", "features per frame");
     tile(1, 4, v[9], NULL, "audio dropped");
     footer("All of this runs on the board. Nothing is recorded.");
+}
+
+/* ---------- boot self-test ---------- */
+
+#if defined(__arm__)
+#define UI_COLD __attribute__((section(".text.mram"), noinline))   /* boot only: kept out of ITCM */
+#else
+#define UI_COLD
+#endif
+
+UI_COLD static void check_badge(float cx, float cy, ui_check_state st)
+{
+    switch (st) {
+    case UI_CHECK_OK:
+        gfx_circle(cx, cy, 22.0f, GREEN);
+        gfx_line(cx - 10, cy + 1, cx - 3, cy + 9, 5.0f, WHITE);
+        gfx_line(cx - 3, cy + 9, cx + 11, cy - 8, 5.0f, WHITE);
+        break;
+    case UI_CHECK_WARN:
+        gfx_circle(cx, cy, 22.0f, ORANGE);
+        gfx_line(cx, cy - 11, cx, cy + 3, 5.0f, INK);
+        gfx_circle(cx, cy + 11, 3.0f, INK);
+        break;
+    case UI_CHECK_FAIL:
+        gfx_circle(cx, cy, 22.0f, VERMILLION);
+        gfx_line(cx - 8, cy - 8, cx + 8, cy + 8, 5.0f, WHITE);
+        gfx_line(cx + 8, cy - 8, cx - 8, cy + 8, 5.0f, WHITE);
+        break;
+    default:
+        gfx_ring(cx, cy, 20.0f, 4.0f, FAINT);
+        break;
+    }
+}
+
+UI_COLD void ui_ready_draw(const ui_ready *r)
+{
+    const ui_check *fail = NULL;
+    for (int i = 0; i < r->n; i++)
+        if (r->item[i].state == UI_CHECK_FAIL && !fail) fail = &r->item[i];
+
+    gfx_fill(0, 0, GFX_W, GFX_H, BG);
+    header("Sound Sense", "self-test", fail ? VERMILLION : r->done ? GREEN : YELLOW);
+    for (int i = 0; i < r->n && i < UI_READY_MAX; i++) {
+        const ui_check *c = &r->item[i];
+        const int y = 100 + i * 88;
+        gfx_round_rect(16, y, 448, 76, 18, PANEL);
+        check_badge(58.0f, y + 38.0f, c->state);
+        gfx_text(B, 100, y + 10, c->name, TEXT, 26);
+        gfx_text(L, 100, y + 44, c->state == UI_CHECK_RUNNING && !c->detail[0] ? "checking..." : c->detail,
+                 c->state == UI_CHECK_FAIL ? VERMILLION : MUTED, 20);
+    }
+
+    /* verdict */
+    const int vy = 100 + r->n * 88 + 12;
+    if (fail || r->done) {
+        const gfx_color bg = fail ? VERMILLION : GREEN;
+        gfx_round_rect(16, vy, 448, 104, 24, bg);
+        gfx_text_center(B, GFX_W / 2, vy + 12, fail ? "Not ready" : "Ready", ink_on(bg), 48);
+        char sub[64];
+        if (fail) snprintf(sub, sizeof sub, "%s: %s", fail->name, fail->detail);
+        else snprintf(sub, sizeof sub, "Listening. Started in %u.%u s", (unsigned)(r->boot_ms / 1000),
+                      (unsigned)(r->boot_ms / 100 % 10));
+        gfx_text_center(L, GFX_W / 2, vy + 70, sub, ink_on(bg), 20);
+    }
+    footer(fail ? "Press the joystick to continue anyway" : "All checks run on the board at every start");
 }
 
 /* ---------- init ---------- */

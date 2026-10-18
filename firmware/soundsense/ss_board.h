@@ -7,6 +7,9 @@
 #include "RTE_Components.h"
 #include CMSIS_device_header
 
+/* Code that runs at boot or rarely: placed in MRAM (linker script), since ITCM is nearly full. */
+#define SS_COLD __attribute__((section(".text.mram"), noinline))
+
 #ifdef __cplusplus
 extern "C" {
 #endif
