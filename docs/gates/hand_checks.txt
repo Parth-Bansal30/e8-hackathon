@@ -1,0 +1,122 @@
+Hand and eye checks on the board, 2026-10-18 1:24-1:28 PM PDT, release build of 32177ea, no sound played.
+Night mode on and off with host keys (screen checked before each key). The owner watched the screen and turned the knob.
+Owner by eye: backlight fully off after 15 s on Home (pass). Knob: notice with a bar followed it (pass). Knob left at 50%.
+
+Board log, ss_rtt.log lines 4765-4962 (knob, night, screen, alert and store lines):
+[SS] night mode on
+[SS] t=1261535 +18.7 dB best 'Glass breaking' 0.47 (thr 0.50), 2nd 'Baby crying' 0.14, felt yes (23.8 mg) -> maybe Knock
+[C3] alert on screen 125976 us after the decision (draw 122450 us, present 3525 us)
+[C3] alert 'Knock' ended after 15001 ms: 1 full redraws, longest draw 122450 us + present 3525 us, 0 audio blocks dropped
+[SS] screen dark (night mode)
+[SS] t=1299910 +15.3 dB best 'Glass breaking' 0.29 (thr 0.50), 2nd 'Quiet' 0.09, felt yes (31.4 mg) -> maybe Knock
+[SS] screen lit
+[C3] alert on screen 126002 us after the decision (draw 122461 us, present 3536 us)
+[C3] alert 'Knock' ended after 15001 ms: 1 full redraws, longest draw 122461 us + present 3536 us, 0 audio blocks dropped
+[SS] screen dark (night mode)
+[SS] t=1327860 +22.5 dB best 'Quiet' 0.12 (thr 0.50), 2nd 'Water running' 0.08, felt yes (27.0 mg) -> maybe Knock
+[SS] screen lit
+[C3] alert on screen 125994 us after the decision (draw 122453 us, present 3535 us)
+[SS] t=1335276 +26.4 dB best 'Glass breaking' 0.34 (thr 0.50), 2nd 'Knock' 0.05, felt yes (28.1 mg) -> maybe Knock
+[C3] alert on screen 129476 us after the decision (draw 125632 us, present 3533 us)
+[C3] alert 'Knock' ended after 9294 ms: 2 full redraws, longest draw 125632 us + present 3535 us, 0 audio blocks dropped
+[SS] night mode off
+[SS] knob: sensitivity 3%, thresholds +0.094
+[SS] knob: sensitivity 6%, thresholds +0.088
+[SS] knob: sensitivity 12%, thresholds +0.076
+[SS] knob: sensitivity 15%, thresholds +0.070
+[SS] knob: sensitivity 18%, thresholds +0.064
+[SS] knob: sensitivity 21%, thresholds +0.058
+[SS] knob: sensitivity 24%, thresholds +0.052
+[SS] knob: sensitivity 28%, thresholds +0.044
+[SS] knob: sensitivity 34%, thresholds +0.032
+[SS] knob: sensitivity 40%, thresholds +0.020
+[SS] knob: sensitivity 44%, thresholds +0.012
+[SS] knob: sensitivity 48%, thresholds +0.004
+[SS] knob: sensitivity 45%, thresholds +0.010
+[SS] knob: sensitivity 42%, thresholds +0.016
+[SS] knob: sensitivity 38%, thresholds +0.024
+[SS] knob: sensitivity 35%, thresholds +0.030
+[SS] knob: sensitivity 32%, thresholds +0.036
+[SS] knob: sensitivity 29%, thresholds +0.042
+[SS] knob: sensitivity 23%, thresholds +0.054
+[SS] knob: sensitivity 18%, thresholds +0.064
+[SS] knob: sensitivity 13%, thresholds +0.074
+[SS] knob: sensitivity 9%, thresholds +0.082
+[SS] knob: sensitivity 4%, thresholds +0.092
+[SS] knob: sensitivity 0%, thresholds +0.100
+[SS] t=1395381 +8.4 dB best 'Quiet' 0.13 (thr 0.60), 2nd 'Glass breaking' 0.07, felt yes (676.1 mg) -> maybe Knock
+[C3] alert on screen 125986 us after the decision (draw 122460 us, present 3525 us)
+[SS] knob: sensitivity 6%, thresholds +0.088
+[SS] knob: sensitivity 12%, thresholds +0.076
+[SS] knob: sensitivity 15%, thresholds +0.070
+[SS] knob: sensitivity 18%, thresholds +0.064
+[SS] knob: sensitivity 22%, thresholds +0.056
+[SS] knob: sensitivity 27%, thresholds +0.046
+[SS] knob: sensitivity 33%, thresholds +0.034
+[SS] knob: sensitivity 30%, thresholds +0.040
+[SS] t=1397453 +13.2 dB best 'Glass breaking' 0.15 (thr 0.54), 2nd 'Alarm' 0.03, felt yes (71.0 mg) -> maybe Knock
+[C3] alert on screen 129163 us after the decision (draw 125635 us, present 3527 us)
+[SS] knob: sensitivity 21%, thresholds +0.058
+[SS] knob: sensitivity 17%, thresholds +0.066
+[SS] knob: sensitivity 12%, thresholds +0.076
+[SS] knob: sensitivity 8%, thresholds +0.084
+[SS] knob: sensitivity 3%, thresholds +0.094
+[SS] knob: sensitivity 0%, thresholds +0.100
+[SS] t=1400227 +8.8 dB best 'Water running' 0.10 (thr 0.60), 2nd 'Glass breaking' 0.08, felt yes (118.1 mg) -> maybe Knock
+[C3] alert on screen 129180 us after the decision (draw 125635 us, present 3545 us)
+[SS] t=1401508 +25.0 dB best 'Quiet' 0.13 (thr 0.60), 2nd 'Dog barking' 0.13, felt yes (2106.1 mg) -> maybe Knock
+[C3] alert on screen 129238 us after the decision (draw 125699 us, present 3537 us)
+[SS] knob: sensitivity 10%, thresholds +0.080
+[SS] knob: sensitivity 15%, thresholds +0.070
+[SS] knob: sensitivity 21%, thresholds +0.058
+[SS] knob: sensitivity 27%, thresholds +0.046
+[SS] knob: sensitivity 31%, thresholds +0.038
+[SS] knob: sensitivity 34%, thresholds +0.032
+[SS] knob: sensitivity 37%, thresholds +0.026
+[SS] knob: sensitivity 40%, thresholds +0.020
+[SS] knob: sensitivity 43%, thresholds +0.014
+[SS] knob: sensitivity 46%, thresholds +0.008
+[SS] knob: sensitivity 49%, thresholds +0.002
+[SS] knob: sensitivity 52%, thresholds -0.004
+[SS] knob: sensitivity 55%, thresholds -0.010
+[SS] knob: sensitivity 58%, thresholds -0.016
+[SS] knob: sensitivity 62%, thresholds -0.024
+[SS] knob: sensitivity 67%, thresholds -0.034
+[SS] knob: sensitivity 76%, thresholds -0.052
+[SS] knob: sensitivity 82%, thresholds -0.064
+[SS] knob: sensitivity 90%, thresholds -0.080
+[SS] knob: sensitivity 93%, thresholds -0.086
+[SS] knob: sensitivity 99%, thresholds -0.098
+[SS] t=1408379 +13.2 dB best 'Glass breaking' 0.23 (thr 0.40), 2nd 'Siren' 0.09, felt yes (396.7 mg) -> maybe Knock
+[C3] alert on screen 130250 us after the decision (draw 126729 us, present 3520 us)
+[SS] knob: sensitivity 92%, thresholds -0.084
+[SS] knob: sensitivity 89%, thresholds -0.078
+[SS] knob: sensitivity 86%, thresholds -0.072
+[SS] knob: sensitivity 82%, thresholds -0.064
+[C3] alert 'Knock' ended after 22792 ms: 6 full redraws, longest draw 126729 us + present 3545 us, 0 audio blocks dropped
+[SS] t=1418263 +26.2 dB best 'Quiet' 0.20 (thr 0.44), 2nd 'Siren' 0.09, felt yes (32.9 mg) -> maybe Knock
+[C3] alert on screen 126926 us after the decision (draw 123411 us, present 3514 us)
+[C3] alert 'Knock' ended after 1609 ms: 1 full redraws, longest draw 123411 us + present 3514 us, 0 audio blocks dropped
+[SS] t=1420366 +25.2 dB best 'Quiet' 0.27 (thr 0.44), 2nd 'Glass breaking' 0.19, felt yes (151.5 mg) -> maybe Knock
+[C3] alert on screen 128177 us after the decision (draw 124639 us, present 3537 us)
+[C3] alert 'Knock' ended after 1151 ms: 1 full redraws, longest draw 124639 us + present 3537 us, 0 audio blocks dropped
+[SS] t=1421908 +22.6 dB best 'Quiet' 0.20 (thr 0.44), 2nd 'Glass breaking' 0.19, felt yes (229.7 mg) -> maybe Knock
+[C3] alert on screen 129171 us after the decision (draw 125636 us, present 3533 us)
+[SS] knob: sensitivity 78%, thresholds -0.056
+[SS] knob: sensitivity 72%, thresholds -0.044
+[SS] knob: sensitivity 69%, thresholds -0.038
+[SS] t=1424168 +11.6 dB best 'Quiet' 0.09 (thr 0.46), 2nd 'Glass breaking' 0.09, felt yes (636.0 mg) -> maybe Knock
+[C3] alert on screen 130221 us after the decision (draw 126698 us, present 3522 us)
+[C3] alert 'Knock' ended after 2393 ms: 2 full redraws, longest draw 126698 us + present 3533 us, 0 audio blocks dropped
+[SS] knob: sensitivity 72%, thresholds -0.044
+[SS] knob: sensitivity 68%, thresholds -0.036
+[SS] knob: sensitivity 64%, thresholds -0.028
+[SS] knob: sensitivity 55%, thresholds -0.010
+[SS] knob: sensitivity 50%, thresholds +0.000
+[SS] knob: sensitivity 47%, thresholds +0.006
+[SS] knob: sensitivity 50%, thresholds +0.000
+[SS] t=1431115 +8.6 dB best 'Quiet' 0.16 (thr 0.50), 2nd 'Glass breaking' 0.10, felt yes (66.8 mg) -> maybe Knock
+[C3] alert on screen 130283 us after the decision (draw 126731 us, present 3551 us)
+[STORE] loaded 1 taught sounds from copy B, seq 1254, in 473 us; built-ins off: 0x0
+[S1] ready after 1278 ms: mics left -52 dB, right -56 dB; npu matches the reference, 1.0 ms; saved sounds 1 taught sound restored; imu knocks can be felt; lights ok
+[SS] knob at 50%: sensitivity as taught until it's turned

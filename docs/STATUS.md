@@ -1,6 +1,6 @@
 # Sound Sense: project status
 
-Snapshot: Sunday 2026-10-18, about 1:05 PM PDT, branch `gates` (feature work stopped). Submission deadline
+Snapshot: Sunday 2026-10-18, about 1:30 PM PDT, branch `gates` (feature work stopped). Submission deadline
 4:30 PM PDT. Feature IDs and priorities come from [SOUND-SENSE.md](SOUND-SENSE.md); the measurements
 behind every "Done" are in [GATES-results.md](GATES-results.md).
 
@@ -23,7 +23,8 @@ snooze. The weak spot is accuracy:
 
 **Final checks at 12:30 PM** (release build flashed from the sources at `ed20a3e`): the full-app
 smoke test passed 16/16 with 0 audio blocks dropped and Ready in 1.28 s, and the feature test passed
-18/18. Not yet checked by eye or hand: night mode turning the backlight off, and the knob.
+18/18. **Hand checks at 1:25 PM pass:** night mode turns the backlight off (seen by the owner), and
+turning the knob shows the notice with its bar. The knob is left in the middle (50%).
 
 **Screen tour at 1 PM** (`tools/ss_tour.py`, no sound): all 30 screens and states reached on the board,
 0 audio blocks dropped. It found one hazard. LEFT on an injected alert of a taught sound saves that
@@ -78,7 +79,7 @@ Doorbell mark from the tour was removed; the board's store has the same content 
 | A3 | Three urgency levels | P0 | Done | Urgent strobe at 1 flash per second (photosensitivity-safe) |
 | A4 | Acknowledge | P0 | Done | Joystick only; touch isn't wired up |
 | A5 | Urgent alerts repeat and escalate | P1 | Done | Urgent alerts stay until a press; after 30 s the strobe doubles to 2 flashes/s (under 3 Hz) and "No response for N" shows |
-| A6 | Night mode | P1 | Done | Menu (DOWN) → Night mode. Home screen goes dark 15 s after the last press (backlight off, live view and live encoder off: CPU active 8.4% vs 12.2%); info sounds only logged; important/urgent alerts light it; a press in the dark only wakes it. Backlight off not yet confirmed by eye |
+| A6 | Night mode | P1 | Done | Menu (DOWN) → Night mode. Home screen goes dark 15 s after the last press (backlight off, live view and live encoder off: CPU active 8.4% vs 12.2%); info sounds only logged; important/urgent alerts light it; a press in the dark only wakes it. Backlight off confirmed by eye (1:25 PM) |
 | A7 | "Maybe: doorbell?" | P1 | Done | |
 | A8 | Snooze a sound | P2 | Done | DOWN on an alert: that sound is logged but doesn't alert for 10 min, with a notice. Settings > Sounds shows "Snoozed" (press to end it). Tested on the board with injected alarms, 4/4 (`tools/ss_t7_test.py`) |
 | A9 | Home / Night / Away modes | P2 | Not started | The screen just says "Home mode" |
@@ -91,7 +92,7 @@ Doorbell mark from the tour was removed; the board's store has the same content 
 | T2 | Quality check per example | P0 | Done | Too quiet (rejected), clipped, loud room (floor over −40 dBFS: kept, flagged orange), unlike the others (flagged when redoing it would raise the threshold by 0.10 or more; UP makes it again). Tested on the board without sound (host command 17); "loud room" not triggered yet |
 | T3 | Test right after teaching | P0 | Done | |
 | T4 | Fix mistakes from the timeline | P1 | Done | Timeline (selected top row) or alert: LEFT = wrong, RIGHT = right. Wrong keeps the sound's embedding as a counter-example: a sound closer to it than to the profile is vetoed (saved in flash for taught sounds; built-ins until restart). Right on a taught sound adds an example and rebuilds its profile and threshold. Tested silently with the boot test clip (host command 15) |
-| T5 | Sensitivity on the knob | P1 | Done (not checked by hand) | The blue R79 knob moves every threshold by up to ±0.10 (one setting for all sounds, not per sound); a notice with a bar shows when it's turned; menu shows the value. Wherever the knob was left, the board starts as taught until it's turned. The ADC read 0% at boot; turning it hasn't been tried yet |
+| T5 | Sensitivity on the knob | P1 | Done | The blue R79 knob moves every threshold by up to ±0.10 (one setting for all sounds, not per sound); a notice with a bar shows when it's turned; menu shows the value. Wherever the knob was left, the board starts as taught until it's turned. Checked by hand at 1:25 PM: the notice and bar follow the knob (24 log lines, 0% to 48%); left at 50% (+0.000) |
 | T6 | Similar-sound warning | P1 | Done | "Sounds like X (NN%): may mix up" when the new profile is within cosine 0.70 of any other; saving still allowed, no merge. Tested on the board (the dog test clip vs "Dog barking", 0.79) |
 | T7 | Manage sounds (rename, delete, factory reset) | P1 | Done | Settings > Sounds: each built-in on or off (off: not shown or logged), each taught sound Info / Important / Urgent, and RIGHT renames it to the next free preset name; all saved in the flash and restored at boot. Forget one taught sound or all (press twice). Tested on the board, 14/14 (`tools/ss_t7_test.py`) |
 

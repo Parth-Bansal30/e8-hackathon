@@ -87,7 +87,7 @@ Work stays on branch **`gates`**. Read in this order:
 | P0 | 16 of 16 done |
 | P1 | 14 done, 1 partial (H7: "My name" not tried on speech), 1 not started (H4 smoke vs CO) |
 | P2 | 2 done (A8 snooze, H8 talking nearby), 3 partial, 15 not started |
-| Not yet checked by eye or hand | Night mode turning the backlight off; turning the knob (T5) |
+| Hand checks (1:25 PM) | Pass: night mode turns the backlight off (seen by the owner); the knob shows its notice and bar. Knob left at 50% |
 
 ## Setting up a new machine
 

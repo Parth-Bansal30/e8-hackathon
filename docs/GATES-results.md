@@ -214,7 +214,8 @@ seconds and reads the screen back over J-Link at each step (`gates/tour.txt`). T
 **Results:**
 - All 30 steps reached the expected screen.
 - 0 audio blocks dropped and 0 IMU errors over 40 stats lines; IMU times back at most 1.08 ms.
-- Night mode logged "screen dark" after 15 s. The backlight going off still isn't confirmed by eye.
+- Night mode logged "screen dark" after 15 s. The owner confirmed by eye at 1:25 PM that the backlight
+  goes off; see the next section.
 
 **Finding: a "wrong" mark on an injected alert damages a taught sound.**
 - An injected alert (host command 13) carries the profile's own reference embedding. LEFT on it keeps
@@ -228,6 +229,22 @@ seconds and reads the screen back over J-Link at each step (`gates/tour.txt`). T
 - Checked after a restart: 0 counter-examples for every sound.
 - Not fixed in the firmware (feature freeze). The fix would be to keep no counter-example from an
   injected event. There is also no way on the board to undo a wrong mark short of forgetting the sound.
+
+## Hand and eye checks (1:25 PM)
+
+These were the last two items not yet checked. No sound was played (`gates/hand_checks.txt`).
+
+- **Night mode turns the backlight off: pass.** Night mode was turned on with host keys. The owner watched
+  the home screen go fully black, with no backlight glow, after 15 s. The board logged "screen dark (night
+  mode)" twice.
+  - Each time, a real nearby knock lit the screen again: a "maybe Knock" alert, felt at 24 to 31 mg, at
+    +15 to +26 dB. Important alerts are meant to wake it.
+- **The knob: pass.** The owner turned the blue R79 knob, and a notice with a bar followed it on screen.
+  - The board logged 24 `[SS] knob:` lines from 0% to 48%; at 0%, thresholds are +0.100.
+  - The knob was left at 50% (+0.000). After a restart the board runs as taught until the knob is turned,
+    and a bump from the middle stays close to as taught.
+- **State after the checks:** the board restarted on the same store (seq 1254: Doorbell taught, threshold
+  0.85, Important; all built-ins on). Night mode is off, there are 0 wrong marks, and Ready took 1278 ms.
 
 ## IMU times back with J-Link attached
 
