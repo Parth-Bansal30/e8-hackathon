@@ -65,7 +65,7 @@ Details and logs: [docs/GATES-results.md](docs/GATES-results.md).
 | Built-in sounds | 88% offline (4% false accepts); 54% live from a laptop speaker (alarm 75%) |
 | Taught sounds | Work live; offline 38% accepted, 79% of untaught sounds rejected (borderline, see limits) |
 | Knock felt | 21 of 22 at 20 cm; IMU FIFO at 805 samples/s, 0 missed |
-| Alert delay | About 0.85 s after the sound starts (decides 0.8 s after the onset); on screen 18.4–19.5 ms after the decision |
+| Alert delay | Clear built-in match: on screen a **median 437 ms** after the sound starts (403–490 ms; 18 of 30 recognised sounds live, 0 wrong). Everything else decides 0.8 s after the onset, about 0.87 s. Drawing the alert: 18.4–19.5 ms on the bench, 30–75 ms in the live run |
 | Display | Live view 10.0 fps; urgent strobe plus 10 forced full redraws a second for 12 s: 0 audio blocks dropped |
 | Flash save | 223–266 ms over 101 saves (median 252), longest 304 ms over 1,000 more; across all 1,101: 0 audio blocks dropped, 0 failed read-backs. Restore 2.2 ms |
 | Power | CPU active **12.6%** in a quiet room (was 100%); NPU busy 0.00% when quiet |
@@ -79,7 +79,7 @@ Details and logs: [docs/GATES-results.md](docs/GATES-results.md).
 ```
  PDM mics (16 kHz) ──> log-mel, 40 bands / 20 ms (M55) ──> 49x40 patch (~1 s) ──int8──> encoder (Ethos-U85)
                                                                                            │ 64-d embedding
- onset detector (M55) ── 0.8 s after a sound starts ──> cosine match against profiles <────┘
+ onset detector (M55) ── 0.4 s if clear, else 0.8 s ──> cosine match against profiles <────┘
                                                            │  built-in (9) + taught (up to 8, flash)
  BMI323 IMU, 800 Hz FIFO (I3C) ── knock felt within ±100 ms? ──┤
                                                            v
@@ -189,7 +189,8 @@ the datasets (ESC-50, Speech Commands), which aren't in git.
   the planned fix.
 - **Knocks are felt within about 20 cm** of the board on our table, hence "place me on the table
   by the door".
-- **Alert delay is about 0.85 s** against a 0.5 s target: the board waits for the whole sound.
+- **Only clear matches meet the 0.5 s alert target.** A clear built-in match alerts in about
+  0.44 s. Taught sounds, "Maybe" matches and anything unclear wait for the whole sound: about 0.87 s.
 - Built but not yet checked by hand at the board: sensitivity on the knob, and the backlight
   turning off in night mode.
 - Not built yet: renaming sounds, per-sound urgency, turning built-ins off, smoke vs CO alarms.

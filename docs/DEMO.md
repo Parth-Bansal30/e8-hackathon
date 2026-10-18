@@ -69,7 +69,7 @@ numbers are samples; quote the measured ones below.
   dropping audio (1,101 test saves). Restored at boot in 2.2 ms.
 - **Boot:** ready 1.5 s after reset, self-test included.
 - **Knock sensing:** accelerometer read at 800 Hz through its FIFO. Knocks 20 cm away were felt 21 of 22 times.
-- **Alert timing:** the alert appears about 0.85 s after the sound starts. The board waits 0.8 s so the whole sound is in the window.
+- **Alert timing:** a clear match to a built-in sound is on screen about 0.44 s after the sound starts (median 437 ms on the board, 0 wrong in the live run). Anything else waits 0.8 s so the whole sound is in the window: about 0.87 s.
 - **Built-ins from a laptop speaker,** on clips never used in training: 54% overall, alarm 75%. Taught sounds work live.
 
 ## Known limits (be upfront if asked)
