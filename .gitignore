@@ -25,3 +25,4 @@ et-venv/
 .DS_Store
 model/esc50/
 model/ss_cache/
+docs/gates/g2_raw/

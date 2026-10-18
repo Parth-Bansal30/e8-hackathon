@@ -2,8 +2,8 @@
 
 | Test | Result | Key numbers | Notes |
 |---|---|---|---|
-| G1 encoder | pending | | |
-| G2 IMU | pending | | |
+| G1 encoder | SOFT (borderline) | 5-way 5-shot int8 75.8% (float 75.9%); 10-way 63.0%. Taught accepted 38%, untaught rejected 79%, AUROC 0.687. Built-ins 88% recognised with 4% false accepts. 219k params, 43.2 M MACs, .pte 240 KB | Shipped ch192 (e22234c); also tried ch128 (74.1%) and ch192 with SpecAugment (72.6%). Taught-sound acceptance is the weak spot. Details in `model/out/g1_metrics.json` |
+| G2 IMU | SOFT | 805 to 834 Hz through the FIFO, 0 missed, 254 µs per read, 3.5% CPU. Felt at 20 cm: 21 of 22 knocks (95%). At 50 cm: 0 of 20 hard knocks; they peak at the sensor's noise level. Phone 30 cm above the table: 2 of 21 knock sounds flagged as felt, both while the phone was being put down; the raw data shows 0 of 21. Alignment: 55% within ±10 ms, held back by an IMU timestamp bug | F1 ships with "place me on the table by the door" (S8). The bug: computed IMU frame times jump back by up to 54 ms while the sensor clock stays continuous. Fix: time frames from the BMI323 sensor clock. Tools: `tools/g2_report.py`, `tools/g2_raw.py`; log in `gates/g2_rtt.log` |
 | G3 live | pending | | |
 | C1 NPU | pending | | |
 | C2 flash | pending | | |

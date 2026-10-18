@@ -1,0 +1,1251 @@
+
+[G2] Sound Sense knock bench, IMU at 800 Hz
+[G2] polling: 8358 register reads in 1 s, 806 distinct samples, 119 us per read
+[G2] listening
+[C3] LED check start
+[C3] shown: LED0 red
+[G2] trial 0 t=5315 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[C3] shown: LED0 green
+[G2] trial 0 t=5949 HEARD ONLY  audio peak -34 dBFS (floor -50 dBFS)
+[G2] trial 0 t=6101 HEARD ONLY  audio peak -34 dBFS (floor -50 dBFS)
+[G2] stats: imu 805.7 Hz, missed 0 (+0), fifo max 244 words, read avg 254 us max 837 us, imu cpu 3.40%, i3c errors 0, audio dropped 0, vib noise 3.32 mg, room -49 dBFS, acc 30 -14 997 mg
+[G2] trial 0 t=7142 HEARD ONLY  audio peak -31 dBFS (floor -51 dBFS)
+[G2] trial 0 t=7357 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[C3] shown: LED0 blue
+[G2] trial 0 t=8120 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[C3] shown: LED0 white
+[G2] trial 0 t=9944 HEARD ONLY  audio peak -33 dBFS (floor -52 dBFS)
+[G2] stats: imu 809.7 Hz, missed 0 (+0), fifo max 256 words, read avg 256 us max 899 us, imu cpu 3.31%, i3c errors 0, audio dropped 0, vib noise 3.22 mg, room -52 dBFS, acc 31 -11 994 mg
+[C3] shown: LED1 red
+[C3] shown: LED1 green
+[C3] shown: LED1 blue
+[G2] trial 0 t=15742 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] stats: imu 806.3 Hz, missed 0 (+0), fifo max 256 words, read avg 256 us max 899 us, imu cpu 3.29%, i3c errors 0, audio dropped 0, vib noise 3.90 mg, room -55 dBFS, acc 32 -12 994 mg
+[C3] shown: LED1 white
+[G2] trial 0 t=20476 HEARD ONLY  audio peak -36 dBFS (floor -55 dBFS)
+[G2] stats: imu 813.8 Hz, missed 0 (+0), fifo max 272 words, read avg 257 us max 899 us, imu cpu 3.26%, i3c errors 0, audio dropped 0, vib noise 3.18 mg, room -54 dBFS, acc 31 -13 998 mg
+[C3] shown: blink 2 Hz
+[G2] trial 0 t=22712 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 0 t=23394 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[C3] shown: blink 4 Hz
+[G2] stats: imu 810.9 Hz, missed 0 (+0), fifo max 272 words, read avg 258 us max 899 us, imu cpu 3.20%, i3c errors 0, audio dropped 0, vib noise 3.25 mg, room -54 dBFS, acc 31 -13 988 mg
+[G2] trial 0 t=26623 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 0 t=28941 HEARD ONLY  audio peak -34 dBFS (floor -55 dBFS)
+[G2] trial 0 t=29290 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[C3] shown: blink 8 Hz
+[C3] LED check done
+[G2] trial 0 t=29594 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] stats: imu 806.9 Hz, missed 0 (+0), fifo max 272 words, read avg 258 us max 899 us, imu cpu 3.29%, i3c errors 0, audio dropped 0, vib noise 3.14 mg, room -53 dBFS, acc 31 -16 994 mg
+[G2] trial 0 t=33770 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 0 t=33900 HEARD ONLY  audio peak -36 dBFS (floor -55 dBFS)
+[G2] stats: imu 812.3 Hz, missed 0 (+0), fifo max 272 words, read avg 257 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 4.84 mg, room -55 dBFS, acc 34 -18 993 mg
+[G2] stats: imu 815.5 Hz, missed 0 (+0), fifo max 272 words, read avg 256 us max 899 us, imu cpu 3.50%, i3c errors 0, audio dropped 0, vib noise 4.70 mg, room -56 dBFS, acc 31 -12 994 mg
+[G2] stats: imu 809.6 Hz, missed 0 (+0), fifo max 272 words, read avg 256 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 3.59 mg, room -56 dBFS, acc 31 -12 993 mg
+[G2] trial 0 t=48092 FELT+HEARD dt=+10.4 ms  imu 35.3 mg (noise 5.05)  audio peak -36 dBFS
+[G2] trial 0 t=48477 FELT+HEARD dt=+21.4 ms  imu 42.1 mg (noise 5.29)  audio peak -39 dBFS
+[G2] trial 0 t=48910 FELT+HEARD dt=-0.0 ms  imu 85.6 mg (noise 7.20)  audio peak -27 dBFS
+[G2] trial 0 t=49328 FELT+HEARD dt=-1.4 ms  imu 129.6 mg (noise 8.66)  audio peak -28 dBFS
+[G2] trial 0 t=49769 FELT+HEARD dt=-26.4 ms  imu 104.4 mg (noise 9.29)  audio peak -36 dBFS
+[G2] trial 0 t=50226 FELT+HEARD dt=-22.1 ms  imu 94.8 mg (noise 8.81)  audio peak -36 dBFS
+[G2] trial 0 t=50772 FELT+HEARD dt=-37.3 ms  imu 64.9 mg (noise 9.88)  audio peak -33 dBFS
+[G2] trial 0 t=50888 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[G2] trial 0 t=51299 FELT+HEARD dt=-0.4 ms  imu 101.0 mg (noise 9.33)  audio peak -25 dBFS
+[G2] stats: imu 805.9 Hz, missed 0 (+0), fifo max 272 words, read avg 255 us max 899 us, imu cpu 3.43%, i3c errors 0, audio dropped 0, vib noise 8.81 mg, room -49 dBFS, acc 34 -6 989 mg
+[G2] trial 0 t=51791 FELT+HEARD dt=+0.7 ms  imu 70.9 mg (noise 8.71)  audio peak -28 dBFS
+[G2] trial 0 t=52269 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[G2] stats: imu 810.6 Hz, missed 0 (+0), fifo max 272 words, read avg 255 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 3.19 mg, room -53 dBFS, acc 33 -8 992 mg
+[G2] stats: imu 807.0 Hz, missed 0 (+0), fifo max 272 words, read avg 255 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 3.99 mg, room -56 dBFS, acc 30 -13 994 mg
+[G2] trial 0 t=62071 HEARD ONLY  audio peak -39 dBFS (floor -56 dBFS)
+[G2] trial 0 t=62196 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 0 t=62651 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 0 t=62754 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 0 t=62883 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 0 t=62983 FELT ONLY  imu 31.1 mg (noise 5.12)
+[G2] trial 0 t=63425 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 0 t=64191 HEARD ONLY  audio peak -34 dBFS (floor -50 dBFS)
+[G2] trial 0 t=64715 HEARD ONLY  audio peak -31 dBFS (floor -49 dBFS)
+[G2] stats: imu 810.5 Hz, missed 0 (+0), fifo max 272 words, read avg 255 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.09 mg, room -51 dBFS, acc 30 -8 990 mg
+[G2] trial 0 t=66993 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 0 t=68334 FELT+HEARD dt=-29.1 ms  imu 54.4 mg (noise 4.25)  audio peak -34 dBFS
+[G2] trial 0 t=68441 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 0 t=68659 FELT ONLY  imu 34.2 mg (noise 4.54)
+[G2] trial 0 t=69259 FELT ONLY  imu 84.6 mg (noise 4.44)
+[G2] trial 0 t=69350 FELT ONLY  imu 34.1 mg (noise 4.65)
+[G2] stats: imu 805.2 Hz, missed 0 (+0), fifo max 272 words, read avg 255 us max 899 us, imu cpu 3.43%, i3c errors 0, audio dropped 0, vib noise 3.27 mg, room -56 dBFS, acc 34 -13 993 mg
+[G2] trial 0 t=72734 HEARD ONLY  audio peak -39 dBFS (floor -56 dBFS)
+[G2] trial 0 t=73042 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] trial 0 t=73715 HEARD ONLY  audio peak -33 dBFS (floor -54 dBFS)
+[G2] trial 0 t=74526 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 0 t=74680 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 0 t=74921 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 0 t=75323 FELT ONLY  imu 52.3 mg (noise 3.19)
+[G2] trial 0 t=75406 FELT ONLY  imu 28.0 mg (noise 3.25)
+[G2] trial 0 t=75614 FELT ONLY  imu 145.4 mg (noise 4.04)
+[G2] trial 0 t=75694 FELT ONLY  imu 72.2 mg (noise 4.04)
+[G2] trial 0 t=75775 FELT ONLY  imu 95.9 mg (noise 4.04)
+[G2] trial 0 t=75932 FELT+HEARD dt=+0.4 ms  imu 235.4 mg (noise 4.02)  audio peak -36 dBFS
+[G2] trial 0 t=76282 FELT ONLY  imu 37.0 mg (noise 5.80)
+[G2] stats: imu 813.8 Hz, missed 0 (+0), fifo max 272 words, read avg 255 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 6.65 mg, room -53 dBFS, acc 32 -20 992 mg
+[G2] trial 0 t=76461 FELT ONLY  imu 45.2 mg (noise 6.66)
+[G2] trial 0 t=77543 FELT ONLY  imu 58.9 mg (noise 6.58)
+[G2] trial 0 t=79389 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 0 t=79653 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] stats: imu 811.2 Hz, missed 0 (+0), fifo max 272 words, read avg 254 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 4.28 mg, room -54 dBFS, acc 22 -32 989 mg
+[G2] trial 0 t=85167 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] joystick centre
+[G2] trial 0 summary: felt+heard 11, heard only 38, felt only 12; dt median -0.4 ms, min -37.3, max +21.4, 5/11 within +-10 ms of the median
+[G2] trial 1 started at audio sample 1339520, imu frame 67799
+[G2] trial 1 is: 20 knocks, 20 cm away
+[G2] trial 1 t=85752 FELT+HEARD dt=-0.2 ms  imu 636.2 mg (noise 5.71)  audio peak -5 dBFS
+[G2] trial 1 t=85903 FELT+HEARD dt=+7.5 ms  imu 752.8 mg (noise 6.37)  audio peak -9 dBFS
+[G2] trial 1 t=85977 FELT ONLY  imu 153.4 mg (noise 6.37)
+[G2] stats: imu 809.1 Hz, missed 0 (+0), fifo max 272 words, read avg 254 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 4.79 mg, room -51 dBFS, acc 27 -13 998 mg
+[G2] trial 1 t=87951 FELT+HEARD dt=-44.0 ms  imu 26.7 mg (noise 3.59)  audio peak -6 dBFS
+[G2] trial 1 t=88875 FELT+HEARD dt=-41.0 ms  imu 26.0 mg (noise 3.75)  audio peak -6 dBFS
+[G2] trial 1 t=89769 FELT+HEARD dt=-42.4 ms  imu 37.0 mg (noise 3.90)  audio peak -4 dBFS
+[G2] trial 1 t=90864 FELT+HEARD dt=-43.1 ms  imu 31.0 mg (noise 4.27)  audio peak -4 dBFS
+[G2] stats: imu 808.4 Hz, missed 0 (+0), fifo max 272 words, read avg 254 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 3.59 mg, room -49 dBFS, acc 29 -15 995 mg
+[G2] trial 1 t=91869 HEARD ONLY  audio peak -5 dBFS (floor -50 dBFS)
+[G2] trial 1 t=92879 FELT+HEARD dt=-29.2 ms  imu 29.4 mg (noise 4.47)  audio peak -3 dBFS
+[G2] trial 1 t=93930 FELT+HEARD dt=-4.9 ms  imu 23.3 mg (noise 3.72)  audio peak -4 dBFS
+[G2] trial 1 t=94940 FELT+HEARD dt=-4.2 ms  imu 29.4 mg (noise 3.53)  audio peak -3 dBFS
+[G2] trial 1 t=95984 FELT+HEARD dt=-4.2 ms  imu 39.4 mg (noise 3.53)  audio peak -3 dBFS
+[G2] stats: imu 815.3 Hz, missed 0 (+0), fifo max 272 words, read avg 254 us max 899 us, imu cpu 3.49%, i3c errors 0, audio dropped 0, vib noise 3.57 mg, room -48 dBFS, acc 25 -17 992 mg
+[G2] trial 1 t=97077 FELT+HEARD dt=-3.0 ms  imu 34.1 mg (noise 3.52)  audio peak -6 dBFS
+[G2] trial 1 t=98128 FELT+HEARD dt=-6.7 ms  imu 26.4 mg (noise 3.80)  audio peak -4 dBFS
+[G2] trial 1 t=99167 FELT+HEARD dt=-4.2 ms  imu 41.9 mg (noise 3.84)  audio peak -3 dBFS
+[G2] trial 1 t=100200 FELT+HEARD dt=-4.5 ms  imu 34.7 mg (noise 3.56)  audio peak -4 dBFS
+[G2] trial 1 t=101229 FELT+HEARD dt=-14.8 ms  imu 34.9 mg (noise 3.70)  audio peak -5 dBFS
+[G2] stats: imu 806.8 Hz, missed 0 (+0), fifo max 272 words, read avg 254 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.87 mg, room -48 dBFS, acc 27 -20 994 mg
+[G2] trial 1 t=102363 FELT+HEARD dt=-44.8 ms  imu 35.6 mg (noise 4.21)  audio peak -6 dBFS
+[G2] trial 1 t=103373 FELT+HEARD dt=-44.9 ms  imu 29.1 mg (noise 4.34)  audio peak -5 dBFS
+[G2] trial 1 t=104363 HEARD ONLY  audio peak -13 dBFS (floor -51 dBFS)
+[G2] trial 1 t=104418 FELT ONLY  imu 28.0 mg (noise 4.32)
+[G2] trial 1 t=105558 FELT+HEARD dt=-4.4 ms  imu 23.7 mg (noise 3.67)  audio peak -5 dBFS
+[G2] stats: imu 806.7 Hz, missed 0 (+0), fifo max 272 words, read avg 254 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.78 mg, room -47 dBFS, acc 32 -19 952 mg
+[G2] trial 1 t=106513 FELT+HEARD dt=-3.4 ms  imu 44.8 mg (noise 3.78)  audio peak -3 dBFS
+[G2] trial 1 t=107507 FELT+HEARD dt=-16.9 ms  imu 43.7 mg (noise 4.07)  audio peak -0 dBFS
+[G2] trial 1 t=108725 FELT ONLY  imu 35.2 mg (noise 4.96)
+[G2] trial 1 t=108855 FELT ONLY  imu 40.9 mg (noise 4.90)
+[G2] trial 1 t=108984 FELT+HEARD dt=+35.7 ms  imu 45.2 mg (noise 5.15)  audio peak -34 dBFS
+[G2] trial 1 t=109028 FELT ONLY  imu 58.2 mg (noise 5.15)
+[G2] joystick centre
+[G2] trial 1 summary: felt+heard 21, heard only 2, felt only 5; dt median -4.9 ms, min -44.9, max +35.7, 11/21 within +-10 ms of the median
+[G2] trial 2 started at audio sample 1713600, imu frame 86737
+[G2] trial 2 is: 20 knocks, 50 cm away
+[G2] trial 2 t=109263 FELT+HEARD dt=+0.2 ms  imu 675.8 mg (noise 8.35)  audio peak -6 dBFS
+[G2] trial 2 t=109397 FELT+HEARD dt=+0.0 ms  imu 937.1 mg (noise 9.28)  audio peak -10 dBFS
+[G2] trial 2 t=111153 HEARD ONLY  audio peak -34 dBFS (floor -53 dBFS)
+[G2] trial 2 t=111297 HEARD ONLY  audio peak -29 dBFS (floor -52 dBFS)
+[G2] stats: imu 807.6 Hz, missed 0 (+0), fifo max 272 words, read avg 254 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 4.18 mg, room -52 dBFS, acc 28 -13 993 mg
+[G2] stats: imu 805.5 Hz, missed 0 (+0), fifo max 272 words, read avg 254 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 3.16 mg, room -56 dBFS, acc 28 -13 994 mg
+[G2] trial 2 t=117285 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=119752 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=119899 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 2 t=120994 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] stats: imu 805.5 Hz, missed 0 (+0), fifo max 272 words, read avg 254 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.36 mg, room -54 dBFS, acc 29 -12 991 mg
+[G2] trial 2 t=122847 FELT ONLY  imu 43.6 mg (noise 3.50)
+[G2] trial 2 t=122930 FELT ONLY  imu 68.2 mg (noise 3.56)
+[G2] trial 2 t=123023 FELT ONLY  imu 23.0 mg (noise 3.80)
+[G2] trial 2 t=123145 FELT ONLY  imu 27.0 mg (noise 4.45)
+[G2] trial 2 t=125207 FELT ONLY  imu 27.5 mg (noise 3.43)
+[G2] stats: imu 807.2 Hz, missed 0 (+0), fifo max 272 words, read avg 254 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 4.21 mg, room -56 dBFS, acc 32 -7 999 mg
+[G2] trial 2 t=126607 HEARD ONLY  audio peak -39 dBFS (floor -56 dBFS)
+[G2] trial 2 t=127836 FELT ONLY  imu 30.6 mg (noise 4.54)
+[G2] trial 2 t=128733 HEARD ONLY  audio peak -27 dBFS (floor -56 dBFS)
+[G2] trial 2 t=128854 HEARD ONLY  audio peak -31 dBFS (floor -55 dBFS)
+[G2] trial 2 t=129259 HEARD ONLY  audio peak -27 dBFS (floor -54 dBFS)
+[G2] trial 2 t=130340 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 2 t=130452 HEARD ONLY  audio peak -28 dBFS (floor -52 dBFS)
+[G2] stats: imu 805.3 Hz, missed 0 (+0), fifo max 272 words, read avg 254 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 3.48 mg, room -53 dBFS, acc 29 -13 995 mg
+[G2] trial 2 t=136329 FELT ONLY  imu 52.3 mg (noise 4.42)
+[G2] stats: imu 808.3 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 6.09 mg, room -56 dBFS, acc 27 -17 997 mg
+[G2] trial 2 t=140377 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=140492 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 2 t=140994 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] stats: imu 810.3 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.43 mg, room -52 dBFS, acc 27 -14 995 mg
+[G2] trial 2 t=142188 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 2 t=142817 FELT+HEARD dt=+25.1 ms  imu 24.5 mg (noise 3.52)  audio peak -34 dBFS
+[G2] trial 2 t=142910 FELT ONLY  imu 28.5 mg (noise 3.87)
+[G2] trial 2 t=144213 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] stats: imu 814.6 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.49%, i3c errors 0, audio dropped 0, vib noise 3.23 mg, room -54 dBFS, acc 30 -16 992 mg
+[G2] trial 2 t=147296 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] stats: imu 805.6 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.16 mg, room -55 dBFS, acc 23 -12 997 mg
+[G2] trial 2 t=152920 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=155732 HEARD ONLY  audio peak -34 dBFS (floor -53 dBFS)
+[G2] stats: imu 813.3 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.49%, i3c errors 0, audio dropped 0, vib noise 3.41 mg, room -53 dBFS, acc 33 -10 992 mg
+[G2] trial 2 t=158716 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] stats: imu 812.6 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.49%, i3c errors 0, audio dropped 0, vib noise 3.49 mg, room -55 dBFS, acc 26 -14 998 mg
+[G2] stats: imu 812.7 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.49%, i3c errors 0, audio dropped 0, vib noise 3.63 mg, room -56 dBFS, acc 27 -13 995 mg
+[G2] trial 2 t=167789 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=167915 FELT+HEARD dt=-26.6 ms  imu 29.6 mg (noise 3.91)  audio peak -21 dBFS
+[G2] trial 2 t=168963 HEARD ONLY  audio peak -34 dBFS (floor -55 dBFS)
+[G2] trial 2 t=169431 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=169551 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 2 t=170411 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 2 t=170575 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 2 t=170686 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 2 t=170970 HEARD ONLY  audio peak -31 dBFS (floor -50 dBFS)
+[G2] stats: imu 806.4 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 3.31 mg, room -49 dBFS, acc 28 -16 999 mg
+[G2] trial 2 t=172229 FELT ONLY  imu 35.2 mg (noise 3.56)
+[G2] trial 2 t=172494 FELT ONLY  imu 55.7 mg (noise 4.07)
+[G2] trial 2 t=173120 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 2 t=173264 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 2 t=174320 HEARD ONLY  audio peak -33 dBFS (floor -51 dBFS)
+[G2] trial 2 t=175631 FELT+HEARD dt=-47.9 ms  imu 23.9 mg (noise 3.85)  audio peak -25 dBFS
+[G2] trial 2 t=175741 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 2 t=175866 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 2 t=176029 HEARD ONLY  audio peak -34 dBFS (floor -50 dBFS)
+[G2] stats: imu 813.4 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 3.44 mg, room -51 dBFS, acc 33 -13 998 mg
+[G2] trial 2 t=176762 HEARD ONLY  audio peak -29 dBFS (floor -51 dBFS)
+[G2] trial 2 t=176897 HEARD ONLY  audio peak -34 dBFS (floor -50 dBFS)
+[G2] trial 2 t=178041 HEARD ONLY  audio peak -33 dBFS (floor -52 dBFS)
+[G2] trial 2 t=178165 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 2 t=180868 HEARD ONLY  audio peak -28 dBFS (floor -54 dBFS)
+[G2] trial 2 t=180989 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 2 t=181123 HEARD ONLY  audio peak -33 dBFS (floor -52 dBFS)
+[G2] stats: imu 812.8 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 3.27 mg, room -51 dBFS, acc 28 -13 992 mg
+[G2] trial 2 t=182331 HEARD ONLY  audio peak -33 dBFS (floor -53 dBFS)
+[G2] trial 2 t=182438 HEARD ONLY  audio peak -33 dBFS (floor -51 dBFS)
+[G2] trial 2 t=183449 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] stats: imu 810.5 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 3.09 mg, room -56 dBFS, acc 28 -14 994 mg
+[G2] trial 2 t=191168 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] stats: imu 812.8 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.49%, i3c errors 0, audio dropped 0, vib noise 3.12 mg, room -53 dBFS, acc 26 -8 995 mg
+[G2] trial 2 t=195076 FELT ONLY  imu 31.7 mg (noise 3.39)
+[G2] stats: imu 805.7 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 3.33 mg, room -56 dBFS, acc 30 -12 993 mg
+[G2] trial 2 t=197504 HEARD ONLY  audio peak -23 dBFS (floor -56 dBFS)
+[G2] trial 2 t=198670 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=198791 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=200330 HEARD ONLY  audio peak -23 dBFS (floor -55 dBFS)
+[G2] trial 2 t=201318 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] stats: imu 805.6 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.35 mg, room -53 dBFS, acc 31 -15 994 mg
+[G2] stats: imu 815.0 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.50%, i3c errors 0, audio dropped 0, vib noise 3.13 mg, room -55 dBFS, acc 26 -10 1002 mg
+[G2] trial 2 t=208610 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 2 t=210866 HEARD ONLY  audio peak -34 dBFS (floor -54 dBFS)
+[G2] stats: imu 814.5 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.49%, i3c errors 0, audio dropped 0, vib noise 3.23 mg, room -53 dBFS, acc 31 -14 991 mg
+[G2] trial 2 t=213802 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 2 t=216436 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] stats: imu 807.9 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.25 mg, room -54 dBFS, acc 28 -12 996 mg
+[G2] trial 2 t=216591 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] trial 2 t=216695 HEARD ONLY  audio peak -34 dBFS (floor -54 dBFS)
+[G2] trial 2 t=218512 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] trial 2 t=220058 HEARD ONLY  audio peak -36 dBFS (floor -55 dBFS)
+[G2] trial 2 t=220163 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 2 t=220274 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 2 t=220376 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 2 t=220486 HEARD ONLY  audio peak -34 dBFS (floor -50 dBFS)
+[G2] trial 2 t=220597 HEARD ONLY  audio peak -30 dBFS (floor -50 dBFS)
+[G2] stats: imu 806.8 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 3.19 mg, room -51 dBFS, acc 30 -13 993 mg
+[G2] trial 2 t=222459 HEARD ONLY  audio peak -31 dBFS (floor -53 dBFS)
+[G2] trial 2 t=222629 HEARD ONLY  audio peak -33 dBFS (floor -51 dBFS)
+[G2] trial 2 t=222964 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 2 t=223108 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[G2] trial 2 t=223209 HEARD ONLY  audio peak -30 dBFS (floor -48 dBFS)
+[G2] trial 2 t=223980 HEARD ONLY  audio peak -33 dBFS (floor -48 dBFS)
+[G2] trial 2 t=224085 HEARD ONLY  audio peak -15 dBFS (floor -48 dBFS)
+[G2] trial 2 t=224264 HEARD ONLY  audio peak -30 dBFS (floor -48 dBFS)
+[G2] stats: imu 813.4 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 3.27 mg, room -51 dBFS, acc 28 -15 992 mg
+[G2] stats: imu 813.2 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.49%, i3c errors 0, audio dropped 0, vib noise 3.36 mg, room -56 dBFS, acc 32 -11 993 mg
+[G2] trial 2 t=233789 FELT ONLY  imu 89.2 mg (noise 4.14)
+[G2] trial 2 t=233889 FELT ONLY  imu 28.8 mg (noise 4.74)
+[G2] trial 2 t=234090 FELT+HEARD dt=+46.3 ms  imu 46.5 mg (noise 5.64)  audio peak -36 dBFS
+[G2] trial 2 t=234163 FELT ONLY  imu 40.6 mg (noise 6.60)
+[G2] trial 2 t=235330 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=235501 FELT+HEARD dt=-23.2 ms  imu 85.5 mg (noise 5.08)  audio peak -39 dBFS
+[G2] stats: imu 812.5 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 5.79 mg, room -55 dBFS, acc 31 -5 985 mg
+[G2] trial 2 t=239682 HEARD ONLY  audio peak -31 dBFS (floor -56 dBFS)
+[G2] stats: imu 810.0 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 3.22 mg, room -56 dBFS, acc 37 -4 997 mg
+[G2] trial 2 t=243563 FELT ONLY  imu 49.8 mg (noise 3.42)
+[G2] stats: imu 810.2 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 4.94 mg, room -55 dBFS, acc 45 -8 999 mg
+[G2] trial 2 t=248843 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] stats: imu 814.0 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.50%, i3c errors 0, audio dropped 0, vib noise 3.11 mg, room -56 dBFS, acc 46 -3 993 mg
+[G2] trial 2 t=253863 HEARD ONLY  audio peak -39 dBFS (floor -56 dBFS)
+[G2] trial 2 t=254223 HEARD ONLY  audio peak -36 dBFS (floor -56 dBFS)
+[G2] stats: imu 812.3 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 3.16 mg, room -53 dBFS, acc 42 -4 995 mg
+[G2] trial 2 t=260494 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 2 t=260667 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] stats: imu 809.4 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.13 mg, room -53 dBFS, acc 41 -3 994 mg
+[G2] trial 2 t=264376 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 2 t=265709 HEARD ONLY  audio peak -34 dBFS (floor -53 dBFS)
+[G2] trial 2 t=266584 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] stats: imu 809.2 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.30 mg, room -54 dBFS, acc 46 -2 996 mg
+[G2] trial 2 t=268187 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] trial 2 t=269390 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=270309 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 2 t=270517 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] stats: imu 806.7 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.30 mg, room -51 dBFS, acc 47 -2 992 mg
+[G2] trial 2 t=276420 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] stats: imu 814.5 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 3.27 mg, room -54 dBFS, acc 42 0 994 mg
+[G2] trial 2 t=279686 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] stats: imu 809.7 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 8.35 mg, room -54 dBFS, acc 43 -4 994 mg
+[G2] trial 2 t=282377 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] trial 2 t=283079 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 2 t=285915 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] stats: imu 812.7 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 3.33 mg, room -53 dBFS, acc 37 -5 993 mg
+[G2] trial 2 t=287264 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 2 t=287555 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 2 t=288107 HEARD ONLY  audio peak -34 dBFS (floor -50 dBFS)
+[G2] stats: imu 805.4 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 3.31 mg, room -55 dBFS, acc 41 -5 994 mg
+[G2] trial 2 t=292455 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=293380 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] trial 2 t=293511 HEARD ONLY  audio peak -33 dBFS (floor -54 dBFS)
+[G2] trial 2 t=293734 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 2 t=294409 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 2 t=294632 HEARD ONLY  audio peak -33 dBFS (floor -51 dBFS)
+[G2] stats: imu 809.6 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.17 mg, room -54 dBFS, acc 38 -4 994 mg
+[G2] trial 2 t=297692 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] stats: imu 805.9 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 3.19 mg, room -55 dBFS, acc 41 -3 996 mg
+[G2] stats: imu 813.2 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.04 mg, room -53 dBFS, acc 40 -1 993 mg
+[G2] trial 2 t=309509 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] trial 2 t=310336 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] stats: imu 805.5 Hz, missed 0 (+0), fifo max 272 words, read avg 253 us max 899 us, imu cpu 3.43%, i3c errors 0, audio dropped 0, vib noise 3.12 mg, room -55 dBFS, acc 46 -4 995 mg
+[G2] trial 2 t=314724 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=314941 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 2 t=315196 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] stats: imu 805.5 Hz, missed 0 (+0), fifo max 272 words, read avg 1 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 3.27 mg, room -52 dBFS, acc 37 -2 991 mg
+[G2] trial 2 t=316881 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 2 t=318151 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 2 t=318425 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 2 t=318612 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 2 t=319678 HEARD ONLY  audio peak -31 dBFS (floor -48 dBFS)
+[G2] trial 2 t=321623 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] stats: imu 805.3 Hz, missed 0 (+0), fifo max 272 words, read avg 5 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 3.43 mg, room -50 dBFS, acc 47 -5 995 mg
+[G2] trial 2 t=322405 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 2 t=323417 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] stats: imu 805.9 Hz, missed 0 (+0), fifo max 272 words, read avg 9 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 3.14 mg, room -56 dBFS, acc 41 -1 998 mg
+[G2] trial 2 t=329869 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=330168 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] trial 2 t=330435 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] stats: imu 809.0 Hz, missed 0 (+0), fifo max 272 words, read avg 13 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 4.25 mg, room -55 dBFS, acc 38 -1 989 mg
+[G2] trial 2 t=332728 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 2 t=336293 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] stats: imu 810.2 Hz, missed 0 (+0), fifo max 272 words, read avg 17 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 4.42 mg, room -54 dBFS, acc 35 -5 998 mg
+[G2] stats: imu 805.7 Hz, missed 0 (+0), fifo max 272 words, read avg 20 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 3.30 mg, room -55 dBFS, acc 43 -6 997 mg
+[G2] trial 2 t=342517 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=345459 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=346539 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] stats: imu 805.6 Hz, missed 0 (+0), fifo max 272 words, read avg 23 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 3.18 mg, room -54 dBFS, acc 44 -1 999 mg
+[G2] trial 2 t=347960 HEARD ONLY  audio peak -34 dBFS (floor -54 dBFS)
+[G2] trial 2 t=348144 HEARD ONLY  audio peak -33 dBFS (floor -54 dBFS)
+[G2] trial 2 t=351321 HEARD ONLY  audio peak -36 dBFS (floor -55 dBFS)
+[G2] stats: imu 812.1 Hz, missed 0 (+0), fifo max 272 words, read avg 27 us max 899 us, imu cpu 3.49%, i3c errors 0, audio dropped 0, vib noise 3.26 mg, room -54 dBFS, acc 42 -5 999 mg
+[G2] trial 2 t=353584 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=353687 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] stats: imu 820.4 Hz, missed 0 (+0), fifo max 272 words, read avg 30 us max 899 us, imu cpu 3.51%, i3c errors 0, audio dropped 0, vib noise 3.16 mg, room -55 dBFS, acc 45 -2 994 mg
+[G2] trial 2 t=357281 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=361658 FELT ONLY  imu 60.3 mg (noise 6.34)
+[G2] stats: imu 813.2 Hz, missed 0 (+0), fifo max 272 words, read avg 33 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 7.78 mg, room -52 dBFS, acc 44 -6 1060 mg
+[G2] trial 2 t=361853 FELT ONLY  imu 106.6 mg (noise 7.78)
+[G2] trial 2 t=362124 HEARD ONLY  audio peak -18 dBFS (floor -52 dBFS)
+[G2] trial 2 t=362304 HEARD ONLY  audio peak -25 dBFS (floor -50 dBFS)
+[G2] trial 2 t=362404 HEARD ONLY  audio peak -26 dBFS (floor -49 dBFS)
+[G2] trial 2 t=362515 HEARD ONLY  audio peak -27 dBFS (floor -47 dBFS)
+[G2] trial 2 t=362663 HEARD ONLY  audio peak -29 dBFS (floor -46 dBFS)
+[G2] trial 2 t=362993 FELT ONLY  imu 46.5 mg (noise 5.03)
+[G2] trial 2 t=363159 HEARD ONLY  audio peak -30 dBFS (floor -47 dBFS)
+[G2] trial 2 t=363569 HEARD ONLY  audio peak -31 dBFS (floor -48 dBFS)
+[G2] trial 2 t=363716 HEARD ONLY  audio peak -23 dBFS (floor -47 dBFS)
+[G2] stats: imu 811.8 Hz, missed 0 (+0), fifo max 272 words, read avg 36 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.18 mg, room -53 dBFS, acc 33 -12 994 mg
+[G2] trial 2 t=369385 FELT ONLY  imu 97.5 mg (noise 7.04)
+[G2] trial 2 t=369472 FELT ONLY  imu 45.5 mg (noise 7.36)
+[G2] trial 2 t=370810 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=371230 HEARD ONLY  audio peak -34 dBFS (floor -54 dBFS)
+[G2] stats: imu 805.7 Hz, missed 0 (+0), fifo max 272 words, read avg 39 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 4.84 mg, room -52 dBFS, acc 31 -9 1004 mg
+[G2] stats: imu 808.1 Hz, missed 0 (+0), fifo max 272 words, read avg 42 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 3.18 mg, room -56 dBFS, acc 28 -15 995 mg
+[G2] trial 2 t=378078 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] stats: imu 805.4 Hz, missed 0 (+0), fifo max 272 words, read avg 45 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 3.15 mg, room -56 dBFS, acc 27 -12 995 mg
+[G2] stats: imu 818.3 Hz, missed 0 (+0), fifo max 272 words, read avg 47 us max 899 us, imu cpu 3.50%, i3c errors 0, audio dropped 0, vib noise 3.24 mg, room -56 dBFS, acc 30 -16 993 mg
+[G2] trial 2 t=390973 HEARD ONLY  audio peak -34 dBFS (floor -56 dBFS)
+[G2] trial 2 t=391327 FELT ONLY  imu 355.1 mg (noise 5.89)
+[G2] trial 2 t=391637 FELT ONLY  imu 130.4 mg (noise 6.51)
+[G2] stats: imu 806.0 Hz, missed 0 (+0), fifo max 272 words, read avg 50 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 8.23 mg, room -55 dBFS, acc 27 -45 997 mg
+[G2] trial 2 t=392058 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 2 t=392246 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 2 t=392391 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 2 t=393215 HEARD ONLY  audio peak -34 dBFS (floor -53 dBFS)
+[G2] trial 2 t=394647 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] stats: imu 816.3 Hz, missed 0 (+0), fifo max 272 words, read avg 52 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 3.26 mg, room -55 dBFS, acc 17 -35 993 mg
+[G2] trial 2 t=400022 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=400234 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] stats: imu 806.9 Hz, missed 0 (+0), fifo max 272 words, read avg 55 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 3.42 mg, room -54 dBFS, acc 18 -35 988 mg
+[G2] trial 2 t=403272 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] trial 2 t=403435 HEARD ONLY  audio peak -33 dBFS (floor -53 dBFS)
+[G2] trial 2 t=404287 HEARD ONLY  audio peak -34 dBFS (floor -53 dBFS)
+[G2] stats: imu 813.6 Hz, missed 0 (+0), fifo max 272 words, read avg 57 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 3.51 mg, room -55 dBFS, acc 14 -39 993 mg
+[G2] trial 2 t=407152 FELT ONLY  imu 109.1 mg (noise 3.43)
+[G2] trial 2 t=407380 FELT ONLY  imu 50.1 mg (noise 3.43)
+[G2] trial 2 t=407829 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=407937 FELT ONLY  imu 102.6 mg (noise 3.71)
+[G2] trial 2 t=408364 FELT ONLY  imu 35.6 mg (noise 4.10)
+[G2] trial 2 t=408683 FELT ONLY  imu 62.2 mg (noise 3.77)
+[G2] trial 2 t=410607 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=410961 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 2 t=411681 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] stats: imu 805.7 Hz, missed 0 (+0), fifo max 272 words, read avg 60 us max 899 us, imu cpu 3.43%, i3c errors 0, audio dropped 0, vib noise 3.75 mg, room -53 dBFS, acc 15 -30 998 mg
+[G2] trial 2 t=412253 FELT ONLY  imu 123.6 mg (noise 3.81)
+[G2] trial 2 t=413259 FELT ONLY  imu 113.3 mg (noise 3.36)
+[G2] trial 2 t=413340 FELT ONLY  imu 68.2 mg (noise 3.36)
+[G2] trial 2 t=414002 FELT ONLY  imu 93.1 mg (noise 3.88)
+[G2] trial 2 t=414743 FELT ONLY  imu 145.4 mg (noise 3.62)
+[G2] trial 2 t=415222 FELT ONLY  imu 166.2 mg (noise 3.74)
+[G2] trial 2 t=415611 FELT ONLY  imu 144.1 mg (noise 3.63)
+[G2] trial 2 t=416086 FELT ONLY  imu 129.8 mg (noise 3.44)
+[G2] trial 2 t=416230 FELT ONLY  imu 157.4 mg (noise 3.50)
+[G2] trial 2 t=416552 FELT ONLY  imu 103.8 mg (noise 3.97)
+[G2] stats: imu 813.0 Hz, missed 0 (+0), fifo max 272 words, read avg 62 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 4.22 mg, room -55 dBFS, acc 17 -45 998 mg
+[G2] trial 2 t=417017 HEARD ONLY  audio peak -36 dBFS (floor -55 dBFS)
+[G2] trial 2 t=417483 HEARD ONLY  audio peak -23 dBFS (floor -55 dBFS)
+[G2] trial 2 t=418971 HEARD ONLY  audio peak -34 dBFS (floor -55 dBFS)
+[G2] trial 2 t=419072 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 2 t=419867 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 2 t=420381 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 2 t=420531 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 2 t=421013 FELT ONLY  imu 230.6 mg (noise 4.49)
+[G2] trial 2 t=421108 FELT ONLY  imu 34.1 mg (noise 4.80)
+[G2] trial 2 t=421577 FELT ONLY  imu 34.3 mg (noise 5.17)
+[G2] stats: imu 809.8 Hz, missed 0 (+0), fifo max 272 words, read avg 64 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 4.92 mg, room -52 dBFS, acc 11 -38 992 mg
+[G2] trial 2 t=422581 FELT ONLY  imu 208.9 mg (noise 4.26)
+[G2] trial 2 t=423330 FELT ONLY  imu 26.6 mg (noise 4.26)
+[G2] trial 2 t=423624 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 2 t=423684 FELT ONLY  imu 82.6 mg (noise 4.53)
+[G2] trial 2 t=423764 FELT ONLY  imu 60.3 mg (noise 4.53)
+[G2] trial 2 t=423897 FELT ONLY  imu 44.5 mg (noise 5.71)
+[G2] trial 2 t=424529 FELT ONLY  imu 68.8 mg (noise 7.90)
+[G2] trial 2 t=424924 FELT ONLY  imu 109.1 mg (noise 8.55)
+[G2] trial 2 t=425005 FELT ONLY  imu 106.8 mg (noise 8.59)
+[G2] trial 2 t=425116 FELT ONLY  imu 58.0 mg (noise 9.14)
+[G2] stats: imu 808.3 Hz, missed 0 (+0), fifo max 272 words, read avg 67 us max 899 us, imu cpu 3.43%, i3c errors 0, audio dropped 0, vib noise 3.73 mg, room -55 dBFS, acc 11 -39 997 mg
+[G2] trial 2 t=427537 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=427991 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 2 t=428668 FELT ONLY  imu 155.7 mg (noise 3.90)
+[G2] trial 2 t=430569 FELT ONLY  imu 33.1 mg (noise 4.32)
+[G2] trial 2 t=430687 FELT ONLY  imu 286.6 mg (noise 4.67)
+[G2] trial 2 t=430801 FELT ONLY  imu 155.4 mg (noise 4.77)
+[G2] stats: imu 812.1 Hz, missed 0 (+0), fifo max 272 words, read avg 69 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 5.46 mg, room -54 dBFS, acc 11 -40 998 mg
+[G2] trial 2 t=433376 FELT ONLY  imu 23.7 mg (noise 3.67)
+[G2] trial 2 t=433762 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 2 t=433965 FELT ONLY  imu 197.0 mg (noise 3.89)
+[G2] trial 2 t=434049 FELT ONLY  imu 25.7 mg (noise 4.00)
+[G2] trial 2 t=434294 FELT ONLY  imu 49.8 mg (noise 4.30)
+[G2] trial 2 t=434480 FELT ONLY  imu 128.0 mg (noise 4.57)
+[G2] trial 2 t=434605 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 2 t=434896 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 2 t=435024 FELT ONLY  imu 37.2 mg (noise 5.68)
+[G2] trial 2 t=435148 FELT ONLY  imu 39.5 mg (noise 5.87)
+[G2] trial 2 t=435263 FELT ONLY  imu 43.4 mg (noise 5.88)
+[G2] trial 2 t=435330 FELT+HEARD dt=-15.0 ms  imu 59.6 mg (noise 5.88)  audio peak -33 dBFS
+[G2] trial 2 t=435563 FELT+HEARD dt=-1.0 ms  imu 101.6 mg (noise 5.42)  audio peak -27 dBFS
+[G2] trial 2 t=435716 FELT ONLY  imu 84.9 mg (noise 5.21)
+[G2] trial 2 t=436610 FELT ONLY  imu 42.7 mg (noise 5.36)
+[G2] trial 2 t=436732 HEARD ONLY  audio peak -31 dBFS (floor -49 dBFS)
+[G2] stats: imu 810.3 Hz, missed 0 (+0), fifo max 272 words, read avg 71 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 4.91 mg, room -48 dBFS, acc 18 -29 991 mg
+[G2] trial 2 t=437237 FELT ONLY  imu 34.5 mg (noise 5.17)
+[G2] trial 2 t=437500 FELT ONLY  imu 54.4 mg (noise 5.09)
+[G2] trial 2 t=437615 FELT ONLY  imu 52.5 mg (noise 5.02)
+[G2] trial 2 t=438035 HEARD ONLY  audio peak -33 dBFS (floor -48 dBFS)
+[G2] trial 2 t=437955 FELT ONLY  imu 41.4 mg (noise 4.78)
+[G2] trial 2 t=438171 FELT ONLY  imu 101.8 mg (noise 4.71)
+[G2] trial 2 t=438992 FELT ONLY  imu 85.5 mg (noise 3.74)
+[G2] trial 2 t=440450 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 2 t=440557 HEARD ONLY  audio peak -31 dBFS (floor -50 dBFS)
+[G2] trial 2 t=440664 HEARD ONLY  audio peak -33 dBFS (floor -48 dBFS)
+[G2] trial 2 t=440769 HEARD ONLY  audio peak -29 dBFS (floor -47 dBFS)
+[G2] stats: imu 805.4 Hz, missed 0 (+0), fifo max 272 words, read avg 73 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 3.42 mg, room -49 dBFS, acc 13 -33 995 mg
+[G2] trial 2 t=442650 FELT ONLY  imu 112.0 mg (noise 3.57)
+[G2] trial 2 t=444034 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 2 t=444375 HEARD ONLY  audio peak -25 dBFS (floor -52 dBFS)
+[G2] trial 2 t=444499 HEARD ONLY  audio peak -33 dBFS (floor -51 dBFS)
+[G2] trial 2 t=444725 HEARD ONLY  audio peak -31 dBFS (floor -51 dBFS)
+[G2] trial 2 t=445410 FELT ONLY  imu 100.1 mg (noise 3.52)
+[G2] trial 2 t=445868 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 2 t=446277 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] stats: imu 805.9 Hz, missed 0 (+0), fifo max 272 words, read avg 75 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 3.56 mg, room -53 dBFS, acc 42 -36 991 mg
+[G2] trial 2 t=446988 FELT ONLY  imu 39.6 mg (noise 3.56)
+[G2] trial 2 t=447069 FELT ONLY  imu 45.2 mg (noise 3.60)
+[G2] trial 2 t=448710 FELT ONLY  imu 178.9 mg (noise 3.72)
+[G2] trial 2 t=448826 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 2 t=449047 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] stats: imu 805.5 Hz, missed 0 (+0), fifo max 272 words, read avg 77 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 3.55 mg, room -55 dBFS, acc 14 -29 998 mg
+[G2] trial 2 t=452814 FELT ONLY  imu 98.7 mg (noise 3.45)
+[G2] trial 2 t=452913 FELT ONLY  imu 28.3 mg (noise 3.74)
+[G2] trial 2 t=453000 FELT ONLY  imu 32.1 mg (noise 3.89)
+[G2] joystick centre
+[G2] trial 2 summary: felt+heard 9, heard only 181, felt only 77; dt median -1.0 ms, min -47.9, max +46.3, 3/9 within +-10 ms of the median
+[G2] trial 3 started at audio sample 7186880, imu frame 363755
+[G2] trial 3 is: 20 knocks, 100 cm away
+[G2] trial 3 t=453189 FELT ONLY  imu 495.1 mg (noise 4.06)
+[G2] trial 3 t=453369 FELT+HEARD dt=+12.2 ms  imu 1017.8 mg (noise 4.55)  audio peak -10 dBFS
+[G2] trial 3 t=453455 FELT ONLY  imu 68.8 mg (noise 4.95)
+[G2] trial 3 t=453545 FELT ONLY  imu 50.2 mg (noise 5.05)
+[G2] trial 3 t=453722 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 3 t=455940 HEARD ONLY  audio peak -30 dBFS (floor -54 dBFS)
+[G2] stats: imu 816.8 Hz, missed 0 (+0), fifo max 272 words, read avg 79 us max 899 us, imu cpu 3.51%, i3c errors 0, audio dropped 0, vib noise 4.91 mg, room -54 dBFS, acc 55 -57 1046 mg
+[G2] trial 3 t=456973 FELT ONLY  imu 144.3 mg (noise 4.91)
+[G2] trial 3 t=457156 FELT+HEARD dt=+10.3 ms  imu 316.5 mg (noise 7.01)  audio peak -33 dBFS
+[G2] trial 3 t=457228 FELT ONLY  imu 45.7 mg (noise 7.01)
+[G2] trial 3 t=457335 FELT+HEARD dt=+26.9 ms  imu 156.2 mg (noise 7.01)  audio peak -36 dBFS
+[G2] trial 3 t=457432 FELT ONLY  imu 208.1 mg (noise 7.01)
+[G2] trial 3 t=457491 FELT+HEARD dt=-26.3 ms  imu 295.1 mg (noise 7.10)  audio peak -29 dBFS
+[G2] trial 3 t=457642 FELT ONLY  imu 70.4 mg (noise 7.86)
+[G2] trial 3 t=457887 FELT+HEARD dt=+39.4 ms  imu 302.6 mg (noise 8.26)  audio peak -34 dBFS
+[G2] joystick centre
+[G2] trial 3 summary: felt+heard 5, heard only 2, felt only 7; dt median +12.2 ms, min -26.3, max +39.4, 2/5 within +-10 ms of the median
+[G2] trial 4 started at audio sample 7264000, imu frame 367658
+[G2] trial 4 is: phone 30 cm above table: knock sounds
+[G2] trial 4 t=458057 FELT+HEARD dt=+0.0 ms  imu 721.1 mg (noise 8.74)  audio peak -4 dBFS
+[G2] trial 4 t=458254 FELT+HEARD dt=+0.0 ms  imu 1044.7 mg (noise 9.12)  audio peak -10 dBFS
+[G2] trial 4 t=458968 FELT ONLY  imu 47.1 mg (noise 7.25)
+[G2] trial 4 t=459303 FELT ONLY  imu 46.1 mg (noise 7.30)
+[G2] trial 4 t=459431 FELT ONLY  imu 98.5 mg (noise 8.43)
+[G2] trial 4 t=459486 FELT+HEARD dt=-25.4 ms  imu 52.2 mg (noise 8.43)  audio peak -30 dBFS
+[G2] trial 4 t=461323 FELT ONLY  imu 30.0 mg (noise 3.89)
+[G2] stats: imu 812.7 Hz, missed 0 (+0), fifo max 272 words, read avg 81 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 3.88 mg, room -55 dBFS, acc 14 -24 989 mg
+[G2] trial 4 t=462219 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 4 t=463512 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 4 t=463920 FELT ONLY  imu 25.6 mg (noise 3.55)
+[G2] trial 4 t=464024 FELT ONLY  imu 37.6 mg (noise 3.57)
+[G2] trial 4 t=464391 FELT+HEARD dt=-43.1 ms  imu 79.0 mg (noise 4.20)  audio peak -34 dBFS
+[G2] trial 4 t=464510 FELT+HEARD dt=-6.2 ms  imu 103.8 mg (noise 4.20)  audio peak -34 dBFS
+[G2] trial 4 t=464674 FELT+HEARD dt=+36.1 ms  imu 78.1 mg (noise 4.48)  audio peak -25 dBFS
+[G2] joystick centre
+[G2] trial 4 summary: felt+heard 6, heard only 2, felt only 6; dt median +0.0 ms, min -43.1, max +36.1, 3/6 within +-10 ms of the median
+[G2] trial 5 started at audio sample 7372480, imu frame 373151
+[G2] trial 5 is: phone lying on table: knock sounds
+[G2] trial 5 t=464881 FELT ONLY  imu 222.5 mg (noise 4.52)
+[G2] trial 5 t=465034 FELT+HEARD dt=+0.2 ms  imu 690.0 mg (noise 4.71)  audio peak -8 dBFS
+[G2] stats: imu 810.8 Hz, missed 0 (+0), fifo max 272 words, read avg 83 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 3.78 mg, room -53 dBFS, acc 15 -34 991 mg
+[G2] trial 5 t=466864 FELT ONLY  imu 47.4 mg (noise 3.70)
+[G2] trial 5 t=467186 FELT ONLY  imu 50.6 mg (noise 3.78)
+[G2] trial 5 t=468097 FELT ONLY  imu 92.8 mg (noise 3.71)
+[G2] trial 5 t=469475 FELT ONLY  imu 87.7 mg (noise 3.62)
+[G2] trial 5 t=470173 FELT ONLY  imu 74.8 mg (noise 3.50)
+[G2] trial 5 t=470601 HEARD ONLY  audio peak -33 dBFS (floor -56 dBFS)
+[G2] trial 5 t=470717 HEARD ONLY  audio peak -33 dBFS (floor -55 dBFS)
+[G2] trial 5 t=470844 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 5 t=471059 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 5 t=471220 FELT ONLY  imu 95.6 mg (noise 3.50)
+[G2] stats: imu 812.6 Hz, missed 0 (+0), fifo max 272 words, read avg 84 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 3.54 mg, room -54 dBFS, acc 10 -31 994 mg
+[G2] trial 5 t=472128 FELT ONLY  imu 141.4 mg (noise 3.55)
+[G2] trial 5 t=473471 FELT ONLY  imu 171.7 mg (noise 3.74)
+[G2] trial 5 t=473854 FELT+HEARD dt=+0.0 ms  imu 44.3 mg (noise 4.53)  audio peak -36 dBFS
+[G2] trial 5 t=474385 FELT ONLY  imu 38.5 mg (noise 6.15)
+[G2] trial 5 t=474508 HEARD ONLY  audio peak -25 dBFS (floor -55 dBFS)
+[G2] trial 5 t=476314 FELT ONLY  imu 22.9 mg (noise 3.63)
+[G2] trial 5 t=476829 FELT ONLY  imu 35.9 mg (noise 3.43)
+[G2] stats: imu 806.9 Hz, missed 0 (+0), fifo max 272 words, read avg 86 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 3.41 mg, room -56 dBFS, acc 16 -29 996 mg
+[G2] trial 5 t=477544 FELT ONLY  imu 35.2 mg (noise 3.57)
+[G2] trial 5 t=478079 FELT ONLY  imu 38.5 mg (noise 3.38)
+[G2] trial 5 t=479040 FELT ONLY  imu 65.7 mg (noise 3.55)
+[G2] trial 5 t=479195 HEARD ONLY  audio peak -30 dBFS (floor -56 dBFS)
+[G2] trial 5 t=481078 FELT ONLY  imu 64.4 mg (noise 4.49)
+[G2] stats: imu 817.4 Hz, missed 0 (+0), fifo max 272 words, read avg 88 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 3.69 mg, room -56 dBFS, acc 13 -28 992 mg
+[G2] trial 5 t=482356 FELT ONLY  imu 39.4 mg (noise 3.55)
+[G2] joystick centre
+[G2] trial 5 summary: felt+heard 2, heard only 6, felt only 17; dt median +0.2 ms, min +0.0, max +0.2, 2/2 within +-10 ms of the median
+[G2] trial 6 started at audio sample 7665280, imu frame 387977
+[G2] trial 6 is: typing on this table, 60 s
+[G2] trial 6 t=483285 FELT+HEARD dt=+0.0 ms  imu 822.5 mg (noise 6.50)  audio peak -11 dBFS
+[G2] trial 6 t=483498 FELT+HEARD dt=-0.3 ms  imu 1326.2 mg (noise 6.55)  audio peak -11 dBFS
+[G2] trial 6 t=484213 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] joystick centre
+[G2] trial 6 summary: felt+heard 2, heard only 1, felt only 0; dt median +0.0 ms, min -0.3, max +0.0, 2/2 within +-10 ms of the median
+[G2] trial 7 started at audio sample 7709440, imu frame 390208
+[G2] trial 7 is: cup put down 10 times
+[G2] trial 7 t=486233 FELT+HEARD dt=+0.2 ms  imu 822.9 mg (noise 5.21)  audio peak -11 dBFS
+[G2] trial 7 t=486313 FELT ONLY  imu 336.4 mg (noise 5.21)
+[G2] stats: imu 805.5 Hz, missed 0 (+0), fifo max 272 words, read avg 90 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 4.31 mg, room -51 dBFS, acc 21 -19 994 mg
+[G2] trial 7 t=487169 HEARD ONLY  audio peak -28 dBFS (floor -52 dBFS)
+[G2] trial 7 t=488723 HEARD ONLY  audio peak -11 dBFS (floor -53 dBFS)
+[G2] trial 7 t=489503 HEARD ONLY  audio peak -8 dBFS (floor -53 dBFS)
+[G2] trial 7 t=490262 HEARD ONLY  audio peak -8 dBFS (floor -51 dBFS)
+[G2] trial 7 t=490969 HEARD ONLY  audio peak -11 dBFS (floor -51 dBFS)
+[G2] trial 7 t=491661 HEARD ONLY  audio peak -9 dBFS (floor -51 dBFS)
+[G2] stats: imu 808.9 Hz, missed 0 (+0), fifo max 272 words, read avg 91 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 3.56 mg, room -48 dBFS, acc 22 -19 988 mg
+[G2] trial 7 t=492371 HEARD ONLY  audio peak -12 dBFS (floor -49 dBFS)
+[G2] trial 7 t=493068 HEARD ONLY  audio peak -9 dBFS (floor -50 dBFS)
+[G2] trial 7 t=493754 HEARD ONLY  audio peak -12 dBFS (floor -49 dBFS)
+[G2] trial 7 t=494546 HEARD ONLY  audio peak -11 dBFS (floor -50 dBFS)
+[G2] trial 7 t=495239 HEARD ONLY  audio peak -12 dBFS (floor -50 dBFS)
+[G2] trial 7 t=495899 HEARD ONLY  audio peak -10 dBFS (floor -50 dBFS)
+[G2] trial 7 t=496674 HEARD ONLY  audio peak -12 dBFS (floor -50 dBFS)
+[G2] stats: imu 805.5 Hz, missed 0 (+0), fifo max 272 words, read avg 93 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 3.20 mg, room -49 dBFS, acc 21 -16 994 mg
+[G2] trial 7 t=497486 HEARD ONLY  audio peak -12 dBFS (floor -51 dBFS)
+[G2] trial 7 t=498276 HEARD ONLY  audio peak -15 dBFS (floor -50 dBFS)
+[G2] trial 7 t=499064 HEARD ONLY  audio peak -13 dBFS (floor -51 dBFS)
+[G2] trial 7 t=499798 HEARD ONLY  audio peak -9 dBFS (floor -51 dBFS)
+[G2] trial 7 t=500513 HEARD ONLY  audio peak -13 dBFS (floor -51 dBFS)
+[G2] trial 7 t=501252 HEARD ONLY  audio peak -14 dBFS (floor -51 dBFS)
+[G2] stats: imu 808.4 Hz, missed 0 (+0), fifo max 272 words, read avg 94 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 3.31 mg, room -50 dBFS, acc 25 -19 996 mg
+[G2] trial 7 t=501986 HEARD ONLY  audio peak -15 dBFS (floor -52 dBFS)
+[G2] trial 7 t=503312 FELT+HEARD dt=-0.3 ms  imu 93.9 mg (noise 4.50)  audio peak -36 dBFS
+[G2] trial 7 t=503454 FELT ONLY  imu 57.7 mg (noise 4.82)
+[G2] joystick centre
+[G2] trial 7 summary: felt+heard 2, heard only 20, felt only 2; dt median +0.2 ms, min -0.3, max +0.2, 2/2 within +-10 ms of the median
+[G2] trial 8 started at audio sample 7989760, imu frame 404396
+[G2] trial 8 is: walk past 5 times
+[G2] trial 8 t=503710 FELT+HEARD dt=-34.1 ms  imu 51.6 mg (noise 5.47)  audio peak -6 dBFS
+[G2] trial 8 t=503839 FELT+HEARD dt=+14.9 ms  imu 641.1 mg (noise 5.47)  audio peak -9 dBFS
+[G2] trial 8 t=503865 FELT ONLY  imu 208.6 mg (noise 5.47)
+[G2] trial 8 t=505003 HEARD ONLY  audio peak -31 dBFS (floor -51 dBFS)
+[G2] trial 8 t=506220 FELT ONLY  imu 46.8 mg (noise 6.05)
+[G2] trial 8 t=506303 FELT ONLY  imu 45.4 mg (noise 6.06)
+[G2] trial 8 t=506395 FELT ONLY  imu 42.4 mg (noise 6.44)
+[G2] stats: imu 812.1 Hz, missed 0 (+0), fifo max 272 words, read avg 96 us max 899 us, imu cpu 3.49%, i3c errors 0, audio dropped 0, vib noise 5.33 mg, room -53 dBFS, acc 27 -15 994 mg
+[G2] trial 8 t=507467 FELT ONLY  imu 45.3 mg (noise 5.48)
+[G2] trial 8 t=510356 HEARD ONLY  audio peak -34 dBFS (floor -53 dBFS)
+[G2] trial 8 t=510827 HEARD ONLY  audio peak -29 dBFS (floor -51 dBFS)
+[G2] trial 8 t=511427 HEARD ONLY  audio peak -33 dBFS (floor -51 dBFS)
+[G2] trial 8 t=511880 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] stats: imu 807.3 Hz, missed 0 (+0), fifo max 272 words, read avg 98 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 6.26 mg, room -50 dBFS, acc 32 -13 986 mg
+[G2] trial 8 t=511987 HEARD ONLY  audio peak -34 dBFS (floor -50 dBFS)
+[G2] trial 8 t=513272 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 8 t=514277 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] stats: imu 806.1 Hz, missed 0 (+0), fifo max 272 words, read avg 99 us max 899 us, imu cpu 3.49%, i3c errors 0, audio dropped 0, vib noise 4.99 mg, room -55 dBFS, acc 23 -16 990 mg
+[G2] trial 8 t=520599 HEARD ONLY  audio peak -39 dBFS (floor -56 dBFS)
+[G2] trial 8 t=520929 HEARD ONLY  audio peak -33 dBFS (floor -56 dBFS)
+[G2] stats: imu 805.5 Hz, missed 0 (+0), fifo max 272 words, read avg 101 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 4.43 mg, room -56 dBFS, acc 27 -19 997 mg
+[G2] trial 8 t=523222 HEARD ONLY  audio peak -39 dBFS (floor -56 dBFS)
+[G2] trial 8 t=523324 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 8 t=523747 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 8 t=524296 HEARD ONLY  audio peak -33 dBFS (floor -52 dBFS)
+[G2] trial 8 t=524405 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 8 t=524584 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[G2] trial 8 t=524989 FELT ONLY  imu 38.1 mg (noise 4.61)
+[G2] trial 8 t=525217 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[G2] stats: imu 806.7 Hz, missed 0 (+0), fifo max 272 words, read avg 102 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 3.26 mg, room -52 dBFS, acc 26 -19 993 mg
+[G2] trial 8 t=527838 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 8 t=528117 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 8 t=528700 HEARD ONLY  audio peak -30 dBFS (floor -51 dBFS)
+[G2] trial 8 t=531521 HEARD ONLY  audio peak -33 dBFS (floor -55 dBFS)
+[G2] trial 8 t=531646 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] stats: imu 809.7 Hz, missed 0 (+0), fifo max 272 words, read avg 103 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 3.29 mg, room -54 dBFS, acc 29 -12 993 mg
+[G2] trial 8 t=533156 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 8 t=533441 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 8 t=533846 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 8 t=534075 FELT ONLY  imu 35.5 mg (noise 5.71)
+[G2] trial 8 t=535110 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 8 t=536056 FELT ONLY  imu 43.1 mg (noise 3.94)
+[G2] stats: imu 812.3 Hz, missed 0 (+0), fifo max 272 words, read avg 105 us max 899 us, imu cpu 3.50%, i3c errors 0, audio dropped 0, vib noise 5.22 mg, room -52 dBFS, acc 30 -20 996 mg
+[G2] trial 8 t=537859 FELT ONLY  imu 46.5 mg (noise 4.19)
+[G2] trial 8 t=538586 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 8 t=538693 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 8 t=538862 HEARD ONLY  audio peak -33 dBFS (floor -51 dBFS)
+[G2] trial 8 t=539026 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[G2] trial 8 t=539186 HEARD ONLY  audio peak -33 dBFS (floor -48 dBFS)
+[G2] stats: imu 805.4 Hz, missed 0 (+0), fifo max 272 words, read avg 106 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 3.56 mg, room -51 dBFS, acc 34 -19 991 mg
+[G2] trial 8 t=542165 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 8 t=543928 FELT ONLY  imu 46.8 mg (noise 5.87)
+[G2] trial 8 t=544051 FELT ONLY  imu 43.2 mg (noise 6.97)
+[G2] trial 8 t=544183 HEARD ONLY  audio peak -34 dBFS (floor -53 dBFS)
+[G2] trial 8 t=546761 FELT ONLY  imu 41.4 mg (noise 4.37)
+[G2] stats: imu 807.3 Hz, missed 0 (+0), fifo max 272 words, read avg 108 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 4.40 mg, room -54 dBFS, acc 33 -22 993 mg
+[G2] trial 8 t=547624 HEARD ONLY  audio peak -34 dBFS (floor -54 dBFS)
+[G2] trial 8 t=547702 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 8 t=547875 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 8 t=547976 HEARD ONLY  audio peak -21 dBFS (floor -50 dBFS)
+[G2] trial 8 t=548096 HEARD ONLY  audio peak -31 dBFS (floor -48 dBFS)
+[G2] trial 8 t=549178 HEARD ONLY  audio peak -30 dBFS (floor -48 dBFS)
+[G2] trial 8 t=549446 HEARD ONLY  audio peak -33 dBFS (floor -48 dBFS)
+[G2] trial 8 t=550526 HEARD ONLY  audio peak -33 dBFS (floor -48 dBFS)
+[G2] trial 8 t=551067 HEARD ONLY  audio peak -31 dBFS (floor -48 dBFS)
+[G2] stats: imu 809.8 Hz, missed 0 (+0), fifo max 272 words, read avg 109 us max 899 us, imu cpu 3.49%, i3c errors 0, audio dropped 0, vib noise 3.78 mg, room -49 dBFS, acc 31 -19 994 mg
+[G2] trial 8 t=554921 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] stats: imu 813.8 Hz, missed 0 (+0), fifo max 272 words, read avg 110 us max 899 us, imu cpu 3.50%, i3c errors 0, audio dropped 0, vib noise 3.64 mg, room -56 dBFS, acc 24 -15 992 mg
+[G2] trial 8 t=558451 HEARD ONLY  audio peak -39 dBFS (floor -56 dBFS)
+[G2] trial 8 t=558580 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] stats: imu 805.5 Hz, missed 0 (+0), fifo max 272 words, read avg 112 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.36 mg, room -54 dBFS, acc 29 -19 999 mg
+[G2] trial 8 t=566793 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] stats: imu 814.2 Hz, missed 0 (+0), fifo max 272 words, read avg 113 us max 899 us, imu cpu 3.50%, i3c errors 0, audio dropped 0, vib noise 3.59 mg, room -52 dBFS, acc 29 -17 996 mg
+[G2] trial 8 t=567878 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 8 t=571751 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 8 t=571874 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] stats: imu 805.6 Hz, missed 0 (+0), fifo max 272 words, read avg 114 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 3.24 mg, room -51 dBFS, acc 28 -14 993 mg
+[G2] trial 8 t=573326 HEARD ONLY  audio peak -27 dBFS (floor -53 dBFS)
+[G2] trial 8 t=573506 HEARD ONLY  audio peak -33 dBFS (floor -52 dBFS)
+[G2] trial 8 t=573617 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 8 t=573943 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 8 t=574370 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 8 t=575249 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 8 t=575374 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 8 t=575586 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] stats: imu 813.2 Hz, missed 0 (+0), fifo max 272 words, read avg 115 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 3.11 mg, room -54 dBFS, acc 25 -14 996 mg
+[G2] trial 8 t=581684 HEARD ONLY  audio peak -34 dBFS (floor -55 dBFS)
+[G2] trial 8 t=581857 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 8 t=582043 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] stats: imu 805.7 Hz, missed 0 (+0), fifo max 272 words, read avg 116 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 3.30 mg, room -53 dBFS, acc 27 -21 992 mg
+[G2] trial 8 t=582228 HEARD ONLY  audio peak -34 dBFS (floor -53 dBFS)
+[G2] trial 8 t=583106 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 8 t=583426 FELT ONLY  imu 24.0 mg (noise 3.60)
+[G2] trial 8 t=583489 HEARD ONLY  audio peak -33 dBFS (floor -54 dBFS)
+[G2] trial 8 t=583750 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 8 t=583855 HEARD ONLY  audio peak -33 dBFS (floor -51 dBFS)
+[G2] trial 8 t=584568 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 8 t=585049 HEARD ONLY  audio peak -31 dBFS (floor -49 dBFS)
+[G2] trial 8 t=585152 HEARD ONLY  audio peak -31 dBFS (floor -48 dBFS)
+[G2] trial 8 t=586740 FELT ONLY  imu 110.0 mg (noise 6.44)
+[G2] stats: imu 813.6 Hz, missed 0 (+0), fifo max 272 words, read avg 118 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 8.78 mg, room -50 dBFS, acc 39 8 1006 mg
+[G2] trial 8 t=587940 HEARD ONLY  audio peak -25 dBFS (floor -51 dBFS)
+[G2] trial 8 t=588226 HEARD ONLY  audio peak -33 dBFS (floor -51 dBFS)
+[G2] trial 8 t=588349 HEARD ONLY  audio peak -31 dBFS (floor -50 dBFS)
+[G2] trial 8 t=588453 HEARD ONLY  audio peak -30 dBFS (floor -49 dBFS)
+[G2] trial 8 t=588997 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[G2] trial 8 t=589110 HEARD ONLY  audio peak -25 dBFS (floor -47 dBFS)
+[G2] trial 8 t=589436 HEARD ONLY  audio peak -27 dBFS (floor -46 dBFS)
+[G2] trial 8 t=589760 HEARD ONLY  audio peak -27 dBFS (floor -44 dBFS)
+[G2] trial 8 t=589874 HEARD ONLY  audio peak -26 dBFS (floor -42 dBFS)
+[G2] trial 8 t=589975 HEARD ONLY  audio peak -25 dBFS (floor -41 dBFS)
+[G2] stats: imu 813.4 Hz, missed 0 (+0), fifo max 272 words, read avg 119 us max 899 us, imu cpu 3.50%, i3c errors 0, audio dropped 0, vib noise 3.71 mg, room -47 dBFS, acc 30 -8 993 mg
+[G2] stats: imu 805.7 Hz, missed 0 (+0), fifo max 272 words, read avg 120 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.28 mg, room -54 dBFS, acc 31 -5 990 mg
+[G2] trial 8 t=597881 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 8 t=598179 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 8 t=598289 HEARD ONLY  audio peak -33 dBFS (floor -52 dBFS)
+[G2] trial 8 t=598470 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 8 t=598863 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 8 t=599069 HEARD ONLY  audio peak -30 dBFS (floor -49 dBFS)
+[G2] trial 8 t=599304 HEARD ONLY  audio peak -30 dBFS (floor -48 dBFS)
+[G2] trial 8 t=599471 HEARD ONLY  audio peak -28 dBFS (floor -47 dBFS)
+[G2] trial 8 t=599591 HEARD ONLY  audio peak -28 dBFS (floor -45 dBFS)
+[G2] trial 8 t=599696 HEARD ONLY  audio peak -23 dBFS (floor -45 dBFS)
+[G2] trial 8 t=599868 HEARD ONLY  audio peak -25 dBFS (floor -43 dBFS)
+[G2] stats: imu 814.7 Hz, missed 0 (+0), fifo max 272 words, read avg 121 us max 899 us, imu cpu 3.50%, i3c errors 0, audio dropped 0, vib noise 4.26 mg, room -50 dBFS, acc 30 -2 993 mg
+[G2] trial 8 t=602658 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 8 t=602763 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[G2] trial 8 t=604336 HEARD ONLY  audio peak -31 dBFS (floor -47 dBFS)
+[G2] trial 8 t=604437 HEARD ONLY  audio peak -30 dBFS (floor -46 dBFS)
+[G2] trial 8 t=604972 HEARD ONLY  audio peak -30 dBFS (floor -46 dBFS)
+[G2] trial 8 t=605317 FELT+HEARD dt=+42.5 ms  imu 211.8 mg (noise 3.87)  audio peak -23 dBFS
+[G2] trial 8 t=605362 FELT ONLY  imu 53.9 mg (noise 4.06)
+[G2] trial 8 t=605908 FELT ONLY  imu 55.1 mg (noise 4.66)
+[G2] trial 8 t=606101 FELT ONLY  imu 41.0 mg (noise 6.48)
+[G2] stats: imu 814.8 Hz, missed 0 (+0), fifo max 272 words, read avg 122 us max 899 us, imu cpu 3.50%, i3c errors 0, audio dropped 0, vib noise 4.17 mg, room -50 dBFS, acc 29 -6 999 mg
+[G2] trial 8 t=608343 HEARD ONLY  audio peak -33 dBFS (floor -51 dBFS)
+[G2] trial 8 t=608592 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] stats: imu 805.4 Hz, missed 0 (+0), fifo max 272 words, read avg 123 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 3.19 mg, room -55 dBFS, acc 27 -5 994 mg
+[G2] trial 8 t=612536 HEARD ONLY  audio peak -34 dBFS (floor -55 dBFS)
+[G2] trial 8 summary: felt+heard 3, heard only 97, felt only 17; dt median +14.9 ms, min -34.1, max +42.5, 1/3 within +-10 ms of the median
+[G2] trial 3 started at audio sample 9727040, imu frame 492330
+[G2] trial 3 t=612875 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 3 t=613807 HEARD ONLY  audio peak -34 dBFS (floor -50 dBFS)
+[G2] trial 3 t=613925 HEARD ONLY  audio peak -33 dBFS (floor -48 dBFS)
+[G2] trial 3 t=615536 HEARD ONLY  audio peak -31 dBFS (floor -51 dBFS)
+[G2] stats: imu 811.2 Hz, missed 0 (+0), fifo max 272 words, read avg 124 us max 899 us, imu cpu 3.49%, i3c errors 0, audio dropped 0, vib noise 3.16 mg, room -52 dBFS, acc 30 -1 994 mg
+[G2] trial 3 t=618743 HEARD ONLY  audio peak -33 dBFS (floor -53 dBFS)
+[G2] trial 3 t=618882 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 3 t=620228 HEARD ONLY  audio peak -33 dBFS (floor -52 dBFS)
+[G2] trial 3 t=620580 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 3 t=620697 HEARD ONLY  audio peak -34 dBFS (floor -50 dBFS)
+[G2] trial 3 t=621054 FELT ONLY  imu 27.4 mg (noise 4.23)
+[G2] trial 3 t=621267 HEARD ONLY  audio peak -31 dBFS (floor -47 dBFS)
+[G2] trial 3 t=621603 HEARD ONLY  audio peak -31 dBFS (floor -47 dBFS)
+[G2] stats: imu 808.3 Hz, missed 0 (+0), fifo max 272 words, read avg 125 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.44 mg, room -48 dBFS, acc 33 -2 995 mg
+[G2] trial 3 t=623481 HEARD ONLY  audio peak -31 dBFS (floor -50 dBFS)
+[G2] trial 3 t=623625 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[G2] trial 3 t=625289 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 3 t=625860 HEARD ONLY  audio peak -33 dBFS (floor -52 dBFS)
+[G2] trial 3 t=626187 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] stats: imu 813.0 Hz, missed 0 (+0), fifo max 272 words, read avg 0 us max 899 us, imu cpu 3.49%, i3c errors 0, audio dropped 0, vib noise 3.40 mg, room -52 dBFS, acc 32 -3 991 mg
+[G2] trial 3 t=627532 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 3 t=627648 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 3 t=629264 HEARD ONLY  audio peak -30 dBFS (floor -51 dBFS)
+[G2] trial 3 t=629391 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 3 t=629521 HEARD ONLY  audio peak -31 dBFS (floor -49 dBFS)
+[G2] trial 3 t=631185 HEARD ONLY  audio peak -31 dBFS (floor -52 dBFS)
+[G2] trial 3 t=631291 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] stats: imu 809.0 Hz, missed 0 (+0), fifo max 272 words, read avg 2 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 3.72 mg, room -50 dBFS, acc 37 -6 997 mg
+[G2] trial 3 t=632361 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[G2] trial 3 t=633462 FELT ONLY  imu 64.0 mg (noise 4.54)
+[G2] trial 3 t=634441 FELT+HEARD dt=+2.6 ms  imu 37.1 mg (noise 4.86)  audio peak -36 dBFS
+[G2] trial 3 t=636256 HEARD ONLY  audio peak -22 dBFS (floor -54 dBFS)
+[G2] trial 3 t=636373 HEARD ONLY  audio peak -24 dBFS (floor -53 dBFS)
+[G2] trial 3 t=636637 HEARD ONLY  audio peak -27 dBFS (floor -52 dBFS)
+[G2] trial 3 t=636756 HEARD ONLY  audio peak -28 dBFS (floor -51 dBFS)
+[G2] trial 3 t=636861 HEARD ONLY  audio peak -25 dBFS (floor -50 dBFS)
+[G2] trial 3 t=637079 HEARD ONLY  audio peak -31 dBFS (floor -49 dBFS)
+[G2] stats: imu 807.4 Hz, missed 0 (+0), fifo max 272 words, read avg 4 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 4.44 mg, room -49 dBFS, acc 38 -6 994 mg
+[G2] trial 3 t=637358 FELT+HEARD dt=-7.2 ms  imu 35.2 mg (noise 4.69)  audio peak -31 dBFS
+[G2] trial 3 t=637493 HEARD ONLY  audio peak -31 dBFS (floor -49 dBFS)
+[G2] trial 3 t=637601 HEARD ONLY  audio peak -23 dBFS (floor -48 dBFS)
+[G2] trial 3 t=637704 HEARD ONLY  audio peak -28 dBFS (floor -48 dBFS)
+[G2] trial 3 t=638593 HEARD ONLY  audio peak -30 dBFS (floor -50 dBFS)
+[G2] trial 3 t=640009 HEARD ONLY  audio peak -31 dBFS (floor -51 dBFS)
+[G2] trial 3 t=641390 HEARD ONLY  audio peak -27 dBFS (floor -52 dBFS)
+[G2] trial 3 t=641629 HEARD ONLY  audio peak -31 dBFS (floor -51 dBFS)
+[G2] stats: imu 806.7 Hz, missed 0 (+0), fifo max 272 words, read avg 6 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 3.22 mg, room -53 dBFS, acc 36 -6 995 mg
+[G2] trial 3 t=642501 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 3 t=642955 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 3 t=643135 HEARD ONLY  audio peak -33 dBFS (floor -52 dBFS)
+[G2] trial 3 t=643252 HEARD ONLY  audio peak -21 dBFS (floor -51 dBFS)
+[G2] trial 3 t=643359 HEARD ONLY  audio peak -24 dBFS (floor -49 dBFS)
+[G2] trial 3 t=643602 HEARD ONLY  audio peak -30 dBFS (floor -46 dBFS)
+[G2] trial 3 t=644877 HEARD ONLY  audio peak -30 dBFS (floor -48 dBFS)
+[G2] stats: imu 811.8 Hz, missed 0 (+0), fifo max 272 words, read avg 8 us max 899 us, imu cpu 3.51%, i3c errors 0, audio dropped 0, vib noise 3.25 mg, room -50 dBFS, acc 32 -2 992 mg
+[G2] trial 3 t=647664 HEARD ONLY  audio peak -34 dBFS (floor -50 dBFS)
+[G2] trial 3 t=647969 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 3 t=649370 HEARD ONLY  audio peak -29 dBFS (floor -53 dBFS)
+[G2] trial 3 t=650351 HEARD ONLY  audio peak -33 dBFS (floor -54 dBFS)
+[G2] trial 3 t=650810 HEARD ONLY  audio peak -33 dBFS (floor -53 dBFS)
+[G2] trial 3 t=650858 HEARD ONLY  audio peak -30 dBFS (floor -51 dBFS)
+[G2] trial 3 t=650976 HEARD ONLY  audio peak -33 dBFS (floor -51 dBFS)
+[G2] trial 3 t=651077 HEARD ONLY  audio peak -27 dBFS (floor -50 dBFS)
+[G2] trial 3 t=651196 HEARD ONLY  audio peak -30 dBFS (floor -49 dBFS)
+[G2] stats: imu 814.5 Hz, missed 0 (+0), fifo max 272 words, read avg 10 us max 899 us, imu cpu 3.51%, i3c errors 0, audio dropped 0, vib noise 3.29 mg, room -51 dBFS, acc 36 -5 996 mg
+[G2] trial 3 t=654242 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 3 t=654363 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 3 t=654483 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 3 t=654627 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 3 t=654751 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 3 t=655490 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 3 t=656190 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 3 t=656289 HEARD ONLY  audio peak -31 dBFS (floor -51 dBFS)
+[G2] trial 3 t=656602 HEARD ONLY  audio peak -28 dBFS (floor -48 dBFS)
+[G2] trial 3 t=656797 HEARD ONLY  audio peak -30 dBFS (floor -48 dBFS)
+[G2] stats: imu 813.2 Hz, missed 0 (+0), fifo max 272 words, read avg 12 us max 899 us, imu cpu 3.51%, i3c errors 0, audio dropped 0, vib noise 3.34 mg, room -48 dBFS, acc 37 -4 993 mg
+[G2] trial 3 t=658319 HEARD ONLY  audio peak -31 dBFS (floor -49 dBFS)
+[G2] trial 3 t=658418 HEARD ONLY  audio peak -24 dBFS (floor -47 dBFS)
+[G2] trial 3 t=658647 HEARD ONLY  audio peak -29 dBFS (floor -47 dBFS)
+[G2] trial 3 t=658760 HEARD ONLY  audio peak -21 dBFS (floor -46 dBFS)
+[G2] trial 3 t=658861 HEARD ONLY  audio peak -24 dBFS (floor -45 dBFS)
+[G2] trial 3 t=658969 FELT ONLY  imu 38.3 mg (noise 5.43)
+[G2] trial 3 t=659078 FELT+HEARD dt=+28.0 ms  imu 48.8 mg (noise 5.43)  audio peak -25 dBFS
+[G2] trial 3 t=659166 FELT ONLY  imu 39.0 mg (noise 6.17)
+[G2] trial 3 t=659318 HEARD ONLY  audio peak -26 dBFS (floor -42 dBFS)
+[G2] trial 3 t=659458 FELT ONLY  imu 107.6 mg (noise 11.21)
+[G2] trial 3 t=659552 FELT ONLY  imu 198.8 mg (noise 11.32)
+[G2] trial 3 t=659842 HEARD ONLY  audio peak -25 dBFS (floor -42 dBFS)
+[G2] trial 3 t=660384 FELT+HEARD dt=-0.9 ms  imu 286.7 mg (noise 12.32)  audio peak -26 dBFS
+[G2] trial 3 t=660524 FELT ONLY  imu 360.4 mg (noise 14.53)
+[G2] trial 3 t=660617 FELT ONLY  imu 94.2 mg (noise 15.38)
+[G2] stats: imu 810.9 Hz, missed 0 (+0), fifo max 272 words, read avg 14 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 5.39 mg, room -48 dBFS, acc 37 3 992 mg
+[G2] trial 3 t=664397 HEARD ONLY  audio peak -28 dBFS (floor -53 dBFS)
+[G2] trial 3 t=664511 HEARD ONLY  audio peak -23 dBFS (floor -51 dBFS)
+[G2] trial 3 t=664615 HEARD ONLY  audio peak -18 dBFS (floor -50 dBFS)
+[G2] trial 3 t=664725 HEARD ONLY  audio peak -33 dBFS (floor -48 dBFS)
+[G2] trial 3 t=664835 HEARD ONLY  audio peak -20 dBFS (floor -47 dBFS)
+[G2] trial 3 t=664935 HEARD ONLY  audio peak -29 dBFS (floor -46 dBFS)
+[G2] trial 3 t=665049 HEARD ONLY  audio peak -28 dBFS (floor -45 dBFS)
+[G2] trial 3 t=665155 HEARD ONLY  audio peak -18 dBFS (floor -44 dBFS)
+[G2] trial 3 t=665629 HEARD ONLY  audio peak -27 dBFS (floor -44 dBFS)
+[G2] trial 3 t=667065 HEARD ONLY  audio peak -27 dBFS (floor -45 dBFS)
+[G2] stats: imu 806.0 Hz, missed 0 (+0), fifo max 272 words, read avg 15 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 7.54 mg, room -43 dBFS, acc 30 18 972 mg
+[G2] trial 3 t=667167 HEARD ONLY  audio peak -23 dBFS (floor -44 dBFS)
+[G2] trial 3 t=667281 HEARD ONLY  audio peak -26 dBFS (floor -43 dBFS)
+[G2] trial 3 t=667423 FELT ONLY  imu 271.0 mg (noise 8.11)
+[G2] trial 3 t=667605 FELT ONLY  imu 87.0 mg (noise 10.46)
+[G2] trial 3 t=667730 FELT ONLY  imu 122.4 mg (noise 13.16)
+[G2] trial 3 t=667813 FELT ONLY  imu 97.9 mg (noise 13.32)
+[G2] trial 3 t=667943 HEARD ONLY  audio peak -27 dBFS (floor -44 dBFS)
+[G2] trial 3 t=668055 HEARD ONLY  audio peak -25 dBFS (floor -44 dBFS)
+[G2] trial 3 t=668159 HEARD ONLY  audio peak -25 dBFS (floor -42 dBFS)
+[G2] trial 3 t=668627 HEARD ONLY  audio peak -24 dBFS (floor -43 dBFS)
+[G2] trial 3 t=668809 HEARD ONLY  audio peak -27 dBFS (floor -43 dBFS)
+[G2] trial 3 t=668919 FELT+HEARD dt=+33.4 ms  imu 1243.6 mg (noise 28.53)  audio peak -23 dBFS
+[G2] trial 3 t=668966 FELT ONLY  imu 284.0 mg (noise 28.53)
+[G2] trial 3 t=669171 FELT+HEARD dt=-0.1 ms  imu 590.1 mg (noise 32.20)  audio peak -24 dBFS
+[G2] trial 3 t=670115 FELT+HEARD dt=-0.6 ms  imu 403.4 mg (noise 25.63)  audio peak -19 dBFS
+[G2] trial 3 t=670714 FELT ONLY  imu 371.8 mg (noise 22.91)
+[G2] trial 3 t=670863 FELT ONLY  imu 174.5 mg (noise 23.40)
+[G2] trial 3 t=671911 FELT ONLY  imu 72.5 mg (noise 10.85)
+[G2] trial 3 t=672016 FELT+HEARD dt=+6.5 ms  imu 257.6 mg (noise 11.84)  audio peak -31 dBFS
+[G2] trial 3 t=672102 FELT ONLY  imu 152.6 mg (noise 12.69)
+[G2] stats: imu 805.3 Hz, missed 0 (+0), fifo max 272 words, read avg 17 us max 899 us, imu cpu 3.43%, i3c errors 0, audio dropped 0, vib noise 15.64 mg, room -48 dBFS, acc 29 30 895 mg
+[G2] trial 3 t=672255 FELT+HEARD dt=+1.5 ms  imu 204.5 mg (noise 15.64)  audio peak -33 dBFS
+[G2] trial 3 t=673109 HEARD ONLY  audio peak -27 dBFS (floor -50 dBFS)
+[G2] trial 3 t=673197 FELT ONLY  imu 565.3 mg (noise 27.13)
+[G2] trial 3 t=673263 FELT+HEARD dt=-14.2 ms  imu 886.9 mg (noise 27.13)  audio peak -1 dBFS
+[G2] trial 3 t=673395 FELT+HEARD dt=-0.2 ms  imu 883.3 mg (noise 29.67)  audio peak -24 dBFS
+[G2] trial 3 t=673541 FELT+HEARD dt=+11.5 ms  imu 860.3 mg (noise 34.49)  audio peak -5 dBFS
+[G2] trial 3 t=674309 FELT+HEARD dt=+0.5 ms  imu 1029.6 mg (noise 18.10)  audio peak -26 dBFS
+[G2] trial 3 t=675028 HEARD ONLY  audio peak -31 dBFS (floor -47 dBFS)
+[G2] trial 3 t=675167 HEARD ONLY  audio peak -30 dBFS (floor -47 dBFS)
+[G2] trial 3 t=676232 HEARD ONLY  audio peak -30 dBFS (floor -48 dBFS)
+[G2] trial 3 t=676393 HEARD ONLY  audio peak -30 dBFS (floor -47 dBFS)
+[G2] trial 3 t=676688 HEARD ONLY  audio peak -27 dBFS (floor -46 dBFS)
+[G2] trial 3 t=676885 HEARD ONLY  audio peak -25 dBFS (floor -45 dBFS)
+[G2] stats: imu 809.0 Hz, missed 0 (+0), fifo max 272 words, read avg 19 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 4.75 mg, room -45 dBFS, acc -15 -20 986 mg
+[G2] trial 3 t=677578 HEARD ONLY  audio peak -29 dBFS (floor -46 dBFS)
+[G2] trial 3 t=677891 HEARD ONLY  audio peak -30 dBFS (floor -46 dBFS)
+[G2] trial 3 t=678803 HEARD ONLY  audio peak -33 dBFS (floor -48 dBFS)
+[G2] trial 3 t=679427 HEARD ONLY  audio peak -29 dBFS (floor -50 dBFS)
+[G2] trial 3 t=679537 HEARD ONLY  audio peak -22 dBFS (floor -49 dBFS)
+[G2] trial 3 t=679638 HEARD ONLY  audio peak -30 dBFS (floor -48 dBFS)
+[G2] trial 3 t=679969 HEARD ONLY  audio peak -31 dBFS (floor -47 dBFS)
+[G2] trial 3 t=680081 HEARD ONLY  audio peak -22 dBFS (floor -46 dBFS)
+[G2] trial 3 t=680207 HEARD ONLY  audio peak -28 dBFS (floor -46 dBFS)
+[G2] trial 3 t=680765 HEARD ONLY  audio peak -25 dBFS (floor -43 dBFS)
+[G2] stats: imu 812.7 Hz, missed 0 (+0), fifo max 272 words, read avg 21 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 3.40 mg, room -49 dBFS, acc -21 -22 991 mg
+[G2] trial 3 t=682867 HEARD ONLY  audio peak -31 dBFS (floor -50 dBFS)
+[G2] trial 3 t=683079 HEARD ONLY  audio peak -22 dBFS (floor -49 dBFS)
+[G2] trial 3 t=683203 HEARD ONLY  audio peak -29 dBFS (floor -49 dBFS)
+[G2] trial 3 t=683303 HEARD ONLY  audio peak -31 dBFS (floor -48 dBFS)
+[G2] trial 3 t=683501 HEARD ONLY  audio peak -31 dBFS (floor -48 dBFS)
+[G2] trial 3 t=684512 HEARD ONLY  audio peak -27 dBFS (floor -50 dBFS)
+[G2] trial 3 t=684628 HEARD ONLY  audio peak -25 dBFS (floor -48 dBFS)
+[G2] trial 3 t=684747 HEARD ONLY  audio peak -25 dBFS (floor -47 dBFS)
+[G2] trial 3 t=685294 HEARD ONLY  audio peak -31 dBFS (floor -47 dBFS)
+[G2] trial 3 t=685395 HEARD ONLY  audio peak -26 dBFS (floor -46 dBFS)
+[G2] trial 3 t=685580 HEARD ONLY  audio peak -28 dBFS (floor -46 dBFS)
+[G2] trial 3 t=685828 HEARD ONLY  audio peak -27 dBFS (floor -44 dBFS)
+[G2] trial 3 t=686379 HEARD ONLY  audio peak -25 dBFS (floor -43 dBFS)
+[G2] stats: imu 805.7 Hz, missed 0 (+0), fifo max 272 words, read avg 22 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 4.07 mg, room -42 dBFS, acc -27 -15 994 mg
+[G2] trial 3 t=689608 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 3 t=689834 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 3 t=691203 FELT ONLY  imu 68.5 mg (noise 6.74)
+[G2] trial 3 t=691820 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 3 t=691971 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 3 t=692088 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[G2] stats: imu 813.8 Hz, missed 0 (+0), fifo max 272 words, read avg 24 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 4.48 mg, room -48 dBFS, acc -24 -22 992 mg
+[G2] trial 3 t=692318 HEARD ONLY  audio peak -27 dBFS (floor -48 dBFS)
+[G2] trial 3 t=692808 HEARD ONLY  audio peak -27 dBFS (floor -47 dBFS)
+[G2] trial 3 t=693037 HEARD ONLY  audio peak -27 dBFS (floor -45 dBFS)
+[G2] trial 3 t=693810 FELT ONLY  imu 29.9 mg (noise 4.64)
+[G2] trial 3 t=694069 HEARD ONLY  audio peak -30 dBFS (floor -47 dBFS)
+[G2] trial 3 t=695201 HEARD ONLY  audio peak -31 dBFS (floor -50 dBFS)
+[G2] trial 3 t=695475 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 3 t=695586 HEARD ONLY  audio peak -19 dBFS (floor -48 dBFS)
+[G2] trial 3 t=695689 HEARD ONLY  audio peak -28 dBFS (floor -47 dBFS)
+[G2] trial 3 t=695810 HEARD ONLY  audio peak -26 dBFS (floor -46 dBFS)
+[G2] trial 3 t=695930 HEARD ONLY  audio peak -23 dBFS (floor -45 dBFS)
+[G2] trial 3 t=696038 HEARD ONLY  audio peak -20 dBFS (floor -44 dBFS)
+[G2] trial 3 t=696150 HEARD ONLY  audio peak -15 dBFS (floor -43 dBFS)
+[G2] trial 3 t=696365 HEARD ONLY  audio peak -25 dBFS (floor -43 dBFS)
+[G2] trial 3 t=696555 HEARD ONLY  audio peak -15 dBFS (floor -42 dBFS)
+[G2] trial 3 t=696748 HEARD ONLY  audio peak -25 dBFS (floor -42 dBFS)
+[G2] trial 3 t=696884 HEARD ONLY  audio peak -20 dBFS (floor -42 dBFS)
+[G2] trial 3 t=697100 HEARD ONLY  audio peak -24 dBFS (floor -42 dBFS)
+[G2] stats: imu 812.8 Hz, missed 0 (+0), fifo max 272 words, read avg 26 us max 899 us, imu cpu 3.50%, i3c errors 0, audio dropped 0, vib noise 8.43 mg, room -41 dBFS, acc -28 -21 995 mg
+[G2] trial 3 t=698832 HEARD ONLY  audio peak -19 dBFS (floor -47 dBFS)
+[G2] trial 3 t=698944 HEARD ONLY  audio peak -15 dBFS (floor -45 dBFS)
+[G2] trial 3 t=699065 HEARD ONLY  audio peak -21 dBFS (floor -44 dBFS)
+[G2] trial 3 t=699577 HEARD ONLY  audio peak -26 dBFS (floor -43 dBFS)
+[G2] trial 3 t=699690 HEARD ONLY  audio peak -15 dBFS (floor -42 dBFS)
+[G2] trial 3 t=699910 HEARD ONLY  audio peak -23 dBFS (floor -40 dBFS)
+[G2] trial 3 t=700610 HEARD ONLY  audio peak -23 dBFS (floor -39 dBFS)
+[G2] trial 3 t=700821 HEARD ONLY  audio peak -16 dBFS (floor -39 dBFS)
+[G2] trial 3 t=700936 HEARD ONLY  audio peak -22 dBFS (floor -38 dBFS)
+[G2] trial 3 t=701132 HEARD ONLY  audio peak -22 dBFS (floor -38 dBFS)
+[G2] trial 3 t=701348 HEARD ONLY  audio peak -20 dBFS (floor -38 dBFS)
+[G2] trial 3 t=702071 FELT ONLY  imu 113.2 mg (noise 5.64)
+[G2] stats: imu 811.6 Hz, missed 0 (+0), fifo max 272 words, read avg 27 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 6.09 mg, room -39 dBFS, acc -26 -24 994 mg
+[G2] trial 3 t=702159 FELT ONLY  imu 38.2 mg (noise 5.87)
+[G2] trial 3 t=705038 HEARD ONLY  audio peak -27 dBFS (floor -46 dBFS)
+[G2] trial 3 t=705499 HEARD ONLY  audio peak -25 dBFS (floor -44 dBFS)
+[G2] trial 3 t=705603 HEARD ONLY  audio peak -22 dBFS (floor -43 dBFS)
+[G2] trial 3 t=705653 FELT ONLY  imu 72.7 mg (noise 8.50)
+[G2] trial 3 t=706566 FELT+HEARD dt=-35.0 ms  imu 248.9 mg (noise 18.65)  audio peak -24 dBFS
+[G2] trial 3 t=706521 FELT ONLY  imu 148.7 mg (noise 18.65)
+[G2] stats: imu 813.0 Hz, missed 0 (+0), fifo max 272 words, read avg 29 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 15.93 mg, room -47 dBFS, acc -29 -20 992 mg
+[G2] trial 3 t=707577 HEARD ONLY  audio peak -31 dBFS (floor -47 dBFS)
+[G2] trial 3 t=707724 HEARD ONLY  audio peak -31 dBFS (floor -47 dBFS)
+[G2] trial 3 t=707895 HEARD ONLY  audio peak -31 dBFS (floor -47 dBFS)
+[G2] trial 3 t=708244 HEARD ONLY  audio peak -30 dBFS (floor -46 dBFS)
+[G2] trial 3 t=708359 HEARD ONLY  audio peak -16 dBFS (floor -46 dBFS)
+[G2] trial 3 t=708460 HEARD ONLY  audio peak -24 dBFS (floor -45 dBFS)
+[G2] trial 3 t=708677 HEARD ONLY  audio peak -26 dBFS (floor -43 dBFS)
+[G2] trial 3 t=708819 HEARD ONLY  audio peak -25 dBFS (floor -42 dBFS)
+[G2] trial 3 t=709020 FELT ONLY  imu 88.6 mg (noise 12.91)
+[G2] trial 3 t=710524 HEARD ONLY  audio peak -25 dBFS (floor -43 dBFS)
+[G2] trial 3 t=712074 HEARD ONLY  audio peak -28 dBFS (floor -45 dBFS)
+[G2] stats: imu 809.5 Hz, missed 0 (+0), fifo max 272 words, read avg 30 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 5.48 mg, room -44 dBFS, acc -0 -10 993 mg
+[G2] trial 3 t=712537 HEARD ONLY  audio peak -28 dBFS (floor -44 dBFS)
+[G2] trial 3 t=712669 HEARD ONLY  audio peak -23 dBFS (floor -43 dBFS)
+[G2] trial 3 t=712800 HEARD ONLY  audio peak -24 dBFS (floor -41 dBFS)
+[G2] trial 3 t=714157 HEARD ONLY  audio peak -28 dBFS (floor -44 dBFS)
+[G2] trial 3 t=714272 HEARD ONLY  audio peak -20 dBFS (floor -43 dBFS)
+[G2] trial 3 t=716154 HEARD ONLY  audio peak -21 dBFS (floor -43 dBFS)
+[G2] trial 3 t=716262 HEARD ONLY  audio peak -16 dBFS (floor -42 dBFS)
+[G2] trial 3 t=716363 HEARD ONLY  audio peak -13 dBFS (floor -41 dBFS)
+[G2] trial 3 t=716467 HEARD ONLY  audio peak -19 dBFS (floor -40 dBFS)
+[G2] trial 3 t=716590 HEARD ONLY  audio peak -22 dBFS (floor -39 dBFS)
+[G2] trial 3 t=716977 FELT ONLY  imu 51.6 mg (noise 4.15)
+[G2] stats: imu 808.7 Hz, missed 0 (+0), fifo max 272 words, read avg 32 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 5.33 mg, room -39 dBFS, acc -5 -14 994 mg
+[G2] trial 3 t=717506 HEARD ONLY  audio peak -22 dBFS (floor -40 dBFS)
+[G2] trial 3 t=719038 HEARD ONLY  audio peak -25 dBFS (floor -44 dBFS)
+[G2] trial 3 t=719138 HEARD ONLY  audio peak -20 dBFS (floor -44 dBFS)
+[G2] trial 3 t=719239 HEARD ONLY  audio peak -22 dBFS (floor -43 dBFS)
+[G2] trial 3 t=719635 HEARD ONLY  audio peak -23 dBFS (floor -43 dBFS)
+[G2] trial 3 t=719914 HEARD ONLY  audio peak -27 dBFS (floor -43 dBFS)
+[G2] trial 3 t=720327 HEARD ONLY  audio peak -24 dBFS (floor -42 dBFS)
+[G2] trial 3 t=720733 HEARD ONLY  audio peak -26 dBFS (floor -42 dBFS)
+[G2] trial 3 t=720930 HEARD ONLY  audio peak -13 dBFS (floor -42 dBFS)
+[G2] trial 3 t=721049 HEARD ONLY  audio peak -15 dBFS (floor -40 dBFS)
+[G2] trial 3 t=721184 HEARD ONLY  audio peak -23 dBFS (floor -39 dBFS)
+[G2] trial 3 t=721298 HEARD ONLY  audio peak -21 dBFS (floor -39 dBFS)
+[G2] trial 3 t=721407 HEARD ONLY  audio peak -21 dBFS (floor -38 dBFS)
+[G2] trial 3 t=721976 HEARD ONLY  audio peak -23 dBFS (floor -39 dBFS)
+[G2] stats: imu 805.6 Hz, missed 0 (+0), fifo max 272 words, read avg 33 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 15.75 mg, room -38 dBFS, acc -17 -1 981 mg
+[G2] trial 3 t=727021 FELT ONLY  imu 152.9 mg (noise 3.77)
+[G2] trial 3 t=727111 FELT ONLY  imu 95.2 mg (noise 4.01)
+[G2] stats: imu 815.1 Hz, missed 0 (+0), fifo max 272 words, read avg 35 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 4.22 mg, room -51 dBFS, acc -13 -16 1006 mg
+[G2] trial 3 t=727312 FELT ONLY  imu 81.7 mg (noise 4.22)
+[G2] trial 3 t=727822 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 3 t=728140 HEARD ONLY  audio peak -30 dBFS (floor -51 dBFS)
+[G2] trial 3 t=728243 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 3 t=728579 HEARD ONLY  audio peak -23 dBFS (floor -50 dBFS)
+[G2] trial 3 t=729746 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 3 t=729927 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] joystick centre
+[G2] trial 3 summary: felt+heard 14, heard only 193, felt only 29; dt median +0.5 ms, min -35.0, max +33.4, 9/14 within +-10 ms of the median
+[G2] trial 4 started at audio sample 11603200, imu frame 587302
+[G2] trial 4 is: phone 30 cm above table: knock sounds
+[G2] trial 4 t=730763 FELT+HEARD dt=+0.4 ms  imu 855.0 mg (noise 6.22)  audio peak -11 dBFS
+[G2] trial 4 t=730907 FELT+HEARD dt=-0.7 ms  imu 1112.4 mg (noise 6.70)  audio peak -7 dBFS
+[G2] stats: imu 813.8 Hz, missed 0 (+0), fifo max 272 words, read avg 36 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.62 mg, room -52 dBFS, acc -3 -13 997 mg
+[G2] trial 4 t=732647 HEARD ONLY  audio peak -8 dBFS (floor -53 dBFS)
+[G2] trial 4 t=733822 HEARD ONLY  audio peak -9 dBFS (floor -53 dBFS)
+[G2] trial 4 t=734975 HEARD ONLY  audio peak -6 dBFS (floor -52 dBFS)
+[G2] trial 4 t=736098 HEARD ONLY  audio peak -9 dBFS (floor -51 dBFS)
+[G2] stats: imu 805.4 Hz, missed 0 (+0), fifo max 272 words, read avg 38 us max 899 us, imu cpu 3.43%, i3c errors 0, audio dropped 0, vib noise 3.27 mg, room -48 dBFS, acc -3 -14 996 mg
+[G2] trial 4 t=737258 HEARD ONLY  audio peak -5 dBFS (floor -53 dBFS)
+[G2] trial 4 t=738375 HEARD ONLY  audio peak 0 dBFS (floor -51 dBFS)
+[G2] trial 4 t=739518 HEARD ONLY  audio peak -5 dBFS (floor -48 dBFS)
+[G2] trial 4 t=740649 HEARD ONLY  audio peak -6 dBFS (floor -50 dBFS)
+[G2] trial 4 t=741779 HEARD ONLY  audio peak -0 dBFS (floor -51 dBFS)
+[G2] stats: imu 808.9 Hz, missed 0 (+0), fifo max 272 words, read avg 39 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 3.22 mg, room -47 dBFS, acc -7 -12 994 mg
+[G2] trial 4 t=742870 HEARD ONLY  audio peak -4 dBFS (floor -48 dBFS)
+[G2] trial 4 t=743947 HEARD ONLY  audio peak -5 dBFS (floor -50 dBFS)
+[G2] trial 4 t=745019 HEARD ONLY  audio peak 0 dBFS (floor -50 dBFS)
+[G2] trial 4 t=746162 HEARD ONLY  audio peak -0 dBFS (floor -49 dBFS)
+[G2] stats: imu 813.1 Hz, missed 0 (+0), fifo max 272 words, read avg 41 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.29 mg, room -45 dBFS, acc -5 -15 1000 mg
+[G2] trial 4 t=747293 HEARD ONLY  audio peak -0 dBFS (floor -48 dBFS)
+[G2] trial 4 t=748415 HEARD ONLY  audio peak -8 dBFS (floor -49 dBFS)
+[G2] trial 4 t=749493 HEARD ONLY  audio peak -4 dBFS (floor -50 dBFS)
+[G2] trial 4 t=750581 HEARD ONLY  audio peak -4 dBFS (floor -50 dBFS)
+[G2] trial 4 t=751713 HEARD ONLY  audio peak -5 dBFS (floor -49 dBFS)
+[G2] stats: imu 807.4 Hz, missed 0 (+0), fifo max 272 words, read avg 42 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 3.51 mg, room -48 dBFS, acc -4 -13 994 mg
+[G2] trial 4 t=752431 FELT ONLY  imu 92.7 mg (noise 3.51)
+[G2] trial 4 t=752601 FELT ONLY  imu 74.3 mg (noise 3.79)
+[G2] trial 4 t=752797 FELT+HEARD dt=-4.4 ms  imu 35.5 mg (noise 5.37)  audio peak -2 dBFS
+[G2] trial 4 t=752881 FELT ONLY  imu 80.9 mg (noise 5.37)
+[G2] trial 4 t=753007 FELT ONLY  imu 43.9 mg (noise 6.01)
+[G2] trial 4 t=753836 HEARD ONLY  audio peak -5 dBFS (floor -48 dBFS)
+[G2] trial 4 t=755000 HEARD ONLY  audio peak -6 dBFS (floor -50 dBFS)
+[G2] trial 4 t=755153 FELT ONLY  imu 38.6 mg (noise 4.66)
+[G2] joystick centre
+[G2] trial 4 summary: felt+heard 3, heard only 20, felt only 5; dt median -0.7 ms, min -4.4, max +0.4, 3/3 within +-10 ms of the median
+[G2] trial 5 started at audio sample 11994880, imu frame 607132
+[G2] trial 5 is: phone lying on table: knock sounds
+[G2] trial 5 t=755536 FELT+HEARD dt=-0.9 ms  imu 975.2 mg (noise 6.33)  audio peak -7 dBFS
+[G2] trial 5 t=755805 FELT+HEARD dt=-21.2 ms  imu 1207.2 mg (noise 9.25)  audio peak -9 dBFS
+[G2] trial 5 t=755744 FELT ONLY  imu 130.3 mg (noise 9.25)
+[G2] stats: imu 805.9 Hz, missed 0 (+0), fifo max 272 words, read avg 44 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 4.39 mg, room -49 dBFS, acc -3 -10 997 mg
+[G2] trial 5 t=759431 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 5 t=759582 HEARD ONLY  audio peak -31 dBFS (floor -53 dBFS)
+[G2] trial 5 t=759852 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 5 t=760888 FELT+HEARD dt=-14.5 ms  imu 58.1 mg (noise 3.45)  audio peak -36 dBFS
+[G2] trial 5 t=760983 FELT ONLY  imu 33.1 mg (noise 3.45)
+[G2] trial 5 t=761314 FELT+HEARD dt=-0.6 ms  imu 100.6 mg (noise 6.42)  audio peak -34 dBFS
+[G2] trial 5 t=761905 HEARD ONLY  audio peak -34 dBFS (floor -53 dBFS)
+[G2] stats: imu 805.6 Hz, missed 0 (+0), fifo max 272 words, read avg 45 us max 899 us, imu cpu 3.42%, i3c errors 0, audio dropped 0, vib noise 10.13 mg, room -51 dBFS, acc -24 -21 1021 mg
+[G2] trial 5 t=762869 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 5 t=763090 HEARD ONLY  audio peak -30 dBFS (floor -50 dBFS)
+[G2] trial 5 t=764515 FELT+HEARD dt=-37.6 ms  imu 75.0 mg (noise 9.29)  audio peak -26 dBFS
+[G2] trial 5 t=764710 HEARD ONLY  audio peak -19 dBFS (floor -52 dBFS)
+[G2] trial 5 t=764913 HEARD ONLY  audio peak -24 dBFS (floor -52 dBFS)
+[G2] trial 5 t=765076 HEARD ONLY  audio peak -29 dBFS (floor -52 dBFS)
+[G2] trial 5 t=765299 HEARD ONLY  audio peak -33 dBFS (floor -52 dBFS)
+[G2] trial 5 t=765870 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 5 t=765975 HEARD ONLY  audio peak -27 dBFS (floor -50 dBFS)
+[G2] trial 5 t=766103 HEARD ONLY  audio peak -34 dBFS (floor -50 dBFS)
+[G2] trial 5 t=766217 HEARD ONLY  audio peak -29 dBFS (floor -49 dBFS)
+[G2] trial 5 t=766376 HEARD ONLY  audio peak -31 dBFS (floor -48 dBFS)
+[G2] trial 5 t=766735 HEARD ONLY  audio peak -26 dBFS (floor -48 dBFS)
+[G2] trial 5 t=766843 HEARD ONLY  audio peak -28 dBFS (floor -47 dBFS)
+[G2] stats: imu 814.7 Hz, missed 0 (+0), fifo max 272 words, read avg 46 us max 899 us, imu cpu 3.48%, i3c errors 0, audio dropped 0, vib noise 6.15 mg, room -45 dBFS, acc -11 -20 989 mg
+[G2] trial 5 t=767276 HEARD ONLY  audio peak -29 dBFS (floor -46 dBFS)
+[G2] trial 5 t=767474 HEARD ONLY  audio peak -25 dBFS (floor -46 dBFS)
+[G2] trial 5 t=767714 HEARD ONLY  audio peak -26 dBFS (floor -44 dBFS)
+[G2] trial 5 t=767826 HEARD ONLY  audio peak -21 dBFS (floor -43 dBFS)
+[G2] trial 5 t=770091 FELT+HEARD dt=-30.5 ms  imu 106.6 mg (noise 10.09)  audio peak -14 dBFS
+[G2] trial 5 t=770246 FELT+HEARD dt=-33.2 ms  imu 96.4 mg (noise 12.78)  audio peak -18 dBFS
+[G2] trial 5 t=771590 HEARD ONLY  audio peak -31 dBFS (floor -49 dBFS)
+[G2] stats: imu 810.2 Hz, missed 0 (+0), fifo max 272 words, read avg 48 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 4.08 mg, room -50 dBFS, acc -17 -29 996 mg
+[G2] trial 5 t=772660 HEARD ONLY  audio peak -27 dBFS (floor -51 dBFS)
+[G2] trial 5 t=772772 HEARD ONLY  audio peak -31 dBFS (floor -48 dBFS)
+[G2] stats: imu 811.4 Hz, missed 0 (+0), fifo max 272 words, read avg 49 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 3.09 mg, room -54 dBFS, acc -6 -24 995 mg
+[G2] stats: imu 811.3 Hz, missed 0 (+0), fifo max 272 words, read avg 50 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 4.34 mg, room -56 dBFS, acc -14 -24 994 mg
+[G2] trial 5 t=783067 FELT+HEARD dt=-1.2 ms  imu 1102.4 mg (noise 3.71)  audio peak -24 dBFS
+[G2] trial 5 t=783149 FELT ONLY  imu 253.9 mg (noise 3.71)
+[G2] trial 5 t=783242 FELT ONLY  imu 27.7 mg (noise 3.86)
+[G2] trial 5 t=783363 FELT ONLY  imu 32.3 mg (noise 4.33)
+[G2] trial 5 t=783429 FELT+HEARD dt=-31.7 ms  imu 41.2 mg (noise 4.86)  audio peak -24 dBFS
+[G2] trial 5 t=783585 FELT+HEARD dt=-37.0 ms  imu 117.5 mg (noise 4.86)  audio peak -17 dBFS
+[G2] trial 5 t=783542 FELT ONLY  imu 62.9 mg (noise 4.86)
+[G2] trial 5 t=786932 HEARD ONLY  audio peak -33 dBFS (floor -52 dBFS)
+[G2] stats: imu 810.2 Hz, missed 0 (+0), fifo max 272 words, read avg 52 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 3.50 mg, room -53 dBFS, acc -14 -26 993 mg
+[G2] trial 5 t=788156 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 5 t=788476 HEARD ONLY  audio peak -34 dBFS (floor -54 dBFS)
+[G2] trial 5 t=788636 HEARD ONLY  audio peak -33 dBFS (floor -53 dBFS)
+[G2] trial 5 t=788740 HEARD ONLY  audio peak -25 dBFS (floor -52 dBFS)
+[G2] trial 5 t=788847 HEARD ONLY  audio peak -30 dBFS (floor -51 dBFS)
+[G2] trial 5 t=788970 HEARD ONLY  audio peak -31 dBFS (floor -49 dBFS)
+[G2] trial 5 t=789281 HEARD ONLY  audio peak -30 dBFS (floor -47 dBFS)
+[G2] trial 5 t=789882 HEARD ONLY  audio peak -30 dBFS (floor -46 dBFS)
+[G2] trial 5 t=791267 FELT+HEARD dt=-43.8 ms  imu 31.8 mg (noise 4.11)  audio peak -33 dBFS
+[G2] trial 5 t=791516 FELT+HEARD dt=+4.4 ms  imu 100.5 mg (noise 4.71)  audio peak -30 dBFS
+[G2] trial 5 t=791629 FELT+HEARD dt=-10.6 ms  imu 50.6 mg (noise 5.21)  audio peak -31 dBFS
+[G2] trial 5 t=791736 FELT ONLY  imu 61.8 mg (noise 5.61)
+[G2] trial 5 t=791866 FELT+HEARD dt=-36.9 ms  imu 52.4 mg (noise 5.83)  audio peak -27 dBFS
+[G2] trial 5 t=791818 FELT ONLY  imu 87.5 mg (noise 5.64)
+[G2] trial 5 t=792061 FELT ONLY  imu 82.0 mg (noise 7.10)
+[G2] trial 5 t=792156 FELT+HEARD dt=+0.4 ms  imu 328.1 mg (noise 7.15)  audio peak -21 dBFS
+[G2] trial 5 t=792236 FELT ONLY  imu 1073.1 mg (noise 7.15)
+[G2] stats: imu 805.3 Hz, missed 0 (+0), fifo max 272 words, read avg 53 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 7.15 mg, room -41 dBFS, acc 2 -31 1019 mg
+[G2] trial 5 t=792313 FELT+HEARD dt=-2.9 ms  imu 1951.9 mg (noise 7.15)  audio peak -3 dBFS
+[G2] trial 5 t=792414 FELT ONLY  imu 110.1 mg (noise 7.15)
+[G2] trial 5 t=792494 FELT ONLY  imu 67.5 mg (noise 7.15)
+[G2] trial 5 t=792781 HEARD ONLY  audio peak -26 dBFS (floor -42 dBFS)
+[G2] trial 5 t=792976 HEARD ONLY  audio peak -20 dBFS (floor -41 dBFS)
+[G2] trial 5 t=793248 HEARD ONLY  audio peak -18 dBFS (floor -40 dBFS)
+[G2] trial 5 t=793367 HEARD ONLY  audio peak -19 dBFS (floor -39 dBFS)
+[G2] trial 5 t=793919 FELT+HEARD dt=-31.3 ms  imu 116.8 mg (noise 14.82)  audio peak -22 dBFS
+[G2] trial 5 t=794958 HEARD ONLY  audio peak -21 dBFS (floor -43 dBFS)
+[G2] trial 5 t=795236 HEARD ONLY  audio peak -27 dBFS (floor -43 dBFS)
+[G2] stats: imu 808.6 Hz, missed 0 (+0), fifo max 272 words, read avg 54 us max 899 us, imu cpu 3.43%, i3c errors 0, audio dropped 0, vib noise 7.30 mg, room -45 dBFS, acc -6 -17 996 mg
+[G2] trial 5 t=797469 HEARD ONLY  audio peak -29 dBFS (floor -45 dBFS)
+[G2] trial 5 t=799138 FELT ONLY  imu 41.1 mg (noise 6.80)
+[G2] trial 5 t=799930 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 5 t=800968 HEARD ONLY  audio peak -20 dBFS (floor -51 dBFS)
+[G2] stats: imu 807.1 Hz, missed 0 (+0), fifo max 272 words, read avg 55 us max 899 us, imu cpu 3.43%, i3c errors 0, audio dropped 0, vib noise 6.73 mg, room -53 dBFS, acc -5 -17 1003 mg
+[G2] trial 5 t=802668 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 5 t=803012 HEARD ONLY  audio peak -27 dBFS (floor -53 dBFS)
+[G2] trial 5 t=803123 HEARD ONLY  audio peak -33 dBFS (floor -52 dBFS)
+[G2] trial 5 t=803329 HEARD ONLY  audio peak -34 dBFS (floor -50 dBFS)
+[G2] trial 5 t=804302 HEARD ONLY  audio peak -29 dBFS (floor -52 dBFS)
+[G2] trial 5 t=804842 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 5 t=805411 HEARD ONLY  audio peak -34 dBFS (floor -54 dBFS)
+[G2] trial 5 t=805882 HEARD ONLY  audio peak -34 dBFS (floor -54 dBFS)
+[G2] trial 5 t=806090 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] trial 5 t=806459 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] trial 5 t=806940 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] stats: imu 807.2 Hz, missed 0 (+0), fifo max 272 words, read avg 57 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 6.61 mg, room -55 dBFS, acc -11 -21 996 mg
+[G2] trial 5 t=808988 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 5 t=810143 FELT ONLY  imu 45.0 mg (noise 4.65)
+[G2] trial 5 t=810801 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 5 t=810928 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 5 t=811110 HEARD ONLY  audio peak -33 dBFS (floor -55 dBFS)
+[G2] trial 5 t=811256 HEARD ONLY  audio peak -34 dBFS (floor -55 dBFS)
+[G2] trial 5 t=811606 FELT ONLY  imu 86.7 mg (noise 11.60)
+[G2] trial 5 t=812174 HEARD ONLY  audio peak -31 dBFS (floor -54 dBFS)
+[G2] stats: imu 814.3 Hz, missed 0 (+0), fifo max 272 words, read avg 58 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 11.56 mg, room -54 dBFS, acc 1 -12 986 mg
+[G2] trial 5 t=812337 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 5 t=812979 HEARD ONLY  audio peak -34 dBFS (floor -54 dBFS)
+[G2] trial 5 t=813338 HEARD ONLY  audio peak -28 dBFS (floor -54 dBFS)
+[G2] trial 5 t=813906 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 5 t=815014 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 5 t=815358 HEARD ONLY  audio peak -27 dBFS (floor -53 dBFS)
+[G2] trial 5 t=817083 HEARD ONLY  audio peak -29 dBFS (floor -54 dBFS)
+[G2] stats: imu 805.8 Hz, missed 0 (+0), fifo max 272 words, read avg 59 us max 899 us, imu cpu 3.42%, i3c errors 0, audio dropped 0, vib noise 4.33 mg, room -54 dBFS, acc -6 -18 990 mg
+[G2] trial 5 t=817725 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] trial 5 t=817876 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] trial 5 t=817986 HEARD ONLY  audio peak -33 dBFS (floor -52 dBFS)
+[G2] trial 5 t=818122 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 5 t=818224 HEARD ONLY  audio peak -30 dBFS (floor -51 dBFS)
+[G2] trial 5 t=818452 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 5 t=818804 HEARD ONLY  audio peak -31 dBFS (floor -49 dBFS)
+[G2] trial 5 t=819048 FELT+HEARD dt=-34.2 ms  imu 60.6 mg (noise 8.11)  audio peak -30 dBFS
+[G2] trial 5 t=819822 FELT+HEARD dt=-6.6 ms  imu 39.9 mg (noise 5.95)  audio peak -27 dBFS
+[G2] trial 5 t=820195 FELT ONLY  imu 85.3 mg (noise 9.55)
+[G2] trial 5 t=820326 FELT ONLY  imu 91.4 mg (noise 11.11)
+[G2] trial 5 t=821178 HEARD ONLY  audio peak -31 dBFS (floor -47 dBFS)
+[G2] trial 5 t=821688 HEARD ONLY  audio peak -31 dBFS (floor -48 dBFS)
+[G2] stats: imu 806.0 Hz, missed 0 (+0), fifo max 272 words, read avg 60 us max 899 us, imu cpu 3.42%, i3c errors 0, audio dropped 0, vib noise 3.90 mg, room -48 dBFS, acc -5 -16 993 mg
+[G2] trial 5 t=822575 HEARD ONLY  audio peak -31 dBFS (floor -48 dBFS)
+[G2] trial 5 t=823580 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[G2] trial 5 t=824759 HEARD ONLY  audio peak -33 dBFS (floor -52 dBFS)
+[G2] trial 5 t=826466 HEARD ONLY  audio peak -34 dBFS (floor -54 dBFS)
+[G2] trial 5 t=826606 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] stats: imu 813.7 Hz, missed 0 (+0), fifo max 272 words, read avg 61 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 4.67 mg, room -52 dBFS, acc -11 -19 991 mg
+[G2] trial 5 t=827652 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 5 t=828513 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 5 t=830169 FELT ONLY  imu 46.4 mg (noise 5.88)
+[G2] trial 5 t=830249 FELT ONLY  imu 45.5 mg (noise 5.88)
+[G2] trial 5 t=830361 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 5 t=831326 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 5 t=831435 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] stats: imu 812.3 Hz, missed 0 (+0), fifo max 272 words, read avg 62 us max 899 us, imu cpu 3.46%, i3c errors 0, audio dropped 0, vib noise 6.53 mg, room -53 dBFS, acc -12 -23 1001 mg
+[G2] trial 5 t=832596 HEARD ONLY  audio peak -34 dBFS (floor -53 dBFS)
+[G2] trial 5 t=833053 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 5 t=833571 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 5 t=835010 HEARD ONLY  audio peak -25 dBFS (floor -54 dBFS)
+[G2] trial 5 t=835130 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 5 t=835278 HEARD ONLY  audio peak -29 dBFS (floor -51 dBFS)
+[G2] trial 5 t=835887 HEARD ONLY  audio peak -31 dBFS (floor -51 dBFS)
+[G2] trial 5 t=836061 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 5 t=837106 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] stats: imu 808.8 Hz, missed 0 (+0), fifo max 272 words, read avg 64 us max 899 us, imu cpu 3.43%, i3c errors 0, audio dropped 0, vib noise 9.32 mg, room -51 dBFS, acc -10 -18 995 mg
+[G2] trial 5 t=837874 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 5 t=839278 HEARD ONLY  audio peak -27 dBFS (floor -54 dBFS)
+[G2] trial 5 t=839622 HEARD ONLY  audio peak -30 dBFS (floor -54 dBFS)
+[G2] trial 5 t=840809 HEARD ONLY  audio peak -30 dBFS (floor -55 dBFS)
+[G2] trial 5 t=840961 HEARD ONLY  audio peak -34 dBFS (floor -54 dBFS)
+[G2] trial 5 t=841066 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 5 t=841167 HEARD ONLY  audio peak -29 dBFS (floor -52 dBFS)
+[G2] trial 5 t=841288 HEARD ONLY  audio peak -30 dBFS (floor -51 dBFS)
+[G2] trial 5 t=841426 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 5 t=841583 HEARD ONLY  audio peak -30 dBFS (floor -48 dBFS)
+[G2] stats: imu 813.1 Hz, missed 0 (+0), fifo max 272 words, read avg 65 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 3.88 mg, room -49 dBFS, acc -9 -17 998 mg
+[G2] trial 5 t=843021 FELT ONLY  imu 34.3 mg (noise 3.95)
+[G2] trial 5 t=843102 FELT ONLY  imu 26.8 mg (noise 3.95)
+[G2] trial 5 t=843784 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 5 t=843987 FELT+HEARD dt=-38.0 ms  imu 39.8 mg (noise 5.94)  audio peak -28 dBFS
+[G2] trial 5 t=845960 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 5 t=846206 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 5 t=846429 HEARD ONLY  audio peak -31 dBFS (floor -53 dBFS)
+[G2] trial 5 t=846586 HEARD ONLY  audio peak -33 dBFS (floor -52 dBFS)
+[G2] trial 5 t=846779 HEARD ONLY  audio peak -31 dBFS (floor -51 dBFS)
+[G2] trial 5 t=846864 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 5 t=846953 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 5 t=847138 HEARD ONLY  audio peak -28 dBFS (floor -50 dBFS)
+[G2] stats: imu 814.5 Hz, missed 0 (+0), fifo max 272 words, read avg 66 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 10.27 mg, room -48 dBFS, acc -8 -21 998 mg
+[G2] trial 5 t=849284 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 5 t=849810 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 5 t=850232 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 5 t=851100 HEARD ONLY  audio peak -36 dBFS (floor -54 dBFS)
+[G2] trial 5 t=851429 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] stats: imu 807.6 Hz, missed 0 (+0), fifo max 272 words, read avg 67 us max 899 us, imu cpu 3.43%, i3c errors 0, audio dropped 0, vib noise 9.30 mg, room -54 dBFS, acc -6 -17 994 mg
+[G2] trial 5 t=852881 HEARD ONLY  audio peak -34 dBFS (floor -54 dBFS)
+[G2] trial 5 t=853584 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] trial 5 t=853915 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] trial 5 t=854073 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 5 t=854186 HEARD ONLY  audio peak -31 dBFS (floor -52 dBFS)
+[G2] trial 5 t=854381 HEARD ONLY  audio peak -33 dBFS (floor -50 dBFS)
+[G2] trial 5 t=854676 HEARD ONLY  audio peak -23 dBFS (floor -48 dBFS)
+[G2] trial 5 t=855175 HEARD ONLY  audio peak -30 dBFS (floor -46 dBFS)
+[G2] trial 5 t=855278 HEARD ONLY  audio peak -28 dBFS (floor -45 dBFS)
+[G2] trial 5 t=856086 HEARD ONLY  audio peak -28 dBFS (floor -44 dBFS)
+[G2] trial 5 t=856384 HEARD ONLY  audio peak -27 dBFS (floor -44 dBFS)
+[G2] trial 5 t=856664 HEARD ONLY  audio peak -26 dBFS (floor -43 dBFS)
+[G2] trial 5 t=856800 HEARD ONLY  audio peak -25 dBFS (floor -43 dBFS)
+[G2] trial 5 t=857087 HEARD ONLY  audio peak -25 dBFS (floor -41 dBFS)
+[G2] stats: imu 805.6 Hz, missed 0 (+0), fifo max 272 words, read avg 68 us max 899 us, imu cpu 3.40%, i3c errors 0, audio dropped 0, vib noise 10.45 mg, room -41 dBFS, acc -12 -17 992 mg
+[G2] trial 5 t=862310 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] stats: imu 814.5 Hz, missed 0 (+0), fifo max 272 words, read avg 69 us max 899 us, imu cpu 3.47%, i3c errors 0, audio dropped 0, vib noise 9.62 mg, room -53 dBFS, acc -12 -27 1004 mg
+[G2] trial 5 t=862513 HEARD ONLY  audio peak -21 dBFS (floor -53 dBFS)
+[G2] trial 5 t=862679 HEARD ONLY  audio peak -33 dBFS (floor -53 dBFS)
+[G2] trial 5 t=862820 HEARD ONLY  audio peak -36 dBFS (floor -52 dBFS)
+[G2] trial 5 t=862929 HEARD ONLY  audio peak -27 dBFS (floor -52 dBFS)
+[G2] trial 5 t=863034 HEARD ONLY  audio peak -33 dBFS (floor -51 dBFS)
+[G2] trial 5 t=863198 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[G2] trial 5 t=863275 HEARD ONLY  audio peak -30 dBFS (floor -48 dBFS)
+[G2] trial 5 t=866386 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 5 t=866490 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 5 t=866654 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 5 t=866865 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 5 t=867068 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 5 t=867349 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[G2] stats: imu 812.9 Hz, missed 0 (+0), fifo max 272 words, read avg 70 us max 899 us, imu cpu 3.44%, i3c errors 0, audio dropped 0, vib noise 9.01 mg, room -49 dBFS, acc -24 -23 1005 mg
+[G2] trial 5 t=868441 HEARD ONLY  audio peak -34 dBFS (floor -52 dBFS)
+[G2] trial 5 t=868624 HEARD ONLY  audio peak -25 dBFS (floor -52 dBFS)
+[G2] trial 5 t=870789 HEARD ONLY  audio peak -39 dBFS (floor -54 dBFS)
+[G2] stats: imu 812.2 Hz, missed 0 (+0), fifo max 272 words, read avg 71 us max 899 us, imu cpu 3.45%, i3c errors 0, audio dropped 0, vib noise 4.15 mg, room -55 dBFS, acc -14 -21 991 mg
+[G2] trial 5 t=873157 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 5 t=873890 HEARD ONLY  audio peak -39 dBFS (floor -55 dBFS)
+[G2] trial 5 t=874936 HEARD ONLY  audio peak -36 dBFS (floor -55 dBFS)
+[G2] trial 5 t=875087 HEARD ONLY  audio peak -34 dBFS (floor -53 dBFS)
+[G2] trial 5 t=875245 HEARD ONLY  audio peak -36 dBFS (floor -53 dBFS)
+[G2] trial 5 t=876564 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] stats: imu 807.3 Hz, missed 0 (+0), fifo max 272 words, read avg 72 us max 899 us, imu cpu 3.43%, i3c errors 0, audio dropped 0, vib noise 3.25 mg, room -51 dBFS, acc -15 -21 994 mg
+[G2] trial 5 t=878048 HEARD ONLY  audio peak -34 dBFS (floor -51 dBFS)
+[G2] trial 5 t=878417 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[G2] trial 5 t=878933 HEARD ONLY  audio peak -33 dBFS (floor -49 dBFS)
+[G2] trial 5 t=879180 HEARD ONLY  audio peak -29 dBFS (floor -50 dBFS)

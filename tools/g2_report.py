@@ -76,7 +76,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("log")
     ap.add_argument("--gap-ms", type=float, default=400, help="events closer than this are one knock")
-    ap.add_argument("--sets", default="", help="labels for the sets after the warm-up, in order")
+    ap.add_argument("--sets", default="", help="labels for the sets in order (the warm-up before the first trial is skipped)")
     ap.add_argument("--json")
     a = ap.parse_args()
     sets, rates, missed = parse(a.log)
@@ -85,7 +85,7 @@ def main():
     print(f"IMU rate {min(rates):.1f}..{max(rates):.1f} Hz over {len(rates)} stats lines, missed total {sum(missed)}"
           if rates else "no stats lines")
     for i, s in enumerate(sets):
-        lab = labels[i - 1] if 0 < i <= len(labels) else f"trial{s['trial']}"
+        lab = labels[i] if i < len(labels) else f"set{i + 1}"
         ks = knocks(s["events"], a.gap_ms)
         r = summarise(ks)
         r["name"] = s["name"]
