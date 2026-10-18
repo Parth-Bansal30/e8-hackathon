@@ -207,6 +207,11 @@ the datasets (ESC-50, Speech Commands), which aren't in git.
   keys each time, the examples agree far more closely.
 - **Knocks are felt within about 20 cm** of the board on our table, hence "place me on the table
   by the door".
+- **Teaching quality matters.** Examples that clip or come too close together save a loose profile
+  (threshold 0.50) that sits close to unrelated sounds: in the rehearsal, Keys taught that way was the
+  best match for several knocks. A sound played much louder than when it was taught can also fall
+  below its threshold (the Doorbell taught at volume 44 was only "Maybe" at volume 100, where the laptop
+  clips). The teach screen already flags clipped and "loud room" examples.
 - **Only clear matches meet the 0.5 s alert target.** A clear built-in match alerts in about
   0.44 s. Taught sounds, "Maybe" matches and anything unclear wait for the whole sound: about 0.87 s.
 - Not built yet: telling a smoke alarm from a CO alarm, and dimming the screen (night mode switches

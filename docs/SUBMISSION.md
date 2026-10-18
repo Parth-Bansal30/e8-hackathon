@@ -322,6 +322,11 @@ All on the DK-E8 (M55-HP at 400 MHz, Ethos-U85-256), release build, 2026-10-18. 
   sounds rejected. Live, with the same doorbell or keys each time, the examples agree far more
   closely (4 of 5 trials).
 - Knocks are felt within about 20 cm of the board.
+- Teaching quality matters. Examples that clip or come too close together save a loose profile
+  (threshold 0.50) that sits close to unrelated sounds: in the rehearsal, Keys taught that way was the
+  best match for several knocks. A sound played much louder than when it was taught can also fall
+  below its threshold (the Doorbell taught at volume 44 was only "Maybe" at volume 100, where the laptop
+  clips). The teach screen already flags clipped and "loud room" examples.
 - Only clear built-in matches meet our 0.5 s alert target (median 437 ms). Taught sounds, "Maybe"
   matches and anything unclear wait for the whole sound: about 0.87 s.
 
