@@ -1,6 +1,6 @@
 # Handoff: the last three hours, split across two laptops (2026-10-18)
 
-Written 1:15 PM PDT. **Firmware is frozen again at `v1.1-judged` = `1d5fe72`** (full: `1d5fe7236b385e81017fda78b6ea9341573b14b5`),
+Written 1:15 PM PDT. **Update 4:20 PM: the judged tag is now `v1.2-judged` = `0d8b0f1` (adds the Notification teach name); see SUBMISSION.md.** **Firmware is frozen again at `v1.1-judged` = `1d5fe72`** (full: `1d5fe7236b385e81017fda78b6ea9341573b14b5`),
 after the Whistle reflash at about 2 PM. The owner chose a new tag; `v1.0-judged` = `32177ea` is history.
 Any further firmware change needs a new tag; ask the owner first.
 Originally frozen at `v1.0-judged` = `32177ea`. `main` holds all of `gates` (PR #3, 1:07 PM). What is

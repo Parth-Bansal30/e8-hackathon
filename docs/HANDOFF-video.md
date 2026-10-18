@@ -10,7 +10,8 @@ judging state (part C) by **4:55**. The video is optional on the form, so if tim
 judging comes first.
 
 **No firmware changes.** Don't rebuild or reflash: the flashed release build is the judged
-`v1.1-judged` = `1d5fe72`. Don't clear taught sounds (no `ss_cmd 4`, no Settings > Forget).
+`v1.2-judged` = `0d8b0f1` (tagged 4:20 PM: `v1.1-judged` plus the Notification name). Don't clear taught sounds (no `ss_cmd 4`, no Settings > Forget, except Forget Keys in C2). If the
+firmware has to change again, tell the desk laptop so the judged tag moves with it.
 
 ```
 E=firmware/out/soundsense/E8-HP/release/soundsense.elf
@@ -19,7 +20,8 @@ E=firmware/out/soundsense/E8-HP/release/soundsense.elf
 ## A. Before filming (about 5 min)
 
 1. **Firmware check:** press reset on the board. The **Ready** screen should show 5 green rows and
-   **6 taught sounds restored** (Doorbell, Keys, Microwave, Clap, Phone, Whistle).
+   **6 taught sounds restored** (Doorbell, Keys, Microwave, Clap, Phone, Whistle), or 7 if Notification
+   has been taught since 4:14 PM. Every count below goes up by one in that case.
 2. **Settings at their defaults** (look, don't change unless one is off): microphones on, night
    mode off, nothing snoozed (DOWN > Sounds), all built-ins on, the blue knob near the middle.
 3. **Placement:**
