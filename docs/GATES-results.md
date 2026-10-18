@@ -199,6 +199,36 @@ sessions and ignored a write that failed while the RTT logger held the probe, so
 command 8 with the previous argument (0: no key). `Board.command()` (CLI: `jlink.py <elf> cmd C N`)
 now writes both in one session, and every write is checked. `g3_play.py` and `c2_power.py` use it.
 
+## Screen tour on the board (1 PM)
+
+`tools/ss_tour.py`, no sound, about 4 minutes. It restarts the app, then shows every screen for a few
+seconds and reads the screen back over J-Link at each step (`gates/tour.txt`). The tour visits:
+- Ready, then Home.
+- Alerts: Alarm, then "still sounding", then snoozed; urgent Glass breaking; the "maybe" Baby crying.
+- Knock felt, then heard only; the Dog banner; the taught Doorbell.
+- Timeline and Stats.
+- Settings, then Sounds, where the snooze is ended.
+- Calibrate room; Microphones off; night mode dark.
+- The teach name screen, then a Keys teach with T2 and T6, a redo and a cancel.
+
+**Results:**
+- All 30 steps reached the expected screen.
+- 0 audio blocks dropped and 0 IMU errors over 40 stats lines; IMU times back at most 1.08 ms.
+- Night mode logged "screen dark" after 15 s. The backlight going off still isn't confirmed by eye.
+
+**Finding: a "wrong" mark on an injected alert damages a taught sound.**
+- An injected alert (host command 13) carries the profile's own reference embedding. LEFT on it keeps
+  that reference as a counter-example (T4).
+- For a taught sound the counter-example is saved in the flash. A real match then scores almost the
+  same against the counter-example as against the profile, so about half of real matches are vetoed.
+- During the tour the board registered LEFT on Alarm, Baby crying and Doorbell, which the script never
+  sent. The board felt 140 taps during the tour against 4 after it, so it was being handled.
+- The Doorbell mark was saved (store seq 1253). It was removed with the owner's OK (counter-example
+  count 0 over J-Link, then host command 11): seq 1254, 824 bytes, as before the tour.
+- Checked after a restart: 0 counter-examples for every sound.
+- Not fixed in the firmware (feature freeze). The fix would be to keep no counter-example from an
+  injected event. There is also no way on the board to undo a wrong mark short of forgetting the sound.
+
 ## IMU times back with J-Link attached
 
 `times back` (the largest backward step between IMU sample times) was not new: `gates/c3_rtt.log`

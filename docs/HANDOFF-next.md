@@ -1,6 +1,6 @@
 # Handoff: continuing Sound Sense (2026-10-18)
 
-**Updated 12:45 PM PDT. Feature work stopped (owner). Tagged `v1.0-judged` = `32177ea`; PR #2 open, not merged.** The board's J-Link is now on the laptop with the et-venv (it has torch,
+**Updated 1:05 PM PDT. Feature work stopped (owner). Tagged `v1.0-judged` = `32177ea`; PR #2 merged into `main` (`ae723fa`); screen tour done, board store back to its pre-tour content.** The board's J-Link is now on the laptop with the et-venv (it has torch,
 the datasets and the toolchain), so offline work and board work happen on one machine.
 
 Since 10:10 AM:
@@ -228,6 +228,7 @@ To check the result, read variables over J-Link:
 | `tools/build_flash.sh <project> [debug\|release] [noflash]` | Build (and flash). The log goes to `/tmp/build_<project>.log`; read it when cbuild's error is vague ("read .../firmware: is a directory" was an ITCM overflow). |
 | `tools/jlink.py <elf> get\|set\|cmd\|rtt\|reset` | Read and write variables, send a host command, follow RTT, reset |
 | `tools/ss_smoke.py` | Full-app smoke test over J-Link, no sound: resets the board, 16 checks, about 1 minute |
+| `tools/ss_tour.py [--pause 6]` | Screen tour for watching the board, no sound: restarts the app and shows all 30 screens and states, a few seconds each, about 4 minutes; saves nothing. **Don't touch the joystick while it runs** (see Gotchas) |
 | `tools/ss_t7_test.py` | Sounds page (on/off, urgency, rename), "still sounding", Calibrate room and snooze on the board, no sound, 18 checks, about 4 minutes; restores the settings. `--set 0 1`: all built-ins on, taught sound Important |
 | `tools/c3_ui.py [log]` | C3 rows 2-4 without sound: fake detections plus the board's own timing |
 | `tools/pc_profile.py [elf] [samples]` | Statistical CPU profile (DWT PC sampling). WFI sleep shows inside `main`. |
@@ -238,6 +239,14 @@ To check the result, read variables over J-Link:
 | `tools/g2_report.py`, `tools/g2_raw.py`, `tools/mic_calib.py`, `tools/mic_geometry.py`, `tools/teach_preview.py` | Earlier gates |
 
 ## Gotchas learned the hard way
+
+- **Never mark an injected alert wrong (LEFT) on a taught sound.**
+  - The injected event carries the profile's own reference embedding, so the counter-example saved
+    in the flash is the reference itself.
+  - About half of that sound's real matches are then vetoed.
+  - This happened once during the screen tour (1 PM). To undo it, set that sound's `_ZL4n_cx[p]` to 0
+    over J-Link, then send `cmd 11 1` (save). Check after a reset. Details in `gates/tour.txt`.
+  - Built-in sounds keep these marks only until a restart.
 
 - **Don't rebuild while a logger or test runs.** A new ELF moves `_SEGGER_RTT`, and the logger
   reads garbage. Stop it first: `pkill -f rtt_log.sh; pkill -f 'jlink.py.*rtt'`.
@@ -353,7 +362,13 @@ Agreed with the owner at about 10 AM; also in SUBMISSION.md.
 2. **Done at 12:35 PM.** STATUS.md and GATES-results.md updated, committed and pushed to `gates`.
 3. **Done at 12:45 PM:** tag `v1.0-judged` = `32177ea` (pushed). The board's firmware is built
    from the sources at that commit.
-4. **PR open, not merged:** [Parth-Bansal30/e8-hackathon#2](https://github.com/Parth-Bansal30/e8-hackathon/pull/2)
-   `gates` → `main`, opened at 12:45 PM with the owner's OK. It merges cleanly. Merge it with a merge commit only when the owner says so, and keep the `gates` branch.
-5. Give the submission session the hash **`32177ea`** (full: `32177eaeabfa0ecd9c5577c0500474ee2ca85cb9`). It
+4. **PR merged:** [Parth-Bansal30/e8-hackathon#2](https://github.com/Parth-Bansal30/e8-hackathon/pull/2)
+   `gates` → `main`, opened at 12:45 PM and merged with a merge commit (`ae723fa`), both with the owner's OK.
+   `gates` is kept. Later commits on `gates` (docs, `tools/ss_tour.py`) reach `main` only through a new PR the owner OKs.
+6. **Done at 1 PM:**
+   - PR #2 merged into `main` as `ae723fa`, with a merge commit; `gates` kept.
+   - Screen tour on the board (`tools/ss_tour.py`): 30 of 30 screens, 0 dropped.
+   - A stray Doorbell "wrong" mark from the tour was removed. The board's store is seq 1254, the same
+     content as before the tour: Doorbell taught, threshold 0.85, Important; all built-ins on.
+7. Give the submission session the hash **`32177ea`** (full: `32177eaeabfa0ecd9c5577c0500474ee2ca85cb9`). It
    replaces `<hash>` in SUBMISSION.md section 1 and in "About the project".

@@ -1,0 +1,66 @@
+Screen tour on the board, 2026-10-18 about 12:55 PM PDT, release build of 32177ea, no sound played.
+/opt/anaconda3/bin/python3 tools/ss_tour.py   (screen read back over J-Link at each step)
+
+Restarting the app...
+ 1. [Ready   ] Ready: the boot self-test (mics, NPU, saved sounds, vibration sensor, lights)
+ 2. [Ready   ] Home: live spectrogram, room level against its floor, best 3 matches, recent sounds
+ 3. [Alert   ] Alarm alert (important): full screen, LEDs, '% sure'
+ 4. [Alert   ] The alarm again: '2 times, still sounding'
+ 5. [Home    ] DOWN snoozed it: 'Alarm snoozed - no alerts for 10 min; still in the timeline'
+ 6. [Alert   ] Glass breaking (urgent): strobes once a second, waits for a press
+ 7. [Alert   ] A weak match: 'Maybe: Baby crying?' (RIGHT it was, LEFT it wasn't)
+ 8. [Alert   ] Knock felt through the table: 'Felt here'
+ 9. [Home    ] Knock heard but not felt: a banner, 'Heard only (TV?)'
+10. [Home    ] Dog barking (info): a banner on the home screen, no full-screen alert
+11. [Alert   ] Your taught Doorbell: an alert like the built-ins
+12. [Timeline] Timeline: today's sounds, repeats merged, felt marked
+13. [Timeline] Timeline scrolled (the top row is the selected one: LEFT wrong, RIGHT right)
+14. [Stats   ] Stats: NPU time per run, CPU active, NPU busy, model size, saves
+15. [Menu    ] Settings menu
+16. [Menu    ] Settings > Sounds: built-ins on/off, taught sound's urgency (RIGHT renames)
+17. [Menu    ] Alarm reads 'Snoozed' (from the DOWN on its alert)
+18. [Menu    ] Press ended the snooze: Alarm is On again
+19. [Menu    ] Calibrate room: measuring 10 s (the row shows progress)
+20. [Menu    ] Calibrate room: result, and how loud a sound must be
+21. [Menu    ] Microphones off
+22. [Home    ] Home with the mic off ('Mic off' at the top)
+23. [Home    ] Night mode on: home goes dark after 15 s without a press. Owner check: does the backlight go off?
+    dark now: True
+24. [Home    ] Night mode off again, mic on
+25. [Teach   ] Teach: the name screen (UP/DOWN picks the name, press starts)
+26. [Teach   ] Teach 'Keys': 8 circles, each turns green with its dB over the room
+27. [Teach   ] 7 examples in
+28. [Teach   ] 8th example is the room: flagged orange 'unlike', and 'Sounds like Dog barking' (the test clip is a dog)
+29. [Teach   ] UP redid the flagged example
+30. [Home    ] RIGHT cancelled the teach (nothing saved): home
+Tour done.
+
+Step 2 reads Ready because the screen is read before the switch to Home, which takes 1.28 s.
+
+From the board log (docs/gates/ss_rtt.log, the tour's [S1] ready to the next one):
+- 40 stats lines: 0 audio blocks dropped, 0 IMU errors. IMU times back at most 1080 us, which is
+  within the 1 ms that the SysTick re-arm allows per J-Link detach.
+- [S5] room calibrated: floor -51.5 dB (median of 10 s); sounds need -43.5 dB
+- [SS] screen dark (night mode), then "screen lit" on the next press. The backlight going off was not
+  confirmed by eye.
+- Teach: 7 clip shots at +20.0 dB. Two room shots in between were refused as too quiet (+4.7, +1.6 dB).
+  Shot 8 came from the room at +11.2 dB and was flagged as unlike the others (0.16); without it the
+  threshold would be 0.85 instead of 0.50. T6 then showed "sounds like 'Dog barking' (0.79)". The
+  redo brought leave-one-out to 1.00 x 8. "[TEACH] cancelled": nothing was saved.
+
+Side effect, undone:
+- The board registered LEFT presses that the script never sent, on three alerts:
+  - 'Alarm' and 'Baby crying' marked wrong: built-ins, RAM only.
+  - 'Doorbell' marked wrong: "kept as counter-example 1, saved", then [STORE] save 1 ok, copy A
+    seq 1253, 888 bytes.
+- Onsets next to those presses were skipped as joystick clicks. The board felt 140 taps during the tour
+  and 4 in the minutes after it, so it was being handled.
+- An injected alert carries the profile's own reference embedding. Marking it wrong therefore keeps the
+  reference itself as a counter-example. A real Doorbell then scores about the same against that
+  counter-example as against the profile, and the T4 veto (counter-example above the match) would
+  reject about half of real Doorbells.
+- Undone at 1:00 PM, with the owner's OK:
+  - n_cx[9] was set to 0 over J-Link, then host command 11 (save):
+    [STORE] save 1 ok: copy B seq 1254, 824 bytes (the size before the tour).
+  - After a restart: [STORE] loaded 1 taught sounds from copy B, seq 1254; built-ins off: 0x0.
+    Counter-examples per profile are 0 for all 10; Ready after 1278 ms; screen Home.

@@ -1,6 +1,6 @@
 # Sound Sense: project status
 
-Snapshot: Sunday 2026-10-18, about 12:35 PM PDT, branch `gates` (feature work stopped). Submission deadline
+Snapshot: Sunday 2026-10-18, about 1:05 PM PDT, branch `gates` (feature work stopped). Submission deadline
 4:30 PM PDT. Feature IDs and priorities come from [SOUND-SENSE.md](SOUND-SENSE.md); the measurements
 behind every "Done" are in [GATES-results.md](GATES-results.md).
 
@@ -24,6 +24,11 @@ snooze. The weak spot is accuracy:
 **Final checks at 12:30 PM** (release build flashed from the sources at `ed20a3e`): the full-app
 smoke test passed 16/16 with 0 audio blocks dropped and Ready in 1.28 s, and the feature test passed
 18/18. Not yet checked by eye or hand: night mode turning the backlight off, and the knob.
+
+**Screen tour at 1 PM** (`tools/ss_tour.py`, no sound): all 30 screens and states reached on the board,
+0 audio blocks dropped. It found one hazard. LEFT on an injected alert of a taught sound saves that
+sound's own reference as a "wrong" example, which vetoes about half of its real matches. The stray
+Doorbell mark from the tour was removed; the board's store has the same content as before the tour.
 
 ## Gates (feasibility tests)
 
@@ -136,4 +141,5 @@ smoke test passed 16/16 with 0 audio blocks dropped and Ready in 1.28 s, and the
 | IMU timestamp bug | Fixed | Backward jumps under stalls 69 ms -> 0; sensor clock measured at +0.68% |
 | IMU `times back` while J-Link is attached | Fixed | Every J-Link detach stops the cycle counter until it is re-armed; a detach during a long draw lost up to the whole draw (times went back up to 108 ms, clock reading spiked to +4%). Re-armed every 1 ms in SysTick now: 30 s of full redraws with the logger running, 0.55 ms max (was 31.8 ms). Only happens with a debugger attached |
 | 8 examples + T2 checks + T6 | Done; tested live | Doorbell clip from the Mac. At volume 69 the first teach found two bugs, both fixed ("loud room" fired during the sound itself; T2 missed two stray shots), and the second was loose (threshold 0.50): 1 of 5 recognised, Siren confusions. **Demo rehearsal at 12 PM, volume 44: tight teach (threshold 0.85), 4 of 5 recognised at 0.95-0.96, the 5th quieter and just under (0.82), no Siren confusions** |
+| Screen tour | 30/30 screens, 0 dropped | `tools/ss_tour.py`, no sound, about 4 min. Found: a "wrong" mark on an injected alert keeps the profile's own reference as a counter-example (saved for taught sounds), vetoing about half of its real matches. Undone on the board; firmware not changed (feature freeze). See [GATES-results.md](GATES-results.md#screen-tour-on-the-board-1-pm) |
 | Full-app smoke test | 16/16 pass, 0 audio blocks dropped | `tools/ss_smoke.py`, no sound. The first run's 2 failures were a J-Link tool bug (stale `ss_arg`), fixed in `tools/jlink.py` |
