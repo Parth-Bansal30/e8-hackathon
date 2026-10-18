@@ -64,7 +64,7 @@ HANDOFF-next.md item 11, done on the old laptop (et-venv, float encoder as shipp
 - Early check at 0.4 s, margin 0.05: 55% of built-in sounds alert early; false alerts +1.5 points.
 - Margin 0.10 instead: 44% early, and false alerts no higher than today.
 
-**Firmware: written and built, not yet flashed or tested on the board** (`decide_early()` in `main.cpp`):
+**Firmware: written, built and flashed (10:40 AM); silent check passes; not yet tested with sound** (`decide_early()` in `main.cpp`):
 - At 0.4 s after the onset (`EARLY_DELAY`), one extra encoder run (about 1 ms) checks the match.
 - It decides at once only if all of these hold:
   - the best match is an alerting built-in
@@ -74,7 +74,13 @@ HANDOFF-next.md item 11, done on the old laptop (et-venv, float encoder as shipp
 - Everything else waits for 0.8 s as before: taught sounds, "Maybe", felt-only knocks, teaching and `[CAL]`.
 - Each early decision logs `[SS] t=... early, N ms after the onset` before the usual decision line, so `g3_play.py` parses it unchanged.
 - Release build: ITCM 254,944 B (97.25%, +720 B).
-- To check on the board: the `early` lines and the stats screen's alert latency during a G3 built-in run (`g3_play.py builtin`, needs sound). Compare recognition against the 54% run.
+- Silent check after flashing (`gates/early_rtt.log`):
+  - Ready screen: ready after 1,479 ms, every check OK.
+  - `[C1]`: 0 of 1960 inputs differ, output within 1 LSB, cosine 0.9996, "dog" 0.79, NPU 1.0 ms. Same as before.
+  - Quiet room: CPU active 12.0 to 13.1%, 0 audio blocks dropped.
+  - Room noises gave 3 decisions; all were weak matches (best 0.20 to 0.41 against a threshold of 0.50), and all waited for 0.8 s as they should.
+- IMU `times back` read 95 µs, then 1.7 ms, then 3.0 ms in the first 40 s (it was 0 in `gates/c3_rtt.log`). The early path didn't cause it: the first two readings came before any sound was decided. It's small next to the ±100 ms felt window. Flashing the previous build would settle whether it's new.
+- Still to do with sound: the `early` lines and the stats screen's alert latency during a G3 built-in run (`g3_play.py builtin`). Compare recognition against the 54% run.
 
 ## C4 details
 

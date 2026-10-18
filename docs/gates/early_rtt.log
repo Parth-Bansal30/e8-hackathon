@@ -1,0 +1,37 @@
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11878 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1025 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 1193), copy B valid (seq 1192)
+[STORE] loaded 0 taught sounds from copy A, seq 1193, in 134 us
+[S1] mics: left -50.1 dB (peak 896), right -56.4 dB (peak 935) over 8000 samples
+[S1] ready after 1479 ms: mics left -50 dB, right -56 dB; npu matches the reference, 1.0 ms; saved sounds nothing taught yet; imu knocks can be felt; lights ok
+[C5] cycle counter through WFI: 100% of wall time -> sleeping between audio blocks
+[SS] listening; 9 built-in sounds
+[SS] knob at 0%: sensitivity as taught until it's turned
+[SS] draw: full max 52777 us + present 3556 us; live view 6.9 fps, max 10338 us
+[SS] stats t=10000 level -48 dB floor -49 dB, npu 1000 us runner 1025 us feat 303 us, 1.2 inf/s, busy 10%, active 13.1% (3808 passes/s, 3759 sleeps/s, 231 us each), npu busy 0.12%, dropped 0, imu 7462 samples 0 errors (times back 95 us, clock +6532 ppm), knocks 0, events 0, saves 0
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8400 us
+[SS] stats t=20000 level -50 dB floor -50 dB, npu 1000 us runner 1025 us feat 303 us, 0.0 inf/s, busy 7%, active 13.0% (3816 passes/s, 3766 sleeps/s, 230 us each), npu busy 0.00%, dropped 0, imu 15516 samples 0 errors (times back 1733 us, clock +7547 ppm), knocks 0, events 0, saves 0
+[SS] t=20432 +5.9 dB best 'Water running' 0.33 (thr 0.50), 2nd 'Dog barking' 0.14, felt no (0.0 mg) -> quiet
+[SS] t=22579 +7.8 dB best 'Water running' 0.41 (thr 0.50), 2nd 'Alarm' 0.33, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 8.6 fps, max 15352 us
+[SS] stats t=30000 level -49 dB floor -49 dB, npu 1008 us runner 1035 us feat 303 us, 1.0 inf/s, busy 6%, active 12.6% (3831 passes/s, 3781 sleeps/s, 231 us each), npu busy 0.10%, dropped 0, imu 23564 samples 0 errors (times back 2980 us, clock +7557 ppm), knocks 0, events 0, saves 0
+[SS] draw: full max 0 us + present 0 us; live view 8.4 fps, max 8434 us
+[SS] stats t=40000 level -50 dB floor -49 dB, npu 1008 us runner 1035 us feat 303 us, 0.0 inf/s, busy 6%, active 12.0% (3852 passes/s, 3802 sleeps/s, 231 us each), npu busy 0.00%, dropped 0, imu 31618 samples 0 errors (times back 2980 us, clock +6839 ppm), knocks 0, events 0, saves 0
+[SS] t=44515 +22.2 dB best 'Water running' 0.20 (thr 0.50), 2nd 'Baby crying' 0.15, felt no (0.0 mg) -> unknown
+[SS] t=44515 what was that? +22.2 dB, matches nothing; UP teaches it
+[C3] banner on screen 59752 us after the decision (draw 56215 us, present 3536 us)
+[SS] draw: full max 56215 us + present 3536 us; live view 10.0 fps, max 16336 us
+[SS] stats t=50000 level -47 dB floor -47 dB, npu 1006 us runner 1033 us feat 303 us, 1.4 inf/s, busy 9%, active 15.5% (3780 passes/s, 3730 sleeps/s, 226 us each), npu busy 0.14%, dropped 0, imu 39672 samples 0 errors (times back 12617 us, clock +6716 ppm), knocks 0, events 1, saves 0
+[SS] t=54524 +8.8 dB best 'Alarm' 0.28 (thr 0.58), 2nd 'Water running' 0.26, felt no (0.0 mg) -> unknown
+[SS] t=56883 +6.9 dB best 'Alarm' 0.26 (thr 0.58), 2nd 'Water running' 0.23, felt no (0.0 mg) -> quiet
+[SS] t=58268 +5.2 dB best 'Water running' 0.46 (thr 0.50), 2nd 'Dog barking' 0.39, felt no (0.0 mg) -> quiet
+[SS] draw: full max 39095 us + present 3509 us; live view 9.5 fps, max 13984 us
+[SS] stats t=60000 level -49 dB floor -49 dB, npu 1007 us runner 1034 us feat 303 us, 1.2 inf/s, busy 8%, active 14.2% (3770 passes/s, 3720 sleeps/s, 230 us each), npu busy 0.12%, dropped 0, imu 47727 samples 0 errors (times back 12617 us, clock +6685 ppm), knocks 0, events 1, saves 0
+[SS] t=62079 +5.7 dB best 'Water running' 0.32 (thr 0.50), 2nd 'Glass breaking' 0.28, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8611 us
+[SS] stats t=70000 level -50 dB floor -50 dB, npu 1007 us runner 1034 us feat 302 us, 0.2 inf/s, busy 7%, active 13.3% (3831 passes/s, 3781 sleeps/s, 229 us each), npu busy 0.02%, dropped 0, imu 55782 samples 0 errors (times back 12617 us, clock +6603 ppm), knocks 0, events 1, saves 0
+[SS] t=70709 +4.7 dB best 'Water running' 0.42 (thr 0.50), 2nd 'Siren' 0.35, felt no (0.0 mg) -> quiet

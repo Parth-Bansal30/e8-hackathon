@@ -284,15 +284,19 @@ To check the result, read variables over J-Link:
 
 ### Not on this laptop
 
-11. **Latency.** Offline test done at about 10:45 AM (`model/delay_sweep.py`). Results:
+11. **Latency.** Offline test done at about 10:35 AM (`model/delay_sweep.py`). Results:
     [GATES-results.md](GATES-results.md#alert-delay-offline).
     - Don't just shorten `DECIDE_DELAY`: at 0.45 s the built-ins lose about 9 points.
     - Firmware for a two-stage decision is written (`decide_early()` in `main.cpp`). An early check at
       0.4 s decides clear built-in matches (threshold + 0.05); everything else waits for 0.8 s as
       today. Offline that alerts 55% of built-in sounds at about 0.45 s.
-    - Built release on the old laptop; **not flashed or tested**. On the board laptop: flash, run the
-      Ready screen, then (with sound, once OK'd) `g3_play.py builtin`. Look for `[SS] t=... early`
-      lines and the alert latency on the stats screen.
+    - Flashed at 10:40 AM from the laptop with the et-venv (the board's J-Link is on it now). The
+      Ready screen passes and `[C1]` is unchanged; weak matches wait for 0.8 s as they should
+      (`docs/gates/early_rtt.log`).
+    - **Not yet tested with sound.** Once the owner OKs it: `g3_play.py builtin`. Look for
+      `[SS] t=... early` lines and the alert latency on the stats screen.
+    - The IMU `times back` read up to 3 ms after this flash (it was 0 in `c3_rtt.log`). It isn't from
+      the early path; flash the previous build to see whether it's new.
     - Once it's confirmed, update the 0.85 s claims: README (lines 68, 82, 192), DEMO.md "Alert
       timing", SUBMISSION.md "Alert delay", HANDOFF-submission.md. Tell the submission session.
 
