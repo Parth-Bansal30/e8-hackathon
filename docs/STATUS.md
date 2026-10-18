@@ -1,6 +1,6 @@
 # Sound Sense: project status
 
-Snapshot: Sunday 2026-10-18, about 9 AM PDT, branch `gates` (after `c6bf638`). Submission deadline
+Snapshot: Sunday 2026-10-18, about 11 AM PDT, branch `gates`. Submission deadline
 4:30 PM PDT. Feature IDs and priorities come from [SOUND-SENSE.md](SOUND-SENSE.md); the measurements
 behind every "Done" are in [GATES-results.md](GATES-results.md).
 
@@ -8,21 +8,21 @@ behind every "Done" are in [GATES-results.md](GATES-results.md).
 
 | Priority | Total | Done | Partial | Not started |
 |---|---|---|---|---|
-| **P0** (must-have product) | 16 | **15** | 1 (T2) | 0 |
-| **P1** (makes it good) | 16 | 10 | 4 | 2 |
+| **P0** (must-have product) | 16 | **16** | 0 | 0 |
+| **P1** (makes it good) | 16 | 11 | 4 | 1 (H4) |
 | **P2** (nice to have) | 20 | 0 | 4 | 16 |
 | **P3** (stretch) | 7 | 0 | 0 | 7 |
 
 The must-have product works on the board end to end: listen, recognise, teach, alert, save to
 flash, self-test at boot. The weak spot is accuracy: built-in sounds played from a laptop speaker
-were recognised 54% of the time, and taught sounds were accepted 38% of the time offline at 5
-examples (they work well live; the offline test uses unseen clips from strangers' recordings).
+were recognised 54% of the time, and taught sounds were accepted 45% of the time offline at 8
+examples, 38% at 5 (they work well live; the offline test uses unseen clips from strangers' recordings).
 
 ## Gates (feasibility tests)
 
 | Gate | Result | Left to do |
 |---|---|---|
-| G1 encoder | SOFT (borderline): 5-way 5-shot 75.8% int8 | 8 examples per taught sound |
+| G1 encoder | SOFT (borderline): 5-way 5-shot 75.8% int8 | Done: 8 examples per taught sound (offline acceptance 38% -> 45%) |
 | G2 knock felt | SOFT: felt at 20 cm (21 of 22), not at 50 cm | Re-measure alignment after the timestamp fix (needs knocks) |
 | G3 live | SOFT, stopped early: built-ins 54% from the laptop speaker | Taught, rejection and false-alarm runs; re-measuring the built-ins on the board. All need sound in the room |
 | C1 NPU | GO: all 14 ops on the NPU, 1.0 ms, matches the host | — |
@@ -38,7 +38,7 @@ examples (they work well live; the offline test uses unseen clips from strangers
 | ID | Feature | Pri | Status | Notes |
 |---|---|---|---|---|
 | H1 | Built-in sounds (7 alerting + speech, background) | P0 | Done | 54% live from the laptop speaker, 88% offline; re-measuring on the board needs sound |
-| H2 | Teach your own sound | P0 | Done | Works live; 38% offline acceptance at 5 examples, so 8 is planned |
+| H2 | Teach your own sound | P0 | Done | Works live; 8 examples: offline acceptance 45% (38% at 5), untaught rejection 77% |
 | H3 | Reject unknown sounds | P0 | Done | 79% offline; live run not measured |
 | H4 | Smoke vs CO from the beep pattern | P1 | Not started | |
 | H5 | Ongoing sounds ("for 6 min") | P1 | Partial | Repeats within 30 s merge with a count and duration; no "still sounding" |
@@ -75,12 +75,12 @@ examples (they work well live; the offline test uses unseen clips from strangers
 
 | ID | Feature | Pri | Status | Notes |
 |---|---|---|---|---|
-| T1 | Guided teach flow | P0 | Done | 5 examples, each shown with its dB over the room |
-| T2 | Quality check per example | P0 | **Partial** | "Too quiet" and "clipped" done; "unlike the others" and "background too loud" missing |
+| T1 | Guided teach flow | P0 | Done | 8 examples in two rows of 4, each shown with its dB over the room |
+| T2 | Quality check per example | P0 | Done | Too quiet (rejected), clipped, loud room (floor over −40 dBFS: kept, flagged orange), unlike the others (flagged when redoing it would raise the threshold by 0.10 or more; UP makes it again). Tested on the board without sound (host command 17); "loud room" not triggered yet |
 | T3 | Test right after teaching | P0 | Done | |
 | T4 | Fix mistakes from the timeline | P1 | Done | Timeline (selected top row) or alert: LEFT = wrong, RIGHT = right. Wrong keeps the sound's embedding as a counter-example: a sound closer to it than to the profile is vetoed (saved in flash for taught sounds; built-ins until restart). Right on a taught sound adds an example and rebuilds its profile and threshold. Tested silently with the boot test clip (host command 15) |
 | T5 | Sensitivity on the knob | P1 | Done (not checked by hand) | The blue R79 knob moves every threshold by up to ±0.10 (one setting for all sounds, not per sound); a notice with a bar shows when it's turned; menu shows the value. Wherever the knob was left, the board starts as taught until it's turned. The ADC read 0% at boot; turning it hasn't been tried yet |
-| T6 | Similar-sound warning | P1 | Not started | |
+| T6 | Similar-sound warning | P1 | Done | "Sounds like X (NN%): may mix up" when the new profile is within cosine 0.70 of any other; saving still allowed, no merge. Tested on the board (the dog test clip vs "Dog barking", 0.79) |
 | T7 | Manage sounds (rename, delete, factory reset) | P1 | Partial | Menu: forget one taught sound or all of them (press twice to confirm), saved to flash. No rename, urgency or built-in on/off |
 
 **Timeline**
@@ -127,4 +127,4 @@ examples (they work well live; the offline test uses unseen clips from strangers
 | Alert delay | Two-stage decision on the board: clear built-in alerts in a median 437 ms | On the board, G3 built-ins: 18 of 30 recognised sounds alerted early, median 437 ms from onset to screen, 0 wrong; recognition unchanged at 54%. Others still about 0.87 s. Offline: a plain 0.45 s delay costs about 9 points on built-ins. A two-stage decision (early at 0.4 s when the match is clear, otherwise 0.8 s) alerts 55% of built-in sounds at about 0.45 s with no loss in recognition and +1.5 points of false alerts. See [GATES-results.md](GATES-results.md#alert-delay-offline) |
 | Built-in accuracy | Open | Needs sound in the room |
 | IMU timestamp bug | Fixed | Backward jumps under stalls 69 ms -> 0; sensor clock measured at +0.68% |
-| 8 examples + T2 checks | Parked until 10:30 AM | HANDOFF-next.md steps 4 and 6 |
+| 8 examples + T2 checks + T6 | Done at 11 AM; tested without sound | Live teaching with 8 examples not tried yet (needs sound) |

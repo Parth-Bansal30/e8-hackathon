@@ -607,42 +607,56 @@ UI_COLD void ui_teach_draw(const ui_teach *t)
     gfx_fill(0, 0, GFX_W, GFX_H, BG);
     header("Teach a sound", NULL, BG);
 
-    badge(t->icon, t->cat, GFX_W / 2.0f, 176, 64);
-    gfx_text_center(B, GFX_W / 2, 256, t->label, TEXT, 44);
+    /* up to 5 examples in one row; more in two rows of 4 under a smaller badge */
+    const bool two = t->n_shots > 5;
+    const int per_row = two ? 4 : t->n_shots, r = two ? 26 : 32;
+    badge(t->icon, t->cat, GFX_W / 2.0f, two ? 150.0f : 176.0f, two ? 48 : 64);
+    gfx_text_center(B, GFX_W / 2, two ? 212 : 256, t->label, TEXT, 44);
 
-    int done = 0;
-    for (int i = 0; i < t->n_shots; i++) done += t->shot[i] == UI_SHOT_OK;
+    int next = -1;   /* the first shot still to make */
+    for (int i = 0; i < t->n_shots && next < 0; i++)
+        if (t->shot[i] != UI_SHOT_OK && t->shot[i] != UI_SHOT_WARN) next = i;
     char prompt[48];
-    if (done < t->n_shots) snprintf(prompt, sizeof prompt, "Make the sound now  (%d of %d)", done + 1, t->n_shots);
+    if (next >= 0) snprintf(prompt, sizeof prompt, "Make the sound now  (%d of %d)", next + 1, t->n_shots);
     else snprintf(prompt, sizeof prompt, "Got all %d. Test it once more.", t->n_shots);
-    gfx_text_center(L, GFX_W / 2, 320, prompt, MUTED, 24);
+    const int py = two ? 268 : 320;
+    gfx_text_center(L, GFX_W / 2, py, prompt, MUTED, 24);
+    if (t->warn) gfx_text_center(L, GFX_W / 2, py + 28, t->warn, ORANGE, 18);
 
-    const int step = 84, x0 = GFX_W / 2 - (t->n_shots - 1) * step / 2;
+    const int step = 84, x0 = GFX_W / 2 - (per_row - 1) * step / 2;
     for (int i = 0; i < t->n_shots; i++) {
-        const float cx = (float)(x0 + i * step), cy = 408.0f;
+        const float cx = (float)(x0 + (i % per_row) * step);
+        const float cy = two ? 352.0f + (float)(i / per_row) * 80.0f : 408.0f;
+        const float k = (float)r / 32.0f;   /* tick and cross scale with the circle */
         char num[4], note[16];
         switch (t->shot[i]) {
         case UI_SHOT_OK:
-            gfx_circle(cx, cy, 32, GREEN);
-            gfx_line(cx - 14, cy + 1, cx - 4, cy + 11, 6, INK);
-            gfx_line(cx - 4, cy + 11, cx + 15, cy - 11, 6, INK);
+            gfx_circle(cx, cy, r, GREEN);
+            gfx_line(cx - 14 * k, cy + 1 * k, cx - 4 * k, cy + 11 * k, 6 * k, INK);
+            gfx_line(cx - 4 * k, cy + 11 * k, cx + 15 * k, cy - 11 * k, 6 * k, INK);
             snprintf(note, sizeof note, "+%d dB", t->shot_db[i]);
+            if (t->shot_note[i] && strcmp(t->shot_note[i], "ok")) snprintf(note, sizeof note, "%s", t->shot_note[i]);
+            break;
+        case UI_SHOT_WARN:
+            gfx_circle(cx, cy, r, ORANGE);
+            gfx_text_center(B, (int)cx, (int)(cy - 15 * k), "!", INK, (int)(28 * k));
+            snprintf(note, sizeof note, "%s", t->shot_note[i] ? t->shot_note[i] : "check");
             break;
         case UI_SHOT_BAD:
-            gfx_circle(cx, cy, 32, VERMILLION);
-            gfx_line(cx - 11, cy - 11, cx + 11, cy + 11, 6, WHITE);
-            gfx_line(cx - 11, cy + 11, cx + 11, cy - 11, 6, WHITE);
+            gfx_circle(cx, cy, r, VERMILLION);
+            gfx_line(cx - 11 * k, cy - 11 * k, cx + 11 * k, cy + 11 * k, 6 * k, WHITE);
+            gfx_line(cx - 11 * k, cy + 11 * k, cx + 11 * k, cy - 11 * k, 6 * k, WHITE);
             snprintf(note, sizeof note, "%s", t->shot_note[i] ? t->shot_note[i] : "retry");
             break;
         default:
-            gfx_ring(cx, cy, 32, 4, FAINT);
+            gfx_ring(cx, cy, r, 4, FAINT);
             snprintf(num, sizeof num, "%d", i + 1);
-            gfx_text_center(B, (int)cx, (int)cy - 14, num, FAINT, 28);
+            gfx_text_center(B, (int)cx, (int)(cy - 14 * k), num, FAINT, (int)(28 * k));
             note[0] = 0;
             break;
         }
-        if (note[0]) gfx_text_center(L, (int)cx, (int)cy + 42, note,
-                                     t->shot[i] == UI_SHOT_BAD ? VERMILLION : MUTED, 16);
+        if (note[0]) gfx_text_center(L, (int)cx, (int)cy + r + 8, note,
+                                     t->shot[i] == UI_SHOT_BAD ? VERMILLION : t->shot[i] == UI_SHOT_WARN ? ORANGE : MUTED, 16);
     }
 
     /* live level with the capture trigger (noise floor + 10 dB) */

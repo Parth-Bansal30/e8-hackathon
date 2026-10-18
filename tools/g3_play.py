@@ -7,7 +7,7 @@ sound ("[SS] t=.. +18.2 dB best 'Dog barking' 0.71 (thr 0.52) ... -> Dog barking
 back from the log. Results are appended to docs/gates/g3_results.json.
 
     tools/g3_play.py builtin                 # ESC-50 fold 5 (never trained on): 8 clips per built-in
-    tools/g3_play.py teach doorbell          # teach a generated sound over J-Link (5 examples), save it
+    tools/g3_play.py teach doorbell          # teach a generated sound over J-Link (8 examples), save it
     tools/g3_play.py trials doorbell --n 10  # play it again, expecting its label
     tools/g3_play.py reject                  # untaught: clapping, coughing (ESC-50 fold 5), another chime
     tools/g3_play.py noise --minutes 3       # spoken words and typing; counts the alerts
@@ -381,7 +381,7 @@ def main():
     ap.add_argument("--n", type=int, default=8)
     ap.add_argument("--only", help="built-ins to run, comma separated")
     ap.add_argument("--gain-db", type=float, default=0.0)
-    ap.add_argument("--max-plays", type=int, default=10)
+    ap.add_argument("--max-plays", type=int, default=12)
     ap.add_argument("--minutes", type=float, default=3)
     a = ap.parse_args()
     {"builtin": run_builtin, "teach": run_teach, "trials": run_trials, "reject": run_reject, "noise": run_noise,

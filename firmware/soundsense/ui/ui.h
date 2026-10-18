@@ -73,17 +73,18 @@ typedef struct {
     int n_recent;
 } ui_home;
 
-typedef enum { UI_SHOT_WAITING, UI_SHOT_OK, UI_SHOT_BAD } ui_shot_state;
+typedef enum { UI_SHOT_WAITING, UI_SHOT_OK, UI_SHOT_BAD, UI_SHOT_WARN } ui_shot_state;   /* WARN: kept, but flagged (T2) */
 
 #define UI_TEACH_MAX 8
 typedef struct {
     const char *label;
     ui_icon icon;
     ui_category cat;
-    int n_shots;                        /* examples wanted, usually 5 */
+    int n_shots;                        /* examples wanted, usually 8 */
     ui_shot_state shot[UI_TEACH_MAX];
     int8_t shot_db[UI_TEACH_MAX];       /* dB above the noise floor */
-    const char *shot_note[UI_TEACH_MAX];/* "ok", "too quiet", "clipped", "unlike the others" */
+    const char *shot_note[UI_TEACH_MAX];/* "ok", "too quiet", "clipped", "loud room", "unlike" */
+    const char *warn;                   /* T2 / T6 line under the prompt, or NULL */
     float level_db, floor_db;           /* live level */
     int test_score;                     /* -1 until tested, else match % */
 } ui_teach;

@@ -16,10 +16,13 @@ numbers are samples; quote the measured ones below.
 - **Sound check:** in a terminal at the repo root, run `tools/demo_sound.py alarm`. A full-screen **Alarm** should appear.
 - **Room:** sounds must be about 8 dB over the room's background, and teaching needs 10 dB. A quiet corner helps.
 - **Joystick** (directions as you face the screen):
-  - **UP:** teach a sound.
+  - **UP:** teach a sound (or teach the "What was that?" sound while its banner shows).
+  - **DOWN:** settings menu: night mode, microphones off, sensitivity (the knob), privacy, forget sounds.
   - **LEFT:** timeline.
   - **RIGHT:** stats.
   - **Press:** OK or dismiss.
+  - **On an alert or a timeline row:** LEFT marks it wrong, RIGHT marks it right.
+  - **While teaching:** LEFT starts over, UP makes a flagged example again, press saves, RIGHT cancels.
 
   Press once and wait for the screen to change; the switches bounce. The app ignores sounds for
   0.8 s after a press, so the click doesn't count.
@@ -43,14 +46,15 @@ numbers are samples; quote the measured ones below.
    If the laptop sits on the same table, the board feels its speaker, so lift it for this part.
 5. **Teach a new sound (90 s):**
    - Press **UP**. The name screen starts on **Keys** (UP/DOWN changes the name). Press to start.
-   - Jingle keys 5 times, about 2 s apart. Each circle turns green and shows its dB over the room.
+   - Jingle keys 8 times, about 2 s apart. Each circle turns green and shows its dB over the room.
+     If one is flagged orange ("unlike"), press UP and jingle once more to replace it.
    - Jingle once more: it shows **Test match: xx%**. Press to **Save**.
    - Jingle the keys again: **Keys** alert.
    - Optional: press reset. The Ready screen shows **Saved sounds: 1 taught sound restored**, and keys still
      alert. Taught sounds live in the flash.
 
    **Repeatable version with the laptop:** on the name screen, press DOWN once to pick **Doorbell**, then press to start. Then:
-   - run `tools/demo_sound.py doorbell --times 5` and wait for 5 green circles;
+   - run `tools/demo_sound.py doorbell --times 8` and wait for 8 green circles;
    - run `tools/demo_sound.py doorbell` to see the test match;
    - press to save;
    - run `tools/demo_sound.py doorbell` again for a **Doorbell** alert.
@@ -74,10 +78,9 @@ numbers are samples; quote the measured ones below.
 
 ## Known limits (be upfront if asked)
 
-- **Built-ins vs taught sounds:** the built-ins are weaker through a laptop speaker and an unfamiliar room. Teaching is the strong part: 5 examples, on the device.
-- **Taught sounds at 5 examples:** offline, a taught sound was accepted 38% of the time on
-  recordings it had never heard; live with the same keys or doorbell it works. 8 examples per sound
-  is the planned fix.
+- **Built-ins vs taught sounds:** the built-ins are weaker through a laptop speaker and an unfamiliar room. Teaching is the strong part: 8 examples, on the device.
+- **Taught sounds offline:** accepted 45% of the time at 8 examples (38% at 5) on recordings it had
+  never heard; live with the same keys or doorbell it works.
 - **Knock range:** knocks are felt within about 20 cm of the board on this table, hence "place me on the table by the door".
 
 ## If something goes wrong
@@ -96,6 +99,7 @@ numbers are samples; quote the measured ones below.
   tools/jlink.py $E set ss_arg 1; tools/jlink.py $E set ss_cmd 1   # teach Doorbell (0 Keys, 1 Doorbell, 2 Clap, 3 Microwave)
   tools/jlink.py $E set ss_cmd 2                                  # save
   tools/jlink.py $E set ss_cmd 3                                  # back to home / dismiss
+  tools/jlink.py $E set ss_arg 0; tools/jlink.py $E set ss_cmd 17  # a teach shot without sound (the boot test clip)
   ```
 - **Logs:** `tools/jlink.py firmware/out/soundsense/E8-HP/release/soundsense.elf rtt` prints one
   `[SS]` line per sound: the best match, its score and threshold, and whether it was felt.

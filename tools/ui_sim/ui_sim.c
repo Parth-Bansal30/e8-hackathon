@@ -216,10 +216,10 @@ int main(void)
     save("08_timeline");
 
     ui_teach teach = {
-        .label = "Our doorbell", .icon = UI_ICON_DOORBELL, .cat = UI_CAT_DOOR, .n_shots = 5,
-        .shot = {UI_SHOT_OK, UI_SHOT_OK, UI_SHOT_BAD, UI_SHOT_OK, UI_SHOT_WAITING},
-        .shot_db = {24, 21, 4, 26, 0},
-        .shot_note = {"ok", "ok", "too quiet", "ok", NULL},
+        .label = "Our doorbell", .icon = UI_ICON_DOORBELL, .cat = UI_CAT_DOOR, .n_shots = 8,
+        .shot = {UI_SHOT_OK, UI_SHOT_OK, UI_SHOT_BAD, UI_SHOT_OK, UI_SHOT_OK, UI_SHOT_WAITING},
+        .shot_db = {24, 21, 4, 26, 22, 0},
+        .shot_note = {"ok", "ok", "too quiet", "ok", "ok", NULL},
         .level_db = -36.0f, .floor_db = -58.0f, .test_score = -1,
     };
     ui_teach_draw(&teach);
@@ -238,8 +238,14 @@ int main(void)
     teach.shot[2] = UI_SHOT_OK;
     teach.shot_db[2] = 22;
     teach.shot_note[2] = "ok";
-    teach.shot[4] = UI_SHOT_OK;
-    teach.shot_db[4] = 23;
+    for (int i = 5; i < 8; i++) {
+        teach.shot[i] = UI_SHOT_OK;
+        teach.shot_db[i] = (int8_t)(20 + i);
+        teach.shot_note[i] = "ok";
+    }
+    teach.shot[6] = UI_SHOT_WARN;
+    teach.shot_note[6] = "unlike";
+    teach.warn = "Shot 7 is unlike the others: UP redoes it";
     teach.test_score = 87;
     teach.level_db = -55.0f;
     ui_teach_draw(&teach);

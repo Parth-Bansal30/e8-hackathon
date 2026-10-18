@@ -88,6 +88,34 @@ HANDOFF-next.md item 11, done on the old laptop (et-venv, float encoder as shipp
   - Latency: early decisions came 403 to 442 ms after the onset; on screen a median 437 ms after the onset (403 to 490 ms). The rest still decide at 0.8 s and show about 65 ms later. Mean over recognised sounds: about 0.61 s, down from about 0.87 s.
   - Draw time: decision to screen took 30 to 75 ms here, against 18 to 20 ms in C3 with fake detections. Not looked into.
 
+## Teaching: 8 examples, T2, T6
+
+Done at 11 AM. Offline numbers come from `model/shots_eval.py` (G1 pools, float encoder, 600 episodes; `model/out/shots_eval.log`).
+
+**8 examples per taught sound** (`SHOTS` 5 → 8; the teach screen shows two rows of 4):
+
+| Examples | Taught accepted | Untaught rejected | AUROC |
+|---|---|---|---|
+| 5 | 38.9% | 78.2% | 0.687 |
+| 8 | 44.6% | 77.1% | 0.709 |
+
+**T2 "unlike the others":** a shot is flagged when making it again would raise the profile's threshold by 0.10 or more. The threshold is the lowest leave-one-out similarity − 0.05, so one stray example drags it down for everything.
+- A plain "0.15 under the median" rule flagged 88% of ESC-50 teaches. Those classes are many different recordings, far more varied than one doorbell taught 8 times, so that rule was dropped.
+- The threshold rule flags 0.4% of ESC-50 teaches. A live, same-source teach is tight (the keys preview: threshold 0.81), and there one stray example would drop the threshold to 0.50.
+- The flagged shot turns orange ("unlike"), and UP makes it again; saving is still allowed.
+
+**T2 "loud room":** a shot taken while the room floor is over −40 dBFS (a quiet room here is about −50) is kept but flagged orange. Rejecting it would make teaching impossible in a noisy hall.
+
+**T6 "Sounds like …":** the new profile is compared with every other profile; at cosine 0.70 or more the screen says "Sounds like X (NN%): may mix up".
+- Two 8-example profiles of the same class score a median 0.79 (p10 0.59).
+- A held-out class against the closest built-in scores a median 0.37 (p90 0.56); 0.5% reach 0.70.
+- Two different held-out classes score a median 0.00 (p90 0.49).
+
+**On the board, no sound** (host command 17; `gates/teach8_rtt.log`; screenshots `gates/teach8_board_flag.png`, `gates/teach8_board_redo.png`):
+- Seven shots of the boot test clip and one of the room: leave-one-out 0.99 ×7 and 0.00. T2 flagged shot 8 (threshold 0.850 without it, 0.500 with it), and T6 said "Sounds like Dog barking" (0.79; the test clip is a dog).
+- UP, then one more clip shot: shot 8 was replaced and the threshold went to 0.850.
+- Cancelled without saving. Release build: ITCM 97.31%; the new teach code is in MRAM.
+
 ## C4 details
 
 **Recordings:** [c4_take1.wav](gates/audio/c4_take1.wav) has 16 claps at 1 m: 5 at position A, 6 at the middle position (a short end, about 1 m from the left mic), 5 at position B, plus the start and stop joystick clicks. [c4_take2.wav](gates/audio/c4_take2.wav) has 5 key jingles. Both came out of the PSRAM over J-Link at 64 KB/s. Analysis: `tools/mic_geometry.py`, written to [c4_mic_geometry.json](gates/c4_mic_geometry.json).

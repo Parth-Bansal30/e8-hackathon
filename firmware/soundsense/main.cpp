@@ -61,7 +61,10 @@
 #define ESCALATE_MS    30000                  /* urgent alert with no press: strobe twice as fast, bigger text (A5) */
 #define MAX_EVENTS     32
 #define MAX_TAUGHT     8
-#define SHOTS          5
+#define SHOTS          8                      /* examples per taught sound (G1 SOFT; offline 5 -> 8: accepted 39% -> 45%) */
+#define UNLIKE_RISE    0.10f                  /* T2: a shot is "unlike the others" if redoing it would raise the threshold this much */
+#define LOUD_ROOM_DB   (-40.0f)               /* T2: room floor over this (dBFS; a quiet room here is about -50): "loud room" */
+#define SIMILAR_COS    0.70f                  /* T6: a new sound this close to another profile gets "Sounds like ..." */
 #define MAX_PROF       (SS_NUM_BUILTIN + MAX_TAUGHT)
 #define GATE_DB        6.0f                   /* live encoder only above the noise floor + this */
 #define GATE_HOLD_MS   300                    /* ... and for this long after */
@@ -464,7 +467,9 @@ enum tphase { T_NAMING, T_REC, T_TEST };
 static struct {
     tphase ph;
     int preset, n;
+    int flag, redo;   /* T2: the shot flagged "unlike the others" and the one being made again, or -1 */
     float emb[SHOTS][SS_EMB], proto[SS_EMB], loo[SHOTS], thr;
+    char warn[48];
     ui_teach ui;
 } tc;
 
@@ -478,6 +483,7 @@ static void teach_open(int preset, bool start)
     memset(&tc, 0, sizeof(tc));
     tc.preset = preset;
     tc.ph = start ? T_REC : T_NAMING;
+    tc.flag = tc.redo = -1;
     tc.ui.n_shots = SHOTS;
     tc.ui.test_score = -1;
     scr = TEACH;
@@ -591,6 +597,64 @@ static float snr_of(uint32_t first, int *clipped)
     return db - ss_audio_floor_db();
 }
 
+/* All shots in: the profile, then T2 (one shot dragging the threshold down) and T6 (too close to a
+ * sound already known). The warnings don't block saving. */
+SS_COLD static void teach_finish(void)
+{
+    tc.thr = ss_make_profile(tc.emb, SHOTS, tc.proto, tc.loo);
+    tc.ph = T_TEST;
+    tc.flag = -1;
+    tc.warn[0] = 0;
+    printf("[TEACH] profile: thr %.3f, leave-one-out", (double)tc.thr);
+    for (int k = 0; k < SHOTS; k++) printf(" %.2f", (double)tc.loo[k]);
+    printf("; make it once more to test, press to save\r\n");
+
+    int w = 0;
+    for (int k = 1; k < SHOTS; k++)
+        if (tc.loo[k] < tc.loo[w]) w = k;
+    static float rest[SHOTS - 1][SS_EMB], p[SS_EMB];   /* off the stack */
+    for (int k = 0, j = 0; k < SHOTS; k++)
+        if (k != w) memcpy(rest[j++], tc.emb[k], sizeof(rest[0]));
+    const float thr_without = ss_make_profile(rest, SHOTS - 1, p, NULL);
+    if (thr_without - tc.thr >= UNLIKE_RISE) {
+        tc.flag = w;
+        tc.ui.shot[w] = UI_SHOT_WARN;
+        tc.ui.shot_note[w] = "unlike";
+        snprintf(tc.warn, sizeof(tc.warn), "Shot %d is unlike the others: UP redoes it", w + 1);
+        printf("[TEACH] T2: shot %d unlike the others (%.2f); without it thr %.3f instead of %.3f\r\n", w + 1,
+               (double)tc.loo[w], (double)thr_without, (double)tc.thr);
+    }
+
+    int b = -1;
+    float bs = -1.0f;
+    for (int q = 0; q < n_prof; q++) {
+        if (prof[q].preset == tc.preset) continue;   /* teaching the same name again replaces it */
+        const float s = ss_dot(tc.proto, prof[q].proto);
+        if (s > bs) { bs = s; b = q; }
+    }
+    if (b >= 0 && bs >= SIMILAR_COS) {
+        printf("[TEACH] T6: sounds like '%s' (%.2f)\r\n", prof[b].lk->label, (double)bs);
+        if (!tc.warn[0]) snprintf(tc.warn, sizeof(tc.warn), "Sounds like %s (%d%%): may mix up", prof[b].lk->label,
+                                  (int)(bs * 100.0f + 0.5f));
+    }
+    tc.ui.warn = tc.warn[0] ? tc.warn : NULL;
+}
+
+/* T2: make the flagged shot again (UP); the next sound replaces it. */
+SS_COLD static void teach_redo(void)
+{
+    if (tc.ph != T_TEST || tc.flag < 0) return;
+    tc.redo = tc.flag;
+    tc.flag = -1;
+    tc.ph = T_REC;
+    tc.ui.shot[tc.redo] = UI_SHOT_WAITING;
+    tc.ui.test_score = -1;
+    snprintf(tc.warn, sizeof(tc.warn), "Making shot %d again", tc.redo + 1);
+    tc.ui.warn = tc.warn;
+    printf("[TEACH] redo shot %d\r\n", tc.redo + 1);
+    redraw = true;
+}
+
 static void teach_shot(const float *e, float snr, int clipped)
 {
     if (tc.ph == T_TEST) {
@@ -600,27 +664,29 @@ static void teach_shot(const float *e, float snr, int clipped)
         redraw = true;
         return;
     }
-    if (tc.ph != T_REC || tc.n >= SHOTS) return;
+    const int k = tc.redo >= 0 ? tc.redo : tc.n;
+    if (tc.ph != T_REC || k >= SHOTS) return;
     if (snr < TEACH_SNR_DB) {
-        tc.ui.shot[tc.n] = UI_SHOT_BAD;
-        tc.ui.shot_note[tc.n] = "too quiet";
-        printf("[TEACH] shot %d: too quiet (+%.1f dB)\r\n", tc.n + 1, (double)snr);
+        tc.ui.shot[k] = UI_SHOT_BAD;
+        tc.ui.shot_note[k] = "too quiet";
+        printf("[TEACH] shot %d: too quiet (+%.1f dB)\r\n", k + 1, (double)snr);
         redraw = true;
         return;
     }
-    memcpy(tc.emb[tc.n], e, sizeof(tc.emb[0]));
-    tc.ui.shot[tc.n] = UI_SHOT_OK;
-    tc.ui.shot_db[tc.n] = (int8_t)(snr > 99 ? 99 : snr);
-    tc.ui.shot_note[tc.n] = clipped ? "clipped" : "ok";
-    tc.n++;
-    printf("[TEACH] shot %d/%d: +%.1f dB%s\r\n", tc.n, SHOTS, (double)snr, clipped ? ", clipped" : "");
-    if (tc.n == SHOTS) {
-        tc.thr = ss_make_profile(tc.emb, SHOTS, tc.proto, tc.loo);
-        tc.ph = T_TEST;
-        printf("[TEACH] profile: thr %.3f, leave-one-out %.2f %.2f %.2f %.2f %.2f; make it once more to test, "
-               "press to save\r\n", (double)tc.thr, (double)tc.loo[0], (double)tc.loo[1], (double)tc.loo[2],
-               (double)tc.loo[3], (double)tc.loo[4]);
+    const bool loud_room = ss_audio_floor_db() > LOUD_ROOM_DB;   /* T2: background too loud (kept, flagged) */
+    memcpy(tc.emb[k], e, sizeof(tc.emb[0]));
+    tc.ui.shot[k] = loud_room ? UI_SHOT_WARN : UI_SHOT_OK;
+    tc.ui.shot_db[k] = (int8_t)(snr > 99 ? 99 : snr);
+    tc.ui.shot_note[k] = loud_room ? "loud room" : clipped ? "clipped" : "ok";
+    if (tc.redo >= 0) tc.redo = -1;
+    else tc.n++;
+    printf("[TEACH] shot %d/%d: +%.1f dB%s%s\r\n", k + 1, SHOTS, (double)snr, clipped ? ", clipped" : "",
+           loud_room ? ", loud room" : "");
+    if (loud_room) {
+        snprintf(tc.warn, sizeof(tc.warn), "Loud room (%.0f dB): a quieter spot is better", (double)ss_audio_floor_db());
+        tc.ui.warn = tc.warn;
     }
+    if (tc.n == SHOTS) teach_finish();
     redraw = true;
 }
 
@@ -895,6 +961,19 @@ SS_COLD static void classify_test_clip(void)
     classify(e, s, 20.0f, 0, ss_ms());
 }
 
+/* Host command 17 (silent teach test): a teach shot from the boot test clip (room = 0) or from the
+ * last 1 s of the room (room = 1, an outlier next to the clip), at +20 dB. */
+SS_COLD static void teach_test_shot(bool room)
+{
+    int8_t out[SS_EMB];
+    float e[SS_EMB], s[MAX_PROF];
+    if (room) embed_now(e, s);
+    else if (infer(ss_test_input, out)) ss_embed(out, e);
+    else return;
+    printf("[TEACH] command 17: shot from %s\r\n", room ? "the room" : "the boot test clip");
+    teach_shot(e, 20.0f, 0);
+}
+
 /* ---------- managing taught sounds (T7) and the menu ---------- */
 
 /* Forget taught sound k (0-based among the taught ones) and save. */
@@ -1086,7 +1165,8 @@ SS_COLD static void inject(uint32_t a)
  * 10 finish re-measuring, 11 save to flash ss_arg times back to back (C2 row 1), 12 fill every taught
  * slot with a stand-in (C2 bench, full-size record), 13 fake a recognised sound (see inject()),
  * 14 redraw the whole screen 10 times a second for ss_arg seconds (C3 row 3), 15 classify the boot test
- * clip as if heard, 16 mark timeline event (ss_arg & 0xff) wrong, or right with bit 8 (T4). */
+ * clip as if heard, 16 mark timeline event (ss_arg & 0xff) wrong, or right with bit 8 (T4), 17 a teach
+ * shot from the boot test clip (ss_arg 0) or the room (1), for testing T2/T6 without sound. */
 static void host_command(void)
 {
     const uint32_t c = ss_cmd, a = ss_arg;
@@ -1110,6 +1190,7 @@ static void host_command(void)
     case 14: stress_until = ss_ms() + 1000u * (a ? a : 10); break;
     case 15: classify_test_clip(); break;
     case 16: event_mark((int)(a & 0xffu), (a & 0x100u) != 0); redraw = true; break;
+    case 17: if (scr == TEACH && tc.ph != T_NAMING) teach_test_shot(a == 1); break;
     }
 }
 
@@ -1165,6 +1246,7 @@ static void on_keys(uint32_t k)
             redraw = true;
         } else {
             if (k & SS_JOY_LEFT) teach_open(tc.preset, true);              /* retry */
+            else if (k & SS_JOY_UP) teach_redo();                           /* T2: the flagged shot again */
             else if (k & SS_JOY_RIGHT) { printf("[TEACH] cancelled\r\n"); go_home(); }
             else if (k & SS_JOY_CENTER) teach_save();
         }

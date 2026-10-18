@@ -16,9 +16,11 @@ delegated to the Ethos-U85.
 
 - **Recognises built-in sounds:** knock, dog, baby crying, alarm, glass breaking, siren, running
   water (plus speech and background, which never alert).
-- **Learns your sounds on the device:** press UP, make the sound 5 times, and it builds a profile
-  from the encoder's embeddings. Each example is checked (too quiet, clipped) and shown with its dB
-  over the room. A test match follows, then save. No retraining, no laptop.
+- **Learns your sounds on the device:** press UP, make the sound 8 times, and it builds a profile
+  from the encoder's embeddings. Each example is checked (too quiet, clipped, loud room) and shown
+  with its dB over the room. An example unlike the others is flagged and can be made again (UP).
+  A sound too close to one already known gets "Sounds like …". A test match follows, then save.
+  No retraining, no laptop.
 - **Remembers them:** taught sounds are saved in the 64 MB OSPI flash (two copies with CRC32) and
   restored at boot in 2.2 ms. Saving runs in the background without dropping audio.
 - **Felt vs heard:** the BMI323 accelerometer, read at 800 Hz, decides whether a knock was felt on
@@ -70,7 +72,7 @@ Details and logs: [docs/GATES-results.md](docs/GATES-results.md).
 | Flash save | 223–266 ms over 101 saves (median 252), longest 304 ms over 1,000 more; across all 1,101: 0 audio blocks dropped, 0 failed read-backs. Restore 2.2 ms |
 | Power | CPU active **12.6%** in a quiet room (was 100%); NPU busy 0.00% when quiet |
 | Boot to Ready | 1.5 s |
-| Memory | ITCM 97.6% (all hot code), MRAM 1.03 MB of 2 MB (model, fonts, cold code) |
+| Memory | ITCM 97.3% (all hot code), MRAM 1.05 MB of 2 MB (model, fonts, cold code) |
 
 ## How it works
 
@@ -168,13 +170,18 @@ those if your paths differ. Exact tool versions and a second-machine setup:
 
 **Using it:** the joystick does everything. On the home screen UP teaches a sound, LEFT shows the
 timeline, RIGHT the stats and DOWN the settings menu; press is OK or dismiss. On an alert or a
-timeline row, LEFT marks it wrong and RIGHT marks it right. The demo run sheet, with laptop-played sounds for a repeatable
+timeline row, LEFT marks it wrong and RIGHT marks it right. While teaching, LEFT starts over, UP
+makes a flagged example again, press saves and RIGHT cancels. The demo run sheet, with laptop-played sounds for a repeatable
 demo, is [docs/DEMO.md](docs/DEMO.md).
 
 **Host control over J-Link** (scripted tests, no joystick):
 `tools/jlink.py <elf> set ss_arg N` then `tools/jlink.py <elf> set ss_cmd C`, where C is 1 teach
 preset N, 2 save, 3 home, 4 forget taught sounds, 5 stats, 6 timeline, 7 set clock, 8 press keys,
-9 re-measure built-in N, 10 finish, 11 N flash saves, 12 fill the flash record with stand-ins.
+9 re-measure built-in N, 10 finish, 11 N flash saves, 12 fill the flash record with stand-ins,
+13 fake a detection of profile N (flags 0x100 maybe, 0x200 felt, 0x400 heard only), 14 full redraws
+10 times a second for N s, 15 classify the boot test clip, 16 mark timeline row N wrong (right with
+0x100), 17 a teach shot from the boot test clip (N = 0) or the room (N = 1). 13-17 test the UI and
+teaching without sound.
 `tools/jlink.py <elf> reset` resets the board without halting.
 
 **Python tools** need numpy, scipy and Pillow (`python3 -m venv .venv && .venv/bin/pip install
@@ -185,8 +192,9 @@ the datasets (ESC-50, Speech Commands), which aren't in git.
 
 - **Built-ins through a laptop speaker are weaker** (54% live, 88% offline): the speaker and an
   unfamiliar room change the sound. Teaching your own sounds is the strong path.
-- **Taught-sound acceptance is borderline offline at 5 examples** (38%); 8 examples per sound is
-  the planned fix.
+- **Taught-sound acceptance is borderline offline:** 45% at 8 examples (38% at 5), with 77% of
+  untaught sounds rejected, on recordings the encoder never heard. Live, with the same doorbell or
+  keys each time, the examples agree far more closely.
 - **Knocks are felt within about 20 cm** of the board on our table, hence "place me on the table
   by the door".
 - **Only clear matches meet the 0.5 s alert target.** A clear built-in match alerts in about

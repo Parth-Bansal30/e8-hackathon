@@ -1,6 +1,18 @@
 # Handoff: continuing Sound Sense (2026-10-18)
 
-**Updated 10:10 AM PDT on the board laptop (M1).** Since 9 AM, done without playing any sound:
+**Updated 11:10 AM PDT.** The board's J-Link is now on the laptop with the et-venv (it has torch,
+the datasets and the toolchain), so offline work and board work happen on one machine.
+
+Since 10:10 AM:
+
+- Two-stage alert decision: clear built-in matches alert in a median 437 ms (tested live).
+- 8 examples per taught sound, with a two-row teach screen.
+- T2 complete: "loud room", and "unlike the others" with UP to make that example again.
+- T6 "Sounds like …" warning.
+- Host command 17: teach shots without sound.
+- Docs pass: controls and host commands in README and DEMO.md.
+
+Done between 9 and 10:10 AM, without playing any sound:
 
 - C3 rows 1-4 pass.
 - A5 urgent alerts escalate.
@@ -52,10 +64,10 @@ Work stays on branch **`gates`**. Read in this order:
 
 | Area | Status |
 |---|---|
-| App `firmware/soundsense/` | Release build flashed (`cbb51cc` firmware; later commits are docs only) |
+| App `firmware/soundsense/` | Release build flashed at 11:00 AM: two-stage decision, 8 examples, T2, T6, host command 17 |
 | Gates | G1 SOFT, G2 SOFT, G3 SOFT (short run), C1 GO, C2 GO, C3 rows 1-4 pass (row 5: backlight on/off only, no dimming), C4 GO, C5 done (12.6%, target 10%) |
-| P0 | 15 of 16 done. T2 is partial: "too quiet" and "clipped" are checked; "unlike the others" and "background too loud" aren't |
-| P1 | 10 done, 4 partial (H5, H7, S5, T7), 2 not started (H4 smoke vs CO, T6 similar-sound warning) |
+| P0 | 16 of 16 done |
+| P1 | 11 done, 4 partial (H5, H7, S5, T7), 1 not started (H4 smoke vs CO) |
 | Not yet checked by eye or hand | Night mode turning the backlight off; turning the knob (T5) |
 
 ## Setting up a new machine
@@ -117,6 +129,7 @@ A failure stays on screen (red LED blink) until a key is pressed.
   | Alert | — | — | Wrong sound | Right sound | OK, dismiss |
   | Timeline | Pick row | Pick row | Mark wrong | Mark right | Back |
   | Menu | Move | Move | Home | Home | Choose (forgetting asks twice) |
+  | Teach (recording or testing) | Make the flagged example again (T2) | — | Start over | Cancel | Save |
 
   The menu has these rows:
   - Night mode
@@ -140,7 +153,7 @@ A failure stays on screen (red LED blink) until a key is pressed.
   | `[STORE]` | Restore at boot and each save |
   | `[SS] t=... best '...' score (thr) ... -> result` | Each decision |
 | `[SS] t=... early, N ms after the onset` | The next decision line was made at 0.4 s |
-  | `[TEACH]`, `[CAL]` | Teaching and re-measuring built-ins |
+  | `[TEACH]`, `[CAL]` | Teaching and re-measuring built-ins. `[TEACH] T2: shot N unlike the others` and `[TEACH] T6: sounds like '...'` are the checks |
   | `[C3] alert on screen N us after the decision` | Alert timing |
   | `[SS] knob:` | Knob turned |
   | `[SS] screen dark (night mode)` | Night mode turned the screen off |
@@ -170,6 +183,7 @@ To send a command: `tools/jlink.py <elf> set ss_arg N`, then `set ss_cmd C`. Pyt
 | 14 | **Full redraws 10 times a second** for N seconds (stress test) |
 | 15 | **Run the boot test clip** (a dog bark) through the real `classify()` path |
 | 16 | **Mark timeline row** N & 0xff wrong, or right with 0x100 |
+| 17 | **A teach shot without sound** (teach screen only): N = 0 the boot test clip, N = 1 the room's last 1 s (an outlier). Seven 0s and a 1 trigger T2 on shot 8 and T6 "Sounds like Dog barking" |
 
 Profile indices: knock 0, dog 1, baby 2, alarm 3, glass 4, siren 5, water 6, speech 7,
 background 8. Taught sounds start at 9.
@@ -232,36 +246,25 @@ To check the result, read variables over J-Link:
 - **The Mac was left muted.** Unmute it (at the current volume, never louder) only when the owner
   OKs a sound test.
 
-## Next steps, in priority order (as of 10:10 AM)
+## Next steps, in priority order (as of 11:10 AM)
 
 ### Silent: can be built and mostly tested without sound
 
-1. **8 examples per taught sound.** G1 is SOFT; taught-sound acceptance was 38% offline at 5
-   examples. To do:
-   - Make the teach screen's circles smaller; it fits 5 at 84 px today.
-   - Change `SHOTS` from 5 to 8 (`main.cpp:62`). The flash record holds 10, so a "right" mark in
-     T4 can then add only 2 more.
-   - Update the "5 times" / "5 examples" text in SUBMISSION.md, VIDEO-SCRIPT.md, DEMO.md and the
-     README, and tell the submission session.
-   - Trying it live needs sound.
-2. **T2 checks (the last partial P0).**
-   - "Unlike the others": the leave-one-out score of each example against the rest. Warn on the
-     example and offer to redo it.
-   - "Background too loud": the room floor during the shot.
-
-   Host command 1 records real sound. A silent test would need a new command that feeds the boot
-   test clip in as a teach shot (like command 15).
-3. **T6 similar-sound warning** (P1). When teaching finishes, compare the new profile against
-   every other profile. If one is close, say so ("Sounds like Doorbell").
+1. **Done at 11 AM: 8 examples, T2, T6** (`model/shots_eval.py`; results in
+   [GATES-results.md](GATES-results.md#teaching-8-examples-t2-t6)).
+   - Tested on the board with host command 17: T2 flagged the outlier, UP replaced it, T6 warned.
+   - Still to do: SUBMISSION.md and VIDEO-SCRIPT.md say "5 times" and "5 examples"; tell the
+     submission session.
+   - Live teaching with 8 examples needs sound.
+   - "Loud room" (floor over −40 dBFS) hasn't been triggered yet.
+2. **Done: T2** (see 1).
+3. **Done: T6** (see 1).
 4. **Checks by eye and hand, no sound.** Ask the owner to look or turn:
    - Night mode on, then wait 15 s on the home screen: the backlight should go off.
    - Turn the blue R79 knob: a notice with a bar should show, and an `[SS] knob:` log line should
      appear.
-5. **Docs pass.** Add these to DEMO.md (its joystick list has only UP, LEFT, RIGHT and Press) and
-   the README:
-   - the controls: DOWN opens the menu; LEFT/RIGHT on an alert or timeline row mark it wrong or
-     right; night mode; microphones off
-   - host commands 13-16
+5. **Done: docs pass.** The controls (menu, marking, teach keys) and host commands 13-17 are in
+   README and DEMO.md.
 6. **Smaller P1 gaps, if there's time:**
    - H5 "still sounding"
    - S5 explicit 10 s calibration
