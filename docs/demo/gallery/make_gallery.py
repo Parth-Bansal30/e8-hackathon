@@ -274,7 +274,7 @@ BOARD = os.path.join(HERE, "..", "board")
 def on_the_board():
     """The two board photos (docs/demo/board/), upright and side by side."""
     im, d = canvas()
-    header(d, "Running on the board", "Photos of the DK-E8 running the judged build (v1.0-judged); values are live.")
+    header(d, "Running on the board", "Photos of the DK-E8 running Sound Sense, release build; values are live.")
     home = Image.open(os.path.join(BOARD, "board_table.jpg")).rotate(90, expand=True).crop((110, 240, 800, 1350))
     stats = Image.open(os.path.join(BOARD, "stats_page.jpg")).crop((120, 180, 880, 1360))
     h = 740

@@ -1,7 +1,9 @@
 # Handoff: the last three hours, split across two laptops (2026-10-18)
 
-Written 1:15 PM PDT. Firmware is frozen and tagged: **`v1.0-judged` = `32177ea`** (full:
-`32177eaeabfa0ecd9c5577c0500474ee2ca85cb9`). `main` holds all of `gates` (PR #3, 1:07 PM). What is
+Written 1:15 PM PDT. **Firmware is frozen again at `v1.1-judged` = `1d5fe72`** (full: `1d5fe7236b385e81017fda78b6ea9341573b14b5`),
+after the Whistle reflash at about 2 PM. The owner chose a new tag; `v1.0-judged` = `32177ea` is history.
+Any further firmware change needs a new tag; ask the owner first.
+Originally frozen at `v1.0-judged` = `32177ea`. `main` holds all of `gates` (PR #3, 1:07 PM). What is
 left is checks and media at the board, and the write-up away from it.
 
 - **Board laptop:** the one with the DK-E8 on USB, J-Link, SETOOLS and the et-venv.
@@ -29,10 +31,10 @@ Deadlines: Devpost closes **5:00 PM PDT**; team target **4:30 PM**; everything r
 ## Rules for both
 
 - Work on **`gates`**. Before every push: `git pull --rebase --autostash` (the local `.vscode` edits block a plain rebase), then push. Never push to `main`;
-  it moves only through a PR the owner OKs. Never move, delete or re-create the `v1.0-judged` tag.
+  it moves only through a PR the owner OKs. Never move, delete or re-create the `v1.0-judged` or `v1.1-judged` tags.
 - Commit **only your own paths** (table below) with `git add <path>`, never `git add -A`. Never
   commit `firmware/.vscode/` or `docs/HANDOFF-gates-dream-canvas.md`.
-- **No firmware changes.** The board runs the release build of `32177ea`. If a show-stopper bug
+- **No firmware changes.** The board runs the release build of `1d5fe72` (`v1.1-judged`). If a show-stopper bug
   turns up, stop and ask the owner. A reflash means a new tag, and that's their call.
 - **No sound in the room without the owner's OK.** Never raise the Mac volume; use the volume as
   found.
