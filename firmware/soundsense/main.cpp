@@ -104,6 +104,7 @@ static const look kPresets[] = {
     {"phone", "Phone", UI_ICON_PHONE, UI_CAT_APPLIANCE, UI_IMPORTANT},
     {"washer", "Washer", UI_ICON_WASHER, UI_CAT_APPLIANCE, UI_INFO},
     {"name", "My name", UI_ICON_NAME, UI_CAT_FAMILY, UI_IMPORTANT},
+    {"whistle", "Whistle", UI_ICON_CUSTOM, UI_CAT_OTHER, UI_IMPORTANT},   /* new names go last: saved sounds keep their index */
 };
 #define N_PRESETS ((int)(sizeof(kPresets) / sizeof(kPresets[0])))
 
