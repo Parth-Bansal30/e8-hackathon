@@ -12,7 +12,7 @@ Deadlines: Devpost closes **5:00 PM PDT**; team target **4:30 PM**; everything r
 
 ## Rules for both
 
-- Work on **`gates`**. Before every push: `git pull --rebase`, then push. Never push to `main`;
+- Work on **`gates`**. Before every push: `git pull --rebase --autostash` (the local `.vscode` edits block a plain rebase), then push. Never push to `main`;
   it moves only through a PR the owner OKs. Never move, delete or re-create the `v1.0-judged` tag.
 - Commit **only your own paths** (table below) with `git add <path>`, never `git add -A`. Never
   commit `firmware/.vscode/` or `docs/HANDOFF-gates-dream-canvas.md`.
