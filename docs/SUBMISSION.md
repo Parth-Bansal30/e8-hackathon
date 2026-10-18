@@ -93,9 +93,9 @@ judging.
 
 ## 2. About the project (paste into "About the project")
 
-Devpost renders Markdown here (headings, bold, lists, links, code blocks). This section avoids
-tables because we haven't checked that Devpost renders them; the README has the same facts as
-tables.
+Devpost renders Markdown here (headings, bold, lists, links, images by URL). Pasted into the
+draft at 10:30 AM with paragraphs unwrapped. No tables, and no text diagram: Devpost cut the
+wide diagram off, so the architecture image stands in for it (the README keeps both).
 
 ---
 
@@ -159,16 +159,6 @@ Sound Sense runs entirely on the Alif Ensemble E8 DevKit (Cortex-M55 + Ethos-U85
 ### Architecture
 
 ![Architecture](https://raw.githubusercontent.com/Parth-Bansal30/e8-hackathon/main/docs/demo/gallery/02_architecture.png)
-
-```
- PDM mics (16 kHz) ──> log-mel, 40 bands / 20 ms (M55) ──> 49x40 patch (~1 s) ──int8──> encoder (Ethos-U85)
-                                                                                           │ 64-d embedding
- onset detector (M55) ── 0.8 s after a sound starts ──> cosine match against profiles <────┘
-                                                           │  built-in (9) + taught (up to 8, flash)
- BMI323 IMU, 800 Hz FIFO (I3C) ── knock felt within ±100 ms? ──┤
-                                                           v
-                                     alert card + LED pattern + timeline  ──>  480x800 MIPI DSI LCD, RGB LEDs
-```
 
 ### Where each workload runs
 
