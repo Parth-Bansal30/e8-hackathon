@@ -12,7 +12,8 @@ numbers are samples; quote the measured ones below.
   checks the mics, NPU, saved sounds, vibration sensor and lights (1.5 s), then the home screen
   says **Listening**. A red row means something failed; it stays on screen until you press.
 - **Placement:** put the board flat on the table where you'll knock. Put the laptop on the same table, 0.5 to 1 m away.
-- **Mac sound:** unmute the Mac and set the volume to about 75%. (It was muted at the last check.)
+- **Mac sound:** unmute the Mac. Built-ins are fine at 75-100%. Play the taught Doorbell at about 44%,
+  the level it was taught at.
 - **Sound check:** in a terminal at the repo root, run `tools/demo_sound.py alarm`. A full-screen **Alarm** should appear.
 - **Room:** sounds must be about 8 dB over the room's background, and teaching needs 10 dB. A quiet corner helps.
 - **Joystick** (directions as you face the screen):
@@ -52,7 +53,7 @@ numbers are samples; quote the measured ones below.
      If one is flagged orange ("unlike"), press UP and jingle once more to replace it.
    - Jingle once more: it shows **Test match: xx%**. Press to **Save**.
    - Jingle the keys again: **Keys** alert.
-   - Optional: press reset. The Ready screen shows **Saved sounds: 1 taught sound restored**, and keys still
+   - Optional: press reset. The Ready screen shows **Saved sounds: N taught sounds restored** (3 on the board since 1:50 PM), and keys still
      alert. Taught sounds live in the flash.
 
    **Repeatable version with the laptop:** on the name screen, press DOWN once to pick **Doorbell**, then press to start. Then:
@@ -92,6 +93,19 @@ numbers are samples; quote the measured ones below.
   - Move the laptop closer.
   - The room level bar on the home screen should jump when the sound plays.
 - **Wrong label:** the low-confidence path shows "Maybe: …?". That's the cue to teach it.
+- **Doorbell shows "Maybe" or nothing:** play it at about **volume 44**, the level it was taught at.
+  At volume 100 the laptop clips, and the match drops to the 0.85 threshold: 0.88 ("Maybe"), then 0.85
+  (nothing), in the 1:50 PM rehearsal.
+- **Table knock shows "Maybe: Knock?":** the board felt it, but it was too quiet to be sure. Knock loud,
+  with your knuckles, right next to the board, off the desk pad: the pad muffles knocks to +3 to +10 dB.
+  A loud one gave Knock 0.73 at +27.8 dB, felt here and heard.
+- **Never mark a taught sound wrong, and never press LEFT on an injected alert (host command 13).**
+  - A wrong mark on a taught sound is saved to flash as a counter-example. On an injected alert, the
+    counter-example is the sound's own reference, which vetoes about half of its real matches.
+  - In the timeline, mark only built-in rows (they last until a restart). Check which row is on top
+    before pressing LEFT: during the video, Keys was marked by accident.
+  - To undo a mark on a taught sound, forget it and teach it again, or clear it over J-Link (see
+    `docs/HANDOFF-next.md`, Gotchas).
 - **Frozen or blank screen:** press reset or power-cycle; it is ready in about 1.5 s, and taught
   sounds come back from the flash.
 - **Teach without the joystick (over J-Link):**

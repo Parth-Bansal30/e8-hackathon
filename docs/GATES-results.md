@@ -246,6 +246,26 @@ These were the last two items not yet checked. No sound was played (`gates/hand_
 - **State after the checks:** the board restarted on the same store (seq 1254: Doorbell taught, threshold
   0.85, Important; all built-ins on). Night mode is off, there are 0 wrong marks, and Ready took 1278 ms.
 
+## Video recording and demo rehearsal (1:35-1:55 PM)
+
+With sound from the Mac speaker at volume 100 (as found). The owner filmed and used the joystick.
+Details are in `gates/video_takes.txt` and `gates/demo_rehearsal.txt`.
+
+- **Built-ins:** Alarm 0.93 to 0.94, early at 414 to 421 ms (four plays); Glass 0.71, early at 416 ms.
+  The laptop knock was heard only (0.68, 0.72).
+- **Table knock:**
+  - Felt + heard (Knock 0.73, +27.8 dB, 81.5 mg) only when knocked loud right beside the board.
+  - On the desk pad, knocks are felt but muffled to +3 to +10 dB: "quiet" or "Maybe: Knock?".
+- **Teaching:**
+  - Keys on camera: 8 shots, many clipped or "loud room". T2 flagged 2 of them. Saved at thr 0.50;
+    restored after a reset, then alerted at 0.74.
+  - Microwave from the laptop: thr 0.835, test 0.942.
+- **Taught Doorbell at volume 100:** 0.88 ("Maybe"), then 0.85 (no alert), against a 0.85 threshold.
+  It was taught at volume 44, where 4 of 5 trials were recognised. DEMO.md now says to play it at about 44.
+- **Microwave untaught:** the built-ins call it "Maybe: Alarm?" (0.57 to 0.66).
+- **Accidental wrong mark:** segment 8 marked Keys wrong, not the alarm (saved). The owner kept it.
+  DEMO.md now warns about checking the top row.
+
 ## IMU times back with J-Link attached
 
 `times back` (the largest backward step between IMU sample times) was not new: `gates/c3_rtt.log`
