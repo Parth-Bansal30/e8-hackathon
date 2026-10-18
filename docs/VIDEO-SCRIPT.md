@@ -198,5 +198,5 @@ Same shots, shorter. Cut between teach examples instead of showing every pause.
 - Upload to YouTube (or Vimeo). "Unlisted" lets judges watch with the link; whether it's
   unlisted or public is the owner's call. Paste the link into the Devpost form and into
   SUBMISSION.md section 1.
-- Take two stills from the footage for the gallery (see [demo/GALLERY.md](demo/GALLERY.md)): the
-  board on the table, and the real Stats page.
+- Board photos are already in the gallery (image 2, from `docs/demo/board/`). A sharper still from
+  the footage can replace them; see [demo/GALLERY.md](demo/GALLERY.md).
