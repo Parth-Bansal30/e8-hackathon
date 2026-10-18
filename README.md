@@ -10,7 +10,7 @@ Entry for the [Arm + ExecuTorch Edge AI hackathon](https://arm-executorch.devpos
 is a PyTorch audio encoder, quantized to int8 and run through ExecuTorch with every operator
 delegated to the Ethos-U85.
 
-![Sound Sense screens, rendered by the UI simulator](docs/demo/screens.png)
+![Sound Sense: alert and teach screens, rendered by the UI simulator (values on the screens are samples)](docs/demo/gallery/01_cover.png)
 
 ## What it does
 
@@ -56,12 +56,14 @@ Details and logs: [docs/GATES-results.md](docs/GATES-results.md).
 | Taught sounds | Work live; offline 38% accepted, 79% of untaught sounds rejected (borderline, see limits) |
 | Knock felt | 21 of 22 at 20 cm; IMU FIFO at 805 samples/s, 0 missed |
 | Alert delay | About 0.85 s after the sound starts (decides 0.8 s after the onset) |
-| Flash save | 223–266 ms (1,101 saves, 0 audio blocks dropped, 0 failed read-backs); restore 2.2 ms |
+| Flash save | 223–266 ms over 101 saves (median 252), longest 304 ms over 1,000 more; across all 1,101: 0 audio blocks dropped, 0 failed read-backs. Restore 2.2 ms |
 | Power | CPU active **12.6%** in a quiet room (was 100%); NPU busy 0.00% when quiet |
 | Boot to Ready | 1.5 s |
 | Memory | ITCM 97.6% (all hot code), MRAM 1.03 MB of 2 MB (model, fonts, cold code) |
 
 ## How it works
+
+![Architecture: features, matching, fusion and UI on the Cortex-M55; the int8 encoder on the Ethos-U85 through ExecuTorch](docs/demo/gallery/02_architecture.png)
 
 ```
  PDM mics (16 kHz) ──> log-mel, 40 bands / 20 ms (M55) ──> 49x40 patch (~1 s) ──int8──> encoder (Ethos-U85)
@@ -197,7 +199,7 @@ Board gotchas and their fixes: [docs/bringup-notes.md](docs/bringup-notes.md).
 
 ## Credits and licenses
 
-- `firmware/` builds on [alifsemi/alif_vscode-template](https://github.com/alifsemi/alif_vscode-template) (Alif license, `firmware/License.txt`) and SEGGER RTT (`firmware/libs/SEGGER_RTT_V796h/LICENSE.md`).
+- `firmware/` builds on [alifsemi/alif_vscode-template](https://github.com/alifsemi/alif_vscode-template) (Alif license, `firmware/License.txt`) and SEGGER RTT (`firmware/libs/SEGGER_RTT_V796h/LICENSE.md`). The BMI323 driver in `firmware/soundsense/vendor/` is Alif's (Alif license).
 - The ExecuTorch runner started from Arm's [alif-ethos-u85-npu-mnist](https://github.com/arm-education/alif-ethos-u85-npu-mnist) learning path; `tools/fetch_et_bundle.sh` downloads its prebuilt runtime.
 - Training data: [ESC-50](https://github.com/karolpiczak/ESC-50) (K. J. Piczak, CC BY-NC 3.0) and [Speech Commands v2](https://arxiv.org/abs/1804.03209) (Google, CC BY 4.0).
 - UI fonts: DejaVu Sans (`firmware/soundsense/ui/LICENSE-DejaVu.txt`).
