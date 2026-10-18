@@ -5551,3 +5551,28 @@
 [SS] draw: full max 37480 us + present 3715 us; live view 0.0 fps, max 0 us
 [SS] stats t=20000 level -48 dB floor -49 dB, npu 1008 us runner 1036 us feat 305 us, 0.4 inf/s, busy 20%, active 26.1% (3252 passes/s, 3207 sleeps/s, 230 us each), npu busy 0.04%, dropped 0, imu 15678 samples 0 errors (times back 114 us, clock +6621 ppm), knocks 40, events 1, saves 0
 [TEACH] shot 2/8: +25.7 dB
+[TEACH] shot 3/8: +29.0 dB, clipped
+[TEACH] shot 4/8: +29.4 dB, clipped
+[TEACH] shot 5/8: +27.4 dB, clipped
+[TEACH] shot 6/8: +28.1 dB, clipped
+[TEACH] shot 7/8: +29.3 dB, clipped
+[TEACH] shot 8/8: +28.8 dB, clipped
+[TEACH] profile: thr 0.500, leave-one-out 0.00 0.75 0.93 0.91 0.88 0.94 0.95 0.91; make it once more to test, press to save
+[TEACH] T2: shot 1 unlike the others (0.00); without it thr 0.718 instead of 0.500
+[SS] draw: full max 35138 us + present 3782 us; live view 0.0 fps, max 0 us
+[SS] stats t=30003 level -49 dB floor -33 dB, npu 1007 us runner 1035 us feat 304 us, 0.7 inf/s, busy 16%, active 22.4% (3483 passes/s, 3436 sleeps/s, 225 us each), npu busy 0.07%, dropped 0, imu 23734 samples 0 errors (times back 114 us, clock +6993 ppm), knocks 44, events 1, saves 0
+[TEACH] test: match 0.886 (thr 0.500) accepted
+[TEACH] saved 'Clap' thr 0.500; 4 taught
+[STORE] save 1 ok: copy B seq 1258, 3264 bytes, 180 ms (max 180), longest step 116508 us, dropped 0
+[SS] t=36614 skipped (joystick)
+[SS] t=39108 +29.9 dB clipped best 'Clap' 0.90 (thr 0.50), 2nd 'Keys' 0.36, felt no (0.0 mg) -> Clap
+[C3] alert on screen 27313 us after the decision (draw 23791 us, present 3522 us)
+[SS] draw: full max 39966 us + present 3550 us; live view 3.0 fps, max 15606 us
+[SS] stats t=40003 level -53 dB floor -34 dB, npu 1008 us runner 1036 us feat 304 us, 1.2 inf/s, busy 14%, active 21.4% (3457 passes/s, 3410 sleeps/s, 230 us each), npu busy 0.12%, dropped 0, imu 31785 samples 0 errors (times back 479 us, clock +7123 ppm), knocks 48, events 2, saves 1
+[C3] alert 'Clap' ended after 9108 ms: 1 full redraws, longest draw 23791 us + present 3522 us, 0 audio blocks dropped
+[SS] t=48806 skipped (joystick)
+[SS] draw: full max 44469 us + present 3527 us; live view 0.9 fps, max 13818 us
+[SS] stats t=50003 level -51 dB floor -49 dB, npu 1004 us runner 1032 us feat 303 us, 0.5 inf/s, busy 2%, active 8.1% (4024 passes/s, 3974 sleeps/s, 231 us each), npu busy 0.05%, dropped 0, imu 39839 samples 0 errors (times back 479 us, clock +6862 ppm), knocks 52, events 2, saves 1
+[SS] t=50814 +21.7 dB best 'Knock' 0.60 (thr 0.62), 2nd 'Clap' 0.43, felt yes (26.3 mg) -> maybe Knock
+[C3] alert on screen 127568 us after the decision (draw 123977 us, present 3590 us)
+[SS] t=53250 +7.9 dB best 'Clap' 0.53 (thr 0.50), 2nd 'Keys' 0.27, felt no (0.0 mg) -> quiet
