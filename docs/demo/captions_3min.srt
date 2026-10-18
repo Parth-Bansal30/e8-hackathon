@@ -138,16 +138,16 @@ missing a sound.
 And now it knows my keys.
 
 31
-00:02:22,300 --> 00:02:24,625
+00:02:22,300 --> 00:02:24,592
 Now I reset the board.
 
 32
-00:02:24,675 --> 00:02:30,404
+00:02:24,642 --> 00:02:30,449
 The self-test restores the taught sounds
-from flash, in two milliseconds.
+from flash in under a millisecond.
 
 33
-00:02:30,454 --> 00:02:33,650
+00:02:30,499 --> 00:02:33,650
 Jingle again, and it still knows my keys.
 
 34

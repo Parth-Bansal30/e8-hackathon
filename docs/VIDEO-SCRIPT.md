@@ -130,9 +130,11 @@ overlay text for the edit.
 
 - **Shot:** press reset. The Ready screen's **Saved sounds** row says the taught sounds were
   restored (2 with the Doorbell already on the board). Jingle the keys: **Keys** alert.
-- **VO:** "Now I reset the board. The self-test restores the taught sounds from flash, in two
-  milliseconds. Jingle again, and it still knows my keys."
-- **On screen:** "Restored from OSPI flash in 2.2 ms"
+- **VO:** "Now I reset the board. The self-test restores the taught sounds from flash in under a
+  millisecond. Jingle again, and it still knows my keys."
+- **On screen:** "Restored from OSPI flash in 0.7 ms (2.2 ms for a full store)"
+- **As recorded (1:33-1:45 PM):** 2 taught sounds restored in 0.7 ms, Ready in 1.48 s, Keys alert
+  at 0.74 (`gates/video_takes.txt`).
 
 ### 8. Timeline and fixing a mistake (3:10-3:32)
 
