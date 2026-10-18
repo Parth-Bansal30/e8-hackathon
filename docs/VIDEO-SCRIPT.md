@@ -9,7 +9,7 @@ checked on 2026-10-18 at 4:10 PM. The video field is optional and takes a YouTub
 it is embedded at the top of the project page. Judging is live at the board (5:00-5:30 PM), so the
 video is short and recorded in one take.
 
-**Matches the judged firmware** `v1.1-judged` = `1d5fe72`. Every number in the narration comes from
+**Matches the judged firmware** `v1.2-judged` = `0d8b0f1`. Every number in the narration comes from
 the README, [DEMO.md](DEMO.md) or [GATES-results.md](GATES-results.md). The Stats page shows live
 values, which can differ a little from what is said.
 

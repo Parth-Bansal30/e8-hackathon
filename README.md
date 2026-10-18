@@ -10,8 +10,8 @@ Entry for the [Arm + ExecuTorch Edge AI hackathon](https://arm-executorch.devpos
 is a PyTorch audio encoder, quantized to int8 and run through ExecuTorch with every operator
 delegated to the Ethos-U85.
 
-**Judged version:** tag [`v1.1-judged`](https://github.com/Parth-Bansal30/e8-hackathon/tree/v1.1-judged)
-(commit `1d5fe72`), the firmware flashed on the board for judging. Later commits change docs, the
+**Judged version:** tag [`v1.2-judged`](https://github.com/Parth-Bansal30/e8-hackathon/tree/v1.2-judged)
+(commit `0d8b0f1`), the firmware flashed on the board for judging. Later commits change docs, the
 gallery and test tools, not the firmware.
 
 ![Sound Sense: alert and teach screens, rendered by the UI simulator (values on the screens are samples)](docs/demo/gallery/01_cover.png)

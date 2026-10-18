@@ -38,7 +38,7 @@ winners are announced at 5:30 PM PDT. Our own target is still 4:30 PM, with ever
 |---|---|---|
 | Live demonstration on the Alif E8 Dev Kit | At the judging table; the run of show is [VIDEO-SCRIPT.md](VIDEO-SCRIPT.md) / [DEMO.md](DEMO.md) | Rehearsal at the board about 2:45 PM |
 | Public source code repository | github.com/Parth-Bansal30/e8-hackathon is public | Done; `main` has all of `gates` (PR #3, 1:07 PM); the docs below reach it through one more PR |
-| Fixed release version: a commit hash or release tag | Tag `v1.1-judged` = `1d5fe72`, the commit the board is flashed from | Done (pushed about 2:15 PM; replaces `v1.0-judged`) |
+| Fixed release version: a commit hash or release tag | Tag `v1.2-judged` = `0d8b0f1`, the commit the board is flashed from | Done (pushed about 4:20 PM; replaces `v1.1-judged` and `v1.0-judged`) |
 | README with build, deploy and run instructions | README "Build and run" | Done on `gates` |
 | Brief description of the application architecture | README "How it works"; section 2 "How we built it" | Done |
 | Where key models and workloads execute | README "Workload placement"; section 2 | Done |
@@ -61,7 +61,9 @@ Other rules that matter:
 10 AM, the board session tagged its last firmware commit `v1.0-judged` (`32177ea`, pushed 12:45 PM),
 and `gates` was merged into `main` again (PR #2 at 12:48 PM, PR #3 at 1:07 PM). At about 2 PM the board
 was reflashed with one more teach name (Whistle), so the owner chose a new tag: `v1.1-judged` =
-`1d5fe72`. Docs changes reach `main` through a PR the owner OKs.
+`1d5fe72`. At about 4:14 PM the board was reflashed with one more teach name (Notification), and the
+owner again chose a new tag: `v1.2-judged` = `0d8b0f1` (PR #5 merged it into `main` at 4:14 PM). Docs
+changes reach `main` through a PR the owner OKs.
 
 ## 1. Form fields, ready to paste
 
@@ -77,14 +79,15 @@ was reflashed with one more teach name (Whistle), so the owner chose a new tag: 
 `esc-50`, `speech-commands`
 
 **"Try it out" links** (one per field; "add another link" adds a field):
-- `https://github.com/Parth-Bansal30/e8-hackathon/tree/v1.1-judged` (the judged version)
+- `https://github.com/Parth-Bansal30/e8-hackathon/tree/v1.2-judged` (the judged version)
 - `https://github.com/Parth-Bansal30/e8-hackathon` (the repo; `main` shows the README with build
   and run steps)
 
-**Judged version (fixed release):** tag `v1.1-judged`, commit `1d5fe72` (full:
-`1d5fe7236b385e81017fda78b6ea9341573b14b5`). The board is flashed for judging with the release build
-of this commit. It is `v1.0-judged` (`32177ea`) plus one line: a "Whistle" teach name, added at
-about 2 PM. The owner chose a new tag over reflashing, at about 2:15 PM.
+**Judged version (fixed release):** tag `v1.2-judged`, commit `0d8b0f1` (full:
+`0d8b0f135db371f686cb4cec83925973f604206a`). The board is flashed for judging with the release build
+of this commit. It is `v1.0-judged` (`32177ea`) plus two teach names: "Whistle" (`v1.1-judged` =
+`1d5fe72`, about 2 PM) and "Notification" (about 4:14 PM). Each time the owner chose a new tag over
+reflashing.
 
 **Video demo link:** `<YouTube or Vimeo link, unlisted is fine if the form allows it>`.
 
@@ -102,7 +105,7 @@ wide diagram off, so the architecture image stands in for it (the README keeps b
 ---
 
 **Code:** [github.com/Parth-Bansal30/e8-hackathon](https://github.com/Parth-Bansal30/e8-hackathon).
-**Judged version:** tag [`v1.1-judged`](https://github.com/Parth-Bansal30/e8-hackathon/tree/v1.1-judged) (commit `1d5fe72`). Build and run steps are in the README.
+**Judged version:** tag [`v1.2-judged`](https://github.com/Parth-Bansal30/e8-hackathon/tree/v1.2-judged) (commit `0d8b0f1`). Build and run steps are in the README.
 
 ## Inspiration
 
@@ -333,6 +336,47 @@ All on the DK-E8 (M55-HP at 400 MHz, Ethos-U85-256), release build, 2026-10-18. 
 - Only clear built-in matches meet our 0.5 s alert target (median 437 ms). Taught sounds, "Maybe"
   matches and anything unclear wait for the whole sound: about 0.87 s.
 
+## Team
+
+### Parth Bansal: hardware, AI model and core app
+
+*Board laptop · 52 commits*
+
+- **Board bring-up:** test programs for the display, LEDs, accelerometer and NPU.
+- **Sound model:** trained the PyTorch sound encoder, quantized it to int8 and exported it through
+  ExecuTorch. All 14 operators run on the Ethos-U85 NPU in about 1 ms. A boot self-test checks the
+  output against the Python reference.
+- **Core app (about 60% of the final code):**
+    - listening loop and two-stage alert decision (median 437 ms to screen)
+    - teaching a sound from 8 examples, with quality checks
+    - settings: sound on/off, urgency, rename, Calibrate room, snooze, "still sounding", "someone
+      is talking nearby"
+    - fix for jumping sensor timestamps
+- **Testing:** nearly all the test tooling (J-Link host control, 16-check smoke test, 18-check
+  feature test, screen tour, demo-sound scripts) and the live tests on the board. Found and
+  documented a bug where a wrong mark on a test alert damages a taught sound.
+- **Demo:** taught the Phone and Whistle sounds. Took the board photos and video takes, and ran the
+  demo rehearsal.
+
+### Sanket Shah: interface, storage, power and submission
+
+*Desk laptop · 42 commits*
+
+- **Planning:** tested the 64 MB external flash and PSRAM. Wrote the product spec and the go/no-go
+  gate plan.
+- **Interface (about 1,400 hand-written lines):**
+    - home screen with live spectrogram and room level
+    - full-screen alerts in colour-blind-safe colours, with icons and LED patterns
+    - urgent alerts that strobe at a photosensitivity-safe rate and escalate when ignored
+    - timeline, stats, settings and night mode
+    - host simulator that renders every screen on a laptop
+    - alerts reach the screen 18–20 ms after the decision
+- **Board:** saves taught sounds to flash in the background in about 250 ms, with 0 audio lost in
+  over 1,000 saves. Cut CPU awake time from 100% to 12.6% in a quiet room. Added the Ready
+  self-test screen.
+- **Submission:** README, Devpost write-up, the video scripts with captions and overlays, and
+  gallery images. Kept every number consistent with the measured results.
+
 ## Built with
 
 Alif Ensemble E8 DevKit (Cortex-M55 + Ethos-U85-256), ExecuTorch with the Arm Ethos-U backend,
@@ -348,7 +392,8 @@ started from Arm's alif-ethos-u85-npu-mnist learning path.
 - [x] Sign in to Devpost and read the form (10:20 AM; no hackathon-specific questions).
 - [x] Decide `main` and the judged version (tag `v1.0-judged` at the end, then merge again).
 - [x] Tag `v1.0-judged` = `32177ea` (12:45 PM); after the Whistle reflash, tag `v1.1-judged` = `1d5fe72`
-      (about 2:15 PM, the owner's call). Merge `gates` into `main` (PRs #2 to #4), and
+      (about 2:15 PM, the owner's call); after the Notification reflash, tag `v1.2-judged` = `0d8b0f1`
+      (about 4:20 PM, the owner's call). Merge `gates` into `main` (PRs #2 to #4), and
       replace `<hash>` in section 1 and at the top of "About the project" (1:19 PM).
 - [x] Re-check against `gates`: the draft now covers the final firmware (8 examples, teach checks,
       437 ms alerts, Sounds page, Calibrate room, snooze, "still sounding", talking nearby).
