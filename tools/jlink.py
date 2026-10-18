@@ -5,6 +5,7 @@ on-board tests (tools/pull_audio.sh, tools/g3_live.py).
 
     tools/jlink.py <elf> get rec_bytes            print a uint32 variable
     tools/jlink.py <elf> set rec_cmd 1            write a uint32 variable
+    tools/jlink.py <elf> cmd 8 2                  Sound Sense host command 8 with ss_arg 2, in one session
     tools/jlink.py <elf> dump 0xA0000000 4096 out.bin
     tools/jlink.py <elf> rtt                      print new RTT output (like tools/rtt_dump.sh)
     tools/jlink.py <elf> reset                    reset the core and let it run (a reboot without a power pull)
@@ -77,8 +78,19 @@ class Board:
     def get(self, name):
         return self.read32(self.addr(name))[0]
 
+    def write32(self, pairs):
+        """Write (addr, value) pairs in one J-Link session; raises if any write didn't happen (probe busy)."""
+        out = self.run([f"w4 0x{a:08X} 0x{v & 0xFFFFFFFF:08X}" for a, v in pairs])
+        for a, v in pairs:
+            if f"Writing {v & 0xFFFFFFFF:08X} -> {a:08X}" not in out:
+                raise RuntimeError(f"J-Link write of 0x{a:08X} failed:\n{out[-800:]}")
+
     def set(self, name, value):
-        self.run([f"w4 0x{self.addr(name):08X} 0x{value & 0xFFFFFFFF:08X}"])
+        self.write32([(self.addr(name), value)])
+
+    def command(self, c, a=0):
+        """Host command: ss_arg then ss_cmd in one session, so the board never takes c with a stale ss_arg."""
+        self.write32([(self.addr("ss_arg"), a), (self.addr("ss_cmd"), c)])
 
     def dump(self, addr, length, path):
         out = self.run([f"savebin {path} 0x{addr:08X} 0x{length:X}"])
@@ -116,6 +128,8 @@ def main():
             print(n, b.get(n))
     elif cmd == "set":
         b.set(sys.argv[3], int(sys.argv[4], 0))
+    elif cmd == "cmd":
+        b.command(int(sys.argv[3], 0), int(sys.argv[4], 0) if len(sys.argv) > 4 else 0)
     elif cmd == "dump":
         b.dump(int(sys.argv[3], 0), int(sys.argv[4], 0), sys.argv[5])
     elif cmd == "rtt":

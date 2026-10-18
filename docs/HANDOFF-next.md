@@ -1,6 +1,6 @@
 # Handoff: continuing Sound Sense (2026-10-18)
 
-**Updated 11:10 AM PDT.** The board's J-Link is now on the laptop with the et-venv (it has torch,
+**Updated 11:25 AM PDT.** The board's J-Link is now on the laptop with the et-venv (it has torch,
 the datasets and the toolchain), so offline work and board work happen on one machine.
 
 Since 10:10 AM:
@@ -11,6 +11,9 @@ Since 10:10 AM:
 - T6 "Sounds like …" warning.
 - Host command 17: teach shots without sound.
 - Docs pass: controls and host commands in README and DEMO.md.
+- 11:10-11:25 AM: live 8-example teach. Two bugs found and fixed ("loud room" during the sound, T2
+  with two stray shots). Full-app smoke test `tools/ss_smoke.py`: 16/16 pass. `tools/jlink.py cmd`
+  sends host commands safely while the RTT logger runs.
 
 Done between 9 and 10:10 AM, without playing any sound:
 
@@ -64,7 +67,7 @@ Work stays on branch **`gates`**. Read in this order:
 
 | Area | Status |
 |---|---|
-| App `firmware/soundsense/` | Release build flashed at 11:00 AM: two-stage decision, 8 examples, T2, T6, host command 17 |
+| App `firmware/soundsense/` | Release build flashed at 11:10 AM: two-stage decision, 8 examples, T2 (two stray shots, loud room before the sound), T6, host command 17. Smoke test 16/16 |
 | Gates | G1 SOFT, G2 SOFT, G3 SOFT (short run), C1 GO, C2 GO, C3 rows 1-4 pass (row 5: backlight on/off only, no dimming), C4 GO, C5 done (12.6%, target 10%) |
 | P0 | 16 of 16 done |
 | P1 | 11 done, 4 partial (H5, H7, S5, T7), 1 not started (H4 smoke vs CO) |
@@ -162,7 +165,8 @@ A failure stays on screen (red LED blink) until a key is pressed.
 
 ### Host control over J-Link (silent testing)
 
-To send a command: `tools/jlink.py <elf> set ss_arg N`, then `set ss_cmd C`. Python scripts use
+To send a command: `tools/jlink.py <elf> cmd C N` (one J-Link session, so the board never takes C
+with a stale `ss_arg`; separate `set` calls can lose the argument while the RTT logger runs). Python scripts use
 `g3_play.command(C, N)`.
 
 | C | What it does |
@@ -206,7 +210,8 @@ To check the result, read variables over J-Link:
 |---|---|
 | `tools/rtt_log.sh soundsense release <log>` | Follow the RTT log into a file. Start it before any script that reads the log. |
 | `tools/build_flash.sh <project> [debug\|release] [noflash]` | Build (and flash). The log goes to `/tmp/build_<project>.log`; read it when cbuild's error is vague ("read .../firmware: is a directory" was an ITCM overflow). |
-| `tools/jlink.py <elf> get\|set\|rtt\|reset` | Read and write variables, follow RTT, reset |
+| `tools/jlink.py <elf> get\|set\|cmd\|rtt\|reset` | Read and write variables, send a host command, follow RTT, reset |
+| `tools/ss_smoke.py` | Full-app smoke test over J-Link, no sound: resets the board, 16 checks, about 1 minute |
 | `tools/c3_ui.py [log]` | C3 rows 2-4 without sound: fake detections plus the board's own timing |
 | `tools/pc_profile.py [elf] [samples]` | Statistical CPU profile (DWT PC sampling). WFI sleep shows inside `main`. |
 | `tools/ss_screen.py` | Screenshot of the frame buffer over J-Link (12 s; tears during redraws) |
@@ -255,8 +260,10 @@ To check the result, read variables over J-Link:
    - Tested on the board with host command 17: T2 flagged the outlier, UP replaced it, T6 warned.
    - Still to do: SUBMISSION.md and VIDEO-SCRIPT.md say "5 times" and "5 examples"; tell the
      submission session.
-   - Live teaching with 8 examples needs sound.
-   - "Loud room" (floor over −40 dBFS) hasn't been triggered yet.
+   - Tested live at 11:10 AM with the doorbell clip at volume 69; see
+     [GATES-results.md](GATES-results.md#teaching-8-examples-t2-t6). Two bugs fixed. The
+     second teach was loose (threshold 0.50, Siren confusions), so the demo should teach louder or
+     use keys.
 2. **Done: T2** (see 1).
 3. **Done: T6** (see 1).
 4. **Checks by eye and hand, no sound.** Ask the owner to look or turn:

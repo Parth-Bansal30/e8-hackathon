@@ -116,6 +116,42 @@ Done at 11 AM. Offline numbers come from `model/shots_eval.py` (G1 pools, float 
 - UP, then one more clip shot: shot 8 was replaced and the threshold went to 0.850.
 - Cancelled without saving. Release build: ITCM 97.31%; the new teach code is in MRAM.
 
+**Live, the doorbell clip from the Mac speaker at volume 69** (`gates/ss_rtt.log`, `gates/g3_teach8.txt`, `gates/g3_trials8.txt`):
+- **First teach:** 6 shots were tight (leave-one-out 0.88-0.92) and 2 were stray (0.18 and 0.02). The test match was 0.817.
+  It showed two bugs, both fixed and flashed at 11:10 AM:
+  - "Loud room" flagged 6 of 8 shots. The room floor rises while the doorbell plays, so the check now
+    measures the 0.2 s before each sound (`level_db()`).
+  - T2 flagged neither stray shot: with two of them, leaving out one doesn't raise the threshold. T2
+    now tries leaving out the worst one, then the worst two. Without both, the threshold would be
+    about 0.83 instead of 0.50.
+- **Second teach, after the fixes:** shots at +11 to +17 dB, no "loud room" flags. The shots were loose
+  (leave-one-out 0.34-0.61, nothing for T2 to flag), so the threshold sat at the 0.50 floor. The test
+  match was 0.527. Saved, and restored after a reset.
+- **5 more doorbells:** 1 alerted as Doorbell, 2 as Siren, 2 didn't alert. Siren scored 0.53-0.64
+  against Doorbell's 0.46-0.55: through this speaker the doorbell clip sits close to the built-in Siren.
+- **9 untaught sounds** (clapping, coughing, a 3-tone chime): 5 rejected. Wrong alerts: 2 Doorbell
+  (0.51 and 0.55), 1 Water running, 1 Alarm.
+- **Reading:** a loose teach gives a 0.50 threshold that lets other sounds in. For the demo, teach
+  louder (about 75%, DEMO.md) or with a distinctive real sound such as keys, and redo any shot T2 flags.
+
+## Full-app smoke test
+
+`tools/ss_smoke.py`, no sound, about 1 minute. It resets the board, then drives every screen and path
+with host commands:
+- alarm and knock injection; press to dismiss; LEFT marks wrong;
+- the boot test clip as a banner; the timeline, with row 0 marked right; stats;
+- DOWN opens the menu and LEFT leaves it;
+- teaching Keys with 8 silent shots, then cancelling;
+- 10 s of forced full redraws.
+
+**Result at 11:20 AM: 16 of 16 pass, 0 audio blocks dropped, 0 IMU errors** (`gates/smoke.txt`).
+
+The first run failed two checks: DOWN didn't open the menu, so the following LEFT went to the
+timeline. The firmware was fine. `tools/jlink.py` wrote `ss_arg` and `ss_cmd` in separate J-Link
+sessions and ignored a write that failed while the RTT logger held the probe, so the board took
+command 8 with the previous argument (0: no key). `Board.command()` (CLI: `jlink.py <elf> cmd C N`)
+now writes both in one session, and every write is checked. `g3_play.py` and `c2_power.py` use it.
+
 ## C4 details
 
 **Recordings:** [c4_take1.wav](gates/audio/c4_take1.wav) has 16 claps at 1 m: 5 at position A, 6 at the middle position (a short end, about 1 m from the left mic), 5 at position B, plus the start and stop joystick clicks. [c4_take2.wav](gates/audio/c4_take2.wav) has 5 key jingles. Both came out of the PSRAM over J-Link at 64 KB/s. Analysis: `tools/mic_geometry.py`, written to [c4_mic_geometry.json](gates/c4_mic_geometry.json).

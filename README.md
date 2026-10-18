@@ -175,7 +175,7 @@ makes a flagged example again, press saves and RIGHT cancels. The demo run sheet
 demo, is [docs/DEMO.md](docs/DEMO.md).
 
 **Host control over J-Link** (scripted tests, no joystick):
-`tools/jlink.py <elf> set ss_arg N` then `tools/jlink.py <elf> set ss_cmd C`, where C is 1 teach
+`tools/jlink.py <elf> cmd C N` (writes ss_arg N and ss_cmd C in one J-Link session), where C is 1 teach
 preset N, 2 save, 3 home, 4 forget taught sounds, 5 stats, 6 timeline, 7 set clock, 8 press keys,
 9 re-measure built-in N, 10 finish, 11 N flash saves, 12 fill the flash record with stand-ins,
 13 fake a detection of profile N (flags 0x100 maybe, 0x200 felt, 0x400 heard only), 14 full redraws

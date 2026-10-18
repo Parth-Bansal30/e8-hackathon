@@ -24,17 +24,23 @@ ELF = os.path.join(ROOT, "firmware/out/soundsense/E8-HP/release/soundsense.elf")
 
 
 def command(b, cmd, arg=0):
-    """Write a host command; retry, since the RTT logger shares the probe."""
+    """Write a host command and wait until the board takes it; retry a write that didn't land (the RTT
+    logger shares the probe), never one that did."""
     for _ in range(10):
         try:
-            b.set("ss_arg", arg)
-            b.set("ss_cmd", cmd)
-            time.sleep(0.3)
+            b.command(cmd, arg)
+            break
+        except RuntimeError:
+            time.sleep(0.5)
+    else:
+        return False
+    for _ in range(20):
+        time.sleep(0.25)
+        try:
             if b.get("ss_cmd") == 0:
                 return True
         except (RuntimeError, IndexError):
             pass
-        time.sleep(0.5)
     return False
 
 

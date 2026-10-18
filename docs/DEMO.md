@@ -96,10 +96,10 @@ numbers are samples; quote the measured ones below.
 
   ```
   E=firmware/out/soundsense/E8-HP/release/soundsense.elf
-  tools/jlink.py $E set ss_arg 1; tools/jlink.py $E set ss_cmd 1   # teach Doorbell (0 Keys, 1 Doorbell, 2 Clap, 3 Microwave)
-  tools/jlink.py $E set ss_cmd 2                                  # save
-  tools/jlink.py $E set ss_cmd 3                                  # back to home / dismiss
-  tools/jlink.py $E set ss_arg 0; tools/jlink.py $E set ss_cmd 17  # a teach shot without sound (the boot test clip)
+  tools/jlink.py $E cmd 1 1    # teach Doorbell (0 Keys, 1 Doorbell, 2 Clap, 3 Microwave)
+  tools/jlink.py $E cmd 2      # save
+  tools/jlink.py $E cmd 3      # back to home / dismiss
+  tools/jlink.py $E cmd 17 0   # a teach shot without sound (the boot test clip)
   ```
 - **Logs:** `tools/jlink.py firmware/out/soundsense/E8-HP/release/soundsense.elf rtt` prints one
   `[SS]` line per sound: the best match, its score and threshold, and whether it was felt.

@@ -1,0 +1,22 @@
+PASS  boot: screen HOME 6 s after reset
+PASS  alarm detection -> alert: screen ALERT (want ALERT)
+PASS  press dismisses: screen HOME (want HOME)
+PASS  felt knock -> alert: screen ALERT (want ALERT)
+PASS  LEFT marks the alert wrong: screen HOME
+PASS  home: screen HOME (want HOME)
+PASS  test clip (dog, info) -> banner on home: screen HOME (want HOME)
+PASS  timeline: screen TIMELINE (want TIMELINE)
+PASS  mark row 0 right: screen TIMELINE (want TIMELINE)
+PASS  stats: screen STATS (want STATS)
+PASS  home: screen HOME (want HOME)
+PASS  DOWN opens the menu: screen MENU (want MENU)
+PASS  LEFT leaves the menu: screen HOME (want HOME)
+PASS  teach Keys: screen TEACH (want TEACH)
+PASS  RIGHT cancels teaching: screen HOME (want HOME)
+PASS  10 s of forced full redraws: screen HOME (want HOME)
+    [S1] ready after 1278 ms: mics left -48 dB, right -50 dB; npu matches the reference, 1.0 ms; saved sounds 1 taught sound restored; imu knocks can be f
+    [STORE] loaded 1 taught sounds from copy A, seq 1195, in 465 us
+    [TEACH] T6: sounds like 'Dog barking' (0.79)
+    [C3] banner on screen 61942 us after the decision (draw 58404 us, present 3538 us)
+stats lines 4, dropped 0, imu errors 0; 16/16 checks pass
+SMOKE PASS

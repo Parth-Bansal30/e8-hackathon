@@ -63,7 +63,7 @@
 #define MAX_TAUGHT     8
 #define SHOTS          8                      /* examples per taught sound (G1 SOFT; offline 5 -> 8: accepted 39% -> 45%) */
 #define UNLIKE_RISE    0.10f                  /* T2: a shot is "unlike the others" if redoing it would raise the threshold this much */
-#define LOUD_ROOM_DB   (-40.0f)               /* T2: room floor over this (dBFS; a quiet room here is about -50): "loud room" */
+#define LOUD_ROOM_DB   (-40.0f)               /* T2: the 0.2 s before the sound over this (dBFS; a quiet room here is about -50): "loud room" */
 #define SIMILAR_COS    0.70f                  /* T6: a new sound this close to another profile gets "Sounds like ..." */
 #define MAX_PROF       (SS_NUM_BUILTIN + MAX_TAUGHT)
 #define GATE_DB        6.0f                   /* live encoder only above the noise floor + this */
@@ -476,7 +476,7 @@ static struct {
 /* H6: the last "What was that?" sound, which becomes example 1 if the user teaches it right away */
 static float what_emb[SS_EMB], what_snr;
 static bool seed_pending;
-static void teach_shot(const float *e, float snr, int clipped);
+static void teach_shot(const float *e, float snr, int clipped, float bg_db);
 
 static void teach_open(int preset, bool start)
 {
@@ -492,7 +492,7 @@ static void teach_open(int preset, bool start)
     if (start && seed_pending) {
         seed_pending = false;
         printf("[TEACH] example 1 is the sound just heard\r\n");
-        teach_shot(what_emb, what_snr, 0);
+        teach_shot(what_emb, what_snr, 0, ss_audio_floor_db());
     }
 }
 
@@ -597,6 +597,18 @@ static float snr_of(uint32_t first, int *clipped)
     return db - ss_audio_floor_db();
 }
 
+/* Mean level (dBFS) of n samples from `first`, or the noise floor if they're no longer in the ring. */
+static float level_db(uint32_t first, uint32_t n)
+{
+    if (n > KWS_SR || ss_audio_copy(first, clip_buf, n) != 0) return ss_audio_floor_db();
+    float acc = 0.0f;
+    for (uint32_t i = 0; i < n; i++) {
+        const float x = clip_buf[i] / 32768.0f;
+        acc += x * x;
+    }
+    return acc > 0.0f ? 10.0f * log10f(acc / (float)n) : -120.0f;
+}
+
 /* All shots in: the profile, then T2 (one shot dragging the threshold down) and T6 (too close to a
  * sound already known). The warnings don't block saving. */
 SS_COLD static void teach_finish(void)
@@ -609,20 +621,39 @@ SS_COLD static void teach_finish(void)
     for (int k = 0; k < SHOTS; k++) printf(" %.2f", (double)tc.loo[k]);
     printf("; make it once more to test, press to save\r\n");
 
-    int w = 0;
+    /* T2: the worst one or two examples (two strays hide each other when left out one at a time) */
+    for (int k = 0; k < SHOTS; k++)
+        if (tc.ui.shot_note[k] && !strcmp(tc.ui.shot_note[k], "unlike")) {
+            tc.ui.shot[k] = UI_SHOT_OK;
+            tc.ui.shot_note[k] = "ok";
+        }
+    int w1 = 0, w2 = -1;
     for (int k = 1; k < SHOTS; k++)
-        if (tc.loo[k] < tc.loo[w]) w = k;
+        if (tc.loo[k] < tc.loo[w1]) w1 = k;
+    for (int k = 0; k < SHOTS; k++)
+        if (k != w1 && (w2 < 0 || tc.loo[k] < tc.loo[w2])) w2 = k;
     static float rest[SHOTS - 1][SS_EMB], p[SS_EMB];   /* off the stack */
-    for (int k = 0, j = 0; k < SHOTS; k++)
-        if (k != w) memcpy(rest[j++], tc.emb[k], sizeof(rest[0]));
-    const float thr_without = ss_make_profile(rest, SHOTS - 1, p, NULL);
-    if (thr_without - tc.thr >= UNLIKE_RISE) {
-        tc.flag = w;
-        tc.ui.shot[w] = UI_SHOT_WARN;
-        tc.ui.shot_note[w] = "unlike";
-        snprintf(tc.warn, sizeof(tc.warn), "Shot %d is unlike the others: UP redoes it", w + 1);
-        printf("[TEACH] T2: shot %d unlike the others (%.2f); without it thr %.3f instead of %.3f\r\n", w + 1,
-               (double)tc.loo[w], (double)thr_without, (double)tc.thr);
+    for (int out = 1; out <= 2 && tc.flag < 0; out++) {
+        int j = 0;
+        for (int k = 0; k < SHOTS; k++)
+            if (k != w1 && (out == 1 || k != w2)) memcpy(rest[j++], tc.emb[k], sizeof(rest[0]));
+        const float thr_without = ss_make_profile(rest, j, p, NULL);
+        if (thr_without - tc.thr < UNLIKE_RISE) continue;
+        tc.flag = w1 < w2 || out == 1 ? w1 : w2;   /* UP redoes the earlier one first */
+        tc.ui.shot[w1] = UI_SHOT_WARN;
+        tc.ui.shot_note[w1] = "unlike";
+        if (out == 2) {
+            tc.ui.shot[w2] = UI_SHOT_WARN;
+            tc.ui.shot_note[w2] = "unlike";
+            snprintf(tc.warn, sizeof(tc.warn), "Shots %d, %d unlike the others: UP redoes", (w1 < w2 ? w1 : w2) + 1,
+                     (w1 < w2 ? w2 : w1) + 1);
+        } else {
+            snprintf(tc.warn, sizeof(tc.warn), "Shot %d is unlike the others: UP redoes it", w1 + 1);
+        }
+        printf("[TEACH] T2: shot %d%s unlike the others (%.2f); without %s thr %.3f instead of %.3f\r\n", w1 + 1,
+               out == 2 ? " and another" : "", (double)tc.loo[w1], out == 2 ? "them" : "it", (double)thr_without,
+               (double)tc.thr);
+        if (out == 2) printf("[TEACH] T2: the other is shot %d (%.2f)\r\n", w2 + 1, (double)tc.loo[w2]);
     }
 
     int b = -1;
@@ -655,7 +686,8 @@ SS_COLD static void teach_redo(void)
     redraw = true;
 }
 
-static void teach_shot(const float *e, float snr, int clipped)
+/* bg_db: the room just before the sound (dBFS), for T2 "loud room" */
+static void teach_shot(const float *e, float snr, int clipped, float bg_db)
 {
     if (tc.ph == T_TEST) {
         const float s = ss_dot(e, tc.proto);
@@ -673,7 +705,7 @@ static void teach_shot(const float *e, float snr, int clipped)
         redraw = true;
         return;
     }
-    const bool loud_room = ss_audio_floor_db() > LOUD_ROOM_DB;   /* T2: background too loud (kept, flagged) */
+    const bool loud_room = bg_db > LOUD_ROOM_DB;   /* T2: background too loud (kept, flagged) */
     memcpy(tc.emb[k], e, sizeof(tc.emb[0]));
     tc.ui.shot[k] = loud_room ? UI_SHOT_WARN : UI_SHOT_OK;
     tc.ui.shot_db[k] = (int8_t)(snr > 99 ? 99 : snr);
@@ -683,7 +715,7 @@ static void teach_shot(const float *e, float snr, int clipped)
     printf("[TEACH] shot %d/%d: +%.1f dB%s%s\r\n", k + 1, SHOTS, (double)snr, clipped ? ", clipped" : "",
            loud_room ? ", loud room" : "");
     if (loud_room) {
-        snprintf(tc.warn, sizeof(tc.warn), "Loud room (%.0f dB): a quieter spot is better", (double)ss_audio_floor_db());
+        snprintf(tc.warn, sizeof(tc.warn), "Loud room (%.0f dB): a quieter spot is better", (double)bg_db);
         tc.ui.warn = tc.warn;
     }
     if (tc.n == SHOTS) teach_finish();
@@ -787,7 +819,7 @@ static void decide(uint32_t onset, uint32_t onset_ms)
     const float snr = snr_of(onset - KWS_SR / 5, &clipped);
 
     if (scr == TEACH) {
-        if (tc.ph != T_NAMING) teach_shot(e, snr, clipped);
+        if (tc.ph != T_NAMING) teach_shot(e, snr, clipped, level_db(onset - KWS_SR / 5, KWS_SR / 5));
         return;
     }
     if (cal_idx >= 0) {
@@ -971,7 +1003,7 @@ SS_COLD static void teach_test_shot(bool room)
     else if (infer(ss_test_input, out)) ss_embed(out, e);
     else return;
     printf("[TEACH] command 17: shot from %s\r\n", room ? "the room" : "the boot test clip");
-    teach_shot(e, 20.0f, 0);
+    teach_shot(e, 20.0f, 0, ss_audio_floor_db());
 }
 
 /* ---------- managing taught sounds (T7) and the menu ---------- */

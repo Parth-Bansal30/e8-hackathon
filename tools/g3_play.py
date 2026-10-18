@@ -169,18 +169,24 @@ def board():
 
 
 def command(cmd, arg=0):
-    """Write a host command and check the board took it (ss_cmd back to 0). The RTT logger shares the
-    probe, so a J-Link call can fail now and then: retry."""
+    """Write a host command and wait until the board takes it (ss_cmd back to 0). The RTT logger shares the
+    probe, so a J-Link call can fail now and then: retry a write that didn't land, never one that did."""
     b = board()
     for _ in range(6):
         try:
-            b.set("ss_arg", arg)
-            b.set("ss_cmd", cmd)
-            time.sleep(0.3)
+            b.command(cmd, arg)
+            break
+        except RuntimeError:
+            time.sleep(0.5)
+    else:
+        raise RuntimeError(f"couldn't write command {cmd}")
+    for _ in range(20):
+        time.sleep(0.25)
+        try:
             if b.get("ss_cmd") == 0:
                 return
         except RuntimeError:
-            time.sleep(0.5)
+            pass
     raise RuntimeError(f"board did not take command {cmd}")
 
 
