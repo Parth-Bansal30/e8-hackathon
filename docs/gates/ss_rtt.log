@@ -494,3 +494,53 @@
 [SS] stats t=230031 level -49 dB floor -49 dB, npu 999 us runner 1026 us feat 303 us, 10.0 inf/s, busy 17%, dropped 0, imu 184948 samples 0 errors, knocks 71, events 1, saves 0
 [TEACH] shot 4: too quiet (+4.6 dB)
 [SS] stats t=240031 level -50 dB floor -49 dB, npu 1001 us runner 1028 us feat 302 us, 10.1 inf/s, busy 17%, dropped 0, imu 193001 samples 0 errors, knocks 71, events 1, saves 0
+[SS] t=464827 +7.0 dB best 'Baby crying' 0.22 (thr 0.57), 2nd 'Clap' 0.22, felt no (0.0 mg) -> quiet
+[SS] stats t=471000 level -51 dB floor -51 dB, npu 1000 us runner 1027 us feat 303 us, 10.0 inf/s, busy 21%, dropped 0, imu 362047 samples 0 errors, knocks 9, events 1, saves 1000
+[SS] stats t=481017 level -51 dB floor -51 dB, npu 1000 us runner 1027 us feat 302 us, 10.0 inf/s, busy 22%, dropped 0, imu 370115 samples 0 errors, knocks 9, events 1, saves 1000
+[SS] t=483058 +11.8 dB best 'Baby crying' 0.30 (thr 0.57), 2nd 'Clap' 0.30, felt no (0.0 mg) -> unknown
+[SS] t=488957 +12.2 dB best 'Alarm' 0.26 (thr 0.58), 2nd 'Microwave' 0.26, felt no (0.0 mg) -> unknown
+[SS] stats t=491017 level -51 dB floor -45 dB, npu 1000 us runner 1028 us feat 303 us, 10.1 inf/s, busy 22%, dropped 0, imu 378166 samples 0 errors, knocks 9, events 1, saves 1000
+[SS] t=494874 +11.5 dB best 'Dog barking' 0.24 (thr 0.52), 2nd 'Doorbell' 0.24, felt no (0.0 mg) -> unknown
+[SS] stats t=501039 level -38 dB floor -49 dB, npu 1001 us runner 1032 us feat 299 us, 10.1 inf/s, busy 21%, dropped 0, imu 386241 samples 0 errors, knocks 9, events 1, saves 1000
+[SS] t=500785 +11.7 dB best 'Siren' 0.27 (thr 0.59), 2nd 'Phone' 0.27, felt no (0.0 mg) -> unknown
+[SS] t=508201 +8.8 dB best 'Baby crying' 0.43 (thr 0.57), 2nd 'Clap' 0.43, felt no (0.0 mg) -> unknown
+[SS] stats t=511039 level -50 dB floor -47 dB, npu 1000 us runner 1028 us feat 303 us, 10.1 inf/s, busy 21%, dropped 0, imu 394295 samples 0 errors, knocks 10, events 1, saves 1000
+[SS] t=514057 +8.7 dB best 'Baby crying' 0.31 (thr 0.57), 2nd 'Clap' 0.31, felt no (0.0 mg) -> unknown
+[SS] t=519443 +8.6 dB best 'Dog barking' 0.23 (thr 0.52), 2nd 'Doorbell' 0.23, felt no (0.0 mg) -> unknown
+[SS] stats t=521048 level -49 dB floor -44 dB, npu 1000 us runner 1028 us feat 303 us, 10.2 inf/s, busy 21%, dropped 0, imu 402356 samples 0 errors, knocks 10, events 1, saves 1000
+[SS] t=525320 +8.4 dB best 'Alarm' 0.28 (thr 0.58), 2nd 'Microwave' 0.28, felt no (0.0 mg) -> unknown
+[SS] stats t=531048 level -51 dB floor -50 dB, npu 1000 us runner 1027 us feat 303 us, 10.0 inf/s, busy 21%, dropped 0, imu 410409 samples 0 errors, knocks 10, events 1, saves 1000
+[SS] stats t=541058 level -53 dB floor -51 dB, npu 1000 us runner 1031 us feat 298 us, 10.0 inf/s, busy 21%, dropped 0, imu 418473 samples 0 errors, knocks 10, events 1, saves 1000
+[SS] t=546820 +4.8 dB best 'Water running' 0.33 (thr 0.50), 2nd 'Washer' 0.33, felt no (0.0 mg) -> quiet
+[SS] stats t=551058 level -49 dB floor -50 dB, npu 1000 us runner 1027 us feat 303 us, 10.0 inf/s, busy 22%, dropped 0, imu 426524 samples 0 errors, knocks 10, events 1, saves 1000
+[SS] t=558037 +9.7 dB best 'Alarm' 0.28 (thr 0.58), 2nd 'Microwave' 0.28, felt no (0.0 mg) -> unknown
+[SS] stats t=561071 level -51 dB floor -51 dB, npu 999 us runner 1027 us feat 303 us, 10.1 inf/s, busy 21%, dropped 0, imu 434591 samples 0 errors, knocks 10, events 1, saves 1000
+[SS] taught sounds cleared
+[STORE] save 1001 ok: copy A seq 1107, 32 bytes, 137 ms (max 304), longest step 123736 us, dropped 0
+[TEACH] 'Doorbell': make the sound 5 times
+[TEACH] shot 1/5: +17.1 dB
+[SS] stats t=571071 level -50 dB floor -42 dB, npu 1000 us runner 1030 us feat 299 us, 9.9 inf/s, busy 20%, dropped 0, imu 442644 samples 0 errors, knocks 10, events 1, saves 1001
+[TEACH] shot 2/5: +17.8 dB
+[TEACH] shot 3/5: +13.1 dB
+[TEACH] shot 4: too quiet (+9.8 dB)
+[SS] stats t=581072 level -43 dB floor -45 dB, npu 1004 us runner 1032 us feat 303 us, 10.3 inf/s, busy 17%, dropped 0, imu 450699 samples 0 errors, knocks 16, events 1, saves 1001
+[TEACH] shot 4: too quiet (+6.4 dB)
+[TEACH] shot 4: too quiet (+6.8 dB)
+[SS] stats t=591075 level -51 dB floor -50 dB, npu 1000 us runner 1028 us feat 303 us, 10.1 inf/s, busy 17%, dropped 0, imu 458755 samples 0 errors, knocks 20, events 1, saves 1001
+[TEACH] shot 4: too quiet (+6.3 dB)
+[TEACH] shot 4: too quiet (+6.7 dB)
+[SS] stats t=601076 level -50 dB floor -47 dB, npu 1000 us runner 1026 us feat 303 us, 10.1 inf/s, busy 17%, dropped 0, imu 466810 samples 0 errors, knocks 24, events 1, saves 1001
+[TEACH] shot 4: too quiet (+6.9 dB)
+[SS] stats t=611088 level -42 dB floor -42 dB, npu 1000 us runner 1026 us feat 303 us, 10.0 inf/s, busy 17%, dropped 0, imu 474874 samples 0 errors, knocks 33, events 1, saves 1001
+[TEACH] shot 4: too quiet (+5.9 dB)
+[TEACH] shot 4: too quiet (+6.8 dB)
+[SS] stats t=621088 level -49 dB floor -50 dB, npu 1000 us runner 1026 us feat 302 us, 10.1 inf/s, busy 17%, dropped 0, imu 482928 samples 0 errors, knocks 39, events 1, saves 1001
+[TEACH] shot 4: too quiet (+3.9 dB)
+[SS] stats t=631095 level -51 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 10.0 inf/s, busy 17%, dropped 0, imu 490988 samples 0 errors, knocks 45, events 1, saves 1001
+[TEACH] shot 4: too quiet (+1.5 dB)
+[TEACH] shot 4: too quiet (+2.9 dB)
+[SS] stats t=641109 level -51 dB floor -50 dB, npu 1000 us runner 1026 us feat 302 us, 10.1 inf/s, busy 17%, dropped 0, imu 499053 samples 0 errors, knocks 45, events 1, saves 1001
+[SS] stats t=651109 level -49 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 9.9 inf/s, busy 17%, dropped 0, imu 507107 samples 0 errors, knocks 47, events 1, saves 1001
+[SS] stats t=661113 level -50 dB floor -50 dB, npu 1000 us runner 1030 us feat 298 us, 9.9 inf/s, busy 17%, dropped 0, imu 515164 samples 0 errors, knocks 47, events 1, saves 1001
+[SS] stats t=671113 level -50 dB floor -50 dB, npu 1000 us runner 1026 us feat 302 us, 9.9 inf/s, busy 16%, dropped 0, imu 523218 samples 0 errors, knocks 47, events 1, saves 1001
+[SS] stats t=681122 level -50 dB floor -50 dB, npu 1000 us runner 1027 us feat 303 us, 10.0 inf/s, busy 19%, dropped 0, imu 531279 samples 0 errors, knocks 47, events 1, saves 1001
