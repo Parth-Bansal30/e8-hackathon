@@ -1,0 +1,583 @@
+=== flashed 07:16:33 (debug)
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 59586 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1077 us, runner 1115 us (mean of 10); model 240224 bytes
+[SS] listening; 9 built-in sounds
+[SS] t=1279 +10.5 dB best 'Dog barking' 0.23 (thr 0.52), 2nd 'Baby crying' 0.16, felt no (0.0 mg) -> unknown
+[SS] t=6480 +4.8 dB best 'Speech' 0.18 (thr 0.50), 2nd 'Water running' 0.15, felt no (0.0 mg) -> quiet
+[SS] t=8425 +7.7 dB best 'Speech' 0.32 (thr 0.50), 2nd 'Quiet' 0.14, felt no (0.0 mg) -> quiet
+[SS] stats t=10000 level -52 dB floor -45 dB, npu 1077 us runner 1117 us feat 648 us, 11.2 inf/s, busy 75%, dropped 0, imu 7572 samples 0 errors, knocks 0, events 0
+[SS] t=9859 +6.4 dB best 'Water running' 0.19 (thr 0.50), 2nd 'Glass breaking' 0.09, felt no (0.0 mg) -> quiet
+[SS] t=11138 +11.5 dB best 'Dog barking' 0.30 (thr 0.52), 2nd 'Water running' 0.20, felt no (0.0 mg) -> unknown
+[SS] t=15503 +8.6 dB best 'Dog barking' 0.21 (thr 0.52), 2nd 'Baby crying' 0.13, felt no (0.0 mg) -> unknown
+[SS] stats t=20001 level -53 dB floor -52 dB, npu 1078 us runner 1117 us feat 648 us, 10.3 inf/s, busy 74%, dropped 0, imu 15630 samples 0 errors, knocks 2, events 0
+[SS] t=19569 +10.0 dB best 'Baby crying' 0.08 (thr 0.57), 2nd 'Knock' 0.06, felt no (0.0 mg) -> unknown
+[SS] t=21798 +7.9 dB best 'Water running' 0.23 (thr 0.50), 2nd 'Dog barking' 0.22, felt no (0.0 mg) -> quiet
+[SS] t=26245 +6.0 dB best 'Dog barking' 0.25 (thr 0.52), 2nd 'Glass breaking' 0.20, felt no (0.0 mg) -> quiet
+[SS] t=28795 +6.2 dB best 'Quiet' 0.32 (thr 0.50), 2nd 'Glass breaking' 0.25, felt no (0.0 mg) -> quiet
+[SS] stats t=30021 level -55 dB floor -54 dB, npu 1082 us runner 1122 us feat 647 us, 10.3 inf/s, busy 76%, dropped 0, imu 23691 samples 0 errors, knocks 2, events 0
+[SS] t=33255 +17.2 dB best 'Dog barking' 0.32 (thr 0.52), 2nd 'Speech' 0.13, felt no (0.0 mg) -> unknown
+[SS] t=35230 +9.4 dB best 'Glass breaking' 0.19 (thr 0.50), 2nd 'Dog barking' 0.12, felt no (0.0 mg) -> unknown
+[SS] t=37253 +10.0 dB best 'Water running' 0.31 (thr 0.50), 2nd 'Baby crying' 0.24, felt no (0.0 mg) -> unknown
+[SS] t=39114 +7.8 dB best 'Glass breaking' 0.17 (thr 0.50), 2nd 'Water running' 0.08, felt no (0.0 mg) -> quiet
+[SS] stats t=40058 level -54 dB floor -53 dB, npu 1083 us runner 1121 us feat 648 us, 10.4 inf/s, busy 75%, dropped 0, imu 31774 samples 0 errors, knocks 2, events 0
+[SS] t=40872 +5.7 dB best 'Quiet' 0.10 (thr 0.50), 2nd 'Speech' 0.09, felt no (0.0 mg) -> quiet
+[SS] t=42782 +5.9 dB best 'Glass breaking' 0.23 (thr 0.50), 2nd 'Water running' 0.17, felt no (0.0 mg) -> quiet
+[SS] t=45037 +5.6 dB best 'Baby crying' 0.22 (thr 0.57), 2nd 'Water running' 0.21, felt no (0.0 mg) -> quiet
+[SS] t=47856 +10.9 dB best 'Glass breaking' 0.26 (thr 0.50), 2nd 'Baby crying' 0.20, felt no (0.0 mg) -> unknown
+[SS] stats t=50091 level -52 dB floor -52 dB, npu 1078 us runner 1117 us feat 650 us, 10.4 inf/s, busy 77%, dropped 0, imu 39853 samples 0 errors, knocks 2, events 0
+[SS] t=50950 +3.4 dB best 'Water running' 0.28 (thr 0.50), 2nd 'Dog barking' 0.20, felt no (0.0 mg) -> quiet
+[SS] t=56208 +8.1 dB best 'Dog barking' 0.23 (thr 0.52), 2nd 'Speech' 0.01, felt no (0.0 mg) -> unknown
+[SS] stats t=60124 level -53 dB floor -53 dB, npu 1078 us runner 1117 us feat 710 us, 10.2 inf/s, busy 80%, dropped 0, imu 47934 samples 0 errors, knocks 2, events 0
+[SS] t=60922 +5.8 dB best 'Glass breaking' 0.25 (thr 0.50), 2nd 'Water running' 0.16, felt no (0.0 mg) -> quiet
+[SS] t=63444 +10.6 dB best 'Glass breaking' 0.21 (thr 0.50), 2nd 'Dog barking' 0.11, felt no (0.0 mg) -> unknown
+[SS] t=68093 +14.0 dB best 'Glass breaking' 0.14 (thr 0.50), 2nd 'Water running' 0.12, felt no (0.0 mg) -> unknown
+[SS] stats t=70124 level -56 dB floor -54 dB, npu 1077 us runner 1117 us feat 647 us, 10.3 inf/s, busy 74%, dropped 0, imu 55998 samples 0 errors, knocks 3, events 0
+[SS] t=70250 +5.8 dB best 'Speech' 0.11 (thr 0.50), 2nd 'Water running' 0.11, felt no (0.0 mg) -> quiet
+[SS] t=72946 +5.9 dB best 'Glass breaking' 0.25 (thr 0.50), 2nd 'Water running' 0.12, felt no (0.0 mg) -> quiet
+[SS] t=76263 +6.9 dB best 'Glass breaking' 0.31 (thr 0.50), 2nd 'Baby crying' 0.18, felt no (0.0 mg) -> quiet
+[SS] t=78386 +6.8 dB best 'Water running' 0.42 (thr 0.50), 2nd 'Glass breaking' 0.23, felt no (0.0 mg) -> quiet
+[SS] stats t=80190 level -52 dB floor -51 dB, npu 1078 us runner 1117 us feat 648 us, 10.3 inf/s, busy 77%, dropped 0, imu 64095 samples 0 errors, knocks 3, events 0
+[SS] t=79843 +5.1 dB best 'Glass breaking' 0.37 (thr 0.50), 2nd 'Knock' 0.13, felt no (0.0 mg) -> quiet
+[SS] stats t=90190 level -54 dB floor -55 dB, npu 1082 us runner 1121 us feat 648 us, 10.1 inf/s, busy 74%, dropped 0, imu 72159 samples 0 errors, knocks 3, events 0
+[SS] t=92160 +17.9 dB best 'Speech' 0.20 (thr 0.50), 2nd 'Dog barking' 0.14, felt no (0.0 mg) -> unknown
+[SS] t=93517 +5.3 dB best 'Glass breaking' 0.29 (thr 0.50), 2nd 'Speech' 0.24, felt no (0.0 mg) -> quiet
+[SS] t=95176 +15.6 dB best 'Glass breaking' 0.48 (thr 0.50), 2nd 'Baby crying' 0.12, felt no (0.0 mg) -> unknown
+[SS] t=96475 +15.3 dB best 'Water running' 0.24 (thr 0.50), 2nd 'Dog barking' 0.14, felt no (0.0 mg) -> unknown
+[SS] t=98081 +7.2 dB best 'Water running' 0.11 (thr 0.50), 2nd 'Speech' 0.04, felt no (0.0 mg) -> quiet
+[SS] stats t=100261 level -53 dB floor -49 dB, npu 1084 us runner 1123 us feat 648 us, 10.4 inf/s, busy 75%, dropped 0, imu 80258 samples 0 errors, knocks 8, events 0
+[SS] t=100958 +11.6 dB best 'Water running' 0.26 (thr 0.50), 2nd 'Baby crying' 0.16, felt no (0.0 mg) -> unknown
+[SS] t=102551 +7.8 dB best 'Water running' 0.18 (thr 0.50), 2nd 'Dog barking' 0.15, felt no (0.0 mg) -> quiet
+[SS] t=107363 +19.2 dB best 'Dog barking' 0.25 (thr 0.52), 2nd 'Speech' 0.23, felt no (0.0 mg) -> unknown
+[SS] stats t=110286 level -49 dB floor -52 dB, npu 1083 us runner 1122 us feat 648 us, 10.3 inf/s, busy 78%, dropped 0, imu 88336 samples 0 errors, knocks 9, events 0
+[SS] t=110284 +10.8 dB best 'Water running' 0.30 (thr 0.50), 2nd 'Speech' 0.13, felt no (0.0 mg) -> unknown
+[SS] t=113652 +18.1 dB best 'Glass breaking' 0.50 (thr 0.50), 2nd 'Quiet' 0.16, felt no (0.0 mg) -> maybe Glass breaking
+[SS] t=116370 +8.7 dB best 'Baby crying' 0.29 (thr 0.57), 2nd 'Water running' 0.25, felt no (0.0 mg) -> unknown
+=== flashed 07:19:19 (release)
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11876 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1026 us (mean of 10); model 240224 bytes
+[SS] listening; 9 built-in sounds
+[SS] t=4714 +8.0 dB best 'Glass breaking' 0.30 (thr 0.50), 2nd 'Water running' 0.23, felt no (0.0 mg) -> quiet
+[SS] stats t=10000 level -57 dB floor -55 dB, npu 1000 us runner 1027 us feat 303 us, 11.1 inf/s, busy 22%, dropped 0, imu 7568 samples 0 errors, knocks 0, events 0
+[SS] stats t=20000 level -53 dB floor -53 dB, npu 1000 us runner 1027 us feat 303 us, 9.9 inf/s, busy 21%, dropped 0, imu 15624 samples 0 errors, knocks 1, events 0
+[SS] t=19545 +3.8 dB best 'Quiet' 0.40 (thr 0.50), 2nd 'Glass breaking' 0.12, felt no (0.0 mg) -> quiet
+[SS] t=21958 +26.8 dB best 'Water running' 0.52 (thr 0.50), 2nd 'Dog barking' 0.13, felt no (0.0 mg) -> maybe Water running
+[SS] t=25015 +7.2 dB best 'Glass breaking' 0.20 (thr 0.50), 2nd 'Knock' 0.14, felt no (0.0 mg) -> quiet
+[SS] t=27566 +6.5 dB best 'Water running' 0.56 (thr 0.50), 2nd 'Baby crying' 0.16, felt no (0.0 mg) -> quiet
+[SS] stats t=30000 level -48 dB floor -53 dB, npu 1000 us runner 1026 us feat 303 us, 10.4 inf/s, busy 22%, dropped 0, imu 23679 samples 0 errors, knocks 8, events 1
+[SS] t=29931 +8.8 dB best 'Water running' 0.44 (thr 0.50), 2nd 'Glass breaking' 0.34, felt no (0.0 mg) -> unknown
+[SS] t=38607 +11.7 dB best 'Water running' 0.17 (thr 0.50), 2nd 'Dog barking' 0.17, felt no (0.0 mg) -> unknown
+[SS] stats t=40000 level -53 dB floor -49 dB, npu 1000 us runner 1027 us feat 303 us, 10.1 inf/s, busy 21%, dropped 0, imu 31731 samples 0 errors, knocks 8, events 1
+[SS] t=40078 +9.9 dB best 'Water running' 0.22 (thr 0.50), 2nd 'Speech' 0.12, felt no (0.0 mg) -> unknown
+[SS] t=45242 +7.6 dB best 'Dog barking' 0.23 (thr 0.52), 2nd 'Speech' 0.18, felt no (0.0 mg) -> quiet
+[SS] t=46670 +9.2 dB best 'Knock' 0.29 (thr 0.62), 2nd 'Water running' 0.21, felt yes (60.0 mg) -> maybe Knock
+[SS] t=48695 +11.2 dB best 'Water running' 0.38 (thr 0.50), 2nd 'Baby crying' 0.06, felt no (0.0 mg) -> unknown
+[SS] stats t=50000 level -50 dB floor -46 dB, npu 1000 us runner 1027 us feat 303 us, 10.4 inf/s, busy 23%, dropped 0, imu 39788 samples 0 errors, knocks 12, events 2
+[SS] t=50126 +11.6 dB best 'Water running' 0.32 (thr 0.50), 2nd 'Dog barking' 0.23, felt no (0.0 mg) -> unknown
+[SS] t=51673 +16.5 dB best 'Dog barking' 0.42 (thr 0.52), 2nd 'Water running' 0.30, felt no (0.0 mg) -> unknown
+[SS] t=57505 +23.0 dB best 'Glass breaking' 0.30 (thr 0.50), 2nd 'Water running' 0.10, felt no (0.0 mg) -> unknown
+[SS] stats t=60000 level -55 dB floor -51 dB, npu 1000 us runner 1027 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 47840 samples 0 errors, knocks 19, events 2
+[SS] t=62905 +24.2 dB best 'Knock' 0.49 (thr 0.62), 2nd 'Baby crying' 0.32, felt yes (65.0 mg) -> maybe Knock
+[SS] t=68690 +23.0 dB best 'Knock' 0.48 (thr 0.62), 2nd 'Siren' 0.33, felt yes (22.8 mg) -> maybe Knock
+[SS] stats t=70013 level -55 dB floor -45 dB, npu 1000 us runner 1027 us feat 303 us, 10.2 inf/s, busy 21%, dropped 0, imu 55906 samples 0 errors, knocks 31, events 2
+[SS] t=71763 +13.8 dB best 'Dog barking' 0.17 (thr 0.52), 2nd 'Water running' 0.16, felt no (0.0 mg) -> unknown
+[SS] t=73431 +25.2 dB best 'Water running' 0.33 (thr 0.50), 2nd 'Dog barking' 0.30, felt no (0.0 mg) -> unknown
+[SS] t=74720 +18.6 dB best 'Water running' 0.30 (thr 0.50), 2nd 'Baby crying' 0.29, felt yes (34.0 mg) -> maybe Knock
+[SS] stats t=80013 level -44 dB floor -48 dB, npu 1000 us runner 1027 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 63959 samples 0 errors, knocks 37, events 2
+[SS] t=79923 +22.5 dB best 'Knock' 0.64 (thr 0.62), 2nd 'Siren' 0.33, felt yes (38.0 mg) -> Knock
+[SS] t=85905 +23.2 dB best 'Knock' 0.45 (thr 0.62), 2nd 'Siren' 0.31, felt yes (65.8 mg) -> maybe Knock
+[SS] t=88602 +5.4 dB best 'Water running' 0.20 (thr 0.50), 2nd 'Glass breaking' 0.12, felt no (0.0 mg) -> quiet
+[SS] stats t=90021 level -55 dB floor -49 dB, npu 1000 us runner 1027 us feat 303 us, 10.3 inf/s, busy 22%, dropped 0, imu 72020 samples 0 errors, knocks 48, events 2
+[SS] t=90489 +6.0 dB best 'Water running' 0.55 (thr 0.50), 2nd 'Baby crying' 0.20, felt no (0.0 mg) -> quiet
+[SS] t=92025 +24.3 dB best 'Knock' 0.27 (thr 0.62), 2nd 'Glass breaking' 0.20, felt yes (38.4 mg) -> maybe Knock
+[SS] t=95756 +13.3 dB best 'Dog barking' 0.37 (thr 0.52), 2nd 'Water running' 0.17, felt no (0.0 mg) -> unknown
+[SS] t=97358 +18.2 dB best 'Dog barking' 0.80 (thr 0.52), 2nd 'Siren' 0.18, felt yes (73.0 mg) -> Dog barking
+[SS] stats t=100021 level -56 dB floor -40 dB, npu 1000 us runner 1027 us feat 303 us, 10.3 inf/s, busy 23%, dropped 0, imu 80072 samples 0 errors, knocks 60, events 3
+[SS] t=101685 +21.4 dB best 'Dog barking' 0.26 (thr 0.52), 2nd 'Water running' 0.25, felt no (0.0 mg) -> unknown
+[SS] t=103053 +19.2 dB best 'Dog barking' 0.78 (thr 0.52), 2nd 'Baby crying' 0.07, felt no (0.0 mg) -> Dog barking
+[SS] t=107925 +17.8 dB best 'Dog barking' 0.37 (thr 0.52), 2nd 'Water running' 0.17, felt yes (33.7 mg) -> maybe Knock
+[SS] stats t=110021 level -57 dB floor -30 dB, npu 1000 us runner 1031 us feat 299 us, 10.2 inf/s, busy 23%, dropped 0, imu 88128 samples 0 errors, knocks 67, events 4
+[SS] t=113295 +18.8 dB best 'Dog barking' 0.49 (thr 0.52), 2nd 'Baby crying' 0.18, felt no (0.0 mg) -> unknown
+[SS] t=114848 +10.7 dB best 'Water running' 0.31 (thr 0.50), 2nd 'Dog barking' 0.16, felt no (0.0 mg) -> unknown
+[SS] t=119152 +22.9 dB best 'Dog barking' 0.76 (thr 0.52), 2nd 'Water running' 0.23, felt no (0.0 mg) -> Dog barking
+[SS] stats t=120029 level -27 dB floor -35 dB, npu 1000 us runner 1027 us feat 305 us, 10.3 inf/s, busy 23%, dropped 0, imu 96189 samples 0 errors, knocks 75, events 5
+[SS] t=120379 +21.7 dB best 'Dog barking' 0.56 (thr 0.52), 2nd 'Water running' 0.38, felt no (0.0 mg) -> maybe Dog barking
+[SS] t=125036 +17.7 dB best 'Dog barking' 0.68 (thr 0.52), 2nd 'Siren' 0.37, felt yes (26.0 mg) -> Dog barking
+[SS] stats t=130029 level -55 dB floor -49 dB, npu 1000 us runner 1027 us feat 303 us, 10.0 inf/s, busy 22%, dropped 0, imu 104239 samples 0 errors, knocks 79, events 5
+[SS] t=130436 +17.5 dB best 'Dog barking' 0.56 (thr 0.52), 2nd 'Baby crying' 0.45, felt no (0.0 mg) -> maybe Dog barking
+[SS] t=131714 +17.1 dB best 'Dog barking' 0.49 (thr 0.52), 2nd 'Baby crying' 0.49, felt yes (56.0 mg) -> maybe Knock
+=== flashed 07:22:39 (release)
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11880 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1025 us (mean of 10); model 240224 bytes
+[SS] listening; 9 built-in sounds
+[SS] t=5157 +8.5 dB best 'Glass breaking' 0.25 (thr 0.50), 2nd 'Water running' 0.19, felt no (0.0 mg) -> unknown
+[SS] stats t=10000 level -54 dB floor -53 dB, npu 1000 us runner 1027 us feat 303 us, 11.1 inf/s, busy 22%, dropped 0, imu 7569 samples 0 errors, knocks 0, events 0
+[SS] t=10950 +21.3 dB best 'Dog barking' 0.32 (thr 0.52), 2nd 'Baby crying' 0.30, felt no (0.0 mg) -> unknown
+[SS] t=12434 +9.4 dB best 'Baby crying' 0.16 (thr 0.57), 2nd 'Glass breaking' 0.14, felt no (0.0 mg) -> unknown
+[SS] t=16665 +22.3 dB best 'Glass breaking' 0.36 (thr 0.50), 2nd 'Alarm' 0.05, felt no (0.0 mg) -> unknown
+[SS] stats t=20000 level -55 dB floor -54 dB, npu 999 us runner 1027 us feat 302 us, 10.2 inf/s, busy 22%, dropped 0, imu 15625 samples 0 errors, knocks 1, events 0
+[SS] t=22546 +23.1 dB best 'Knock' 0.46 (thr 0.62), 2nd 'Dog barking' 0.32, felt yes (24.0 mg) -> maybe Knock
+[SS] t=25693 +6.6 dB best 'Water running' 0.30 (thr 0.50), 2nd 'Speech' 0.21, felt no (0.0 mg) -> quiet
+[SS] t=28362 +20.0 dB best 'Knock' 0.54 (thr 0.62), 2nd 'Dog barking' 0.35, felt yes (24.5 mg) -> maybe Knock
+[SS] stats t=30000 level -56 dB floor -49 dB, npu 1000 us runner 1027 us feat 303 us, 10.3 inf/s, busy 21%, dropped 0, imu 23679 samples 0 errors, knocks 9, events 1
+[SS] t=33841 +21.9 dB best 'Water running' 0.29 (thr 0.50), 2nd 'Dog barking' 0.26, felt no (0.0 mg) -> unknown
+[SS] t=35152 +19.3 dB best 'Glass breaking' 0.37 (thr 0.50), 2nd 'Water running' 0.33, felt no (0.0 mg) -> unknown
+[SS] stats t=40000 level -51 dB floor -49 dB, npu 1000 us runner 1027 us feat 302 us, 10.1 inf/s, busy 22%, dropped 0, imu 31732 samples 0 errors, knocks 11, events 1
+[SS] t=39603 +21.4 dB best 'Knock' 0.67 (thr 0.62), 2nd 'Siren' 0.33, felt yes (25.8 mg) -> Knock
+[SS] t=42013 +7.8 dB best 'Baby crying' 0.09 (thr 0.57), 2nd 'Dog barking' 0.04, felt no (0.0 mg) -> quiet
+[SS] t=43479 +7.1 dB best 'Water running' 0.39 (thr 0.50), 2nd 'Baby crying' 0.21, felt no (0.0 mg) -> quiet
+[SS] t=45579 +22.0 dB best 'Knock' 0.33 (thr 0.62), 2nd 'Dog barking' 0.32, felt yes (23.0 mg) -> maybe Knock
+[SS] stats t=50003 level -56 dB floor -54 dB, npu 999 us runner 1026 us feat 302 us, 10.4 inf/s, busy 22%, dropped 0, imu 39790 samples 0 errors, knocks 24, events 1
+[SS] t=51296 +25.1 dB best 'Dog barking' 0.45 (thr 0.52), 2nd 'Knock' 0.18, felt yes (22.2 mg) -> maybe Knock
+[SS] t=54226 +8.1 dB best 'Glass breaking' 0.18 (thr 0.50), 2nd 'Dog barking' 0.08, felt no (0.0 mg) -> unknown
+[SS] t=57032 +20.3 dB best 'Dog barking' 0.79 (thr 0.52), 2nd 'Siren' 0.18, felt yes (73.6 mg) -> Dog barking
+[SS] stats t=60003 level -53 dB floor -47 dB, npu 999 us runner 1031 us feat 298 us, 10.2 inf/s, busy 22%, dropped 0, imu 47842 samples 0 errors, knocks 32, events 2
+[SS] t=62520 +20.0 dB best 'Dog barking' 0.54 (thr 0.52), 2nd 'Siren' 0.37, felt yes (20.9 mg) -> maybe Dog barking
+[SS] t=67253 +11.8 dB best 'Water running' 0.37 (thr 0.50), 2nd 'Baby crying' 0.21, felt yes (30.2 mg) -> maybe Knock
+[SS] t=68563 +15.9 dB best 'Dog barking' 0.36 (thr 0.52), 2nd 'Water running' 0.16, felt no (0.0 mg) -> unknown
+[SS] stats t=70003 level -53 dB floor -38 dB, npu 1000 us runner 1027 us feat 304 us, 10.2 inf/s, busy 23%, dropped 0, imu 55897 samples 0 errors, knocks 37, events 3
+[SS] t=72505 +10.7 dB best 'Water running' 0.26 (thr 0.50), 2nd 'Speech' 0.23, felt yes (28.3 mg) -> maybe Knock
+[SS] t=73789 +13.0 dB best 'Baby crying' 0.34 (thr 0.57), 2nd 'Dog barking' 0.23, felt no (0.0 mg) -> unknown
+[SS] stats t=80003 level -45 dB floor -49 dB, npu 999 us runner 1027 us feat 360 us, 10.1 inf/s, busy 22%, dropped 0, imu 63949 samples 0 errors, knocks 39, events 3
+[SS] t=79874 +21.1 dB best 'Dog barking' 0.65 (thr 0.52), 2nd 'Water running' 0.39, felt no (0.0 mg) -> Dog barking
+[SS] t=85156 +16.2 dB best 'Dog barking' 0.64 (thr 0.52), 2nd 'Knock' 0.31, felt no (0.0 mg) -> Dog barking
+[SS] stats t=90003 level -55 dB floor -53 dB, npu 1000 us runner 1027 us feat 303 us, 10.1 inf/s, busy 23%, dropped 0, imu 72005 samples 0 errors, knocks 44, events 4
+[SS] t=90581 +19.8 dB best 'Dog barking' 0.66 (thr 0.52), 2nd 'Baby crying' 0.23, felt no (0.0 mg) -> Dog barking
+[SS] t=94312 +1.5 dB best 'Quiet' 0.32 (thr 0.50), 2nd 'Alarm' 0.28, felt yes (78.4 mg) -> quiet
+[SS] t=96440 +24.1 dB best 'Dog barking' 0.45 (thr 0.52), 2nd 'Baby crying' 0.12, felt yes (41.2 mg) -> maybe Knock
+[SS] t=98388 +10.9 dB best 'Baby crying' 0.17 (thr 0.57), 2nd 'Glass breaking' 0.16, felt yes (157.5 mg) -> maybe Knock
+[SS] stats t=100003 level -44 dB floor -47 dB, npu 999 us runner 1027 us feat 303 us, 10.3 inf/s, busy 23%, dropped 0, imu 80058 samples 0 errors, knocks 56, events 5
+[SS] t=99956 +18.9 dB best 'Water running' 0.30 (thr 0.50), 2nd 'Glass breaking' 0.30, felt no (0.0 mg) -> unknown
+[SS] t=101206 +16.6 dB best 'Water running' 0.25 (thr 0.50), 2nd 'Dog barking' 0.20, felt yes (68.7 mg) -> maybe Knock
+[SS] t=102536 +5.8 dB best 'Baby crying' 0.65 (thr 0.57), 2nd 'Glass breaking' 0.23, felt no (0.0 mg) -> quiet
+[SS] t=104199 +7.4 dB best 'Glass breaking' 0.25 (thr 0.50), 2nd 'Knock' 0.21, felt yes (63.1 mg) -> quiet
+[SS] t=107871 +14.3 dB best 'Baby crying' 0.65 (thr 0.57), 2nd 'Alarm' 0.29, felt no (0.0 mg) -> Baby crying
+[SS] stats t=110003 level -56 dB floor -43 dB, npu 999 us runner 1027 us feat 303 us, 10.4 inf/s, busy 23%, dropped 0, imu 88114 samples 0 errors, knocks 69, events 6
+[SS] t=113616 +8.8 dB best 'Baby crying' 0.67 (thr 0.57), 2nd 'Water running' 0.46, felt no (0.0 mg) -> Baby crying
+[SS] t=116689 +6.9 dB best 'Dog barking' 0.19 (thr 0.52), 2nd 'Baby crying' -0.04, felt no (0.0 mg) -> quiet
+[SS] t=118141 +14.6 dB best 'Water running' 0.36 (thr 0.50), 2nd 'Knock' 0.31, felt no (0.0 mg) -> unknown
+[SS] stats t=120003 level -45 dB floor -40 dB, npu 1000 us runner 1027 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 96168 samples 0 errors, knocks 69, events 6
+[SS] t=124810 +13.9 dB best 'Baby crying' 0.40 (thr 0.57), 2nd 'Alarm' 0.17, felt no (0.0 mg) -> unknown
+[SS] t=126064 +11.4 dB best 'Baby crying' 0.52 (thr 0.57), 2nd 'Glass breaking' 0.09, felt no (0.0 mg) -> unknown
+[SS] stats t=130003 level -55 dB floor -53 dB, npu 999 us runner 1026 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 104220 samples 0 errors, knocks 69, events 6
+[SS] t=130572 +10.3 dB best 'Baby crying' 0.76 (thr 0.57), 2nd 'Alarm' 0.31, felt yes (60.0 mg) -> Baby crying
+[SS] t=135203 +14.1 dB best 'Water running' 0.32 (thr 0.50), 2nd 'Baby crying' 0.31, felt no (0.0 mg) -> unknown
+[SS] t=136454 +10.8 dB best 'Alarm' 0.47 (thr 0.58), 2nd 'Siren' 0.34, felt no (0.0 mg) -> unknown
+[SS] stats t=140003 level -59 dB floor -48 dB, npu 1000 us runner 1026 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 112274 samples 0 errors, knocks 71, events 6
+[SS] t=141814 +11.2 dB best 'Baby crying' 0.63 (thr 0.57), 2nd 'Water running' 0.55, felt no (0.0 mg) -> Baby crying
+[SS] t=145358 +13.2 dB best 'Water running' 0.31 (thr 0.50), 2nd 'Knock' 0.16, felt no (0.0 mg) -> unknown
+[SS] t=147261 +14.9 dB best 'Alarm' 0.81 (thr 0.58), 2nd 'Glass breaking' 0.41, felt no (0.0 mg) -> Alarm
+[SS] stats t=150003 level -58 dB floor -51 dB, npu 1000 us runner 1027 us feat 303 us, 10.2 inf/s, busy 23%, dropped 0, imu 120327 samples 0 errors, knocks 75, events 7
+[SS] t=149284 +9.4 dB best 'Dog barking' 0.48 (thr 0.52), 2nd 'Speech' 0.23, felt no (0.0 mg) -> unknown
+[SS] t=152995 +7.0 dB best 'Knock' 0.13 (thr 0.62), 2nd 'Baby crying' 0.10, felt no (0.0 mg) -> quiet
+[SS] t=158730 +18.8 dB best 'Alarm' 0.91 (thr 0.58), 2nd 'Glass breaking' 0.39, felt no (0.0 mg) -> Alarm
+[SS] stats t=160003 level -33 dB floor -46 dB, npu 999 us runner 1027 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 128381 samples 0 errors, knocks 75, events 7
+[SS] t=159960 +16.6 dB best 'Alarm' 0.89 (thr 0.58), 2nd 'Glass breaking' 0.41, felt no (0.0 mg) -> Alarm
+[SS] t=162301 +5.5 dB best 'Dog barking' 0.12 (thr 0.52), 2nd 'Quiet' 0.10, felt yes (266.5 mg) -> quiet
+[SS] t=164264 +14.5 dB best 'Alarm' 0.91 (thr 0.58), 2nd 'Water running' 0.24, felt no (0.0 mg) -> Alarm
+[SS] t=167412 +3.0 dB best 'Water running' 0.41 (thr 0.50), 2nd 'Baby crying' 0.04, felt no (0.0 mg) -> quiet
+[SS] stats t=170010 level -57 dB floor -51 dB, npu 1000 us runner 1027 us feat 303 us, 10.4 inf/s, busy 23%, dropped 0, imu 136443 samples 0 errors, knocks 79, events 7
+[SS] t=170317 +15.3 dB best 'Glass breaking' 0.56 (thr 0.50), 2nd 'Alarm' 0.44, felt no (0.0 mg) -> Glass breaking
+[SS] t=171558 +16.2 dB best 'Glass breaking' 0.40 (thr 0.50), 2nd 'Alarm' 0.30, felt no (0.0 mg) -> unknown
+[SS] t=176199 +14.7 dB best 'Alarm' 0.89 (thr 0.58), 2nd 'Baby crying' 0.24, felt no (0.0 mg) -> Alarm
+[SS] stats t=180010 level -57 dB floor -54 dB, npu 999 us runner 1026 us feat 303 us, 10.2 inf/s, busy 23%, dropped 0, imu 144497 samples 0 errors, knocks 79, events 9
+[SS] t=180674 +1.8 dB best 'Quiet' 0.20 (thr 0.50), 2nd 'Alarm' 0.15, felt no (0.0 mg) -> quiet
+[SS] t=181896 +14.9 dB best 'Alarm' 0.69 (thr 0.58), 2nd 'Baby crying' 0.19, felt no (0.0 mg) -> Alarm
+[SS] t=186672 +20.8 dB best 'Alarm' 0.89 (thr 0.58), 2nd 'Glass breaking' 0.33, felt no (0.0 mg) -> Alarm
+[SS] t=187922 +19.6 dB best 'Alarm' 0.88 (thr 0.58), 2nd 'Glass breaking' 0.25, felt no (0.0 mg) -> Alarm
+[SS] stats t=190028 level -55 dB floor -51 dB, npu 1000 us runner 1027 us feat 303 us, 10.3 inf/s, busy 23%, dropped 0, imu 152565 samples 0 errors, knocks 79, events 9
+[SS] t=191283 +6.8 dB best 'Water running' 0.36 (thr 0.50), 2nd 'Glass breaking' 0.06, felt no (0.0 mg) -> quiet
+[SS] t=192676 +13.7 dB best 'Glass breaking' 0.30 (thr 0.50), 2nd 'Quiet' 0.27, felt no (0.0 mg) -> unknown
+[SS] t=194668 +10.3 dB best 'Glass breaking' 0.33 (thr 0.50), 2nd 'Water running' 0.21, felt no (0.0 mg) -> unknown
+[SS] t=195956 +9.8 dB best 'Glass breaking' 0.31 (thr 0.50), 2nd 'Water running' 0.12, felt no (0.0 mg) -> unknown
+[SS] t=197738 +8.8 dB best 'Glass breaking' 0.41 (thr 0.50), 2nd 'Water running' 0.19, felt no (0.0 mg) -> unknown
+[SS] stats t=200028 level -48 dB floor -47 dB, npu 999 us runner 1027 us feat 304 us, 10.4 inf/s, busy 23%, dropped 0, imu 160617 samples 0 errors, knocks 82, events 9
+[SS] t=199740 +4.1 dB best 'Glass breaking' 0.48 (thr 0.50), 2nd 'Water running' 0.15, felt no (0.0 mg) -> quiet
+[SS] t=203301 +8.5 dB best 'Water running' 0.21 (thr 0.50), 2nd 'Baby crying' 0.18, felt no (0.0 mg) -> unknown
+[SS] stats t=210043 level -51 dB floor -52 dB, npu 1000 us runner 1027 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 168685 samples 0 errors, knocks 84, events 9
+[SS] t=209753 +18.4 dB best 'Glass breaking' 0.76 (thr 0.50), 2nd 'Alarm' 0.21, felt no (0.0 mg) -> Glass breaking
+[SS] t=215732 +14.4 dB best 'Glass breaking' 0.75 (thr 0.50), 2nd 'Baby crying' 0.44, felt no (0.0 mg) -> Glass breaking
+[SS] stats t=220043 level -56 dB floor -56 dB, npu 999 us runner 1027 us feat 303 us, 10.1 inf/s, busy 22%, dropped 0, imu 176739 samples 0 errors, knocks 84, events 10
+[SS] t=221045 +11.9 dB best 'Quiet' 0.44 (thr 0.50), 2nd 'Glass breaking' 0.34, felt no (0.0 mg) -> unknown
+[SS] t=226787 +17.3 dB best 'Glass breaking' 0.40 (thr 0.50), 2nd 'Quiet' 0.25, felt no (0.0 mg) -> unknown
+[SS] stats t=230053 level -56 dB floor -56 dB, npu 999 us runner 1026 us feat 303 us, 10.2 inf/s, busy 21%, dropped 0, imu 184801 samples 0 errors, knocks 84, events 10
+[SS] t=232530 +16.6 dB best 'Glass breaking' 0.68 (thr 0.50), 2nd 'Alarm' 0.36, felt no (0.0 mg) -> Glass breaking
+[SS] t=238288 +12.8 dB best 'Baby crying' 0.48 (thr 0.57), 2nd 'Siren' 0.39, felt no (0.0 mg) -> unknown
+[SS] stats t=240053 level -55 dB floor -45 dB, npu 1000 us runner 1027 us feat 304 us, 10.1 inf/s, busy 22%, dropped 0, imu 192853 samples 0 errors, knocks 84, events 10
+[SS] t=241138 +7.6 dB best 'Water running' 0.39 (thr 0.50), 2nd 'Speech' 0.11, felt no (0.0 mg) -> quiet
+[SS] t=243501 +5.9 dB best 'Alarm' 0.56 (thr 0.58), 2nd 'Baby crying' 0.50, felt no (0.0 mg) -> quiet
+[SS] stats t=250065 level -44 dB floor -46 dB, npu 1000 us runner 1027 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 200919 samples 0 errors, knocks 84, events 10
+[SS] t=249427 +6.3 dB best 'Baby crying' 0.55 (thr 0.57), 2nd 'Siren' 0.35, felt no (0.0 mg) -> quiet
+[SS] t=254967 +13.7 dB best 'Siren' 0.59 (thr 0.59), 2nd 'Water running' 0.46, felt no (0.0 mg) -> maybe Siren
+[SS] stats t=260065 level -58 dB floor -55 dB, npu 1000 us runner 1027 us feat 303 us, 10.1 inf/s, busy 22%, dropped 0, imu 208970 samples 0 errors, knocks 84, events 11
+[SS] t=260451 +10.6 dB best 'Siren' 0.68 (thr 0.59), 2nd 'Baby crying' 0.41, felt no (0.0 mg) -> Siren
+[SS] t=266169 +5.7 dB best 'Baby crying' 0.49 (thr 0.57), 2nd 'Water running' 0.35, felt no (0.0 mg) -> quiet
+[SS] stats t=270065 level -55 dB floor -51 dB, npu 999 us runner 1027 us feat 303 us, 10.1 inf/s, busy 22%, dropped 0, imu 217024 samples 0 errors, knocks 84, events 11
+[SS] t=272406 +15.4 dB best 'Siren' 0.69 (thr 0.59), 2nd 'Water running' 0.42, felt no (0.0 mg) -> Siren
+[SS] t=277650 +12.7 dB best 'Water running' 0.50 (thr 0.50), 2nd 'Siren' 0.41, felt no (0.0 mg) -> maybe Water running
+[SS] stats t=280065 level -56 dB floor -48 dB, npu 999 us runner 1027 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 225079 samples 0 errors, knocks 84, events 12
+[SS] t=283508 +8.3 dB best 'Water running' 0.48 (thr 0.50), 2nd 'Baby crying' 0.18, felt no (0.0 mg) -> unknown
+[SS] t=289144 +13.9 dB best 'Water running' 0.59 (thr 0.50), 2nd 'Baby crying' 0.26, felt no (0.0 mg) -> Water running
+[SS] stats t=290065 level -55 dB floor -53 dB, npu 999 us runner 1027 us feat 303 us, 10.1 inf/s, busy 22%, dropped 0, imu 233132 samples 0 errors, knocks 84, events 12
+[SS] t=290467 +7.4 dB best 'Water running' 0.39 (thr 0.50), 2nd 'Glass breaking' 0.33, felt no (0.0 mg) -> quiet
+[SS] t=294063 +10.7 dB best 'Water running' 0.47 (thr 0.50), 2nd 'Baby crying' 0.28, felt no (0.0 mg) -> unknown
+[SS] t=295855 +7.2 dB best 'Water running' 0.51 (thr 0.50), 2nd 'Quiet' 0.23, felt no (0.0 mg) -> quiet
+[SS] stats t=300065 level -52 dB floor -54 dB, npu 1000 us runner 1027 us feat 303 us, 10.2 inf/s, busy 21%, dropped 0, imu 241188 samples 0 errors, knocks 84, events 12
+[SS] t=299627 +13.7 dB best 'Water running' 0.80 (thr 0.50), 2nd 'Siren' 0.21, felt no (0.0 mg) -> Water running
+[SS] t=305396 +12.2 dB best 'Water running' 0.86 (thr 0.50), 2nd 'Siren' 0.30, felt no (0.0 mg) -> Water running
+[SS] t=306796 +3.2 dB best 'Glass breaking' 0.48 (thr 0.50), 2nd 'Water running' 0.40, felt no (0.0 mg) -> quiet
+[SS] stats t=310065 level -55 dB floor -54 dB, npu 999 us runner 1027 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 249243 samples 0 errors, knocks 84, events 12
+[SS] t=310752 +11.0 dB best 'Water running' 0.71 (thr 0.50), 2nd 'Siren' 0.38, felt no (0.0 mg) -> Water running
+[SS] t=316372 +6.0 dB best 'Glass breaking' 0.33 (thr 0.50), 2nd 'Alarm' 0.13, felt no (0.0 mg) -> quiet
+[SS] stats t=320065 level -55 dB floor -55 dB, npu 1000 us runner 1027 us feat 303 us, 10.1 inf/s, busy 22%, dropped 0, imu 257296 samples 0 errors, knocks 85, events 12
+[SS] t=322119 +9.2 dB best 'Water running' 0.59 (thr 0.50), 2nd 'Baby crying' 0.36, felt no (0.0 mg) -> Water running
+[SS] stats t=330065 level -55 dB floor -56 dB, npu 999 us runner 1026 us feat 303 us, 10.1 inf/s, busy 21%, dropped 0, imu 265351 samples 0 errors, knocks 85, events 12
+[SS] stats t=340065 level -54 dB floor -55 dB, npu 999 us runner 1027 us feat 303 us, 9.9 inf/s, busy 20%, dropped 0, imu 273405 samples 0 errors, knocks 85, events 12
+[SS] stats t=350065 level -56 dB floor -56 dB, npu 999 us runner 1027 us feat 303 us, 10.0 inf/s, busy 21%, dropped 0, imu 281456 samples 0 errors, knocks 85, events 12
+[SS] t=359177 +11.8 dB best 'Glass breaking' 0.35 (thr 0.50), 2nd 'Water running' 0.27, felt no (0.0 mg) -> unknown
+[SS] stats t=360065 level -54 dB floor -53 dB, npu 1000 us runner 1025 us feat 303 us, 10.0 inf/s, busy 21%, dropped 0, imu 289511 samples 0 errors, knocks 86, events 12
+[CAL] 'knock': measuring
+[CAL] 'knock' example 1: +14.9 dB, cos to the trained profile -0.01
+[CAL] 'knock' example 2: +9.1 dB, cos to the trained profile -0.07
+[SS] stats t=370074 level -56 dB floor -54 dB, npu 1000 us runner 1027 us feat 303 us, 10.4 inf/s, busy 22%, dropped 0, imu 297575 samples 0 errors, knocks 86, events 12
+[CAL] 'knock' example 3: +14.3 dB, cos to the trained profile -0.06
+[CAL] 'knock' example 4: +19.8 dB, cos to the trained profile 0.40
+[CAL] 'knock' example 5: +12.4 dB, cos to the trained profile 0.41
+[SS] stats t=380074 level -38 dB floor -54 dB, npu 1000 us runner 1027 us feat 303 us, 10.2 inf/s, busy 21%, dropped 0, imu 305626 samples 0 errors, knocks 89, events 12
+[CAL] 'knock' example 6: +14.5 dB, cos to the trained profile 0.60
+[CAL] 'knock' example 7: +8.5 dB, cos to the trained profile -0.11
+[CAL] 'knock' example 8: +21.7 dB, cos to the trained profile 0.01
+[CAL] 'knock' example 9: +15.4 dB, cos to the trained profile 0.45
+[SS] stats t=390089 level -57 dB floor -53 dB, npu 1000 us runner 1027 us feat 302 us, 10.5 inf/s, busy 21%, dropped 0, imu 313694 samples 0 errors, knocks 89, events 12
+[CAL] 'knock' example 10: +10.1 dB, cos to the trained profile 0.25
+[CAL] 'knock' example 11: +18.5 dB, cos to the trained profile 0.23
+[SS] stats t=400089 level -54 dB floor -53 dB, npu 999 us runner 1026 us feat 303 us, 10.1 inf/s, busy 20%, dropped 0, imu 321748 samples 0 errors, knocks 89, events 12
+[CAL] 'knock' example 12: +15.6 dB, cos to the trained profile 0.38
+[CAL] 'knock' from 12 board examples: thr 0.500 (trained 0.620), cos to the trained profile 0.297
+[CAL] proto knock 0.5000 0.05301 0.11195 -0.04350 -0.09855 -0.02006 0.07328 -0.09970 0.32603 -0.08265 0.01519 0.11874 0.01361 -0.07210 0.03113 -0.11193 0.05542 -0.02047 0.03355 0.09084 0.01326 0.10378 -0.04620 0.34137 0.08005 0.03798 0.05138 -0.09007 0.05785 0.00568 -0.29111 -0.10560 0.19280 -0.07192 -0.04386 -0.07917 -0.12123 0.13161 0.04433 -0.25331 -0.04866 -0.01469 0.02801 0.03515 -0.19060 0.03602 -0.10751 -0.09622 -0.20295 -0.03934 0.16648 0.01125 0.25938 -0.11488 -0.10976 0.22675 0.10543 -0.03177 -0.17883 0.01809 0.16404 -0.14201 0.06000 -0.15770 0.06645
+[CAL] 'dog': measuring
+[SS] stats t=410101 level -53 dB floor -55 dB, npu 1000 us runner 1027 us feat 303 us, 10.2 inf/s, busy 21%, dropped 0, imu 329812 samples 0 errors, knocks 89, events 12
+[CAL] 'dog' example 1: +8.5 dB, cos to the trained profile -0.09
+[CAL] 'dog' example 2: +20.2 dB, cos to the trained profile 0.76
+[CAL] 'dog' example 3: +16.5 dB, cos to the trained profile 0.62
+[CAL] 'dog' example 4: +14.2 dB, cos to the trained profile 0.44
+[SS] stats t=420101 level -57 dB floor -51 dB, npu 1000 us runner 1027 us feat 303 us, 10.3 inf/s, busy 22%, dropped 0, imu 337864 samples 0 errors, knocks 89, events 12
+[CAL] 'dog' example 5: +17.2 dB, cos to the trained profile 0.63
+[CAL] 'dog' example 6: +17.1 dB, cos to the trained profile 0.52
+[CAL] 'dog' example 7: +16.2 dB, cos to the trained profile 0.61
+[SS] stats t=430126 level -39 dB floor -47 dB, npu 999 us runner 1027 us feat 304 us, 10.3 inf/s, busy 22%, dropped 0, imu 345940 samples 0 errors, knocks 91, events 12
+[CAL] 'dog' example 8: +16.0 dB, cos to the trained profile 0.41
+[CAL] 'dog' example 9: +18.4 dB, cos to the trained profile 0.82
+[CAL] 'dog' example 10: +16.1 dB, cos to the trained profile 0.43
+[SS] stats t=440126 level -54 dB floor -49 dB, npu 1000 us runner 1027 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 353994 samples 0 errors, knocks 96, events 12
+[CAL] 'dog' example 11: +23.0 dB, cos to the trained profile 0.56
+[CAL] 'dog' example 12: +19.8 dB, cos to the trained profile 0.60
+[SS] stats t=450129 level -57 dB floor -55 dB, npu 999 us runner 1027 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 362050 samples 0 errors, knocks 96, events 12
+[CAL] 'dog' from 12 board examples: thr 0.500 (trained 0.521), cos to the trained profile 0.828
+[CAL] proto dog 0.5000 0.14963 -0.04176 -0.14577 -0.08955 -0.05769 0.11441 -0.10088 0.14237 0.02216 -0.12770 0.15196 0.07609 -0.10672 0.10405 0.11201 0.10533 0.01197 -0.02546 -0.01741 0.05480 0.12856 0.07425 0.06627 0.13838 -0.13605 0.18348 -0.19214 0.02939 0.12710 0.14023 -0.14181 0.18911 0.15985 -0.03675 0.04236 -0.26149 -0.06811 0.20001 0.07336 0.27094 0.04506 0.12199 0.03164 -0.11707 -0.10116 -0.01606 0.09974 -0.05687 0.08894 0.16304 0.02966 0.29047 -0.09724 0.11229 0.06336 0.06912 0.01416 -0.04845 -0.16086 0.04376 -0.07161 -0.21591 -0.21818 0.14418
+[CAL] 'baby': measuring
+[CAL] 'baby' example 1: +17.3 dB, cos to the trained profile 0.80
+[CAL] 'baby' example 2: +14.8 dB, cos to the trained profile 0.67
+[SS] stats t=460129 level -31 dB floor -46 dB, npu 999 us runner 1027 us feat 305 us, 10.1 inf/s, busy 21%, dropped 0, imu 370102 samples 0 errors, knocks 96, events 12
+[CAL] 'baby' example 3: +17.8 dB, cos to the trained profile 0.58
+[CAL] 'baby' example 4: +15.8 dB, cos to the trained profile 0.85
+[SS] stats t=470137 level -55 dB floor -45 dB, npu 1000 us runner 1027 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 378165 samples 0 errors, knocks 96, events 12
+[CAL] 'baby' example 5: +13.1 dB, cos to the trained profile 0.77
+[SS] stats t=480137 level -32 dB floor -45 dB, npu 1000 us runner 1027 us feat 305 us, 10.1 inf/s, busy 22%, dropped 0, imu 386217 samples 0 errors, knocks 97, events 12
+[CAL] 'baby' example 6: +15.1 dB, cos to the trained profile 0.84
+[CAL] 'baby' example 7: +16.3 dB, cos to the trained profile 0.59
+[CAL] 'baby' example 8: +16.1 dB, cos to the trained profile 0.38
+[SS] stats t=490155 level -54 dB floor -50 dB, npu 1000 us runner 1027 us feat 303 us, 10.4 inf/s, busy 22%, dropped 0, imu 394288 samples 0 errors, knocks 101, events 12
+[CAL] 'baby' example 9: +16.4 dB, cos to the trained profile 0.65
+[CAL] 'baby' from 9 board examples: thr 0.500 (trained 0.571), cos to the trained profile 0.889
+[CAL] proto baby 0.5000 0.02284 -0.24944 -0.00572 0.02677 0.02905 0.06247 0.02776 0.27177 0.27758 -0.30782 0.04174 0.01601 -0.04508 0.06406 -0.06382 -0.06301 0.07537 -0.18255 -0.26024 0.06108 -0.12242 -0.10676 0.16981 0.09558 -0.19660 0.10378 -0.01579 0.09048 0.17299 0.04415 0.01344 -0.02866 0.03880 0.05101 0.06541 -0.10835 -0.09107 0.05104 -0.00512 0.06160 -0.29440 0.01315 -0.08613 0.01740 -0.05212 -0.03745 -0.25681 -0.02982 0.16671 0.11647 -0.07626 -0.06596 0.06264 -0.07089 0.08737 -0.16099 0.03047 -0.00866 -0.13932 -0.03120 0.01431 0.07145 -0.28717 0.00652
+[SS] t=497946 +16.5 dB best 'Knock' 0.69 (thr 0.50), 2nd 'Dog barking' 0.48, felt no (0.0 mg) -> Knock
+[SS] stats t=500155 level -56 dB floor -53 dB, npu 999 us runner 1027 us feat 303 us, 10.1 inf/s, busy 23%, dropped 0, imu 402341 samples 0 errors, knocks 103, events 13
+[SS] t=503739 +14.0 dB best 'Knock' 0.65 (thr 0.50), 2nd 'Glass breaking' 0.29, felt no (0.0 mg) -> Knock
+[SS] t=505254 +10.7 dB best 'Knock' 0.72 (thr 0.50), 2nd 'Dog barking' 0.41, felt no (0.0 mg) -> Knock
+[SS] t=506612 +5.3 dB best 'Knock' 0.24 (thr 0.50), 2nd 'Glass breaking' 0.06, felt no (0.0 mg) -> quiet
+[SS] stats t=510155 level -55 dB floor -55 dB, npu 1000 us runner 1027 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 410395 samples 0 errors, knocks 103, events 13
+[SS] stats t=520162 level -56 dB floor -55 dB, npu 999 us runner 1027 us feat 303 us, 10.0 inf/s, busy 22%, dropped 0, imu 418456 samples 0 errors, knocks 103, events 13
+[SS] t=519356 +7.9 dB best 'Quiet' 0.49 (thr 0.50), 2nd 'Knock' 0.27, felt no (0.0 mg) -> quiet
+[SS] t=520658 +8.2 dB best 'Knock' 0.39 (thr 0.50), 2nd 'Quiet' 0.38, felt no (0.0 mg) -> unknown
+[CAL] 'knock': measuring
+[CAL] 'knock' example 1: +8.4 dB, cos to the trained profile 0.15
+[SS] stats t=530162 level -58 dB floor -55 dB, npu 1000 us runner 1027 us feat 303 us, 10.2 inf/s, busy 21%, dropped 0, imu 426507 samples 0 errors, knocks 103, events 13
+[CAL] 'knock' example 2: +14.6 dB, cos to the trained profile 0.26
+[SS] stats t=540173 level -54 dB floor -55 dB, npu 1000 us runner 1028 us feat 303 us, 10.2 inf/s, busy 21%, dropped 0, imu 434572 samples 0 errors, knocks 104, events 13
+[CAL] 'knock' example 3: +15.6 dB, cos to the trained profile 0.11
+[SS] stats t=550173 level -54 dB floor -53 dB, npu 999 us runner 1027 us feat 303 us, 10.1 inf/s, busy 21%, dropped 0, imu 442624 samples 0 errors, knocks 104, events 13
+[CAL] 'knock' example 4: +9.2 dB, cos to the trained profile 0.27
+[SS] stats t=560180 level -55 dB floor -54 dB, npu 1000 us runner 1027 us feat 303 us, 10.3 inf/s, busy 22%, dropped 0, imu 450687 samples 0 errors, knocks 104, events 13
+[CAL] 'knock' from 4 board examples: thr 0.644 (trained 0.620), cos to the trained profile 0.222
+[CAL] proto knock 0.6441 -0.00788 0.19881 -0.02762 -0.12984 -0.05574 -0.09647 -0.04870 0.22177 -0.13601 0.03053 0.10530 0.03819 -0.08840 0.01340 -0.14205 0.08176 0.05412 0.09399 0.01530 0.07222 0.12175 0.03120 0.29341 0.04015 0.07395 0.06986 -0.06791 0.08371 0.08931 -0.19962 -0.13784 0.17125 -0.04546 -0.09345 -0.16161 -0.15811 0.01230 0.02589 -0.14900 0.00100 0.02352 -0.08806 0.01133 -0.21651 0.00129 -0.15403 -0.08329 -0.16406 -0.02184 0.17208 -0.02043 0.21515 -0.15901 -0.17125 0.29974 0.17851 0.01057 -0.17408 0.04269 0.24924 -0.15490 0.05021 -0.03199 0.01763
+[CAL] 'dog': measuring
+[CAL] 'dog' example 1: +11.0 dB, cos to the trained profile 0.27
+[SS] stats t=570180 level -43 dB floor -55 dB, npu 1000 us runner 1027 us feat 302 us, 10.0 inf/s, busy 21%, dropped 0, imu 458740 samples 0 errors, knocks 105, events 13
+[CAL] 'dog' example 2: +13.4 dB, cos to the trained profile 0.74
+[CAL] 'dog' example 3: +9.6 dB, cos to the trained profile 0.56
+[CAL] 'dog' example 4: +9.3 dB, cos to the trained profile 0.43
+[SS] stats t=580190 level -56 dB floor -55 dB, npu 1000 us runner 1027 us feat 302 us, 10.3 inf/s, busy 22%, dropped 0, imu 466802 samples 0 errors, knocks 105, events 13
+[CAL] 'dog' example 5: +9.9 dB, cos to the trained profile 0.65
+[CAL] 'dog' example 6: +9.7 dB, cos to the trained profile 0.68
+[CAL] 'dog' example 7: +12.6 dB, cos to the trained profile 0.60
+[SS] stats t=590190 level -56 dB floor -54 dB, npu 1000 us runner 1025 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 474857 samples 0 errors, knocks 105, events 13
+[CAL] 'dog' example 8: +14.6 dB, cos to the trained profile 0.58
+[CAL] 'dog' example 9: +21.9 dB, cos to the trained profile -0.12
+[CAL] 'dog' example 10: +8.1 dB, cos to the trained profile 0.48
+[SS] stats t=600208 level -54 dB floor -52 dB, npu 1000 us runner 1027 us feat 303 us, 10.3 inf/s, busy 22%, dropped 0, imu 482925 samples 0 errors, knocks 123, events 13
+[CAL] 'dog' example 11: +8.4 dB, cos to the trained profile 0.50
+[CAL] 'dog' from 11 board examples: thr 0.500 (trained 0.521), cos to the trained profile 0.743
+[CAL] proto dog 0.5000 0.15877 0.03897 -0.11846 -0.11332 -0.03351 0.07790 -0.11429 0.14510 0.08920 -0.17143 0.11409 0.13142 -0.10609 0.09546 -0.02602 0.14317 0.01745 0.00850 -0.07633 0.04577 0.09508 0.05214 0.06235 0.19966 -0.09457 0.16610 -0.05805 0.09500 0.13458 0.08015 -0.06575 0.21611 0.10548 -0.10254 -0.01220 -0.28344 -0.04054 0.18616 0.02359 0.29699 0.00356 0.08434 -0.00881 -0.15750 -0.09713 -0.01822 0.06784 -0.09180 0.11771 0.18655 0.02724 0.24833 -0.11007 0.05653 0.11721 0.09774 0.11181 -0.15934 -0.09273 0.15042 -0.08448 -0.27875 -0.08247 0.12328
+[SS] t=604814 +7.9 dB best 'Dog barking' 0.43 (thr 0.50), 2nd 'Knock' 0.35, felt no (0.0 mg) -> quiet
+[SS] t=606521 +5.4 dB best 'Knock' 0.50 (thr 0.64), 2nd 'Dog barking' 0.47, felt no (0.0 mg) -> quiet
+[CAL] 'baby': measuring
+[SS] stats t=610208 level -46 dB floor -49 dB, npu 999 us runner 1027 us feat 304 us, 10.5 inf/s, busy 22%, dropped 0, imu 490980 samples 0 errors, knocks 126, events 13
+[CAL] 'baby' example 1: +11.8 dB, cos to the trained profile -0.29
+[SS] stats t=620225 level -54 dB floor -53 dB, npu 1000 us runner 1027 us feat 304 us, 10.4 inf/s, busy 21%, dropped 0, imu 499047 samples 0 errors, knocks 129, events 13
+[CAL] 'baby' example 2: +13.8 dB, cos to the trained profile -0.27
+[CAL] 'baby' example 3: +8.2 dB, cos to the trained profile -0.17
+[SS] stats t=630225 level -52 dB floor -54 dB, npu 1000 us runner 1027 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 507101 samples 0 errors, knocks 129, events 13
+[CAL] 'baby' example 4: +9.7 dB, cos to the trained profile -0.18
+[CAL] 'baby' example 5: +11.4 dB, cos to the trained profile 0.08
+[SS] stats t=640246 level -53 dB floor -52 dB, npu 1000 us runner 1027 us feat 303 us, 10.4 inf/s, busy 22%, dropped 0, imu 515172 samples 0 errors, knocks 129, events 13
+[CAL] 'baby' example 6: +8.3 dB, cos to the trained profile -0.05
+[CAL] 'baby' example 7: +8.9 dB, cos to the trained profile -0.14
+[CAL] 'baby' example 8: +10.4 dB, cos to the trained profile -0.12
+[CAL] 'baby' example 9: +8.4 dB, cos to the trained profile -0.09
+[CAL] 'baby' example 10: +9.4 dB, cos to the trained profile -0.06
+[CAL] 'baby' from 10 board examples: thr 0.500 (trained 0.571), cos to the trained profile -0.184
+[CAL] proto baby 0.5000 0.03758 0.18764 0.11483 -0.05899 -0.00037 -0.06617 0.11491 0.30504 -0.07089 0.20678 0.15100 0.00098 -0.09742 -0.05002 -0.03283 0.16496 0.04403 -0.14635 0.17413 0.04951 0.06746 0.07523 0.12103 0.04908 0.07715 -0.05535 -0.10485 -0.13458 0.14444 -0.17884 -0.04642 0.23425 -0.05658 -0.23638 -0.05391 0.01749 0.07212 0.01231 -0.14116 0.04686 0.08354 -0.16881 -0.13368 -0.19818 0.00093 0.00025 0.25103 -0.05429 0.01689 0.04939 -0.17164 0.08480 -0.29270 -0.00793 0.05014 0.06223 0.16789 -0.00922 0.07423 0.21096 -0.15252 -0.07015 0.08655 0.00362
+[SS] t=648049 +10.2 dB best 'Dog barking' 0.26 (thr 0.50), 2nd 'Glass breaking' 0.23, felt no (0.0 mg) -> unknown
+[SS] stats t=650246 level -55 dB floor -51 dB, npu 999 us runner 1026 us feat 303 us, 10.5 inf/s, busy 22%, dropped 0, imu 523223 samples 0 errors, knocks 133, events 13
+[SS] t=649457 +13.4 dB best 'Baby crying' 0.50 (thr 0.50), 2nd 'Glass breaking' 0.31, felt no (0.0 mg) -> maybe Baby crying
+[SS] t=650908 +7.2 dB best 'Baby crying' 0.68 (thr 0.50), 2nd 'Knock' 0.37, felt no (0.0 mg) -> quiet
+[CAL] 'alarm': measuring
+[SS] stats t=660246 level -53 dB floor -52 dB, npu 999 us runner 1031 us feat 299 us, 10.3 inf/s, busy 22%, dropped 0, imu 531279 samples 0 errors, knocks 134, events 14
+[CAL] 'alarm' example 1: +10.0 dB, cos to the trained profile -0.01
+[CAL] 'alarm' example 2: +15.3 dB, cos to the trained profile -0.06
+[SS] stats t=670246 level -56 dB floor -55 dB, npu 999 us runner 1027 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 539335 samples 0 errors, knocks 149, events 14
+[SS] stats t=680263 level -53 dB floor -55 dB, npu 999 us runner 1027 us feat 303 us, 10.0 inf/s, busy 22%, dropped 0, imu 547402 samples 0 errors, knocks 150, events 14
+[SS] stats t=690263 level -55 dB floor -56 dB, npu 1000 us runner 1027 us feat 303 us, 10.0 inf/s, busy 22%, dropped 0, imu 555453 samples 0 errors, knocks 151, events 14
+[CAL] 'alarm': only 2 examples, profile unchanged
+[SS] t=692793 +5.4 dB best 'Baby crying' 0.43 (thr 0.50), 2nd 'Knock' 0.18, felt no (0.0 mg) -> quiet
+[CAL] 'glass': measuring
+[CAL] 'glass' example 1: +17.8 dB, cos to the trained profile 0.26
+[SS] stats t=700270 level -56 dB floor -55 dB, npu 1000 us runner 1027 us feat 303 us, 10.3 inf/s, busy 22%, dropped 0, imu 563516 samples 0 errors, knocks 153, events 14
+[CAL] 'glass' example 2: +8.8 dB, cos to the trained profile 0.24
+[SS] stats t=710270 level -56 dB floor -56 dB, npu 1000 us runner 1027 us feat 303 us, 10.0 inf/s, busy 22%, dropped 0, imu 571569 samples 0 errors, knocks 155, events 14
+[SS] stats t=720275 level -53 dB floor -55 dB, npu 999 us runner 1027 us feat 303 us, 10.0 inf/s, busy 22%, dropped 0, imu 579629 samples 0 errors, knocks 155, events 14
+[SS] stats t=730275 level -56 dB floor -55 dB, npu 1000 us runner 1026 us feat 303 us, 9.9 inf/s, busy 21%, dropped 0, imu 587680 samples 0 errors, knocks 155, events 14
+[CAL] 'glass': only 2 examples, profile unchanged
+[CAL] 'siren': measuring
+[SS] stats t=740278 level -54 dB floor -53 dB, npu 999 us runner 1027 us feat 302 us, 10.0 inf/s, busy 22%, dropped 0, imu 595739 samples 0 errors, knocks 155, events 14
+[CAL] 'siren' example 1: +30.6 dB, cos to the trained profile 0.02
+[SS] stats t=750278 level -56 dB floor -55 dB, npu 999 us runner 1026 us feat 303 us, 10.1 inf/s, busy 22%, dropped 0, imu 603793 samples 0 errors, knocks 165, events 14
+[SS] stats t=760287 level -56 dB floor -55 dB, npu 1000 us runner 1026 us feat 303 us, 10.0 inf/s, busy 22%, dropped 0, imu 611855 samples 0 errors, knocks 165, events 14
+[SS] stats t=770287 level -53 dB floor -56 dB, npu 999 us runner 1027 us feat 303 us, 9.9 inf/s, busy 22%, dropped 0, imu 619906 samples 0 errors, knocks 165, events 14
+[CAL] 'siren': only 1 examples, profile unchanged
+[SS] stats t=780292 level -56 dB floor -56 dB, npu 999 us runner 1031 us feat 299 us, 10.0 inf/s, busy 22%, dropped 0, imu 627967 samples 0 errors, knocks 165, events 14
+[CAL] 'water': measuring
+[SS] stats t=790292 level -57 dB floor -55 dB, npu 1000 us runner 1027 us feat 303 us, 9.9 inf/s, busy 21%, dropped 0, imu 636018 samples 0 errors, knocks 165, events 14
+[SS] stats t=800298 level -55 dB floor -55 dB, npu 1000 us runner 1026 us feat 303 us, 10.0 inf/s, busy 22%, dropped 0, imu 644080 samples 0 errors, knocks 165, events 14
+[SS] stats t=810298 level -54 dB floor -56 dB, npu 1000 us runner 1027 us feat 303 us, 9.9 inf/s, busy 22%, dropped 0, imu 652132 samples 0 errors, knocks 165, events 14
+[SS] stats t=820300 level -55 dB floor -56 dB, npu 999 us runner 1031 us feat 298 us, 10.0 inf/s, busy 23%, dropped 0, imu 660190 samples 0 errors, knocks 165, events 14
+[CAL] 'water': only 0 examples, profile unchanged
+[SS] stats t=830300 level -57 dB floor -56 dB, npu 999 us runner 1027 us feat 302 us, 9.9 inf/s, busy 22%, dropped 0, imu 668244 samples 0 errors, knocks 165, events 14
+[SS] stats t=840312 level -56 dB floor -56 dB, npu 999 us runner 1026 us feat 302 us, 10.0 inf/s, busy 22%, dropped 0, imu 676308 samples 0 errors, knocks 165, events 14
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11880 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1025 us (mean of 10); model 240224 bytes
+[SS] listening; 9 built-in sounds
+[SS] t=2732 +15.0 dB best 'Glass breaking' 0.20 (thr 0.50), 2nd 'Quiet' 0.18, felt no (0.0 mg) -> unknown
+[SS] stats t=10000 level -58 dB floor -56 dB, npu 1000 us runner 1025 us feat 303 us, 11.0 inf/s, busy 22%, dropped 0, imu 7735 samples 0 errors, knocks 0, events 0
+[SS] t=13690 +6.8 dB best 'Glass breaking' 0.32 (thr 0.50), 2nd 'Quiet' 0.09, felt no (0.0 mg) -> quiet
+[SS] stats t=20010 level -55 dB floor -55 dB, npu 999 us runner 1027 us feat 303 us, 10.1 inf/s, busy 21%, dropped 0, imu 15798 samples 0 errors, knocks 0, events 0
+[SS] t=21220 +5.0 dB best 'Glass breaking' 0.43 (thr 0.50), 2nd 'Dog barking' 0.26, felt no (0.0 mg) -> quiet
+[SS] t=26229 +11.7 dB best 'Glass breaking' 0.13 (thr 0.50), 2nd 'Quiet' 0.05, felt no (0.0 mg) -> unknown
+[SS] stats t=30010 level -54 dB floor -54 dB, npu 1000 us runner 1027 us feat 303 us, 10.1 inf/s, busy 21%, dropped 0, imu 23849 samples 0 errors, knocks 0, events 0
+[SS] t=35788 +4.9 dB best 'Glass breaking' 0.19 (thr 0.50), 2nd 'Alarm' 0.13, felt no (0.0 mg) -> quiet
+[SS] stats t=40020 level -54 dB floor -54 dB, npu 1000 us runner 1025 us feat 303 us, 10.1 inf/s, busy 21%, dropped 0, imu 31914 samples 0 errors, knocks 0, events 0
+[SS] stats t=50020 level -54 dB floor -55 dB, npu 999 us runner 1027 us feat 302 us, 9.9 inf/s, busy 21%, dropped 0, imu 39967 samples 0 errors, knocks 0, events 0
+[SS] t=50719 +5.1 dB best 'Quiet' 0.16 (thr 0.50), 2nd 'Glass breaking' 0.11, felt no (0.0 mg) -> quiet
+[SS] t=52482 +5.9 dB best 'Quiet' 0.22 (thr 0.50), 2nd 'Glass breaking' 0.05, felt no (0.0 mg) -> quiet
+[SS] t=54561 +2.5 dB best 'Quiet' 0.39 (thr 0.50), 2nd 'Water running' 0.11, felt no (0.0 mg) -> quiet
+[SS] t=56305 +3.0 dB best 'Quiet' 0.44 (thr 0.50), 2nd 'Alarm' 0.09, felt no (0.0 mg) -> quiet
+[SS] t=57557 +7.1 dB best 'Quiet' 0.28 (thr 0.50), 2nd 'Glass breaking' 0.28, felt no (0.0 mg) -> quiet
+[SS] stats t=60028 level -57 dB floor -55 dB, npu 1000 us runner 1026 us feat 303 us, 10.5 inf/s, busy 21%, dropped 0, imu 48028 samples 0 errors, knocks 2, events 0
+[SS] t=60779 +10.9 dB best 'Quiet' 0.22 (thr 0.50), 2nd 'Glass breaking' 0.16, felt yes (49.2 mg) -> maybe Knock
+[SS] stats t=70028 level -59 dB floor -56 dB, npu 999 us runner 1027 us feat 303 us, 10.0 inf/s, busy 21%, dropped 0, imu 56080 samples 0 errors, knocks 3, events 1
+[SS] t=70091 +3.0 dB best 'Quiet' 0.22 (thr 0.50), 2nd 'Glass breaking' 0.06, felt no (0.0 mg) -> quiet
+[SS] t=71908 +13.3 dB best 'Water running' 0.42 (thr 0.50), 2nd 'Glass breaking' 0.27, felt no (0.0 mg) -> unknown
+[SS] stats t=80028 level -58 dB floor -56 dB, npu 1000 us runner 1027 us feat 303 us, 10.1 inf/s, busy 21%, dropped 0, imu 64137 samples 0 errors, knocks 3, events 1
+[SS] t=87992 +5.1 dB best 'Glass breaking' 0.21 (thr 0.50), 2nd 'Quiet' 0.12, felt no (0.0 mg) -> quiet
+[SS] stats t=90028 level -58 dB floor -55 dB, npu 999 us runner 1027 us feat 304 us, 10.1 inf/s, busy 21%, dropped 0, imu 72189 samples 0 errors, knocks 3, events 1
+[SS] stats t=100028 level -55 dB floor -56 dB, npu 1000 us runner 1027 us feat 304 us, 9.9 inf/s, busy 20%, dropped 0, imu 80242 samples 0 errors, knocks 3, events 1
+[SS] stats t=110028 level -56 dB floor -56 dB, npu 1000 us runner 1031 us feat 300 us, 10.0 inf/s, busy 22%, dropped 0, imu 88300 samples 0 errors, knocks 3, events 1
+[SS] stats t=120028 level -56 dB floor -55 dB, npu 999 us runner 1027 us feat 303 us, 9.9 inf/s, busy 21%, dropped 0, imu 96352 samples 0 errors, knocks 3, events 1
+[SS] stats t=130037 level -53 dB floor -55 dB, npu 999 us runner 1026 us feat 303 us, 10.0 inf/s, busy 21%, dropped 0, imu 104415 samples 0 errors, knocks 3, events 1
+[SS] stats t=140037 level -56 dB floor -55 dB, npu 999 us runner 1031 us feat 298 us, 9.9 inf/s, busy 20%, dropped 0, imu 112466 samples 0 errors, knocks 3, events 1
+[SS] stats t=150040 level -55 dB floor -55 dB, npu 1000 us runner 1032 us feat 298 us, 10.0 inf/s, busy 21%, dropped 0, imu 120526 samples 0 errors, knocks 3, events 1
+[SS] stats t=160040 level -56 dB floor -56 dB, npu 999 us runner 1027 us feat 303 us, 9.9 inf/s, busy 20%, dropped 0, imu 128579 samples 0 errors, knocks 3, events 1
+[SS] stats t=170055 level -58 dB floor -56 dB, npu 1000 us runner 1028 us feat 302 us, 10.0 inf/s, busy 21%, dropped 0, imu 136646 samples 0 errors, knocks 3, events 1
+[SS] stats t=180055 level -56 dB floor -56 dB, npu 1000 us runner 1026 us feat 303 us, 9.9 inf/s, busy 20%, dropped 0, imu 144698 samples 0 errors, knocks 3, events 1
+[SS] stats t=190068 level -56 dB floor -56 dB, npu 999 us runner 1027 us feat 302 us, 10.0 inf/s, busy 21%, dropped 0, imu 152765 samples 0 errors, knocks 3, events 1
+[SS] t=6380 +5.1 dB best 'Alarm' 0.35 (thr 0.58), 2nd 'Water running' 0.24, felt no (0.0 mg) -> quiet
+[SS] t=7868 +7.0 dB best 'Dog barking' 0.30 (thr 0.52), 2nd 'Water running' 0.26, felt no (0.0 mg) -> quiet
+[SS] t=9113 +6.3 dB best 'Alarm' 0.30 (thr 0.58), 2nd 'Siren' 0.25, felt no (0.0 mg) -> quiet
+[SS] stats t=10000 level -51 dB floor -50 dB, npu 999 us runner 1026 us feat 302 us, 11.2 inf/s, busy 22%, dropped 0, imu 7730 samples 0 errors, knocks 0, events 0, saves 0
+[SS] stats t=20010 level -50 dB floor -50 dB, npu 1000 us runner 1033 us feat 298 us, 10.0 inf/s, busy 22%, dropped 0, imu 15796 samples 0 errors, knocks 0, events 0, saves 0
+[SS] t=21724 +6.7 dB best 'Alarm' 0.28 (thr 0.58), 2nd 'Water running' 0.18, felt no (0.0 mg) -> quiet
+[SS] stats t=30010 level -50 dB floor -50 dB, npu 1001 us runner 1028 us feat 302 us, 10.0 inf/s, busy 22%, dropped 0, imu 23847 samples 0 errors, knocks 0, events 0, saves 0
+[SS] t=30030 +5.8 dB best 'Alarm' 0.40 (thr 0.58), 2nd 'Water running' 0.22, felt no (0.0 mg) -> quiet
+[SS] stats t=40017 level -50 dB floor -50 dB, npu 1001 us runner 1028 us feat 303 us, 10.1 inf/s, busy 22%, dropped 0, imu 31910 samples 0 errors, knocks 0, events 0, saves 0
+[SS] stats t=50017 level -50 dB floor -50 dB, npu 999 us runner 1026 us feat 302 us, 9.9 inf/s, busy 21%, dropped 0, imu 39961 samples 0 errors, knocks 0, events 0, saves 0
+[SS] stats t=60017 level -51 dB floor -51 dB, npu 1000 us runner 1028 us feat 302 us, 10.0 inf/s, busy 22%, dropped 0, imu 48016 samples 0 errors, knocks 0, events 0, saves 0
+[SS] t=63495 +8.0 dB best 'Water running' 0.33 (thr 0.50), 2nd 'Alarm' 0.33, felt yes (37.8 mg) -> quiet
+[SS] stats t=70017 level -51 dB floor -50 dB, npu 1001 us runner 1028 us feat 303 us, 10.0 inf/s, busy 22%, dropped 0, imu 56070 samples 0 errors, knocks 1, events 0, saves 0
+[TEACH] 'Doorbell': make the sound 5 times
+[TEACH] shot 1: too quiet (+2.9 dB)
+[SS] stats t=80017 level -38 dB floor -43 dB, npu 1062 us runner 1088 us feat 304 us, 10.1 inf/s, busy 21%, dropped 0, imu 64124 samples 0 errors, knocks 9, events 0, saves 0
+[TEACH] shot 1: too quiet (+7.6 dB)
+[TEACH] shot 1: too quiet (+4.5 dB)
+[SS] stats t=90017 level -50 dB floor -50 dB, npu 999 us runner 1025 us feat 303 us, 10.1 inf/s, busy 17%, dropped 0, imu 72180 samples 0 errors, knocks 14, events 0, saves 0
+[TEACH] shot 1: too quiet (+6.1 dB)
+[TEACH] shot 1: too quiet (+3.3 dB)
+[SS] stats t=100017 level -51 dB floor -50 dB, npu 1005 us runner 1033 us feat 303 us, 10.1 inf/s, busy 17%, dropped 0, imu 80233 samples 0 errors, knocks 20, events 0, saves 0
+[SS] stats t=110017 level -50 dB floor -51 dB, npu 999 us runner 1026 us feat 302 us, 9.9 inf/s, busy 16%, dropped 0, imu 88285 samples 0 errors, knocks 21, events 0, saves 0
+[SS] stats t=120017 level -51 dB floor -50 dB, npu 999 us runner 1026 us feat 303 us, 9.9 inf/s, busy 16%, dropped 0, imu 96339 samples 0 errors, knocks 31, events 0, saves 0
+[TEACH] shot 1/5: +16.0 dB
+[TEACH] shot 2/5: +12.4 dB
+[SS] stats t=130017 level -49 dB floor -48 dB, npu 999 us runner 1026 us feat 303 us, 10.1 inf/s, busy 17%, dropped 0, imu 104395 samples 0 errors, knocks 40, events 0, saves 0
+[TEACH] shot 3/5: +12.7 dB
+[SS] stats t=140017 level -46 dB floor -48 dB, npu 999 us runner 1026 us feat 303 us, 10.0 inf/s, busy 16%, dropped 0, imu 112449 samples 0 errors, knocks 41, events 0, saves 0
+[TEACH] shot 4/5: +17.5 dB
+[TEACH] shot 5/5: +17.0 dB
+[TEACH] profile: thr 0.500, leave-one-out 0.36 0.44 -0.03 0.07 -0.12; make it once more to test, press to save
+[TEACH] test: match 0.274 (thr 0.500) rejected
+[TEACH] test: match 0.315 (thr 0.500) rejected
+[SS] stats t=150017 level -51 dB floor -47 dB, npu 999 us runner 1026 us feat 303 us, 10.2 inf/s, busy 19%, dropped 0, imu 120501 samples 0 errors, knocks 42, events 0, saves 0
+[SS] t=154421 +12.0 dB best 'Dog barking' 0.58 (thr 0.52), 2nd 'Baby crying' 0.13, felt no (0.0 mg) -> Dog barking
+[SS] stats t=160031 level -51 dB floor -48 dB, npu 1001 us runner 1028 us feat 303 us, 10.0 inf/s, busy 21%, dropped 0, imu 128570 samples 0 errors, knocks 42, events 1, saves 0
+[SS] t=159293 +11.8 dB best 'Water running' 0.45 (thr 0.50), 2nd 'Baby crying' 0.25, felt no (0.0 mg) -> unknown
+[TEACH] 'Doorbell': make the sound 5 times
+[TEACH] shot 1/5: +14.2 dB
+[TEACH] shot 2: too quiet (+9.7 dB)
+[SS] stats t=170031 level -49 dB floor -46 dB, npu 1001 us runner 1029 us feat 303 us, 10.2 inf/s, busy 20%, dropped 0, imu 136624 samples 0 errors, knocks 60, events 1, saves 0
+[TEACH] shot 2: too quiet (+6.6 dB)
+[TEACH] shot 2: too quiet (+9.1 dB)
+[SS] stats t=180031 level -51 dB floor -46 dB, npu 1001 us runner 1028 us feat 303 us, 10.1 inf/s, busy 17%, dropped 0, imu 144675 samples 0 errors, knocks 68, events 1, saves 0
+[TEACH] shot 2: too quiet (+8.5 dB)
+[SS] stats t=190031 level -50 dB floor -50 dB, npu 1001 us runner 1028 us feat 303 us, 10.0 inf/s, busy 16%, dropped 0, imu 152730 samples 0 errors, knocks 68, events 1, saves 0
+[TEACH] shot 2/5: +23.4 dB
+[TEACH] shot 3: too quiet (+3.4 dB)
+[SS] stats t=200031 level -50 dB floor -50 dB, npu 1001 us runner 1028 us feat 303 us, 10.1 inf/s, busy 17%, dropped 0, imu 160783 samples 0 errors, knocks 68, events 1, saves 0
+[TEACH] shot 3: too quiet (+4.1 dB)
+[SS] stats t=210031 level -51 dB floor -50 dB, npu 1001 us runner 1029 us feat 302 us, 10.0 inf/s, busy 16%, dropped 0, imu 168840 samples 0 errors, knocks 68, events 1, saves 0
+[TEACH] shot 3/5: +15.2 dB
+[SS] stats t=220031 level -50 dB floor -50 dB, npu 1001 us runner 1028 us feat 302 us, 10.0 inf/s, busy 16%, dropped 0, imu 176895 samples 0 errors, knocks 69, events 1, saves 0
+[TEACH] shot 4: too quiet (+7.2 dB)
+[SS] stats t=230031 level -49 dB floor -49 dB, npu 999 us runner 1026 us feat 303 us, 10.0 inf/s, busy 17%, dropped 0, imu 184948 samples 0 errors, knocks 71, events 1, saves 0
+[TEACH] shot 4: too quiet (+4.6 dB)
+[SS] stats t=240031 level -50 dB floor -49 dB, npu 1001 us runner 1028 us feat 302 us, 10.1 inf/s, busy 17%, dropped 0, imu 193001 samples 0 errors, knocks 71, events 1, saves 0
+[SS] t=464827 +7.0 dB best 'Baby crying' 0.22 (thr 0.57), 2nd 'Clap' 0.22, felt no (0.0 mg) -> quiet
+[SS] stats t=471000 level -51 dB floor -51 dB, npu 1000 us runner 1027 us feat 303 us, 10.0 inf/s, busy 21%, dropped 0, imu 362047 samples 0 errors, knocks 9, events 1, saves 1000
+[SS] stats t=481017 level -51 dB floor -51 dB, npu 1000 us runner 1027 us feat 302 us, 10.0 inf/s, busy 22%, dropped 0, imu 370115 samples 0 errors, knocks 9, events 1, saves 1000
+[SS] t=483058 +11.8 dB best 'Baby crying' 0.30 (thr 0.57), 2nd 'Clap' 0.30, felt no (0.0 mg) -> unknown
+[SS] t=488957 +12.2 dB best 'Alarm' 0.26 (thr 0.58), 2nd 'Microwave' 0.26, felt no (0.0 mg) -> unknown
+[SS] stats t=491017 level -51 dB floor -45 dB, npu 1000 us runner 1028 us feat 303 us, 10.1 inf/s, busy 22%, dropped 0, imu 378166 samples 0 errors, knocks 9, events 1, saves 1000
+[SS] t=494874 +11.5 dB best 'Dog barking' 0.24 (thr 0.52), 2nd 'Doorbell' 0.24, felt no (0.0 mg) -> unknown
+[SS] stats t=501039 level -38 dB floor -49 dB, npu 1001 us runner 1032 us feat 299 us, 10.1 inf/s, busy 21%, dropped 0, imu 386241 samples 0 errors, knocks 9, events 1, saves 1000
+[SS] t=500785 +11.7 dB best 'Siren' 0.27 (thr 0.59), 2nd 'Phone' 0.27, felt no (0.0 mg) -> unknown
+[SS] t=508201 +8.8 dB best 'Baby crying' 0.43 (thr 0.57), 2nd 'Clap' 0.43, felt no (0.0 mg) -> unknown
+[SS] stats t=511039 level -50 dB floor -47 dB, npu 1000 us runner 1028 us feat 303 us, 10.1 inf/s, busy 21%, dropped 0, imu 394295 samples 0 errors, knocks 10, events 1, saves 1000
+[SS] t=514057 +8.7 dB best 'Baby crying' 0.31 (thr 0.57), 2nd 'Clap' 0.31, felt no (0.0 mg) -> unknown
+[SS] t=519443 +8.6 dB best 'Dog barking' 0.23 (thr 0.52), 2nd 'Doorbell' 0.23, felt no (0.0 mg) -> unknown
+[SS] stats t=521048 level -49 dB floor -44 dB, npu 1000 us runner 1028 us feat 303 us, 10.2 inf/s, busy 21%, dropped 0, imu 402356 samples 0 errors, knocks 10, events 1, saves 1000
+[SS] t=525320 +8.4 dB best 'Alarm' 0.28 (thr 0.58), 2nd 'Microwave' 0.28, felt no (0.0 mg) -> unknown
+[SS] stats t=531048 level -51 dB floor -50 dB, npu 1000 us runner 1027 us feat 303 us, 10.0 inf/s, busy 21%, dropped 0, imu 410409 samples 0 errors, knocks 10, events 1, saves 1000
+[SS] stats t=541058 level -53 dB floor -51 dB, npu 1000 us runner 1031 us feat 298 us, 10.0 inf/s, busy 21%, dropped 0, imu 418473 samples 0 errors, knocks 10, events 1, saves 1000
+[SS] t=546820 +4.8 dB best 'Water running' 0.33 (thr 0.50), 2nd 'Washer' 0.33, felt no (0.0 mg) -> quiet
+[SS] stats t=551058 level -49 dB floor -50 dB, npu 1000 us runner 1027 us feat 303 us, 10.0 inf/s, busy 22%, dropped 0, imu 426524 samples 0 errors, knocks 10, events 1, saves 1000
+[SS] t=558037 +9.7 dB best 'Alarm' 0.28 (thr 0.58), 2nd 'Microwave' 0.28, felt no (0.0 mg) -> unknown
+[SS] stats t=561071 level -51 dB floor -51 dB, npu 999 us runner 1027 us feat 303 us, 10.1 inf/s, busy 21%, dropped 0, imu 434591 samples 0 errors, knocks 10, events 1, saves 1000
+[SS] taught sounds cleared
+[STORE] save 1001 ok: copy A seq 1107, 32 bytes, 137 ms (max 304), longest step 123736 us, dropped 0
+[TEACH] 'Doorbell': make the sound 5 times
+[TEACH] shot 1/5: +17.1 dB
+[SS] stats t=571071 level -50 dB floor -42 dB, npu 1000 us runner 1030 us feat 299 us, 9.9 inf/s, busy 20%, dropped 0, imu 442644 samples 0 errors, knocks 10, events 1, saves 1001
+[TEACH] shot 2/5: +17.8 dB
+[TEACH] shot 3/5: +13.1 dB
+[TEACH] shot 4: too quiet (+9.8 dB)
+[SS] stats t=581072 level -43 dB floor -45 dB, npu 1004 us runner 1032 us feat 303 us, 10.3 inf/s, busy 17%, dropped 0, imu 450699 samples 0 errors, knocks 16, events 1, saves 1001
+[TEACH] shot 4: too quiet (+6.4 dB)
+[TEACH] shot 4: too quiet (+6.8 dB)
+[SS] stats t=591075 level -51 dB floor -50 dB, npu 1000 us runner 1028 us feat 303 us, 10.1 inf/s, busy 17%, dropped 0, imu 458755 samples 0 errors, knocks 20, events 1, saves 1001
+[TEACH] shot 4: too quiet (+6.3 dB)
+[TEACH] shot 4: too quiet (+6.7 dB)
+[SS] stats t=601076 level -50 dB floor -47 dB, npu 1000 us runner 1026 us feat 303 us, 10.1 inf/s, busy 17%, dropped 0, imu 466810 samples 0 errors, knocks 24, events 1, saves 1001
+[TEACH] shot 4: too quiet (+6.9 dB)
+[SS] stats t=611088 level -42 dB floor -42 dB, npu 1000 us runner 1026 us feat 303 us, 10.0 inf/s, busy 17%, dropped 0, imu 474874 samples 0 errors, knocks 33, events 1, saves 1001
+[TEACH] shot 4: too quiet (+5.9 dB)
+[TEACH] shot 4: too quiet (+6.8 dB)
+[SS] stats t=621088 level -49 dB floor -50 dB, npu 1000 us runner 1026 us feat 302 us, 10.1 inf/s, busy 17%, dropped 0, imu 482928 samples 0 errors, knocks 39, events 1, saves 1001
+[TEACH] shot 4: too quiet (+3.9 dB)
+[SS] stats t=631095 level -51 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 10.0 inf/s, busy 17%, dropped 0, imu 490988 samples 0 errors, knocks 45, events 1, saves 1001
+[TEACH] shot 4: too quiet (+1.5 dB)
+[TEACH] shot 4: too quiet (+2.9 dB)
+[SS] stats t=641109 level -51 dB floor -50 dB, npu 1000 us runner 1026 us feat 302 us, 10.1 inf/s, busy 17%, dropped 0, imu 499053 samples 0 errors, knocks 45, events 1, saves 1001
+[SS] stats t=651109 level -49 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 9.9 inf/s, busy 17%, dropped 0, imu 507107 samples 0 errors, knocks 47, events 1, saves 1001
+[SS] stats t=661113 level -50 dB floor -50 dB, npu 1000 us runner 1030 us feat 298 us, 9.9 inf/s, busy 17%, dropped 0, imu 515164 samples 0 errors, knocks 47, events 1, saves 1001
+[SS] stats t=671113 level -50 dB floor -50 dB, npu 1000 us runner 1026 us feat 302 us, 9.9 inf/s, busy 16%, dropped 0, imu 523218 samples 0 errors, knocks 47, events 1, saves 1001
+[SS] stats t=681122 level -50 dB floor -50 dB, npu 1000 us runner 1027 us feat 303 us, 10.0 inf/s, busy 19%, dropped 0, imu 531279 samples 0 errors, knocks 47, events 1, saves 1001
+[SS] stats t=691122 level -51 dB floor -51 dB, npu 1000 us runner 1027 us feat 302 us, 9.9 inf/s, busy 21%, dropped 0, imu 539332 samples 0 errors, knocks 47, events 1, saves 1001
+[SS] t=693236 +2.6 dB best 'Alarm' 0.31 (thr 0.58), 2nd 'Water running' 0.28, felt no (0.0 mg) -> quiet
+[SS] stats t=701126 level -50 dB floor -50 dB, npu 1000 us runner 1031 us feat 298 us, 10.1 inf/s, busy 22%, dropped 0, imu 547390 samples 0 errors, knocks 47, events 1, saves 1001
+[SS] t=708364 +2.3 dB best 'Water running' 0.33 (thr 0.50), 2nd 'Siren' 0.31, felt yes (56.7 mg) -> quiet
+[SS] stats t=711126 level -49 dB floor -50 dB, npu 1000 us runner 1027 us feat 303 us, 10.0 inf/s, busy 22%, dropped 0, imu 555443 samples 0 errors, knocks 50, events 1, saves 1001
+[SS] t=711692 +2.7 dB best 'Alarm' 0.29 (thr 0.58), 2nd 'Water running' 0.22, felt no (0.0 mg) -> quiet
+[SS] t=714589 +2.4 dB best 'Alarm' 0.32 (thr 0.58), 2nd 'Water running' 0.26, felt no (0.0 mg) -> quiet
+[SS] stats t=721126 level -49 dB floor -49 dB, npu 1000 us runner 1027 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 563496 samples 0 errors, knocks 51, events 1, saves 1001
+[SS] stats t=731126 level -50 dB floor -50 dB, npu 1000 us runner 1027 us feat 303 us, 9.9 inf/s, busy 22%, dropped 0, imu 571549 samples 0 errors, knocks 51, events 1, saves 1001
+[SS] t=733228 +15.6 dB best 'Alarm' 0.28 (thr 0.58), 2nd 'Siren' 0.24, felt no (0.0 mg) -> unknown
+[SS] t=734617 +10.7 dB best 'Water running' 0.34 (thr 0.50), 2nd 'Alarm' 0.22, felt no (0.0 mg) -> unknown
+[SS] t=736517 +3.7 dB best 'Alarm' 0.33 (thr 0.58), 2nd 'Water running' 0.26, felt no (0.0 mg) -> quiet
+[SS] stats t=741126 level -50 dB floor -50 dB, npu 1000 us runner 1031 us feat 299 us, 10.3 inf/s, busy 22%, dropped 0, imu 579606 samples 0 errors, knocks 51, events 1, saves 1001
+[SS] t=743351 +4.0 dB best 'Water running' 0.39 (thr 0.50), 2nd 'Alarm' 0.30, felt no (0.0 mg) -> quiet
+[SS] t=748639 +7.4 dB best 'Siren' 0.23 (thr 0.59), 2nd 'Alarm' 0.14, felt no (0.0 mg) -> quiet
+[SS] stats t=751126 level -51 dB floor -47 dB, npu 1000 us runner 1027 us feat 303 us, 10.1 inf/s, busy 22%, dropped 0, imu 587660 samples 0 errors, knocks 51, events 1, saves 1001
+[SS] t=750889 +12.9 dB best 'Alarm' 0.30 (thr 0.58), 2nd 'Water running' 0.19, felt no (0.0 mg) -> unknown
+[SS] t=753437 +7.2 dB best 'Water running' 0.32 (thr 0.50), 2nd 'Alarm' 0.32, felt no (0.0 mg) -> quiet
+[SS] stats t=761129 level -51 dB floor -50 dB, npu 1000 us runner 1028 us feat 303 us, 10.2 inf/s, busy 22%, dropped 0, imu 595716 samples 0 errors, knocks 51, events 1, saves 1001
+[SS] stats t=771129 level -50 dB floor -51 dB, npu 999 us runner 1027 us feat 303 us, 9.9 inf/s, busy 21%, dropped 0, imu 603769 samples 0 errors, knocks 51, events 1, saves 1001
+[SS] stats t=781135 level -50 dB floor -51 dB, npu 1000 us runner 1027 us feat 302 us, 10.0 inf/s, busy 22%, dropped 0, imu 611829 samples 0 errors, knocks 51, events 1, saves 1001
+[SS] t=787125 +13.7 dB best 'Alarm' 0.28 (thr 0.58), 2nd 'Water running' 0.27, felt no (0.0 mg) -> unknown
+[SS] t=790209 +13.4 dB best 'Water running' 0.28 (thr 0.50), 2nd 'Siren' 0.25, felt no (0.0 mg) -> unknown
+[SS] stats t=791135 level -51 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 10.1 inf/s, busy 22%, dropped 0, imu 619881 samples 0 errors, knocks 51, events 1, saves 1001
+[SS] t=792047 +4.4 dB best 'Water running' 0.33 (thr 0.50), 2nd 'Alarm' 0.28, felt no (0.0 mg) -> quiet
+[SS] t=797172 +13.0 dB best 'Water running' 0.42 (thr 0.50), 2nd 'Baby crying' 0.26, felt no (0.0 mg) -> unknown
+[SS] stats t=801138 level -50 dB floor -50 dB, npu 1000 us runner 1031 us feat 298 us, 10.2 inf/s, busy 22%, dropped 0, imu 627940 samples 0 errors, knocks 51, events 1, saves 1001
+[SS] t=804235 +2.2 dB best 'Alarm' 0.32 (thr 0.58), 2nd 'Water running' 0.23, felt yes (40.1 mg) -> quiet
+[SS] t=809451 +3.2 dB best 'Water running' 0.30 (thr 0.50), 2nd 'Alarm' 0.25, felt yes (52.4 mg) -> quiet
+[SS] stats t=811138 level -49 dB floor -50 dB, npu 1000 us runner 1027 us feat 303 us, 10.1 inf/s, busy 22%, dropped 0, imu 635990 samples 0 errors, knocks 63, events 1, saves 1001
+[SS] t=817276 +5.1 dB best 'Water running' 0.31 (thr 0.50), 2nd 'Siren' 0.29, felt yes (40.5 mg) -> quiet
+[SS] stats t=821140 level -51 dB floor -50 dB, npu 1000 us runner 1027 us feat 303 us, 10.1 inf/s, busy 21%, dropped 0, imu 644049 samples 0 errors, knocks 68, events 1, saves 1001
+[SS] t=825148 +4.6 dB best 'Alarm' 0.36 (thr 0.58), 2nd 'Water running' 0.29, felt no (0.0 mg) -> quiet
+[SS] stats t=831140 level -50 dB floor -50 dB, npu 1000 us runner 1027 us feat 303 us, 10.0 inf/s, busy 22%, dropped 0, imu 652102 samples 0 errors, knocks 71, events 1, saves 1001
+[SS] t=831562 +2.8 dB best 'Alarm' 0.41 (thr 0.58), 2nd 'Siren' 0.28, felt no (0.0 mg) -> quiet
+[SS] t=836166 +3.5 dB best 'Water running' 0.22 (thr 0.50), 2nd 'Dog barking' 0.17, felt no (0.0 mg) -> quiet
+[SS] stats t=841140 level -51 dB floor -51 dB, npu 1000 us runner 1027 us feat 302 us, 10.2 inf/s, busy 22%, dropped 0, imu 660157 samples 0 errors, knocks 73, events 1, saves 1001

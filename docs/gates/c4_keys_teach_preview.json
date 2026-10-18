@@ -1,0 +1,35 @@
+{
+ "wav": "docs/gates/audio/c4_take2.wav",
+ "n_onsets": 10,
+ "n_taught": 5,
+ "threshold": 0.8066803932189941,
+ "groups": {
+  "taught sound": {
+   "n": 10,
+   "score_min": 0.8508033752441406,
+   "score_max": 0.974256694316864,
+   "accepted": 10,
+   "builtin_over_thr": {
+    "water": 7
+   }
+  },
+  "onsets in c4_take1.wav": {
+   "n": 16,
+   "score_min": 0.16297657787799835,
+   "score_max": 0.35951557755470276,
+   "accepted": 0,
+   "builtin_over_thr": {
+    "glass": 3
+   }
+  },
+  "background of c4_take1.wav": {
+   "n": 8,
+   "score_min": -0.06342411041259766,
+   "score_max": 0.16158881783485413,
+   "accepted": 0,
+   "builtin_over_thr": {
+    "background": 2
+   }
+  }
+ }
+}

@@ -76,6 +76,15 @@ SECTIONS
     *sau_tcm_ns_setup*(.text .rodata*)
 
     *lv_*(.text .rodata*)
+    /* cold code kept out of the full ITCM: the OSPI flash driver and Sound Sense storage */
+    *Driver_OSPI.c.obj(.text* .rodata*)
+    *ospi.c.obj(.text* .rodata*)
+    *IS25WX256.c.obj(.text* .rodata*)
+    *ss_store.c.obj(.text* .rodata*)
+    *Driver_ADC.c.obj(.text* .rodata*)   /* the R79 knob, read 10 times a second */
+    *adc.c.obj(.text* .rodata*)
+    *sys_ctrl_analog.c.obj(.text* .rodata*)
+    *(.text.mram .text.mram.*)        /* functions marked SS_COLD / UI_COLD: boot and rare paths */
 
     . = ALIGN(16);
   } > MRAM

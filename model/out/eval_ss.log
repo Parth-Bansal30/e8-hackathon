@@ -1,0 +1,22 @@
+checkpoint ss_encoder.pth: epoch 60, cfg {'ch': 192, 'blocks': 5, 'stride_block': 1, 'emb': 64}, 219328 params, 43.22 M MACs; pools: heldout 400, built-in pos 68, neg 100 (33 classes), bg 300, speech 500
+[float] embedded in 7 s
+[float] a: 5w5s 0.7588 +-0.0062  10w5s 0.6311
+[float] b: taught ok 0.3886  untaught rej 0.7818  bg rej 0.9340  speech rej 0.9982  AUROC 0.6870 (margin 0.7067)  mean taught thr 0.502
+[float] b ALT fixed taught threshold: best untaught rej with taught ok >= 90%: None; best taught ok with untaught rej >= 80%: 0.31728888888888934; sweep 0.00:0.60/0.47 0.05:0.60/0.47 0.10:0.60/0.47 0.15:0.60/0.48 0.20:0.60/0.49 0.25:0.59/0.52 0.30:0.58/0.55 0.35:0.55/0.60 0.40:0.51/0.66 0.45:0.45/0.72 0.50:0.39/0.78 0.55:0.32/0.83 0.60:0.24/0.87 0.65:0.16/0.89 0.70:0.10/0.91 0.75:0.05/0.91 0.80:0.02/0.91 0.85:0.01/0.91 0.90:0.00/0.91
+[float] c: built-ins recognised 0.8529  neg false accept 0.0500  bg FA 0.0000  speech FA 0.0000
+[float]    per class knock 0.75, dog 1.00, baby 0.75, alarm 0.75, glass 0.88, siren 0.62, water 1.00; thr knock 0.62, dog 0.52, baby 0.56, alarm 0.58, glass 0.50, siren 0.60, water 0.50, speech 0.50, background 0.50
+[float] ALT built-in thresholds: c recognised 0.7353  neg FA 0.0100; b taught ok 0.3886 untaught rej 0.8440; thr knock 0.79, dog 0.64, baby 0.68, alarm 0.70, glass 0.70, siren 0.64, water 0.70, speech 0.30, background 0.73
+Skipping import of cpp extensions due to incompatible torch version 2.9.0 for torchao version 0.14.0         Please see GitHub issue #2919 for more info
+W1018 06:57:56.396000 28629 torch/distributed/elastic/multiprocessing/redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+/Users/parthbansal/alif/executorch-alif/et-venv/lib/python3.12/site-packages/executorch/backends/arm/quantizer/quantization_config.py:82: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  return torch.tensor(act_scale * weight_scale).to(
+[int8] embedded in 12 s
+[int8] a: 5w5s 0.7576 +-0.0063  10w5s 0.6299
+[int8] b: taught ok 0.3806  untaught rej 0.7887  bg rej 0.9398  speech rej 0.9982  AUROC 0.6871 (margin 0.7066)  mean taught thr 0.502
+[int8] b ALT fixed taught threshold: best untaught rej with taught ok >= 90%: None; best taught ok with untaught rej >= 80%: 0.3075333333333333; sweep 0.00:0.60/0.47 0.05:0.60/0.47 0.10:0.60/0.47 0.15:0.60/0.48 0.20:0.59/0.49 0.25:0.58/0.52 0.30:0.57/0.56 0.35:0.54/0.61 0.40:0.50/0.67 0.45:0.45/0.73 0.50:0.38/0.79 0.55:0.31/0.84 0.60:0.23/0.87 0.65:0.15/0.89 0.70:0.09/0.90 0.75:0.04/0.91 0.80:0.02/0.91 0.85:0.00/0.91 0.90:0.00/0.91
+[int8] c: built-ins recognised 0.8824  neg false accept 0.0400  bg FA 0.0000  speech FA 0.0000
+[int8]    per class knock 1.00, dog 1.00, baby 0.75, alarm 0.75, glass 0.88, siren 0.62, water 1.00; thr knock 0.62, dog 0.52, baby 0.57, alarm 0.58, glass 0.50, siren 0.59, water 0.50, speech 0.50, background 0.50
+[int8] ALT built-in thresholds: c recognised 0.6912  neg FA 0.0100; b taught ok 0.3806 untaught rej 0.8601; thr knock 0.80, dog 0.63, baby 0.67, alarm 0.66, glass 0.73, siren 0.63, water 0.69, speech 0.30, background 0.68
+int8 vs float: max gap 2.94 points; embedding cosine mean 0.9883 min 0.9047
+VERDICT (computed): SOFT  {'fewshot_int8_ge_85': False, 'taught_accept_ge_90': False, 'untaught_reject_ge_80': False, 'builtins_recognised_ge_85': True, 'builtins_false_accept_le_10': True, 'int8_within_2pt_of_float': False}
+wrote /Users/parthbansal/alif/e8-hackathon/model/out/g1_metrics.json

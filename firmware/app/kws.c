@@ -116,6 +116,7 @@ void kws_features_of_clip(const int16_t *clip, int8_t *out, float in_scale, int 
  * (320 ms) cover a full screen redraw plus an inference. */
 #define NBLK 16
 static int16_t pcm[NBLK][2 * KWS_HOP];
+static volatile uint32_t blk_done_cyc[NBLK];  /* DWT count when each block completed */
 static volatile uint32_t blk_written, blk_read, dropped;
 static volatile bool pdm_error;
 
@@ -138,6 +139,7 @@ static void pdm_cb(uint32_t event)
 {
     if (event & ARM_PDM_EVENT_ERROR) { pdm_error = true; return; }
     if (!(event & ARM_PDM_EVENT_CAPTURE_COMPLETE)) return;
+    blk_done_cyc[blk_written % NBLK] = DWT->CYCCNT;
     blk_written++;
     if (blk_written - blk_read >= NBLK) { blk_read++; dropped++; }  /* overwrite the oldest */
     Driver_PDM.Receive(pcm[blk_written % NBLK], 2 * KWS_HOP);
@@ -175,11 +177,17 @@ int kws_audio_start(void)
     return 0;
 }
 
+__attribute__((weak)) void kws_block_hook(const int16_t *stereo, int n, uint32_t done_cycles)
+{
+    (void)stereo; (void)n; (void)done_cycles;
+}
+
 int kws_audio_poll(void)
 {
     int frames = 0;
     while (blk_read != blk_written) {
         const int16_t *blk = pcm[blk_read % NBLK];
+        kws_block_hook(blk, KWS_HOP, blk_done_cyc[blk_read % NBLK]);
         /* slide the analysis window by one hop and append the new mono samples (mic 4) */
         memmove(window_buf, window_buf + KWS_HOP, (KWS_WIN - KWS_HOP) * sizeof(float));
         float *dst = window_buf + (KWS_WIN - KWS_HOP);

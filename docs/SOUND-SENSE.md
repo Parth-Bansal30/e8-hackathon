@@ -7,7 +7,7 @@ examples, and alerts on the screen and LEDs. Audio is never stored and never lea
 The go/no-go tests for this spec are in [HANDOFF-gates.md](HANDOFF-gates.md). The hardware facts
 behind it are in [HARDWARE.md](HARDWARE.md).
 
-Snapshot: 2026-10-18. Status: chosen direction, not yet built.
+Snapshot: 2026-10-18. Status: built and running on the board; what is done is in [STATUS.md](STATUS.md).
 
 ---
 

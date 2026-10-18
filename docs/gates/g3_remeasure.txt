@@ -1,0 +1,44 @@
+  [CAL] 'knock': measuring
+  [CAL] 'knock' example 1: +8.4 dB, cos to the trained profile 0.15
+  [CAL] 'knock' example 2: +14.6 dB, cos to the trained profile 0.26
+  [CAL] 'knock' example 3: +15.6 dB, cos to the trained profile 0.11
+  [CAL] 'knock' example 4: +9.2 dB, cos to the trained profile 0.27
+  [CAL] 'knock' from 4 board examples: thr 0.644 (trained 0.620), cos to the trained profile 0.222
+  [CAL] 'dog': measuring
+  [CAL] 'dog' example 1: +11.0 dB, cos to the trained profile 0.27
+  [CAL] 'dog' example 2: +13.4 dB, cos to the trained profile 0.74
+  [CAL] 'dog' example 3: +9.6 dB, cos to the trained profile 0.56
+  [CAL] 'dog' example 4: +9.3 dB, cos to the trained profile 0.43
+  [CAL] 'dog' example 5: +9.9 dB, cos to the trained profile 0.65
+  [CAL] 'dog' example 6: +9.7 dB, cos to the trained profile 0.68
+  [CAL] 'dog' example 7: +12.6 dB, cos to the trained profile 0.60
+  [CAL] 'dog' example 8: +14.6 dB, cos to the trained profile 0.58
+  [CAL] 'dog' example 9: +21.9 dB, cos to the trained profile -0.12
+  [CAL] 'dog' example 10: +8.1 dB, cos to the trained profile 0.48
+  [CAL] 'dog' example 11: +8.4 dB, cos to the trained profile 0.50
+  [CAL] 'dog' from 11 board examples: thr 0.500 (trained 0.521), cos to the trained profile 0.743
+  [CAL] 'baby': measuring
+  [CAL] 'baby' example 1: +11.8 dB, cos to the trained profile -0.29
+  [CAL] 'baby' example 2: +13.8 dB, cos to the trained profile -0.27
+  [CAL] 'baby' example 3: +8.2 dB, cos to the trained profile -0.17
+  [CAL] 'baby' example 4: +9.7 dB, cos to the trained profile -0.18
+  [CAL] 'baby' example 5: +11.4 dB, cos to the trained profile 0.08
+  [CAL] 'baby' example 6: +8.3 dB, cos to the trained profile -0.05
+  [CAL] 'baby' example 7: +8.9 dB, cos to the trained profile -0.14
+  [CAL] 'baby' example 8: +10.4 dB, cos to the trained profile -0.12
+  [CAL] 'baby' example 9: +8.4 dB, cos to the trained profile -0.09
+  [CAL] 'baby' example 10: +9.4 dB, cos to the trained profile -0.06
+  [CAL] 'baby' from 10 board examples: thr 0.500 (trained 0.571), cos to the trained profile -0.184
+  [CAL] 'alarm': measuring
+  [CAL] 'alarm' example 1: +10.0 dB, cos to the trained profile -0.01
+  [CAL] 'alarm' example 2: +15.3 dB, cos to the trained profile -0.06
+  [CAL] 'alarm': only 2 examples, profile unchanged
+  [CAL] 'glass': measuring
+  [CAL] 'glass' example 1: +17.8 dB, cos to the trained profile 0.26
+  [CAL] 'glass' example 2: +8.8 dB, cos to the trained profile 0.24
+  [CAL] 'glass': only 2 examples, profile unchanged
+  [CAL] 'siren': measuring
+  [CAL] 'siren' example 1: +30.6 dB, cos to the trained profile 0.02
+  [CAL] 'siren': only 1 examples, profile unchanged
+  [CAL] 'water': measuring
+  [CAL] 'water': only 0 examples, profile unchanged

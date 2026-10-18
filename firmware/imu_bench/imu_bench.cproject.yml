@@ -1,0 +1,54 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/tools/projmgr/2.6.0/tools/projmgr/schemas/cproject.schema.json
+# Sound Sense knock bench (docs/HANDOFF-gates.md G2): BMI323 at 800 Hz through its FIFO, knock
+# detection, felt vs heard pairing with audio onsets. Uses the patched driver in
+# ../soundsense/vendor, so the pack's BSP:External peripherals:BMI323 must NOT be selected here.
+project:
+  groups:
+    - group: App
+      files:
+        - file: main.c
+        - file: ../app/kws.c
+        - file: ../soundsense/ss_board.c
+        - file: ../soundsense/ss_gfx.c
+        - file: ../soundsense/ss_audio.c
+        - file: ../soundsense/ss_imu.c
+    - group: Vendor
+      files:
+        - file: ../soundsense/vendor/BMI323_IMU.c
+    - group: SEGGER_RTT
+      files:
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT.c
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT_printf.c
+        - file: ../libs/SEGGER_RTT_V796h/Syscalls/SEGGER_RTT_Syscalls_GCC.c
+
+  output:
+    base-name: $Project$
+    type:
+      - elf
+      - bin
+
+  layers:
+    - layer: ../device/ensemble/alif-ensemble.clayer.yml
+
+  packs:
+    - pack: AlifSemiconductor::Ensemble
+
+  components:
+    - component: AlifSemiconductor::Device:SOC Peripherals:CDC
+    - component: AlifSemiconductor::Device:SOC Peripherals:MIPI DSI
+    - component: AlifSemiconductor::Device:SOC Peripherals:MIPI DSI CSI2 DPHY
+    - component: AlifSemiconductor::BSP:External peripherals:ILI9806E LCD panel
+    - component: AlifSemiconductor::Device:SOC Peripherals:PDM
+    - component: AlifSemiconductor::Device:SOC Peripherals:I3C
+
+  define:
+    - BUFFER_SIZE_UP: 8192
+
+  add-path:
+    - .
+    - ../app
+    - ../soundsense
+    - ../soundsense/vendor
+    - ../npu_display
+    - ../libs/SEGGER_RTT_V796h/RTT
+    - ../libs/SEGGER_RTT_V796h/Config
