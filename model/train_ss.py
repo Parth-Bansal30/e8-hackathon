@@ -5,8 +5,13 @@ A cosine classifier over 76 classes (40 ESC-50 categories, 35 Speech Commands wo
 teaches the encoder an embedding space; only the encoder is exported. The 10 held-out ESC-50
 classes are never trained on: eval_ss.py uses them to test few-shot teaching.
 
+The defaults are the shipped encoder (G1 fallback 1: 192 channels, stride at block 1, 60 epochs;
+out/train_ss_ch192.log). The first spec run was --ch 128 --stride_block 2 --epochs 30
+(out/train_ss.log); --specaug/--sc_per_word were tried and were worse on the held-out classes
+(out/train_ss_ch192_sa.log, out/g1_metrics.json "variants").
+
 Usage (inside et-venv):
-    python train_ss.py --epochs 1          # measure time per epoch
+    python train_ss.py --epochs 1 --max_batches 40    # measure time per batch
     nohup python -u train_ss.py > out/train_ss.log 2>&1 &
 Writes ss_encoder.pth every epoch; the final model is the last epoch (no selection on held-out
 classes; the held-out few-shot number in the log is for monitoring only).
@@ -111,6 +116,22 @@ def augment_core(x, noise, gen):
     return torch.clamp(x, -1.0, 32767 / 32768.0)
 
 
+def spec_augment(f, n_t, max_t, n_f, max_f, gen):
+    """SpecAugment on [B, 1, 49, 40] features (training only): n_t time masks of up to max_t
+    frames and n_f frequency masks of up to max_f bands, set to 0 (the patch mean)."""
+    B, _, T, M = f.shape
+    keep = torch.ones(B, T, M, dtype=torch.bool)
+    for n, size, ax in ((n_t, max_t, 1), (n_f, max_f, 2)):
+        L = T if ax == 1 else M
+        for _ in range(n):
+            w = torch.randint(0, size + 1, (B, 1), generator=gen)
+            s = (torch.rand(B, 1, generator=gen) * (L - w + 1)).long()
+            pos = torch.arange(L)[None]
+            m = (pos >= s) & (pos < s + w)
+            keep &= ~(m[:, :, None] if ax == 1 else m[:, None, :])
+    return f * keep[:, None].to(f.device, f.dtype)
+
+
 def val_set(d, rng):
     """Cheap validation: ESC-50 fold 5 loudest windows of the trained classes, Speech Commands
     test, 100 background test crops."""
@@ -159,14 +180,18 @@ def few_shot(emb, y, rng, episodes=200, ways=5, shots=5, queries=15):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--epochs", type=int, default=30)
+    ap.add_argument("--epochs", type=int, default=60)
     ap.add_argument("--batch", type=int, default=128)
     ap.add_argument("--lr", type=float, default=3e-3)
     ap.add_argument("--wd", type=float, default=1e-4)
-    ap.add_argument("--ch", type=int, default=128)
+    ap.add_argument("--ch", type=int, default=192)
     ap.add_argument("--blocks", type=int, default=5)
-    ap.add_argument("--stride_block", type=int, default=2)
+    ap.add_argument("--stride_block", type=int, default=1)
     ap.add_argument("--scale", type=float, default=16.0)
+    ap.add_argument("--esc_rep", type=int, default=8, help="ESC-50 oversampling per epoch")
+    ap.add_argument("--sc_per_word", type=int, default=400, help="Speech Commands clips per word per epoch")
+    ap.add_argument("--specaug", type=int, nargs=4, default=[0, 0, 0, 0], metavar=("NT", "MAXT", "NF", "MAXF"),
+                    help="SpecAugment: time masks, max frames, frequency masks, max bands (0 0 0 0 = off)")
     ap.add_argument("--max_batches", type=int, default=0, help="stop each epoch early (timing tests)")
     ap.add_argument("--out", default=os.path.join(HERE, "ss_encoder.pth"))
     args = ap.parse_args()
@@ -176,7 +201,7 @@ def main():
     gen = torch.Generator().manual_seed(0)
     dev = "mps" if torch.backends.mps.is_available() else "cpu"
     d = S.Data()
-    sampler = Sampler(d)
+    sampler = Sampler(d, esc_rep=args.esc_rep, sc_per_word=args.sc_per_word)
     feats = K.Features().to(dev)
     cfg = dict(ch=args.ch, blocks=args.blocks, stride_block=args.stride_block)
     model = S.SSEncoder(**cfg).to(dev)
@@ -212,6 +237,8 @@ def main():
             with torch.no_grad():
                 x = augment_rows(x, nz, bg, gen)
                 f = feats(x)
+                if any(args.specaug):
+                    f = spec_augment(f, *args.specaug, gen)
             loss = F.cross_entropy(head(model(f)), y)
             opt.zero_grad()
             loss.backward()

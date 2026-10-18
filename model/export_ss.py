@@ -176,6 +176,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ckpt", default=os.path.join(HERE, "ss_encoder.pth"))
     ap.add_argument("--untrained", action="store_true")
+    ap.add_argument("--ch", type=int, default=192, help="--untrained only: encoder width")
+    ap.add_argument("--stride_block", type=int, default=1, help="--untrained only")
     ap.add_argument("--calib", type=int, default=600)
     ap.add_argument("--out", default=os.path.join(HERE, "ss_encoder.pte"))
     ap.add_argument("--assets", default=ASSETS)
@@ -185,7 +187,7 @@ def main():
 
     d = S.Data()
     rng = np.random.default_rng(7)
-    model = load_model(args.ckpt, args.untrained)
+    model = load_model(args.ckpt, args.untrained, cfg=dict(ch=args.ch, stride_block=args.stride_block))
     params, macs = S.count_params_macs(model)
     print(f"encoder {model.cfg} ({tag}): {params} parameters (BN folded), {macs / 1e6:.2f} M MACs")
 

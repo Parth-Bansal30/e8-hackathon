@@ -102,6 +102,7 @@ def eval_a(h, hy, ways, episodes=600, shots=5, queries=15, seed=100):
     z = S.normalize(h)
     by = [np.flatnonzero(hy == c) for c in range(len(S.HELDOUT))]
     accs, per_cls = [], np.zeros((len(S.HELDOUT), 2))
+    conf = np.zeros((len(S.HELDOUT), len(S.HELDOUT)), dtype=int)
     for _ in range(episodes):
         cls = rng.choice(len(by), ways, replace=False)
         protos, q, ql = [], [], []
@@ -115,8 +116,11 @@ def eval_a(h, hy, ways, episodes=600, shots=5, queries=15, seed=100):
         accs.append(np.mean(pred == ql))
         for j, c in enumerate(cls):
             per_cls[c] += [np.sum(pred[ql == j] == j), queries]
+        np.add.at(conf, (cls[ql], cls[pred]), 1)
     return {"acc": float(np.mean(accs)), "ci95": ci95(accs), "episodes": episodes,
-            "per_class": {S.HELDOUT[c]: float(per_cls[c, 0] / per_cls[c, 1]) for c in range(len(S.HELDOUT))}}
+            "per_class": {S.HELDOUT[c]: float(per_cls[c, 0] / per_cls[c, 1]) for c in range(len(S.HELDOUT))},
+            "confusion_rows_truth": {S.HELDOUT[c]: dict(zip(S.HELDOUT, map(int, conf[c])))
+                                     for c in range(len(S.HELDOUT))}}
 
 
 def rejected(pred):
@@ -125,8 +129,12 @@ def rejected(pred):
     return (pred < 0) | (builtin & ~ALERTING[np.clip(pred, 0, len(ALERTING) - 1)])
 
 
+SWEEP = np.round(np.arange(0.0, 0.91, 0.05), 2)
+
+
 def eval_b(h, hy, bg, sp, b_protos, b_thrs, episodes=600, shots=5, queries=15, n_bg=50, n_sp=50, seed=200):
     rng = np.random.default_rng(seed)
+    sweep = np.zeros((len(SWEEP), 2))
     by = [np.flatnonzero(hy == c) for c in range(len(S.HELDOUT))]
     nb = len(b_protos)
     r = {k: [] for k in ("taught_ok", "taught_rej", "taught_wrong", "untaught_rej", "untaught_as_taught",
@@ -162,11 +170,21 @@ def eval_b(h, hy, bg, sp, b_protos, b_thrs, episodes=600, shots=5, queries=15, n
         r["bg_rej"].append(np.mean(rejected(bp)))
         r["sp_rej"].append(np.mean(rejected(sp_)))
         r["auroc"].append(auroc(ts, us))
+        for k, t in enumerate(SWEEP):  # ALTERNATIVE: one fixed threshold for the taught profiles
+            th = np.concatenate([thrs[:nb], np.full(len(thrs) - nb, t)])
+            sweep[k] += [np.mean(S.match(tq, protos, th)[0] == tl), np.mean(rejected(S.match(uq, protos, th)[0]))]
         tb, ub = tsim.argmax(1), usim.argmax(1)
         r["auroc_margin"].append(auroc(ts - thrs[tb], us - thrs[ub]))
     out = {k: float(np.mean(v)) for k, v in r.items()}
     out["ci95"] = {k: ci95(r[k]) for k in ("taught_ok", "untaught_rej", "auroc")}
     out["episodes"] = episodes
+    sweep /= episodes
+    out["ALT_fixed_taught_threshold_sweep"] = {f"{t:.2f}": {"taught_ok": float(a), "untaught_rej": float(u)}
+                                               for t, (a, u) in zip(SWEEP, sweep)}
+    ok90 = [u for a, u in sweep if a >= 0.90]
+    rej80 = [a for a, u in sweep if u >= 0.80]
+    out["ALT_untaught_rej_at_taught_ok_ge_90"] = float(max(ok90)) if ok90 else None
+    out["ALT_taught_ok_at_untaught_rej_ge_80"] = float(max(rej80)) if rej80 else None
     out["notes"] = ("taught_ok = accepted as the right taught class; *_rej = no alert (unknown, or matched speech/"
                     "background); auroc = best-match cosine, taught vs untaught queries, per episode then averaged; "
                     "auroc_margin = same with (best score - that profile's threshold)")
@@ -219,6 +237,11 @@ def evaluate(name, embed_fn, d, pools):
     print(f"[{name}] b: taught ok {b['taught_ok']:.4f}  untaught rej {b['untaught_rej']:.4f}  bg rej {b['bg_rej']:.4f}  "
           f"speech rej {b['sp_rej']:.4f}  AUROC {b['auroc']:.4f} (margin {b['auroc_margin']:.4f})  "
           f"mean taught thr {b['taught_thr']:.3f}", flush=True)
+    print(f"[{name}] b ALT fixed taught threshold: best untaught rej with taught ok >= 90%: "
+          f"{b['ALT_untaught_rej_at_taught_ok_ge_90']}; best taught ok with untaught rej >= 80%: "
+          f"{b['ALT_taught_ok_at_untaught_rej_ge_80']}; sweep "
+          + " ".join(f"{t}:{v['taught_ok']:.2f}/{v['untaught_rej']:.2f}" for t, v in b["ALT_fixed_taught_threshold_sweep"].items()),
+          flush=True)
     print(f"[{name}] c: built-ins recognised {c['recognised']:.4f}  neg false accept {c['neg_false_accept']:.4f}  "
           f"bg FA {c['bg_false_accept']:.4f}  speech FA {c['speech_false_accept']:.4f}", flush=True)
     print(f"[{name}]    per class " + ", ".join(f"{k} {v:.2f}" for k, v in c["per_class"].items())
@@ -252,12 +275,33 @@ def verdict(r8, rf):
     return v, crit, float(gap)
 
 
+def summary(r):
+    """Key numbers of one metrics file, for side-by-side variants."""
+    out = {"checkpoint": r.get("checkpoint")}
+    for k in ("float", "int8"):
+        if k in r:
+            a, b, c = r[k]["a_5way5shot"], r[k]["b_rejection"], r[k]["c_builtins"]
+            out[k] = {"a_5way5shot": a["acc"], "a_10way5shot": r[k]["a_10way5shot"]["acc"],
+                      "b_taught_ok": b["taught_ok"], "b_untaught_rej": b["untaught_rej"], "b_auroc": b["auroc"],
+                      "b_bg_rej": b["bg_rej"], "b_speech_rej": b["sp_rej"],
+                      "c_recognised": c["recognised"], "c_neg_false_accept": c["neg_false_accept"]}
+    for k in ("float", "int8"):
+        if k in r:
+            out[k]["b_ALT_untaught_rej_at_taught_ok_ge_90"] = r[k]["b_rejection"].get("ALT_untaught_rej_at_taught_ok_ge_90")
+            out[k]["b_ALT_taught_ok_at_untaught_rej_ge_80"] = r[k]["b_rejection"].get("ALT_taught_ok_at_untaught_rej_ge_80")
+    out["verdict"] = r.get("verdict", {}).get("result")
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ckpt", default=os.path.join(HERE, "ss_encoder.pth"))
     ap.add_argument("--calib", type=int, default=600)
     ap.add_argument("--no_int8", action="store_true")
     ap.add_argument("--out", default=os.path.join(HERE, "out", "g1_metrics.json"))
+    ap.add_argument("--label", default="", help="what this checkpoint is (stored in the JSON)")
+    ap.add_argument("--compare", nargs="*", default=[], metavar="NAME=METRICS.json",
+                    help="other variants' metrics files to summarise next to this one")
     args = ap.parse_args()
 
     d = S.Data()
@@ -269,7 +313,8 @@ def main():
           f"pools: heldout {len(pools.h_y)}, built-in pos {len(pools.bi_y)}, neg {len(pools.neg_x)} "
           f"({pools.n_other_classes} classes), bg {len(pools.bg_x)}, speech {len(pools.sp_x)}", flush=True)
 
-    out = {"checkpoint": {"path": os.path.relpath(args.ckpt, HERE), "epoch": ck["epoch"], "cfg": ck["cfg"]}}
+    out = {"checkpoint": {"path": os.path.relpath(args.ckpt, HERE), "epoch": ck["epoch"], "cfg": ck["cfg"],
+                          "train_args": ck.get("args"), "label": args.label}}
     rf, ef = evaluate("float", lambda x: run(model, features(x), bs=500), d, pools)
     out["float"] = rf
     if not args.no_int8:
@@ -306,6 +351,11 @@ def main():
                                          text=True).stdout.strip()
     except OSError:
         pass
+    if args.compare:
+        out["variants"] = {}
+        for item in args.compare:
+            name, path = item.split("=", 1)
+            out["variants"][name] = summary(json.load(open(path)))
     out["date"] = time.strftime("%Y-%m-%d %H:%M %Z")
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
     with open(args.out, "w") as f:
