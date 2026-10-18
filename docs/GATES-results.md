@@ -64,11 +64,17 @@ HANDOFF-next.md item 11, done on the old laptop (et-venv, float encoder as shipp
 - Early check at 0.4 s, margin 0.05: 55% of built-in sounds alert early; false alerts +1.5 points.
 - Margin 0.10 instead: 44% early, and false alerts no higher than today.
 
-Firmware work, not done:
-- In `main.cpp`, the pending onset gets a second check at 0.4 s: one extra 1 ms inference, built-in profiles only. Teaching, `[CAL]` and taught sounds stay at 0.8 s; the early stage wasn't measured for taught sounds.
-- `snr_of()` reads onset − 0.2 s to onset + 0.8 s, which doesn't exist yet at 0.4 s. The early stage has to measure over its own window.
-- ITCM is 97% full, so watch the size.
-- Then check it on the board: the C3 latency line and a G3 built-in run.
+**Firmware: written and built, not yet flashed or tested on the board** (`decide_early()` in `main.cpp`):
+- At 0.4 s after the onset (`EARLY_DELAY`), one extra encoder run (about 1 ms) checks the match.
+- It decides at once only if all of these hold:
+  - the best match is an alerting built-in
+  - it clears its threshold (knob included) by `MAYBE_MARGIN` (0.05), so it would not be a "Maybe"
+  - it isn't vetoed by a sound marked wrong (T4)
+  - it's 8 dB over the room in the 1 s the encoder saw (its own SNR window; `snr_of()` at 0.8 s still reads onset − 0.2 s to + 0.8 s)
+- Everything else waits for 0.8 s as before: taught sounds, "Maybe", felt-only knocks, teaching and `[CAL]`.
+- Each early decision logs `[SS] t=... early, N ms after the onset` before the usual decision line, so `g3_play.py` parses it unchanged.
+- Release build: ITCM 254,944 B (97.25%, +720 B).
+- To check on the board: the `early` lines and the stats screen's alert latency during a G3 built-in run (`g3_play.py builtin`, needs sound). Compare recognition against the 54% run.
 
 ## C4 details
 

@@ -95,7 +95,8 @@ A failure stays on screen (red LED blink) until a key is pressed.
 
   Otherwise the top 3 reads "Quiet: NPU resting". The loop sleeps in WFI whenever no audio block
   is waiting (E2).
-- **Decisions.** Each sound onset (`ss_audio.c`) is classified once, **0.8 s later**.
+- **Decisions.** Each sound onset (`ss_audio.c`) is classified once, **0.8 s later**, or **0.4 s
+  later** if the best match is a clear alerting built-in (`decide_early()`; not yet tested on the board).
   - `classify()` compares the sound by cosine against the built-in and taught profiles
     (`ss_match.c`).
   - The threshold is moved by the knob offset.
@@ -135,6 +136,7 @@ A failure stays on screen (red LED blink) until a key is pressed.
   | `[C1]` | NPU check |
   | `[STORE]` | Restore at boot and each save |
   | `[SS] t=... best '...' score (thr) ... -> result` | Each decision |
+| `[SS] t=... early, N ms after the onset` | The next decision line was made at 0.4 s |
   | `[TEACH]`, `[CAL]` | Teaching and re-measuring built-ins |
   | `[C3] alert on screen N us after the decision` | Alert timing |
   | `[SS] knob:` | Knob turned |
@@ -282,12 +284,17 @@ To check the result, read variables over J-Link:
 
 ### Not on this laptop
 
-11. **Latency.** Done offline at about 10:45 AM (`model/delay_sweep.py`). Results:
+11. **Latency.** Offline test done at about 10:45 AM (`model/delay_sweep.py`). Results:
     [GATES-results.md](GATES-results.md#alert-delay-offline).
     - Don't just shorten `DECIDE_DELAY`: at 0.45 s the built-ins lose about 9 points.
-    - Next is the firmware for a two-stage decision: an early check at 0.4 s for clear built-in matches
-      (threshold + 0.05), otherwise 0.8 s as today. Offline that alerts 55% of built-in sounds at
-      about 0.45 s.
+    - Firmware for a two-stage decision is written (`decide_early()` in `main.cpp`). An early check at
+      0.4 s decides clear built-in matches (threshold + 0.05); everything else waits for 0.8 s as
+      today. Offline that alerts 55% of built-in sounds at about 0.45 s.
+    - Built release on the old laptop; **not flashed or tested**. On the board laptop: flash, run the
+      Ready screen, then (with sound, once OK'd) `g3_play.py builtin`. Look for `[SS] t=... early`
+      lines and the alert latency on the stats screen.
+    - Once it's confirmed, update the 0.85 s claims: README (lines 68, 82, 192), DEMO.md "Alert
+      timing", SUBMISSION.md "Alert delay", HANDOFF-submission.md. Tell the submission session.
 
 ## Wrap-up (board session, by about 3:45 PM)
 

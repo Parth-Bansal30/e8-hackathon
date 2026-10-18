@@ -4,8 +4,9 @@
  * Every 100 ms the last 1 s goes through the Sound Sense encoder on the Ethos-U85 (64-d embedding)
  * for the live view. Each sound onset (ss_audio.c) is classified once, 0.8 s later, when the onset
  * sits 0.2 s into the window, as in training and teaching: cosine against the built-in and taught
- * profiles; the best one counts if it clears its threshold. Knocks are paired with the BMI323
- * (ss_imu.c) to tell a knock felt through the table from one only heard (TV).
+ * profiles; the best one counts if it clears its threshold. A clear match to an alerting built-in
+ * is decided early instead, 0.4 s after the onset (docs/GATES-results.md "Alert delay"). Knocks are
+ * paired with the BMI323 (ss_imu.c) to tell a knock felt through the table from one only heard (TV).
  *
  * Taught sounds are saved in the OSPI flash (ss_store.c) after each teach and loaded at boot.
  *
@@ -47,6 +48,7 @@
 #define IN_LEN         (KWS_FRAMES * KWS_NMEL)
 #define LIVE_EVERY     5                      /* frames (20 ms) between live-view inferences */
 #define DECIDE_DELAY   (KWS_SR * 8 / 10)      /* onset to decision: the onset lands 0.2 s into the window */
+#define EARLY_DELAY    (KWS_SR * 4 / 10)      /* a clear built-in match (not a "Maybe") is decided this soon */
 #define HOLDOFF        (KWS_SR * 12 / 10)     /* onsets closer than this to the previous one are the same sound */
 #define MIN_SNR_DB     8.0f                   /* loudest 20 ms over the noise floor, to classify at all */
 #define TEACH_SNR_DB   10.0f
@@ -686,17 +688,35 @@ SS_COLD static void cal_finish(void)
 static void classify(const float *e, const float *s, float snr, int clipped, uint32_t onset_ms);
 static void what_was_that(const float *e, float snr, uint32_t onset_ms);
 
-static void decide(uint32_t onset, uint32_t onset_ms)
+/* The last 1 s through the encoder: embedding e and every profile's score s. */
+static void embed_now(float *e, float *s)
 {
     static int8_t in[IN_LEN];
     int8_t out[SS_EMB];
-    float e[SS_EMB], s[MAX_PROF];
     const uint32_t t0 = ss_cycles();
     kws_make_input(in, SS_IN_SCALE, SS_IN_ZP);
     if (!infer(in, out)) ss_halt("inference");
     work_cyc += ss_cycles() - t0;
     ss_embed(out, e);
     score_all(e, s);
+}
+
+/* A profile's threshold, moved by the knob (T5). */
+static float thr_of(int p)
+{
+    const float thr = prof[p].thr + sens_off;
+    return thr < 0.35f ? 0.35f : thr > 0.95f ? 0.95f : thr;
+}
+
+static bool near_key(uint32_t onset_ms)
+{
+    return (int32_t)(onset_ms - last_key_ms) > -300 && (int32_t)(onset_ms - last_key_ms) < KEY_QUIET_MS;
+}
+
+static void decide(uint32_t onset, uint32_t onset_ms)
+{
+    float e[SS_EMB], s[MAX_PROF];
+    embed_now(e, s);
     int clipped;
     const float snr = snr_of(onset - KWS_SR / 5, &clipped);
 
@@ -712,11 +732,33 @@ static void decide(uint32_t onset, uint32_t onset_ms)
         }
         return;
     }
-    if ((int32_t)(onset_ms - last_key_ms) > -300 && (int32_t)(onset_ms - last_key_ms) < KEY_QUIET_MS) {
+    if (near_key(onset_ms)) {
         printf("[SS] t=%lu skipped (joystick)\r\n", (unsigned long)onset_ms);
         return;
     }
     classify(e, s, snr, clipped, onset_ms);
+}
+
+/* EARLY_DELAY after the onset: decide now if the best match is an alerting built-in that clears its
+ * threshold by MAYBE_MARGIN, isn't like a sound marked wrong, and is loud enough over the window the
+ * encoder saw. Anything else (taught sounds, "Maybe", teaching, re-measuring) waits for DECIDE_DELAY.
+ * Offline this alerts 55% of built-in sounds at about 0.45 s with the same recognition. True if decided. */
+static bool decide_early(uint32_t onset_ms)
+{
+    if (scr == TEACH || cal_idx >= 0 || near_key(onset_ms)) return false;
+    float e[SS_EMB], s[MAX_PROF];
+    embed_now(e, s);
+    const int b = best_of(s, NULL);
+    if (b >= SS_NUM_BUILTIN || !prof[b].alerting || s[b] < thr_of(b) + MAYBE_MARGIN) return false;
+    const float cxs = cx_score(b, e);
+    if (cxs >= CX_MIN && cxs > s[b]) return false;
+    int clipped;
+    const float snr = snr_of(ss_audio_samples() - KWS_SR, &clipped);
+    if (snr < MIN_SNR_DB) return false;
+    printf("[SS] t=%lu early, %lu ms after the onset\r\n", (unsigned long)onset_ms,
+           (unsigned long)(ss_ms() - onset_ms));
+    classify(e, s, snr, clipped, onset_ms);
+    return true;
 }
 
 /* The decision for one sound: its embedding e, scores s, level over the room, and onset time. */
@@ -727,8 +769,7 @@ static void classify(const float *e, const float *s, float snr, int clipped, uin
     float mg = 0.0f;
     const ui_felt felt = felt_at(onset_ms, &mg);
     const float cxs = cx_score(b, e);
-    float thr = prof[b].thr + sens_off;   /* T5: the knob */
-    thr = thr < 0.35f ? 0.35f : thr > 0.95f ? 0.95f : thr;
+    const float thr = thr_of(b);   /* T5: the knob */
     const bool veto = s[b] >= thr && cxs >= CX_MIN && cxs > s[b];   /* T4: like a sound marked wrong */
     const bool over = s[b] >= thr && !veto;
     const bool loud = snr >= MIN_SNR_DB;
@@ -1383,7 +1424,7 @@ int main(void)
     int8_t out[SS_EMB];
     float e[SS_EMB], s[MAX_PROF];
     int frames = 0;
-    bool pend = false;
+    bool pend = false, pend_early = false;
     uint32_t pend_sample = 0, pend_ms = 0, last_onset = 0;
     bool any_onset = false;
     uint32_t last_imu = 0, last_live_draw = 0, last_slow = 0, last_log = 0, last_key = 0;
@@ -1454,14 +1495,19 @@ int main(void)
             if (!dark) on_keys(keys);   /* in the dark, a press only lights the screen */
         }
 
-        /* onsets: one decision per sound, 0.8 s after it starts */
+        /* onsets: one decision per sound, 0.4 s after it starts if the match is clear, else 0.8 s */
         ss_onset o;
         while (ss_audio_onset(&o)) {
             if (pend || (any_onset && o.sample - last_onset < HOLDOFF)) continue;
             pend = true;
+            pend_early = false;
             any_onset = true;
             last_onset = pend_sample = o.sample;
             pend_ms = ev_ms(o.cyc);
+        }
+        if (pend && !pend_early && ss_audio_samples() >= pend_sample + EARLY_DELAY) {
+            pend_early = true;
+            if (!mic_off && decide_early(pend_ms)) pend = false;
         }
         if (pend && ss_audio_samples() >= pend_sample + DECIDE_DELAY) {
             pend = false;
