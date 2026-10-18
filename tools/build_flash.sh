@@ -1,7 +1,7 @@
 #!/bin/zsh
 # Build a firmware project for the E8 HP core and flash it to MRAM with SETOOLS.
-# Usage: tools/build_flash.sh <project> [debug|release]     e.g. tools/build_flash.sh app
-# Stops before flashing if the build fails.
+# Usage: tools/build_flash.sh <project> [debug|release] [noflash]     e.g. tools/build_flash.sh app
+# Stops before flashing if the build fails; with noflash, only builds.
 #
 # Machine-specific paths, overridable from the environment:
 #   ALIF_SETOOLS   Alif SETOOLS folder (with app-write-mram; serial port set in isp_config_data.cfg)
@@ -10,6 +10,7 @@
 set -e
 PROJ=${1:?usage: build_flash.sh <project> [debug|release]}
 BUILD=${2:-debug}
+NOFLASH=${3:-}
 FW=${0:A:h:h}/firmware
 SET=${ALIF_SETOOLS:-~/alif/app-release-exec-macos}
 A=${CMSIS_TOOLS:-$(print -l ~/.vcpkg/artifacts/*/tools.open.cmsis.pack.cmsis.toolbox/2.15.0(N:h:h) | head -1)}
@@ -28,6 +29,7 @@ if ! cbuild alif.csolution.yml --context $PROJ.$BUILD+E8-HP --packs --update-rte
     echo "BUILD FAILED (full log: $LOG)"; exit 1
 fi
 grep -A7 "Memory region" $LOG || true   # absent when nothing was relinked
+[ "$NOFLASH" = noflash ] && { echo "BUILT $PROJ ($BUILD), not flashed"; exit 0; }
 
 cd $SET
 cp $FW/out/$PROJ/E8-HP/$BUILD/$PROJ.bin build/images/alif-img.bin
