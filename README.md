@@ -209,8 +209,6 @@ the datasets (ESC-50, Speech Commands), which aren't in git.
   by the door".
 - **Only clear matches meet the 0.5 s alert target.** A clear built-in match alerts in about
   0.44 s. Taught sounds, "Maybe" matches and anything unclear wait for the whole sound: about 0.87 s.
-- Built but not yet checked by hand at the board: sensitivity on the knob, and the backlight
-  turning off in night mode.
 - Not built yet: telling a smoke alarm from a CO alarm, and dimming the screen (night mode switches
   the backlight off). See [docs/STATUS.md](docs/STATUS.md).
 

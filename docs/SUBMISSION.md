@@ -244,6 +244,8 @@ All on the DK-E8 (M55-HP at 400 MHz, Ethos-U85-256), release build, 2026-10-18. 
 - **Memory:** ITCM 97.9% (all hot code); MRAM 1.06 MB of 2 MB (model, fonts, cold code).
 - **Tests on the flashed build:** full-app smoke test 16 of 16 and feature test 18 of 18 (no sound,
   driven over J-Link), 0 audio blocks dropped. A screen tour reached all 30 screens and states.
+  Checked by eye and hand: night mode turns the backlight off after 15 s, and the knob moves the
+  sensitivity with an on-screen bar.
 
 ## Challenges we ran into
 
@@ -320,8 +322,6 @@ All on the DK-E8 (M55-HP at 400 MHz, Ethos-U85-256), release build, 2026-10-18. 
 - Knocks are felt within about 20 cm of the board.
 - Only clear built-in matches meet our 0.5 s alert target (median 437 ms). Taught sounds, "Maybe"
   matches and anything unclear wait for the whole sound: about 0.87 s.
-- Built but not yet checked by hand at the board: sensitivity on the knob, and the backlight
-  turning off in night mode.
 
 ## Built with
 
@@ -343,8 +343,7 @@ started from Arm's alif-ethos-u85-npu-mnist learning path.
       437 ms alerts, Sounds page, Calibrate room, snooze, "still sounding", talking nearby).
 - [ ] **Paste section 2 into the Devpost draft again:** the 10:30 AM paste is out of date (5
       examples, 0.85 s alerts, old feature counts). Same for the elevator pitch.
-- [ ] Once the board laptop pushes the hand checks (knob, night-mode backlight), update the last
-      line of "Known limits".
+- [x] Hand checks (knob, night-mode backlight) passed at 1:25 PM; "Known limits" updated.
 - [ ] Record the video, upload it to YouTube or Vimeo, and paste the link.
 - [ ] Upload the gallery images (thumbnail first).
 - [ ] Add the team members (team HashMap) in step 1 of the form.
