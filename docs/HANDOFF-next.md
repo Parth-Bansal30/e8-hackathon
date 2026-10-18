@@ -1,6 +1,6 @@
 # Handoff: continuing Sound Sense (2026-10-18)
 
-**Updated 12:35 PM PDT. Feature work stopped (owner); wrap-up in progress.** The board's J-Link is now on the laptop with the et-venv (it has torch,
+**Updated 12:45 PM PDT. Feature work stopped (owner). Tagged `v1.0-judged` = `32177ea`; PR #2 open, not merged.** The board's J-Link is now on the laptop with the et-venv (it has torch,
 the datasets and the toolchain), so offline work and board work happen on one machine.
 
 Since 10:10 AM:
@@ -351,8 +351,9 @@ Agreed with the owner at about 10 AM; also in SUBMISSION.md.
 1. **Done at 12:30 PM.** Feature work stopped. The board runs the release build of the final
    firmware sources (unchanged since `ed20a3e`). Ready screen passes, smoke 16/16, feature test 18/18.
 2. **Done at 12:35 PM.** STATUS.md and GATES-results.md updated, committed and pushed to `gates`.
-3. Tag the commit the board is flashed from: `git tag v1.0-judged <hash> && git push origin v1.0-judged`.
-4. Open a PR `gates` → `main` and merge it with a merge commit, once the owner OKs it. Keep the
-   `gates` branch.
-5. Give the submission session the hash. It replaces `<hash>` in SUBMISSION.md section 1 and in
-   "About the project".
+3. **Done at 12:45 PM:** tag `v1.0-judged` = `32177ea` (pushed). The board's firmware is built
+   from the sources at that commit.
+4. **PR open, not merged:** [Parth-Bansal30/e8-hackathon#2](https://github.com/Parth-Bansal30/e8-hackathon/pull/2)
+   `gates` → `main`, opened at 12:45 PM with the owner's OK. It merges cleanly. Merge it with a merge commit only when the owner says so, and keep the `gates` branch.
+5. Give the submission session the hash **`32177ea`** (full: `32177eaeabfa0ecd9c5577c0500474ee2ca85cb9`). It
+   replaces `<hash>` in SUBMISSION.md section 1 and in "About the project".
