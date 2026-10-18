@@ -350,7 +350,7 @@ started from Arm's alif-ethos-u85-npu-mnist learning path.
       replace `<hash>` in section 1 and at the top of "About the project" (1:19 PM).
 - [x] Re-check against `gates`: the draft now covers the final firmware (8 examples, teach checks,
       437 ms alerts, Sounds page, Calibrate room, snooze, "still sounding", talking nearby).
-- [ ] Merge PR #4 first: the two images in section 2 load from `main` (architecture, board photos).
+- [x] Merge PR #4 first (merged 24bc7ae): the two images in section 2 load from `main` (architecture, board photos).
 - [ ] **Paste section 2 into the Devpost draft again:** the 10:30 AM paste is out of date (5
       examples, 0.85 s alerts, old feature counts). Same for the elevator pitch.
 - [x] Hand checks (knob, night-mode backlight) passed at 1:25 PM; "Known limits" updated.
