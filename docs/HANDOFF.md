@@ -22,6 +22,8 @@ Snapshot date: 2026-10-18. Reference machine: MacBook Air M2 (8 GB), macOS 26.6.
 | ICM-42670P IMU | not tested | |
 | Camera | **no camera module in the kit**; capture test written for one | `cam_test` |
 | Mic gain | fixed: 0x800 instead of Alif's demo value 0x0D (+44 dB) | `hw_test`, `app/kws.c` |
+| OSPI flash, **64 MB** (XIP 74 MB/s) | passing; see [HANDOFF-memory.md](HANDOFF-memory.md) | `flash_test` |
+| OSPI PSRAM, **64 MB APS512XXN** (107 MB/s) | passing with the pack 2.2.1 driver; see [HANDOFF-memory.md](HANDOFF-memory.md) | `psram_test` |
 | **Final project: voice + motion controller** | keyword model trained; keyword app **built and flashed but not tested**, see §7 | `model/*kws*`, `firmware/app` |
 
 ---
@@ -51,10 +53,8 @@ Install these versions. Newer ones may work but are untested.
 | CMake | **3.31.12** | `arm:tools/kitware/cmake` |
 | Ninja | **1.13.2** | `arm:tools/ninja-build/ninja` |
 
-`firmware/vcpkg-configuration.json` asks for `^` ranges (`cmsis-toolbox ^2.12.0`,
-`gcc ^13.2.1-0`, `cmake ^3.28.4`, `ninja ^1.12.0`), so a fresh install may resolve newer
-versions. Check what you got (§3.3). If anything differs, change the entries in that file to
-the exact versions above before you open the folder in VS Code.
+`firmware/vcpkg-configuration.json` pins these exact versions, so a fresh install gets the
+same toolchain. Check what you got (§3.3).
 
 ### VS Code extensions
 
@@ -209,6 +209,8 @@ Each step proves one more layer. Build + flash takes 10–40 s.
 | 6 | `tools/build_flash.sh npu_draw` | draw a digit with a finger; it's recognized live |
 | 7 | `tools/build_flash.sh hw_test` + `rtt_dump.sh …/hw_test.elf` | dashboard; see below |
 | 8 | `tools/build_flash.sh cam_test` | without a camera module: `sensor power + ID FAILED` (expected) |
+| 9 | `tools/build_flash.sh flash_test` + `rtt_dump.sh …/flash_test.elf` | `64 MB part`, `RESULT (driver): PASS`, `RESULT (XIP): PASS`. Rewrites only two 4 KB test sectors |
+| 10 | `tools/build_flash.sh psram_test` + `rtt_dump.sh …/psram_test.elf` | `APS512XXN found`, `detected size: 64 MB`, `RESULT: PASS`. Details in [HANDOFF-memory.md](HANDOFF-memory.md) |
 
 **hw_test, by hand:**
 

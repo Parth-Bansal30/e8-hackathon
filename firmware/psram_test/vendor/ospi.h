@@ -1,0 +1,717 @@
+/* Copyright (C) 2023 Alif Semiconductor - All Rights Reserved.
+ * Use, distribution and modification of this code is permitted under the
+ * terms stated in the Alif Semiconductor Software License Agreement
+ *
+ * You should have received a copy of the Alif Semiconductor Software
+ * License Agreement with this file. If not, please write to:
+ * contact@alifsemi.com, or visit: https://alifsemi.com/license
+ *
+ */
+
+/******************************************************************************
+ * @file     ospi.h
+ * @author   Silesh C V, Manoj A Murudi
+ * @email    silesh@alifsemi.com, manoj.murudi@alifsemi.com
+ * @version  V1.0.0
+ * @date     19-06-2023
+ * @brief    Low level header file for OSPI.
+ ******************************************************************************/
+#ifndef OSPI_H
+#define OSPI_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <stdint.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <soc.h>
+
+#define OSPI_TX_FIFO_DEPTH                   256U
+#define OSPI_RX_FIFO_DEPTH                   256U
+
+#define OSPI_ENABLE                          1
+#define OSPI_DISABLE                         0
+
+/* SPI Control Register 0 (CTRLR0) bit Definition, Macros, Offsets and Masks
+ * these include DFS, FRF, SCPH, SCPOL, TMOD, etc
+ */
+/* Data Frame DFS bit[4:0]*/
+#define SPI_CTRLR0_DFS                       0U
+#define SPI_CTRLR0_DFS_8bit                  0x07U
+#define SPI_CTRLR0_DFS_16bit                 0x0FU
+#define SPI_CTRLR0_DFS_32bit                 0x1FU
+#define SPI_CTRLR0_DFS_MASK                  (0x1FU << SPI_CTRLR0_DFS)
+
+/* Frame Format FRF bit[7:6] */
+#define SPI_CTRLR0_FRF                       6U
+#define SPI_CTRLR0_FRF_MASK                  (0x3UL << SPI_CTRLR0_FRF)
+#define SPI_CTRLR0_FRF_MOTOROLA              0x00U /* 0x0 Motorola SPI Frame Format */
+#define SPI_CTRLR0_FRF_TI                    0x40U /* 0x1 Texas Instruments SSP Frame Format */
+#define SPI_CTRLR0_FRF_MICROWIRE             0x80U /* 0X2 National Semiconductors Microwire Frame Format */
+
+/* Serial Clock Polarity SCPOL | Serial Clock Phase SCPH bit[9:8] */
+#define SPI_CTRLR0_SC                        8U
+#define SPI_CTRLR0_SC_MASK                   (0x3UL << SPI_CTRLR0_SC)
+#define SPI_CTRLR0_SCPH_HIGH                 0x100U /* 0x1 SPI SCPH high */
+#define SPI_CTRLR0_SCPH_LOW                  0x000U /* 0x0 SPI SCPH low */
+#define SPI_CTRLR0_SCPOL_HIGH                0x200U /* 0x2 SPI SCPOL high */
+#define SPI_CTRLR0_SCPOL_LOW                 0x000U /* 0x0 SPI SCPOL low */
+
+/* Transfer Mode TMOD bit[11:10] */
+#define SPI_CTRLR0_TMOD                      10U
+#define SPI_CTRLR0_TMOD_MASK                 (0x3UL << SPI_CTRLR0_TMOD)
+#define SPI_CTRLR0_TMOD_TRANSFER             0x000U /* 0x0 SPI transfer mode */
+#define SPI_CTRLR0_TMOD_SEND_ONLY            0x400U /* 0x1 SPI send only mode */
+#define SPI_CTRLR0_TMOD_RECEIVE_ONLY         0x800U /* 0x2 SPI receive only mode */
+#define SPI_CTRLR0_TMOD_EEPROM_READ_ONLY     0xC00U /* 0x3 SPI EEPROM read only mode */
+
+/* Slave Select toggle Enable bit[14]
+ * While operating in SPI mode with clock phase (SCPH) set to
+ * 0, this register controls the behavior of the slave select line
+ *  between data frames.
+ */
+/* Slave Select toggle Enable SSTE bit[14] */
+#define SPI_CTRLR0_SSTE                      14U
+#define SPI_CTRLR0_SSTE_MASK                 (1U << SPI_CTRLR0_SSTE)
+#define SPI_CTRLR0_SSTE_ENABLE               0x4000U /* 0x1 SPI slave select toggle enable */
+#define SPI_CTRLR0_SSTE_DISABLE              0x0000U /* 0x0 SPI slave select toggle disable */
+
+/* Control Frame Size for the Microwire frame format CFS bit[19:16]*/
+#define SPI_CTRLR0_CFS                       16U
+#define SPI_CTRLR0_CFS_MASK                  (0xFU << SPI_CTRLR0_CFS)
+
+#define SPI_FRF_DUAL                         0x1
+#define SPI_FRF_QUAD                         0x2
+#define SPI_FRF_OCTAL                        0x3
+
+/* SPI Frame Format SPI_FRF bit[23:22]*/
+#define SPI_CTRLR0_SPI_FRF                   22U
+#define SPI_CTRLR0_SPI_FRF_MASK              (0x3U << SPI_CTRLR0_SPI_FRF)
+#define SPI_CTRLR0_SPI_FRF_STANDRAD          0x000000U /* 0x0 Standard SPI Format */
+#define SPI_CTRLR0_SPI_FRF_DUAL              0x400000U /* 0x1 Dual SPI Format */
+#define SPI_CTRLR0_SPI_FRF_QUAD              0x800000U /* 0X2 Quad SPI Format */
+#define SPI_CTRLR0_SPI_FRF_OCTAL             0xC00000U /* 0X2 Octal SPI Format */
+
+/* SPI Hyperbus Frame format enable SPI_HYPERBUS_EN bit[24] */
+#define SPI_CTRLR0_SPI_HYPERBUS_EN           24
+#define SPI_CTRLR0_SPI_HYPERBUS_EN_MASK      (1 << SPI_CTRLR0_SPI_HYPERBUS_EN)
+#define SPI_CTRLR0_SPI_HYPERBUS_ENABLE       0x1000000U /* 0x1 SPI Hyperbus Frame format enable */
+#define SPI_CTRLR0_SPI_HYPERBUS_DISABLE      0x0000000U /* 0x0 SPI Hyperbus Frame format disable */
+
+/* SPI is working in Master or Slave SSI_IS_MST bit[31] */
+#define SPI_CTRLR0_SSI_IS_MST                31U
+#define SPI_CTRLR0_SSI_IS_MST_MASK           (0x1UL << SPI_CTRLR0_SSI_IS_MST)
+#define SPI_CTRLR0_SSI_IS_MST_MASTER         0x80000000U /* 0x1 SPI master */
+#define SPI_CTRLR0_SSI_IS_MST_SLAVE          0x00000000U /* 0x0 SPI slave  */
+
+/* Quad SPI MODE Macros */
+#define SPI_CTRLR0_SPI_QUAD_ENABLE           (0x2UL << SPI_CTRLR0_SPI_FRF)
+#define SPI_CTRLR0_SPI_QUAD_TX_MODE          SPI_TMOD_SEND_ONLY
+#define SPI_CTRLR0_SPI_QUAD_RX_MODE          SPI_TMOD_RECEIVE_ONLY
+
+/* Octal SPI MODE Macros */
+#define SPI_CTRLR0_SPI_OCTAL_ENABLE          (0x3UL << SPI_CTRLR0_SPI_FRF)
+#define SPI_CTRLR0_SPI_OCTAL_TX_RX_MODE      SPI_TMOD_TRANSFER
+#define SPI_CTRLR0_SPI_OCTAL_TX_MODE         SPI_TMOD_SEND_ONLY
+#define SPI_CTRLR0_SPI_OCTAL_RX_MODE         SPI_TMOD_RECEIVE_ONLY
+
+#define SPI_IMR_TX_FIFO_EMPTY_INTERRUPT_MASK 0x00000001U /* Transmit fifo empty interrupt mask*/
+#define SPI_IMR_TX_FIFO_OVER_FLOW_INTERRUPT_MASK                                                   \
+    0x00000002U /* Transmit fifo overflow interrupt mask*/
+#define SPI_IMR_RX_FIFO_UNDER_FLOW_INTERRUPT_MASK                                                  \
+    0x00000004U /* Receive fifo underflow interrupt mask*/
+#define SPI_IMR_RX_FIFO_OVER_FLOW_INTERRUPT_MASK                                                   \
+    0x00000008U                                         /* Receive fifo Overflow interrupt mask*/
+#define SPI_IMR_RX_FIFO_FULL_INTERRUPT_MASK 0x00000010U /* Receive fifo full interrupt mask*/
+#define SPI_IMR_MULTI_MASTER_CONTENTION_INTERRUPT_MASK                                             \
+    0x00000020U /* Multi-Master contention interrupt mask.*/
+
+#define SPI_TXFTLR_TFT_SHIFT                    0U
+#define SPI_TXFTLR_TFT_MASK                     (0xFFFFU << SPI_TXFTLR_TFT_SHIFT)
+#define SPI_TXFTLR_TXFTHR_SHIFT                 16U
+#define SPI_TXFTLR_TXFTHR_MASK                  (0xFFFFU << SPI_TXFTLR_TXFTHR_SHIFT)
+
+/* Bit fields in SPI_CTRLR0 */
+#define SPI_CTRLR0_CLK_STRETCH_EN_OFFSET        30U
+#define SPI_CTRLR0_XIP_PREFETCH_EN_OFFSET       29U
+#define SPI_CTRLR0_XIP_MBL_OFFSET               26U
+#define SPI_CTRLR0_SPI_RXDS_SIG_EN_OFFSET       25U
+#define SPI_CTRLR0_SPI_DM_EN_OFFSET             24U
+#define SPI_CTRLR0_XIP_CONT_EN_OFFSET           21U
+#define SPI_CTRLR0_XIP_INST_EN_OFFSET           20U
+#define SPI_CTRLR0_XIP_DFS_HC_OFFSET            19U
+#define SPI_CTRLR0_SPI_RXDS_EN_OFFSET           18U
+#define SPI_CTRLR0_INST_DDR_EN_OFFSET           17U
+#define SPI_CTRLR0_SPI_DDR_EN_OFFSET            16U
+#define SPI_CTRLR0_WAIT_CYCLES_OFFSET           11U
+#define SPI_CTRLR0_INST_L_OFFSET                8U
+#define SPI_CTRLR0_XIP_MD_EN_OFFSET             7U
+#define SPI_CTRLR0_ADDR_L_OFFSET                2U
+#define SPI_CTRLR0_TRANS_TYPE_OFFSET            0U
+
+#define SPI_CTRLR0_TRANS_TYPE_MASK              3U
+#define SPI_TRANS_TYPE_STANDARD                 0U
+#define SPI_TRANS_TYPE_FRF_DEFINED              2U /* CTRLR0.SPI_FRF Defined - Standard/Dual/Quad/Octal */
+#define SPI_TRANS_TYPE_FRF_DUAL_OCTAL           3U
+
+#define SPI_CTRLR0_SPI_RXDS_ENABLE              1U
+#define SPI_CTRLR0_SPI_RXDS_DISABLE             0U
+
+#define SPI_CTRLR0_INST_L_0bit                  0x0U
+#define SPI_CTRLR0_INST_L_4bit                  0x1U
+#define SPI_CTRLR0_INST_L_8bit                  0x2U
+#define SPI_CTRLR0_INST_L_16bit                 0x3U
+
+#define SPI_DMACR_TDMAE                         2U
+#define SPI_DMACR_RDMAE                         1U
+
+#define XIP_CTRL_RXDS_VL_EN_OFFSET              30U
+#define XIP_CTRL_XIP_PREFETCH_EN_OFFSET         29U
+#define XIP_CTRL_XIP_MBL_OFFSET                 26U
+#define XIP_CTRL_RXDS_SIG_EN_OFFSET             25U
+#define XIP_CTRL_XIP_HYPERBUS_EN_OFFSET         24U
+#define XIP_CTRL_CONT_XFER_EN_OFFSET            23U
+#define XIP_CTRL_INST_EN_OFFSET                 22U
+#define XIP_CTRL_RXDS_EN_OFFSET                 21U
+#define XIP_CTRL_INST_DDR_EN_OFFSET             20U
+#define XIP_CTRL_DDR_EN_OFFSET                  19U
+#define XIP_CTRL_DFS_HC_OFFSET                  18U
+#define XIP_CTRL_WAIT_CYCLES_OFFSET             13U
+#define XIP_CTRL_MD_BITS_EN_OFFSET              12U
+#define XIP_CTRL_INST_L_OFFSET                  9U
+#define XIP_CTRL_ADDR_L_OFFSET                  4U
+#define XIP_CTRL_TRANS_TYPE_OFFSET              2U
+#define XIP_CTRL_FRF_OFFSET                     0U
+
+#define XIP_WRITE_CTRL_XIPWR_DFS_HC_OFFSET      21U
+#define XIP_WRITE_CTRL_XIPWR_WAIT_CYCLES        16U
+#define XIP_WRITE_CTRL_XIPWR_DM_EN_OFFSET       14U
+#define XIP_WRITE_CTRL_XIPWR_RXDS_SIG_EN_OFFSET 13U
+#define XIP_WRITE_CTRL_XIPWR_HYPERBUS_EN_OFFSET 12U
+#define XIP_WRITE_CTRL_WR_INST_DDR_EN_OFFSET    11U
+#define XIP_WRITE_CTRL_WR_SPI_DDR_EN_OFFSET     10U
+#define XIP_WRITE_CTRL_WR_INST_L_OFFSET         8U
+#define XIP_WRITE_CTRL_WR_ADDR_L_OFFSET         4U
+#define XIP_WRITE_CTRL_WR_TRANS_TYPE_OFFSET     2U
+#define XIP_WRITE_CTRL_WR_FRF_OFFSET            0U
+
+#define SPI_SR_TX_FIFO_EMPTY                    0x4U
+#define SPI_SR_TFNF                             0x2U
+#define SPI_SR_BUSY                             0x1U
+
+#define SPI_TX_FIFO_EMPTY_EVENT                 0x01U /* Transmit fifo empty interrupt mask*/
+#define SPI_TX_FIFO_OVER_FLOW_EVENT             0x02U /* Transmit fifo overflow interrupt mask*/
+#define SPI_RX_FIFO_UNDER_FLOW_EVENT            0x04U /* Receive fifo underflow interrupt mask*/
+#define SPI_RX_FIFO_OVER_FLOW_EVENT             0x08U /* Receive fifo Overflow interrupt mask*/
+#define SPI_RX_FIFO_FULL_EVENT                  0x10U /* Receive fifo full interrupt mask*/
+#define SPI_MULTI_MASTER_CONTENTION_EVENT       0x20U /* Multi-Master contention interrupt mask.*/
+
+/**
+ * enum SPI_FRAME_FORMAT.
+ * SPI frame formats.
+ */
+typedef enum _SPI_FRAME_FORMAT {
+    SPI_FRAME_FORMAT_STANDARD, /* Standard SPI frame format */
+    SPI_FRAME_FORMAT_DUAL,     /* Dual SPI frame format */
+    SPI_FRAME_FORMAT_QUAD,     /* Quad SPI frame format */
+    SPI_FRAME_FORMAT_OCTAL     /* Octal SPI frame format */
+} SPI_FRAME_FORMAT;
+
+/**
+ * enum SPI_MODE.
+ * SPI modes.
+ */
+typedef enum _SPI_MODE {
+    SPI_MODE_0, /* SPI Mode - 0 : CPHA = 0, CPOL = 0 */
+    SPI_MODE_1, /* SPI Mode - 1 : CPHA = 1, CPOL = 0 */
+    SPI_MODE_2, /* SPI Mode - 2 : CPHA = 0, CPOL = 1 */
+    SPI_MODE_3  /* SPI Mode - 3 : CPHA = 1, CPOL = 1 */
+} SPI_MODE;
+
+/**
+ * enum SPI_TMOD.
+ * SPI transfer modes.
+ */
+typedef enum _SPI_TMOD {
+    SPI_TMOD_TX_AND_RX   = 0x00, /**< Transmit and Receive    */
+    SPI_TMOD_TX          = 0x01, /**< Transmit only           */
+    SPI_TMOD_RX          = 0x02, /**< Receive only            */
+    SPI_TMOD_EEPROM_READ = 0x03  /**< EEPROM read             */
+} SPI_TMOD;
+
+/**
+ * enum SPI_SS_STATE.
+ * SPI Slave Select States.
+ */
+typedef enum _SPI_SS_STATE {
+    SPI_SS_STATE_DISABLE, /**< Slave select disabled  */
+    SPI_SS_STATE_ENABLE,  /**< Slave select Enabled   */
+} SPI_SS_STATE;
+
+/**
+ * enum SPI_INST_L.
+ * SPI instruction length.
+ */
+typedef enum _SPI_INST_L {
+    SPI_INST_L_0_BIT   = 0x00, /**< No Instruction            */
+    SPI_INST_L_4_BIT   = 0x01, /**< 4 bit Instruction length  */
+    SPI_INST_L_8_BIT   = 0x02, /**< 8 bit Instruction length  */
+    SPI_INST_L_16_BIT  = 0x03  /**< 16 bit Instruction length */
+} SPI_INST_L;
+
+/**
+ * enum SPI_ADDR_L.
+ * SPI Address length.
+ */
+typedef enum _SPI_ADDR_L {
+    SPI_ADDR_L_0_BIT   = 0x00, /**< No Address            */
+    SPI_ADDR_L_4_BIT   = 0x01, /**< 4 bit Address length  */
+    SPI_ADDR_L_8_BIT   = 0x02, /**< 8 bit Address length  */
+    SPI_ADDR_L_12_BIT  = 0x03, /**< 12 bit Address length */
+    SPI_ADDR_L_16_BIT  = 0x04, /**< 16 bit Address length */
+    SPI_ADDR_L_20_BIT  = 0x05, /**< 20 bit Address length */
+    SPI_ADDR_L_24_BIT  = 0x06, /**< 24 bit Address length */
+    SPI_ADDR_L_28_BIT  = 0x07, /**< 28 bit Address length */
+    SPI_ADDR_L_32_BIT  = 0x08, /**< 32 bit Address length */
+    SPI_ADDR_L_36_BIT  = 0x09, /**< 36 bit Address length */
+    SPI_ADDR_L_40_BIT  = 0x0a, /**< 40 bit Address length */
+    SPI_ADDR_L_44_BIT  = 0x0b, /**< 44 bit Address length */
+    SPI_ADDR_L_48_BIT  = 0x0c, /**< 48 bit Address length */
+    SPI_ADDR_L_52_BIT  = 0x0d, /**< 52 bit Address length */
+    SPI_ADDR_L_56_BIT  = 0x0e, /**< 56 bit Address length */
+    SPI_ADDR_L_60_BIT  = 0x0f, /**< 60 bit Address length */
+} SPI_ADDR_L;
+
+/**
+ * enum SPI_TRANSFER_STATUS.
+ * Status of an ongoing SPI transfer.
+ */
+typedef enum _SPI_TRANSFER_STATUS {
+    SPI_TRANSFER_STATUS_NONE,              /**< Transfer status none               */
+    SPI_TRANSFER_STATUS_COMPLETE,          /**< Transfer status complete           */
+    SPI_TRANSFER_STATUS_OVERFLOW,          /**< Transfer status Tx/Rx overflow     */
+    SPI_TRANSFER_STATUS_MASTER_CONTENTION, /**< Transfer status master contention  */
+    SPI_TRANSFER_STATUS_RX_UNDERFLOW,      /**< Transfer status Rx underflow       */
+} SPI_TRANSFER_STATUS;
+
+/**
+ * struct ospi_transfer_t.
+ * Information about an ongoing OSPI transfer.
+ */
+typedef struct _ospi_transfer_t {
+    volatile uint32_t            tx_current_cnt; /**< Current Tx Transfer count        */
+    volatile uint32_t            rx_current_cnt; /**< Current Rx Transfer count        */
+    uint32_t                     tx_total_cnt;   /**< Total count to transmit          */
+    uint32_t                     rx_total_cnt;   /**< Total count to receive           */
+    const uint32_t              *tx_buff;        /**< Pointer to TX buffer             */
+    void                        *rx_buff;        /**< Pointer to Rx buffer             */
+    uint32_t                     tx_default_val; /**< Default value to Transfer        */
+    uint32_t                     spi_frf;        /**< SPI frame format - Standard/Dual/Quad/Octal */
+    uint32_t                     addr_len;       /**< Address length for the transfer  */
+    uint32_t                     dummy_cycle;    /**< Dummy cycles for the transfer    */
+    uint32_t                     ddr;            /**< DDR / SDR mode for the transfer  */
+    uint32_t                     inst_len;       /**< Instruction length for the transfer */
+    bool                         tx_default_enable; /**< Enable Tx default value transfer */
+    SPI_TMOD                     mode;              /**< SPI transfer mode                */
+    volatile SPI_TRANSFER_STATUS status;            /**< transfer status                  */
+} ospi_transfer_t;
+
+/**
+  \fn          static inline void ospi_disable(OSPI_Type *spi)
+  \brief       Disable the OSPI instance
+  \param[in]   ospi     Pointer to the OSPI register map
+  \return      none
+*/
+static inline void ospi_disable(OSPI_Type *ospi)
+{
+    ospi->OSPI_ENR = OSPI_DISABLE;
+}
+
+/**
+  \fn          static inline void ospi_enable(OSPI_Type *spi)
+  \brief       Enable the OSPI instance
+  \param[in]   ospi     Pointer to the OSPI register map
+  \return      none
+*/
+static inline void ospi_enable(OSPI_Type *ospi)
+{
+    ospi->OSPI_ENR = OSPI_ENABLE;
+}
+
+/**
+  \fn          static inline void ospi_mode_master(OSPI_Type *ospi)
+  \brief       Enable master mode in the OSPI instance.
+  \param[in]   ospi     Pointer to the OSPI register map
+  \return      none
+*/
+static inline void ospi_mode_master(OSPI_Type *ospi)
+{
+    ospi_disable(ospi);
+    ospi->OSPI_CTRLR0 |= SPI_CTRLR0_SSI_IS_MST_MASTER;
+    ospi_enable(ospi);
+}
+
+/**
+  \fn          static inline void ospi_mode_slave(OSPI_Type *ospi)
+  \brief       Enable slave mode in the OSPI instance.
+  \param[in]   ospi     Pointer to the OSPI register map
+  \return      none
+*/
+static inline void ospi_mode_slave(OSPI_Type *ospi)
+{
+    ospi_disable(ospi);
+    ospi->OSPI_CTRLR0 &= ~SPI_CTRLR0_SSI_IS_MST_MASTER;
+    ospi_enable(ospi);
+}
+
+/**
+  \fn          static inline void ospi_set_baud(OSPI_Type *ospi, uint32_t baud)
+  \brief       Set the bus speed for the OSPI instance.
+  \param[in]   ospi    Pointer to the OSPI register map
+  \param[in]   baud    The baud value to be set
+  \return      none
+*/
+static inline void ospi_set_baud(OSPI_Type *ospi, uint32_t baud)
+{
+    ospi_disable(ospi);
+    ospi->OSPI_BAUDR = baud;
+    ospi_enable(ospi);
+}
+
+/**
+  \fn          static inline uint32_t ospi_get_bus_speed(OSPI_Type *ospi, uint32_t clk)
+  \brief       Get the current bus speed of the OSPI instance.
+  \param[in]   ospi    Pointer to the OSPI register map
+  \param[in]   clk     OSPI input clk
+  \return      Current bus speed
+*/
+static inline uint32_t ospi_get_bus_speed(OSPI_Type *ospi, uint32_t clk)
+{
+    return clk / ospi->OSPI_BAUDR;
+}
+
+/**
+  \fn          static inline void ospi_mask_interrupts(OSPI_Type *spi)
+  \brief       Mask all the interrupts for the OSPI instance
+  \param[in]   ospi       Pointer to the SPI register map
+  \return      none
+*/
+static inline void ospi_mask_interrupts(OSPI_Type *ospi)
+{
+    ospi->OSPI_IMR = 0;
+}
+
+/**
+  \fn          static inline uint32_t ospi_get_dma_addr(OSPI_Type *ospi)
+  \brief       Get the Data(FIFO) register address for the OSPI instance
+  \param[in]   ospi     Pointer to the OSPI register map
+  \return      TXDMA register address.
+*/
+static inline volatile uint32_t *ospi_get_dma_addr(OSPI_Type *ospi)
+{
+    return &ospi->OSPI_DR[0];
+}
+
+/**
+  \fn          void ospi_set_tx_dma_data_level(OSPI_Type *ospi, uint8_t level)
+  \brief       Set Tx DMA trigger level for the OSPI instance.
+  \param[in]   ospi       Pointer to the OSPI register map
+  \param[in]   trig_level Tx DMA trigger level
+  \return      none
+*/
+static inline void ospi_set_tx_dma_data_level(OSPI_Type *ospi, uint8_t level)
+{
+    ospi->OSPI_DMATDLR = level;
+}
+
+/**
+  \fn          void ospi_set_rx_dma_data_level(OSPI_Type *ospi, uint8_t level)
+  \brief       Set Tx DMA trigger level for the OSPI instance.
+  \param[in]   ospi       Pointer to the OSPI register map
+  \param[in]   trig_level Tx DMA trigger level
+  \return      none
+*/
+static inline void ospi_set_rx_dma_data_level(OSPI_Type *ospi, uint8_t level)
+{
+    ospi->OSPI_DMARDLR = level;
+}
+
+/**
+  \fn          void ospi_enable_tx_dma(OSPI_Type *ospi)
+  \brief       Enable Tx DMA for the OSPI instance.
+  \param[in]   ospi       Pointer to the OSPI register map
+  \return      none
+*/
+static inline void ospi_enable_tx_dma(OSPI_Type *ospi)
+{
+    ospi->OSPI_DMACR |= SPI_DMACR_TDMAE;
+}
+
+/**
+  \fn          void ospi_enable_rx_dma(OSPI_Type *ospi)
+  \brief       Enable Tx DMA for the OSPI instance.
+  \param[in]   ospi       Pointer to the OSPI register map
+  \return      none
+*/
+static inline void ospi_enable_rx_dma(OSPI_Type *ospi)
+{
+    ospi->OSPI_DMACR |= SPI_DMACR_RDMAE;
+}
+
+/**
+  \fn          void ospi_disable_tx_dma(OSPI_Type *ospi)
+  \brief       Disable Tx DMA for the OSPI instance.
+  \param[in]   ospi       Pointer to the OSPI register map
+  \return      none
+*/
+static inline void ospi_disable_tx_dma(OSPI_Type *ospi)
+{
+    ospi->OSPI_DMACR &= ~SPI_DMACR_TDMAE;
+}
+
+/**
+  \fn          void ospi_disable_rx_dma(OSPI_Type *ospi)
+  \brief       Disable Tx DMA for the OSPI instance.
+  \param[in]   ospi       Pointer to the OSPI register map
+  \return      none
+*/
+static inline void ospi_disable_rx_dma(OSPI_Type *ospi)
+{
+    ospi->OSPI_DMACR &= ~SPI_DMACR_RDMAE;
+}
+
+/**
+  \fn          bool ospi_busy(OSPI_Type *ospi)
+  \brief       Get the busy status of the OSPI instance.
+  \param[in]   ospi       Pointer to the OSPI register map
+  \return      True/False based on the busy status
+*/
+static inline bool ospi_busy(OSPI_Type *ospi)
+{
+    return (ospi->OSPI_SR & (SPI_SR_BUSY | SPI_SR_TX_FIFO_EMPTY)) != SPI_SR_TX_FIFO_EMPTY;
+}
+
+/**
+  \fn          uint32_t ospi_get_dfs(OSPI_Type *ospi)
+  \brief       Get the data frame size for the OSPI instance.
+  \param[in]   ospi     Pointer to the OSPI register map
+  \return      current dfs configuration
+*/
+static inline uint32_t ospi_get_dfs(OSPI_Type *ospi)
+{
+    return (ospi->OSPI_CTRLR0 & SPI_CTRLR0_DFS_MASK) + 1;
+}
+
+/**
+ * \fn          void ospi_set_rx_threshold(OSPI_Type *ospi, uint8_t threshold)
+ * \brief       Set Receive FIFO interrupt threshold for the OSPI instance
+ * \param[in]   ospi       Pointer to the OSPI register map
+ * \param[in]   threshold  Receive FIFO threshold
+ * \return      none
+ */
+static inline void ospi_set_rx_threshold(OSPI_Type *ospi, uint8_t threshold)
+{
+    ospi->OSPI_RXFTLR = threshold;
+}
+
+/**
+  \fn          void ospi_set_mode(OSPI_Type *ospi, SPI_MODE mode)
+  \brief       Set the OSPI mode for the OSPI instance.
+  \param[in]   ospi     Pointer to the OSPI register map
+  \param[in]   mode    The mode to be set.
+  \return      none
+*/
+void ospi_set_mode(OSPI_Type *ospi, SPI_MODE mode);
+
+/**
+  \fn          void ospi_set_dfs(OSPI_Type *ospi, uint8_t dfs)
+  \brief       Set the data frame size for the OSPI instance.
+  \param[in]   ospi    Pointer to the SPI register map
+  \param[in]   dfs     The data frame size
+  \return      none
+*/
+void ospi_set_dfs(OSPI_Type *ospi, uint8_t dfs);
+
+/**
+  \fn          void ospi_set_tmode(OSPI_Type *ospi, SPI_TMOD tmod)
+  \brief       Set the transfer mode for the OSPI instance.
+  \param[in]   ospi    Pointer to the OSPI register map
+  \param[in]   tmod    Transfer mode
+  \return      none
+*/
+void ospi_set_tmod(OSPI_Type *ospi, SPI_TMOD tmod);
+
+/**
+  \fn          void ospi_set_tx_threshold(OSPI_Type *ospi, uint8_t threshold)
+  \brief       Set Transmit FIFO interrupt threshold for the OSPI instance
+  \param[in]   ospi       Pointer to the OSPI register map
+  \param[in]   threshold  Transmit FIFO threshold
+  \return      none
+*/
+void ospi_set_tx_threshold(OSPI_Type *ospi, uint8_t threshold);
+
+/**
+  \fn          void ospi_set_tx_fifo_start_level(OSPI_Type *spi, uint16_t level)
+  \brief       Set Transmit FIFO start level
+  \param[in]   ospi   Pointer to the OSPI register map
+  \param[in]   level  Transmit FIFO start level
+  \return      none
+*/
+void ospi_set_tx_fifo_start_level(OSPI_Type *ospi, uint16_t level);
+
+/**
+  \fn          void ospi_set_rx_sample_delay(OSPI_Type *ospi, uint8_t rx_sample_delay)
+  \brief       Set Receive sample delay for the OSPI instance
+  \param[in]   ospi       Pointer to the OSPI register map
+  \param[in]   threshold  Receive FIFO threshold
+  \return      none
+*/
+void ospi_set_rx_sample_delay(OSPI_Type *ospi, uint8_t rx_sample_delay);
+
+/**
+  \fn          void ospi_set_ddr_drive_edge(OSPI_Type *ospi, uint8_t ddr_drive_edge)
+  \brief       Set DDR drive edge for the OSPI instance
+  \param[in]   ospi       Pointer to the OSPI register map
+  \param[in]   threshold  Receive FIFO threshold
+  \return      none
+*/
+void ospi_set_ddr_drive_edge(OSPI_Type *ospi, uint8_t ddr_drive_edge);
+
+/**
+  \fn          void ospi_control_ss(OSPI_Type *ospi, uint8_t slave, SPI_SS_STATE state)
+  \brief       Control the slave select line
+  \param[in]   ospi   Pointer to the OSPI register map
+  \param[in]   slave  The slave to be selected
+  \param[in]   state  The state of the slave select line
+  \return      none
+*/
+void ospi_control_ss(OSPI_Type *ospi, uint8_t slave, SPI_SS_STATE state);
+
+/**
+  \fn          void ospi_control_xip_ss(OSPI_Type *ospi, uint8_t slave, SPI_SS_STATE state)
+  \brief       Control the XIP slave select line
+  \param[in]   ospi   Pointer to the OSPI register map
+  \param[in]   slave  The slave to be selected
+  \param[in]   state  The state of the slave select line
+  \return      none
+*/
+void ospi_control_xip_ss(OSPI_Type *ospi, uint8_t slave, SPI_SS_STATE state);
+
+/**
+  \fn          void ospi_send(OSPI_Type *spi, ospi_transfer_t *transfer)
+  \brief       Prepare the OSPI instance for transmission
+  \param[in]   ospi       Pointer to the OSPI register map
+  \param[in]   transfer   Transfer parameters
+  \return      none
+*/
+void ospi_send(OSPI_Type *ospi, ospi_transfer_t *transfer);
+
+/**
+  \fn          void ospi_receive(OSPI_Type *ospi, ospi_transfer_t *transfer)
+  \brief       Prepare the OSPI instance for reception
+  \param[in]   ospi       Pointer to the OSPI register map
+  \param[in]   transfer   Transfer parameters
+  \return      none
+*/
+void ospi_receive(OSPI_Type *ospi, ospi_transfer_t *transfer);
+
+/**
+  \fn          void ospi_transfer(OSPI_Type *spi, ospi_transfer_t *transfer)
+  \brief       Prepare the OSPI instance for transfer
+  \param[in]   ospi       Pointer to the OSPI register map
+  \param[in]   transfer   Transfer parameters
+  \return      none
+*/
+void ospi_transfer(OSPI_Type *ospi, ospi_transfer_t *transfer);
+
+/**
+ * \fn          void ospi_send_polling(OSPI_Type *spi, ospi_transfer_t *transfer)
+ * \brief       Send OSPI data in blocking mode
+ * \param[in]   ospi       Pointer to the OSPI register map
+ * \param[in]   transfer   Transfer parameters
+ * \return      none
+ */
+void ospi_send_polling(OSPI_Type *ospi, ospi_transfer_t *transfer);
+
+/**
+ * \fn          void ospi_transfer_polling(OSPI_Type *spi, ospi_transfer_t *transfer)
+ * \brief       Send OSPI instruction and receive data
+ * \param[in]   ospi       Pointer to the OSPI register map
+ * \param[in]   transfer   Transfer parameters
+ * \return      none
+ */
+void ospi_transfer_polling(OSPI_Type *ospi, ospi_transfer_t *transfer);
+
+/**
+  \fn          void ospi_dma_send(OSPI_Type *spi, ospi_transfer_t *transfer)
+  \brief       Prepare the OSPI instance for transmission with DMA support
+  \param[in]   ospi       Pointer to the OSPI register map
+  \param[in]   transfer   Transfer parameters
+  \return      none
+*/
+void ospi_dma_send(OSPI_Type *ospi, ospi_transfer_t *transfer);
+
+/**
+  \fn          void ospi_dma_transfer(OSPI_Type *spi, ospi_transfer_t *transfer)
+  \brief       Prepare the OSPI instance for transfer with DMA support
+  \param[in]   ospi       Pointer to the OSPI register map
+  \param[in]   transfer   Transfer parameters
+  \return      none
+*/
+void ospi_dma_transfer(OSPI_Type *ospi, ospi_transfer_t *transfer);
+
+/**
+ * \fn          void ospi_psram_xip_cfg(OSPI_Type *ospi, uint8_t wait_cycles,
+ *                             bool is_dual_octal)
+ * \brief       Initialize OSPI XIP configuration for the PSRAM device
+ * \param[in]   ospi          Pointer to the OSPI register map
+ * \param[in]   wait_cycles   Wait cycles for the RAM device
+ * \param[in]   is_dual_octal OSPI transfer type is Dual Octal
+ * \return      none
+ */
+void ospi_psram_xip_cfg(OSPI_Type *ospi, uint8_t wait_cycles, bool is_dual_octal);
+
+/**
+  \fn          void ospi_hyperbus_xip_init(OSPI_Type *ospi, uint8_t wait_cycles, bool is_dual_octal)
+  \brief       Initialize hyperbus XIP configuration for the OSPI instance
+  \param[in]   ospi        Pointer to the OSPI register map
+  \param[in]   wait_cycles Wait cycles needed by the hyperbus device
+  \param[in]   is_dual_octal OSPI transfer type is Dual Octal
+  \return      none
+*/
+void ospi_hyperbus_xip_init(OSPI_Type *ospi, uint8_t wait_cycles, bool is_dual_octal);
+
+/**
+  \fn          void ospi_hyperbus_send(OSPI_Type *spi, ospi_transfer_t *transfer)
+  \brief       Prepare the OSPI instance for transmission
+  \param[in]   ospi       Pointer to the OSPI register map
+  \param[in]   transfer   Transfer parameters
+  \return      none
+*/
+void ospi_hyperbus_send(OSPI_Type *ospi, ospi_transfer_t *transfer);
+
+/**
+ * \fn          void ospi_hyperbus_receive(OSPI_Type *spi, ospi_transfer_t *transfer)
+ * \brief       Prepare the OSPI instance for transmission
+ * \param[in]   ospi       Pointer to the OSPI register map
+ * \param[in]   transfer   Transfer parameters
+ * \return      none
+ */
+void ospi_hyperbus_receive(OSPI_Type *ospi, ospi_transfer_t *transfer);
+
+/**
+  \fn          void ospi_irq_handler(OSPI_Type *ospi, ospi_transfer_t *transfer)
+  \brief       Handle interrupts for the OSPI instance.
+  \param[in]   ospi      Pointer to the OSPI register map
+  \param[in]   transfer  The transfer structure for the SPI instance
+  \return      none
+*/
+void ospi_irq_handler(OSPI_Type *ospi, ospi_transfer_t *transfer);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* OSPI_H */

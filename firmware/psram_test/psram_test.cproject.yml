@@ -1,0 +1,54 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/tools/projmgr/2.6.0/tools/projmgr/schemas/cproject.schema.json
+# OSPI0 PSRAM test (APS512XXN, 64 MB) with the OSPI/PSRAM driver from Alif pack 2.2.1 (vendor/, Alif license).
+# Does not use the pack's OSPI component: vendor/ospi.c replaces it.
+project:
+  groups:
+    - group: App
+      files:
+        - file: main.c
+    - group: Vendor
+      files:
+        - file: vendor/ospi.c
+        - file: vendor/ospi_psram_xip.c
+        - file: vendor/APS512XXN_PSRAM.c
+    - group: FaultHandler
+      files:
+        - file: ../libs/common_app_utils/fault_handler/fault_handler.c
+    - group: RTT
+      files:
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT.c
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT_printf.c
+        - file: ../libs/SEGGER_RTT_V796h/Syscalls/SEGGER_RTT_Syscalls_GCC.c
+
+  output:
+    base-name: $Project$
+    type:
+      - elf
+      - bin
+
+  add-path:
+    - vendor   # ospi_psram_xip.c includes <ospi_psram_xip.h>
+    - ../libs/common_app_utils/fault_handler
+    - ../libs/SEGGER_RTT_V796h/RTT
+    - ../libs/SEGGER_RTT_V796h/Config
+
+  layers:
+    - layer: ../device/ensemble/alif-ensemble.clayer.yml
+
+  packs:
+    - pack: AlifSemiconductor::Ensemble
+
+  define:
+    - BUFFER_SIZE_UP: 16384
+    # pack 2.2.1 settings for the APS512XXN on the E8 (RTE_Device.h and soc_features.h there)
+    - RTE_APS512XXN_PSRAM_WAIT_CYCLES: 4
+    - RTE_APS512XXN_PSRAM_DUAL_OCTAL_MODE_ENABLE: 0   # x8, as on the AppKit-E8 (D0-D7 only)
+    - RTE_APS512XXN_PSRAM_OSPI_SS_LINE: 0
+    - SOC_FEAT_AES_HAS_ADDR_CTRL_SHIM: 1
+    # 2.2.1 RTE_Device.h entries missing from 2.0.4; only read by CONFIG_MODE_RTE, which main.c doesn't use
+    - RTE_OSPI0_BUS_SPEED: 100000000
+    - RTE_OSPI0_DFS: 32
+    - RTE_OSPI0_WAIT_CYCLES: 6
+    - RTE_OSPI1_BUS_SPEED: 100000000
+    - RTE_OSPI1_DFS: 32
+    - RTE_OSPI1_WAIT_CYCLES: 3

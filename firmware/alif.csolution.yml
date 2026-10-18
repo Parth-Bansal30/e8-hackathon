@@ -73,3 +73,5 @@ solution:
     - project: npu_draw/npu_draw.cproject.yml
     - project: hw_test/hw_test.cproject.yml
     - project: cam_test/cam_test.cproject.yml
+    - project: flash_test/flash_test.cproject.yml
+    - project: psram_test/psram_test.cproject.yml

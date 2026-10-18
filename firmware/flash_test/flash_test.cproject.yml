@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/tools/projmgr/2.6.0/tools/projmgr/schemas/cproject.schema.json
+# OSPI1 octal NOR flash test: integrity (driver and memory-mapped XIP), size and CPU bandwidth.
+project:
+  groups:
+    - group: App
+      files:
+        - file: main.c
+    - group: FaultHandler
+      files:
+        - file: ../libs/common_app_utils/fault_handler/fault_handler.c
+    - group: RTT
+      files:
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT.c
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT_printf.c
+        - file: ../libs/SEGGER_RTT_V796h/Syscalls/SEGGER_RTT_Syscalls_GCC.c
+
+  output:
+    base-name: $Project$
+    type:
+      - elf
+      - bin
+
+  add-path:
+    - ../libs/common_app_utils/fault_handler
+    - ../libs/SEGGER_RTT_V796h/RTT
+    - ../libs/SEGGER_RTT_V796h/Config
+
+  layers:
+    - layer: ../device/ensemble/alif-ensemble.clayer.yml
+
+  packs:
+    - pack: AlifSemiconductor::Ensemble
+
+  components:
+    - component: AlifSemiconductor::Device:SOC Peripherals:OSPI
+    - component: AlifSemiconductor::BSP:External peripherals:OSPI Flash ISSI
+    - component: AlifSemiconductor::BSP:OSPI FLASH XIP:core
+
+  define:
+    - BUFFER_SIZE_UP: 16384

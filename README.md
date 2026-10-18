@@ -22,6 +22,8 @@ What has been verified on the board so far:
 | RGB LEDs | self-test written, not confirmed yet | `hw_test` |
 | ICM-42670P IMU | not tested yet | |
 | Camera (MIPI CSI-2) | no camera module in our kit; capture test ready | `cam_test` |
+| OSPI flash, 64 MB (memory-mapped at `0xC0000000`) | working: erase/program/verify, XIP reads at 74 MB/s | `flash_test` |
+| OSPI PSRAM, 64 MB APS512XXN (memory-mapped at `0xA0000000`) | working: full 64 MB pattern test, 107 MB/s read, 113 MB/s write | `psram_test` |
 
 ## Performance (MNIST CNN, int8)
 
@@ -65,6 +67,8 @@ firmware/            CMSIS csolution, based on alifsemi/alif_vscode-template
   app/               final hackathon app (placeholder)
   hw_test/           peripheral self-test dashboard (LEDs, joystick, pot, IMU, mics, touch, NPU)
   cam_test/          ARX3A0 camera capture to the LCD (untested: no module)
+  flash_test/        64 MB OSPI flash: erase/program/verify, XIP read-back and bandwidth
+  psram_test/        64 MB OSPI PSRAM: ID, size, pattern test and bandwidth (pack 2.2.1 driver in vendor/)
   npu_draw/          draw a digit on the touchscreen; the NPU recognizes it live
   npu_display/       cycles MNIST test digits through the NPU with on-screen results
   mnist_executorch/  minimal ExecuTorch runner + RTT output (shared executorch_runner.cpp)

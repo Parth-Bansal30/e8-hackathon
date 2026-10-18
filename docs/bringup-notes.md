@@ -10,7 +10,9 @@ includes these fixes.
 |---|---|---|
 | `app-write-mram` refuses to flash | Board is chip revision **A0**; SETOOLS 1.112 defaults to A1 | Set `"Revision": "A0"` in SETOOLS `utils/global-cfg.db` (check with `maintenance -opt getrevision`) |
 | SETOOLS `-h` crashes | Non-UTF-8 locale | `export LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8` |
-| After a replug the board sits in SEROM recovery (error 0x30, invalid TOC) | Interrupted or invalid MRAM image | `./maintenance` -> ROM -> MRAM Recovery, then flash again |
+| After a replug the board sits in SEROM recovery (error 0x30, invalid TOC); `app-write-mram` prints "device is in RECOVERY MODE" | Interrupted or invalid MRAM image | `./maintenance` -> ROM -> MRAM Recovery, then flash again. It rewrites the 397 KB system package at 57600 baud: about **130 s**. Don't interrupt it (it is safe to rerun if you do) |
+| J-Link: "Found SW-DP ... Failed to power up DAP" | The app stalled the bus, e.g. an OSPI XIP access the memory never answers | Flash a known-good app (`hello_rtt`) to get the debugger back. To find the step, print, then busy-wait a few seconds before the suspect access and read RTT during the wait |
+| DWT cycle counts stop, delays never end | J-Link clears `DEMCR.TRCENA` when it detaches, so every `tools/rtt_dump.sh` call stops `CYCCNT` | Set `TRCENA` and `CYCCNTENA` again on every read (see `flash_test`) |
 | `JLinkRTTLogger` can't attach | | `tools/rtt_dump.sh` reads the RTT buffer straight from memory |
 | RTT buffer size setting ignored | The Arm tutorial's config uses the wrong macro name | Define `BUFFER_SIZE_UP`, not `SEGGER_RTT_BUFFER_SIZE_UP` |
 | `CoreDebug` undeclared | Removed in CMSIS 6 | Use `DCB` |
@@ -62,4 +64,32 @@ app's `platform_init()`.
 - The ADC needs `sys_ctrl_analog.c`, which no pack component pulls in. A copy is in
   `firmware/hw_test/vendor/`.
 - If cbuild fails with "read ...: is a directory", the `firmware/tmp/` cache is corrupt.
-  Delete `firmware/tmp` and `firmware/out/<project>`.
+  Delete `firmware/tmp` and `firmware/out/<project>`. The first build after that (or after adding a
+  project) can fail the same way once; run it again.
+
+## External memory (OSPI)
+
+Tested with `flash_test` and `psram_test`. Both pass on our board (chip revision A0):
+
+| Memory | What is actually fitted | Window | CPU read (D-cache on) | Notes |
+|---|---|---|---|---|
+| Flash, OSPI1 | ISSI octal NOR, **64 MB** (the pack says 32 MB) | XIP at `0xC0000000`, read-only | 74 MB/s sequential, 469 ns random | Pack 2.0.4 CMSIS driver (`OSPI Flash ISSI`) for erase/program: 4 KB erase 82 ms, program 1.1 MB/s, register-mode read 9 MB/s. Then `setup_flash_xip()` (`OSPI FLASH XIP:core`) for memory-mapped reads |
+| RAM, OSPI0 | AP Memory **APS512XXN PSRAM, 64 MB**, not the ISSI HyperRAM the pack 2.0.4 board files describe | XIP at `0xA0000000`, read/write | 107 MB/s sequential, 113 MB/s write, 347 ns random | Needs the PSRAM driver from pack 2.2.1, copied to `firmware/psram_test/vendor/`. Runs x8 (octal) |
+| MRAM (reference) | 5.5 MB on-chip | `0x80000000` | 201 MB/s | |
+
+- **Flash reset is P15_7**, not P15_5: pack 2.0.4's `board_defs.h` gives LCD_RESET's pin (fixed in 2.2.x).
+  The PSRAM reset is P15_6.
+- **The flash must be reset before `setup_flash_xip()`** if the CMSIS driver ran first. The driver leaves
+  the flash in octal DDR, but `setup_flash_xip()` reads the ID in single-wire SDR mode and fails otherwise.
+- **Pack 2.0.4's HyperRAM path stalls the bus** at the first XIP access on this board, in every
+  configuration (ISSI octal, S80K dual-octal; demo values or 2.2.1's RXDS delay 11; with 2.2.1's
+  `FRF_DEFINED` transfer type). The RAM never answers HyperBus. Its ID register (MR2 = 0xDE) reads fine over
+  Xccela register-mode transfers, which can't stall the bus.
+- The PSRAM init is `aps512xxn_psram_init()` with the board settings of Alif's **AppKit-E8**
+  (`BOARD_APS512XXN_PSRAM_PRESENT`), which wires it x8 on OSPI0 D0-D7. Our pins.h also muxes OSPI0
+  D8-D15, but x16 dual-octal stalls at the first XIP access; not investigated further.
+- Pack 2.2.1's driver needs `SOC_FEAT_AES_HAS_ADDR_CTRL_SHIM` and some `RTE_OSPI*` / `RTE_APS512XXN_*`
+  values that 2.0.4's headers lack; `psram_test.cproject.yml` defines them. It replaces the pack's OSPI
+  component, so don't link both in one project.
+- Only the CPU path has been measured. Whether the Ethos-U85 can read weights through these windows is
+  still to be tested.
