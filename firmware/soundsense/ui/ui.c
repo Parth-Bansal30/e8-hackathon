@@ -533,8 +533,8 @@ void ui_alert_draw(const ui_event *e, uint32_t now_ms, int phase)
         gfx_text_center(B, GFX_W / 2, GFX_H - 84, "Press to dismiss", bg, 32);
         return;
     }
-    gfx_text_center(L, GFX_W / 2, GFX_H - 70,
-                    e->maybe ? "Tap: right / wrong" : "Tap anywhere to dismiss", mix(bg, ink, 0.7f), 24);
+    gfx_text_center(L, GFX_W / 2, GFX_H - 70, e->maybe ? "RIGHT it was   LEFT it wasn't   PRESS ok"
+                                                       : "PRESS ok   LEFT wrong sound", mix(bg, ink, 0.7f), 24);
 }
 
 void ui_banner_draw(const ui_event *e, uint32_t now_ms)
@@ -563,9 +563,10 @@ UI_COLD void ui_timeline_draw(const ui_event *ev, int n, uint32_t now_ms, int fi
         const ui_event *e = &ev[i];
         const int y = 92 + row * 82;
         char when[24], label[48], detail[64];
-        gfx_round_rect(16, y, 448, 74, 16, PANEL);
+        gfx_round_rect(16, y, 448, 74, 16, row == 0 ? PANEL2 : PANEL);
         gfx_round_rect(16, y, 8, 74, 4, e->urgency == UI_URGENT ? VERMILLION
                                          : e->urgency == UI_IMPORTANT ? TEXT : FAINT);
+        if (row == 0) gfx_round_frame(16, y, 448, 74, 16, 3, YELLOW);   /* selected: LEFT / RIGHT mark it */
         fmt_when(when, sizeof when, e->t_ms, now_ms);
         if (!clock_set) {                  /* compact relative time for the column */
             const uint32_t s = (now_ms - e->t_ms) / 1000;
@@ -579,10 +580,12 @@ UI_COLD void ui_timeline_draw(const ui_event *ev, int n, uint32_t now_ms, int fi
         gfx_text(B, 186, y + 10, label, e->maybe ? MUTED : TEXT, 24);
         fmt_detail(detail, sizeof detail, e, now_ms, false);
         if (!detail[0]) snprintf(detail, sizeof detail, "%u%% sure", e->confidence);
-        gfx_text(L, 186, y + 42, detail, MUTED, 18);
+        if (e->fixed == 2) gfx_text(B, 186, y + 42, "Marked wrong", VERMILLION, 18);
+        else if (e->fixed == 1) gfx_text(B, 186, y + 42, "Marked right", GREEN, 18);
+        else gfx_text(L, 186, y + 42, detail, MUTED, 18);
         if (!e->acked) gfx_circle(444, (float)(y + 37), 7, ui_cat_color(e->cat));
     }
-    footer("Tap a sound: right / wrong / teach");
+    footer("UP / DOWN pick   LEFT wrong   RIGHT right   PRESS back");
 }
 
 /* ---------- teaching ---------- */

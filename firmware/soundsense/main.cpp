@@ -115,6 +115,23 @@ static uint8_t taught_n_ex[MAX_TAUGHT];
 static_assert(MAX_TAUGHT <= SS_STORE_MAX_PROF && SHOTS <= SS_STORE_MAX_EX, "flash record too small");
 static int knock_prof = -1;
 
+/* T4: sounds the user marked "wrong" for a profile. A sound closer to one of them than to the profile
+ * itself doesn't count as that profile. Kept in flash for taught sounds; for built-ins until restart. */
+#define CX_MIN 0.70f
+static int8_t cx[MAX_PROF][SS_STORE_MAX_EX][SS_EMB];
+static uint8_t n_cx[MAX_PROF];
+
+static float cx_score(int p, const float *e)
+{
+    float best = -1.0f, c[SS_EMB];
+    for (int k = 0; k < n_cx[p]; k++) {
+        ss_store_f32(cx[p][k], c);
+        const float d = ss_dot(e, c);
+        if (d > best) best = d;
+    }
+    return best;
+}
+
 static const look kFallback = {"?", "Sound", UI_ICON_UNKNOWN, UI_CAT_OTHER, UI_INFO};
 
 /* Built-in profiles in RAM, so they can be re-measured on the board (G3 row 7): the trained ones,
@@ -152,7 +169,7 @@ SS_COLD static void profiles_init(void)
 }
 
 /* Taught profile for a preset: replaces an earlier one of the same name. ex: n int8 examples. */
-SS_COLD static void profile_add(int preset, const float *proto, float thr, const int8_t (*ex)[SS_EMB], int n)
+SS_COLD static int profile_add(int preset, const float *proto, float thr, const int8_t (*ex)[SS_EMB], int n)
 {
     int slot = -1;
     for (int k = 0; k < n_taught; k++)
@@ -166,7 +183,9 @@ SS_COLD static void profile_add(int preset, const float *proto, float thr, const
     memcpy(taught_ex[slot], ex, (size_t)n * SS_EMB);
     taught_n_ex[slot] = (uint8_t)n;
     prof[SS_NUM_BUILTIN + slot] = {&kPresets[preset], taught_proto[slot], thr, true, preset};
+    n_cx[SS_NUM_BUILTIN + slot] = 0;
     n_prof = SS_NUM_BUILTIN + n_taught;
+    return slot;
 }
 
 /* ---------- flash copy of the taught sounds ---------- */
@@ -191,6 +210,8 @@ SS_COLD static void store_save(void)
         memcpy(s.proto, p.proto, sizeof(s.proto));
         s.n_ex = taught_n_ex[k];
         memcpy(s.ex, taught_ex[k], sizeof(s.ex));
+        s.n_cx = n_cx[SS_NUM_BUILTIN + k];
+        memcpy(s.cx, cx[SS_NUM_BUILTIN + k], sizeof(s.cx));
     }
     ss_store_save(&store_img);
 }
@@ -231,7 +252,9 @@ SS_COLD static int store_load(void)
             printf("[STORE] skipped unknown sound '%s'\r\n", s.key);
             continue;
         }
-        profile_add(preset, s.proto, s.thr, s.ex, s.n_ex);
+        const int slot = profile_add(preset, s.proto, s.thr, s.ex, s.n_ex);
+        n_cx[SS_NUM_BUILTIN + slot] = s.n_cx;
+        memcpy(cx[SS_NUM_BUILTIN + slot], s.cx, sizeof(s.cx));
     }
     const ss_store_stats *st = ss_store_get_stats();
     printf("[STORE] loaded %d taught sounds from copy %c, seq %lu, in %lu us\r\n", n_taught, 'A' + st->copy,
@@ -335,11 +358,16 @@ SS_COLD static bool self_test(char *detail, size_t len)
 
 static ui_event events[MAX_EVENTS];   /* newest first */
 static int n_events;
+static int8_t ev_emb[MAX_EVENTS][SS_EMB];   /* each event's latest embedding and profile, for T4 */
+static int8_t ev_prof[MAX_EVENTS];
 
-static ui_event *add_event(const look *lk, bool maybe, ui_felt felt, float score, uint32_t t, bool *merged)
+static ui_event *add_event(const look *lk, bool maybe, ui_felt felt, float score, uint32_t t, bool *merged,
+                           const float *emb, int p)
 {
     ui_event *e = &events[0];
     if (n_events && e->label == lk->label && t - (e->t_ms + e->dur_ms) < MERGE_MS) {
+        ss_store_q8(emb, ev_emb[0]);
+        ev_prof[0] = (int8_t)p;
         e->count++;
         e->dur_ms = t - e->t_ms;
         e->maybe = e->maybe && maybe;
@@ -350,6 +378,10 @@ static ui_event *add_event(const look *lk, bool maybe, ui_felt felt, float score
     }
     if (n_events < MAX_EVENTS) n_events++;
     memmove(&events[1], &events[0], (size_t)(n_events - 1) * sizeof(ui_event));
+    memmove(&ev_emb[1], &ev_emb[0], (size_t)(n_events - 1) * SS_EMB);
+    memmove(&ev_prof[1], &ev_prof[0], (size_t)(n_events - 1));
+    ss_store_q8(emb, ev_emb[0]);
+    ev_prof[0] = (int8_t)p;
     memset(e, 0, sizeof(*e));
     e->label = lk->label;
     e->icon = lk->icon;
@@ -626,6 +658,8 @@ SS_COLD static void cal_finish(void)
     printf("\r\n");
 }
 
+static void classify(const float *e, const float *s, float snr, int clipped, uint32_t onset_ms);
+
 static void decide(uint32_t onset, uint32_t onset_ms)
 {
     static int8_t in[IN_LEN];
@@ -639,7 +673,6 @@ static void decide(uint32_t onset, uint32_t onset_ms)
     score_all(e, s);
     int clipped;
     const float snr = snr_of(onset - KWS_SR / 5, &clipped);
-    const uint32_t now = ss_ms();
 
     if (scr == TEACH) {
         if (tc.ph != T_NAMING) teach_shot(e, snr, clipped);
@@ -657,11 +690,19 @@ static void decide(uint32_t onset, uint32_t onset_ms)
         printf("[SS] t=%lu skipped (joystick)\r\n", (unsigned long)onset_ms);
         return;
     }
+    classify(e, s, snr, clipped, onset_ms);
+}
+
+/* The decision for one sound: its embedding e, scores s, level over the room, and onset time. */
+static void classify(const float *e, const float *s, float snr, int clipped, uint32_t onset_ms)
+{
     int b2;
     const int b = best_of(s, &b2);
     float mg = 0.0f;
     const ui_felt felt = felt_at(onset_ms, &mg);
-    const bool over = s[b] >= prof[b].thr;
+    const float cxs = cx_score(b, e);
+    const bool veto = s[b] >= prof[b].thr && cxs >= CX_MIN && cxs > s[b];   /* T4: like a sound marked wrong */
+    const bool over = s[b] >= prof[b].thr && !veto;
     const bool loud = snr >= MIN_SNR_DB;
 
     const look *lk = NULL;
@@ -683,15 +724,79 @@ static void decide(uint32_t onset, uint32_t onset_ms)
            (double)prof[b].thr, b2 >= 0 ? prof[b2].lk->label : "-", b2 >= 0 ? (double)s[b2] : 0.0,
            felt == UI_FELT_YES ? "yes" : felt == UI_FELT_HEARD_ONLY ? "no" : "n/a", (double)mg,
            lk ? (maybe ? "maybe " : "") : "", lk ? lk->label : (loud ? "unknown" : "quiet"));
+    if (veto) printf("[SS] '%s' vetoed: %.2f to a sound marked wrong\r\n", prof[b].lk->label, (double)cxs);
     if (!lk) return;
 
     bool merged;
-    ui_event *ev = add_event(lk, maybe, f, score, onset_ms, &merged);
+    ui_event *ev = add_event(lk, maybe, f, score, onset_ms, &merged, e, lk == prof[knock_prof].lk ? knock_prof : b);
     /* a knock only heard (TV?) is shown as a banner, not a full-screen alert */
     if (lk == prof[knock_prof].lk && f == UI_FELT_HEARD_ONLY) ev->urgency = UI_INFO;
-    lat[n_lat++ % 16] = now - onset_ms;
+    lat[n_lat++ % 16] = ss_ms() - onset_ms;
     alert_raise(ev);
     if (scr == HOME) redraw = true;
+}
+
+/* ---------- fixing mistakes (T4) ---------- */
+
+/* "Right" on a taught sound: its embedding joins the examples (the oldest goes when full), and the
+ * profile and threshold are rebuilt from all of them, as when teaching. */
+SS_COLD static void taught_add_example(int k, const int8_t *q)
+{
+    int n = taught_n_ex[k];
+    if (n >= SS_STORE_MAX_EX) {
+        memmove(taught_ex[k][0], taught_ex[k][1], (size_t)(n - 1) * SS_EMB);
+        n--;
+    }
+    memcpy(taught_ex[k][n++], q, SS_EMB);
+    taught_n_ex[k] = (uint8_t)n;
+    float emb[SS_STORE_MAX_EX][SS_EMB];
+    for (int j = 0; j < n; j++) ss_store_f32(taught_ex[k][j], emb[j]);
+    profile &p = prof[SS_NUM_BUILTIN + k];
+    const float was = p.thr;
+    p.thr = ss_make_profile(emb, n, taught_proto[k], NULL);
+    printf("[SS] '%s' marked right: now %d examples, threshold %.3f -> %.3f\r\n", p.lk->label, n, (double)was,
+           (double)p.thr);
+    store_save();
+}
+
+/* The user says event i was right or wrong (from its alert or the timeline). */
+SS_COLD static void event_mark(int i, bool right)
+{
+    if (i < 0 || i >= n_events) return;
+    ui_event *ev = &events[i];
+    const int p = ev_prof[i];
+    if (p < 0 || p >= n_prof || prof[p].lk->label != ev->label) {
+        printf("[SS] can't mark '%s': that sound was forgotten\r\n", ev->label);
+        return;
+    }
+    ev->acked = true;
+    ev->fixed = right ? 1 : 2;
+    if (right) {
+        if (p >= SS_NUM_BUILTIN) taught_add_example(p - SS_NUM_BUILTIN, ev_emb[i]);
+        else printf("[SS] '%s' marked right\r\n", ev->label);
+        return;
+    }
+    if (n_cx[p] >= SS_STORE_MAX_EX) {   /* full: the oldest goes */
+        memmove(cx[p][0], cx[p][1], (SS_STORE_MAX_EX - 1) * SS_EMB);
+        n_cx[p]--;
+    }
+    memcpy(cx[p][n_cx[p]++], ev_emb[i], SS_EMB);
+    printf("[SS] '%s' marked wrong: kept as counter-example %d%s\r\n", ev->label, n_cx[p],
+           p >= SS_NUM_BUILTIN ? ", saved" : " (built-in: until restart)");
+    if (p >= SS_NUM_BUILTIN) store_save();
+}
+
+/* Host command 15: the boot test clip (a dog bark) through the encoder and the decision, as if just
+ * heard: a silent way to test the whole decision path, counter-examples included. */
+SS_COLD static void classify_test_clip(void)
+{
+    int8_t out[SS_EMB];
+    float e[SS_EMB], s[MAX_PROF];
+    if (!infer(ss_test_input, out)) return;
+    ss_embed(out, e);
+    score_all(e, s);
+    printf("[SS] command 15: the boot test clip ('%s') as if just heard\r\n", SS_TEST_NAME);
+    classify(e, s, 20.0f, 0, ss_ms());
 }
 
 /* ---------- managing taught sounds (T7) and the menu ---------- */
@@ -707,6 +812,8 @@ SS_COLD static void taught_forget(int k)
         taught_n_ex[j] = taught_n_ex[j + 1];
         prof[SS_NUM_BUILTIN + j] = prof[SS_NUM_BUILTIN + j + 1];
         prof[SS_NUM_BUILTIN + j].proto = taught_proto[j];
+        memcpy(cx[SS_NUM_BUILTIN + j], cx[SS_NUM_BUILTIN + j + 1], sizeof(cx[0]));
+        n_cx[SS_NUM_BUILTIN + j] = n_cx[SS_NUM_BUILTIN + j + 1];
     }
     n_taught--;
     n_prof = SS_NUM_BUILTIN + n_taught;
@@ -839,7 +946,7 @@ SS_COLD static void inject(uint32_t a)
     const ui_felt f = a & 0x200u ? UI_FELT_YES : a & 0x400u ? UI_FELT_HEARD_ONLY : UI_FELT_NA;
     const uint32_t now = ss_ms();
     bool merged;
-    ui_event *ev = add_event(prof[p].lk, (a & 0x100u) != 0, f, prof[p].thr + 0.1f, now, &merged);
+    ui_event *ev = add_event(prof[p].lk, (a & 0x100u) != 0, f, prof[p].thr + 0.1f, now, &merged, prof[p].proto, p);
     if (p == knock_prof && f == UI_FELT_HEARD_ONLY) ev->urgency = UI_INFO;
     printf("[SS] t=%lu injected '%s'%s (host command 13, no sound)\r\n", (unsigned long)now, prof[p].lk->label,
            a & 0x100u ? " maybe" : "");
@@ -852,7 +959,8 @@ SS_COLD static void inject(uint32_t a)
  * 8 press joystick keys (ss_arg = SS_JOY_* bits), 9 re-measure built-in ss_arg from the next sounds,
  * 10 finish re-measuring, 11 save to flash ss_arg times back to back (C2 row 1), 12 fill every taught
  * slot with a stand-in (C2 bench, full-size record), 13 fake a recognised sound (see inject()),
- * 14 redraw the whole screen 10 times a second for ss_arg seconds (C3 row 3). */
+ * 14 redraw the whole screen 10 times a second for ss_arg seconds (C3 row 3), 15 classify the boot test
+ * clip as if heard, 16 mark timeline event (ss_arg & 0xff) wrong, or right with bit 8 (T4). */
 static void host_command(void)
 {
     const uint32_t c = ss_cmd, a = ss_arg;
@@ -874,6 +982,8 @@ static void host_command(void)
     case 12: store_fill_test(); break;
     case 13: inject(a); break;
     case 14: stress_until = ss_ms() + 1000u * (a ? a : 10); break;
+    case 15: classify_test_clip(); break;
+    case 16: event_mark((int)(a & 0xffu), (a & 0x100u) != 0); redraw = true; break;
     }
 }
 
@@ -897,13 +1007,21 @@ static void on_keys(uint32_t k)
         else if (k & SS_JOY_CENTER) menu_choose();
         redraw = true;
         break;
-    case ALERT:
+    case ALERT:   /* LEFT: wrong sound, RIGHT: right (T4); the alert's event is the newest with its label */
+        if (k & (SS_JOY_LEFT | SS_JOY_RIGHT) && !alert_ev.unanswered_ms)
+            for (int i = 0; i < n_events; i++)
+                if (events[i].label == alert_ev.label) {
+                    event_mark(i, (k & SS_JOY_RIGHT) != 0);
+                    break;
+                }
         go_home();
         break;
-    case TIMELINE:
-        if (k & SS_JOY_UP) { if (tl_first > 0) tl_first--; redraw = true; }
-        else if (k & SS_JOY_DOWN) { if (tl_first + 1 < n_events) tl_first++; redraw = true; }
-        else go_home();
+    case TIMELINE:   /* the top row is the selected one: LEFT wrong, RIGHT right (T4) */
+        if (k & SS_JOY_UP) { if (tl_first > 0) tl_first--; }
+        else if (k & SS_JOY_DOWN) { if (tl_first + 1 < n_events) tl_first++; }
+        else if (k & (SS_JOY_LEFT | SS_JOY_RIGHT)) event_mark(tl_first, (k & SS_JOY_RIGHT) != 0);
+        else { go_home(); break; }
+        redraw = true;
         break;
     case STATS:
         go_home();

@@ -110,15 +110,15 @@ static void save(const char *name)
 #define NOW (3 * 3600000u + 25 * MIN)
 
 static const ui_event events[] = {
-    {"Doorbell", UI_ICON_DOORBELL, UI_CAT_DOOR, UI_IMPORTANT, false, UI_FELT_NA, 94, 2, NOW - 2 * MIN, 0, false, 0},
-    {"Knock at the door", UI_ICON_KNOCK, UI_CAT_DOOR, UI_IMPORTANT, false, UI_FELT_YES, 88, 3, NOW - 9 * MIN, 0, true, 0},
-    {"Baby crying", UI_ICON_BABY, UI_CAT_FAMILY, UI_IMPORTANT, false, UI_FELT_NA, 91, 1, NOW - 34 * MIN, 6 * MIN, true, 0},
-    {"Kettle", UI_ICON_KETTLE, UI_CAT_APPLIANCE, UI_INFO, false, UI_FELT_NA, 79, 1, NOW - 51 * MIN, 0, true, 0},
-    {"Dog barking", UI_ICON_DOG, UI_CAT_ANIMAL, UI_INFO, true, UI_FELT_NA, 58, 4, NOW - 70 * MIN, 40000, true, 0},
-    {"Smoke alarm", UI_ICON_SMOKE, UI_CAT_SAFETY, UI_URGENT, false, UI_FELT_NA, 97, 1, NOW - 95 * MIN, 25000, true, 0},
-    {"Water running", UI_ICON_WATER, UI_CAT_WATER, UI_INFO, false, UI_FELT_NA, 83, 1, NOW - 130 * MIN, 12 * MIN, true, 0},
-    {"Microwave done", UI_ICON_MICROWAVE, UI_CAT_APPLIANCE, UI_INFO, false, UI_FELT_NA, 86, 1, NOW - 150 * MIN, 0, true, 0},
-    {"Sam's phone", UI_ICON_PHONE, UI_CAT_APPLIANCE, UI_INFO, false, UI_FELT_NA, 81, 1, NOW - 160 * MIN, 0, true, 0},
+    {"Doorbell", UI_ICON_DOORBELL, UI_CAT_DOOR, UI_IMPORTANT, false, UI_FELT_NA, 94, 2, NOW - 2 * MIN, 0, false, 0, 0},
+    {"Knock at the door", UI_ICON_KNOCK, UI_CAT_DOOR, UI_IMPORTANT, false, UI_FELT_YES, 88, 3, NOW - 9 * MIN, 0, true, 0, 0},
+    {"Baby crying", UI_ICON_BABY, UI_CAT_FAMILY, UI_IMPORTANT, false, UI_FELT_NA, 91, 1, NOW - 34 * MIN, 6 * MIN, true, 0, 0},
+    {"Kettle", UI_ICON_KETTLE, UI_CAT_APPLIANCE, UI_INFO, false, UI_FELT_NA, 79, 1, NOW - 51 * MIN, 0, true, 0, 0},
+    {"Dog barking", UI_ICON_DOG, UI_CAT_ANIMAL, UI_INFO, true, UI_FELT_NA, 58, 4, NOW - 70 * MIN, 40000, true, 0, 0},
+    {"Smoke alarm", UI_ICON_SMOKE, UI_CAT_SAFETY, UI_URGENT, false, UI_FELT_NA, 97, 1, NOW - 95 * MIN, 25000, true, 0, 0},
+    {"Water running", UI_ICON_WATER, UI_CAT_WATER, UI_INFO, false, UI_FELT_NA, 83, 1, NOW - 130 * MIN, 12 * MIN, true, 0, 0},
+    {"Microwave done", UI_ICON_MICROWAVE, UI_CAT_APPLIANCE, UI_INFO, false, UI_FELT_NA, 86, 1, NOW - 150 * MIN, 0, true, 0, 0},
+    {"Sam's phone", UI_ICON_PHONE, UI_CAT_APPLIANCE, UI_INFO, false, UI_FELT_NA, 81, 1, NOW - 160 * MIN, 0, true, 0, 0},
 };
 #define N_EVENTS ((int)(sizeof events / sizeof events[0]))
 
@@ -296,6 +296,13 @@ int main(void)
     menu.note = "Press again to forget all 8";
     ui_menu_draw(&menu);
     save("21_menu_full");
+    /* T4: the top row is selected; one sound marked wrong, one right */
+    ui_event tl[N_EVENTS];
+    memcpy(tl, events, sizeof(tl));
+    tl[0].fixed = 2, tl[0].acked = true;
+    tl[2].fixed = 1, tl[2].acked = true;
+    ui_timeline_draw(tl, N_EVENTS, NOW, 0);
+    save("23_timeline_marked");
     home.mode = "Night";
     ui_home_draw(&home, NOW);
     save("22_home_night");

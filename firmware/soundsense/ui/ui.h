@@ -54,6 +54,7 @@ typedef struct {
     uint32_t dur_ms;       /* how long it went on; 0 for a short sound */
     bool acked;
     uint32_t unanswered_ms;  /* urgent alert on screen this long with no press (A5); 0 until it escalates */
+    uint8_t fixed;           /* T4: 1 marked right, 2 marked wrong */
 } ui_event;
 
 typedef struct {
@@ -126,6 +127,7 @@ void ui_alert_draw(const ui_event *e, uint32_t now_ms, int phase);
 /* Info-level sounds: a banner across the top of the home screen. */
 void ui_banner_draw(const ui_event *e, uint32_t now_ms);
 
+/* `first` is the top row and the selected one (marked right or wrong with LEFT / RIGHT). */
 void ui_timeline_draw(const ui_event *ev, int n, uint32_t now_ms, int first);
 void ui_teach_draw(const ui_teach *t);
 void ui_stats_draw(const ui_stats *s);

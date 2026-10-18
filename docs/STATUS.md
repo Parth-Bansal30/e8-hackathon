@@ -9,7 +9,7 @@ behind every "Done" are in [GATES-results.md](GATES-results.md).
 | Priority | Total | Done | Partial | Not started |
 |---|---|---|---|---|
 | **P0** (must-have product) | 16 | **15** | 1 (T2) | 0 |
-| **P1** (makes it good) | 16 | 6 | 5 | 5 |
+| **P1** (makes it good) | 16 | 7 | 5 | 4 |
 | **P2** (nice to have) | 20 | 0 | 4 | 16 |
 | **P3** (stretch) | 7 | 0 | 0 | 7 |
 
@@ -78,7 +78,7 @@ examples (they work well live; the offline test uses unseen clips from strangers
 | T1 | Guided teach flow | P0 | Done | 5 examples, each shown with its dB over the room |
 | T2 | Quality check per example | P0 | **Partial** | "Too quiet" and "clipped" done; "unlike the others" and "background too loud" missing |
 | T3 | Test right after teaching | P0 | Done | |
-| T4 | Fix mistakes from the timeline | P1 | Not started | The flash record already has room for counter-examples |
+| T4 | Fix mistakes from the timeline | P1 | Done | Timeline (selected top row) or alert: LEFT = wrong, RIGHT = right. Wrong keeps the sound's embedding as a counter-example: a sound closer to it than to the profile is vetoed (saved in flash for taught sounds; built-ins until restart). Right on a taught sound adds an example and rebuilds its profile and threshold. Tested silently with the boot test clip (host command 15) |
 | T5 | Sensitivity on the knob | P1 | Not started | |
 | T6 | Similar-sound warning | P1 | Not started | |
 | T7 | Manage sounds (rename, delete, factory reset) | P1 | Partial | Menu: forget one taught sound or all of them (press twice to confirm), saved to flash. No rename, urgency or built-in on/off |
