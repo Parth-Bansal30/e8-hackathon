@@ -31,8 +31,8 @@ alert delay changes, the voice-over doesn't quote it, so nothing else changes.
   use the captions. **Captions are recommended either way:** the product is for deaf and
   hard-of-hearing people, and a captioned video shows we mean it. Caption text = the voice-over
   lines below.
-- **Dismissing:** the alert footer says "Tap anywhere to dismiss", but touch isn't wired up. Press
-  the joystick, and say "press" in the voice-over.
+- **Joystick on an alert:** PRESS is OK (dismiss), LEFT marks it wrong, RIGHT marks it right. Use
+  PRESS to dismiss in segments 4 to 7, so you don't mark anything by accident.
 
 ## Full cut (4:00)
 
@@ -48,7 +48,7 @@ overlay text for the edit.
   screen and lights, and runs entirely on this Alif E8 board. Nothing is recorded."
 - **On screen:** "Sound Sense · Alif Ensemble E8 · Cortex-M55 + Ethos-U85"
 
-### 2. Ready self-test (0:20-0:35)
+### 2. Ready self-test (0:20-0:33)
 
 - **Shot:** close on the screen. Press reset. The **Ready** screen ticks through its rows, then
   goes to the home screen.
@@ -58,7 +58,7 @@ overlay text for the edit.
   seconds after reset."
 - **On screen:** "Ready 1.5 s after reset"
 
-### 3. Live view (0:35-0:55)
+### 3. Live view (0:33-0:50)
 
 - **Shot:** close on the home screen in a quiet moment: it reads **Quiet: NPU resting**. Then talk
   or clap once near the board: the top 3 matches come back.
@@ -68,7 +68,7 @@ overlay text for the edit.
   the encoder wakes up and the matches come back."
 - **On screen:** "CPU awake 12.6% in a quiet room (was 100%)"
 
-### 4. Built-in alert (0:55-1:20)
+### 4. Built-in alert (0:50-1:12)
 
 - **Shot:** run `tools/demo_sound.py alarm` on the laptop (keep the laptop out of frame or at the
   edge). The full-screen **Alarm** card appears and the LEDs blink. Hold 3 seconds on the LEDs, then
@@ -84,7 +84,7 @@ overlay text for the edit.
 - **Fallback:** if the alarm shows as "Maybe: Alarm?", keep it: it's the honest low-confidence
   style. Say "When it isn't sure, it says so."
 
-### 5. Knock: felt vs heard (1:20-2:00)
+### 5. Knock: felt vs heard (1:12-1:52)
 
 - **Shot A:** knock on the table about 20 cm from the board. The card reads **Knock**, tagged
   **Felt here + heard**. Dismiss.
@@ -100,7 +100,7 @@ overlay text for the edit.
   TV. The microphones hear it, but nothing touched the table, so it's only a banner: heard only."
 - **On screen:** "Knocks felt at 20 cm: 21 of 22"
 
-### 6. Teach a new sound (2:00-3:05)
+### 6. Teach a new sound (1:52-2:55)
 
 - **Shot:** close on the screen, with your hand and keys in frame.
   1. Press **UP**. The name screen starts on **Keys**. Press to start.
@@ -119,7 +119,7 @@ overlay text for the edit.
   Save, and once more for the alert. Change "keys" to "doorbell" in the VO.
 - **On screen:** "Taught on the device · saved in 223-266 ms, 0 audio dropped"
 
-### 7. Survives a reset (3:05-3:20)
+### 7. Survives a reset (2:55-3:10)
 
 - **Shot:** press reset. The Ready screen's **Saved sounds** row says the taught sound was restored.
   Jingle the keys: **Keys** alert.
@@ -127,12 +127,16 @@ overlay text for the edit.
   milliseconds. Jingle again, and it still knows my keys."
 - **On screen:** "Restored from OSPI flash in 2.2 ms"
 
-### 8. Timeline (3:20-3:32)
+### 8. Timeline and fixing a mistake (3:10-3:32)
 
 - **Shot:** press **LEFT**. Today's timeline, with the alarm, the knocks and the keys from this
-  take. Hold 4 seconds, press to go back.
-- **VO:** "Left shows today's timeline: every sound, with repeats merged and felt knocks marked, so
-  you can see what you missed."
+  take. The top row is the selected one (UP/DOWN moves). Pick the laptop knock (or the alarm) and
+  press **LEFT**: the row says **Marked wrong**. Press to go back.
+- **VO:** "Left shows today's timeline: every sound, with repeats merged and felt knocks marked.
+  If it got one wrong, left marks it. That sound becomes a counter-example, so it won't set off
+  the same alert again."
+- **After recording:** a wrong mark on a built-in sound lasts until a restart, so reset the board
+  before the live demo.
 
 ### 9. Stats and close (3:32-4:00)
 
@@ -145,6 +149,13 @@ overlay text for the edit.
   itself."
 - **On screen:** "NPU 1.00 ms per embedding · all 14 ops on the Ethos-U85 ·
   github.com/Parth-Bansal30/e8-hackathon"
+
+### Optional cutaways (if a take runs short)
+
+- **Settings (5 s):** on the home screen press **DOWN**: night mode, microphones off, privacy,
+  forget sounds. Overlay: "Settings on the board: no app, no account".
+- **"What was that?" (8 s):** a loud sound it doesn't know (a pan lid, a cupboard door) gets a
+  yellow banner; UP would start teaching it from that sound. Needs about 15 dB over the room.
 
 ## 3:00 cut
 
@@ -159,8 +170,8 @@ Same shots, shorter. Cut between teach examples instead of showing every pause.
 | 5. Knock | 0:52-1:27 | Full VO from the 4:00 cut. This is the fusion point; don't cut it. |
 | 6. Teach | 1:27-2:22 | Cut between the 5 examples (show the first and the fifth landing). Full VO. |
 | 7. Reset | 2:22-2:34 | Full VO. |
-| 8. Timeline | 2:34-2:40 | No VO; overlay "Today's timeline: repeats merged, felt knocks marked". |
-| 9. Stats and close | 2:40-3:00 | Full VO. |
+| 8. Timeline and a mistake | 2:34-2:44 | Show one row marked wrong. No VO; overlay "Today's timeline. LEFT marks a mistake, which becomes a counter-example". |
+| 9. Stats and close | 2:44-3:00 | VO: "Right shows the numbers, live from the board: our own PyTorch model, all fourteen operators on the Ethos-U85, about one millisecond per run, and the CPU awake twelve point six percent of the time in a quiet room. Sound Sense." |
 
 ## After recording
 

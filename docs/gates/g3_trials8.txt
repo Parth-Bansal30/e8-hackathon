@@ -1,0 +1,19 @@
+  doorbell trial 1: Siren  best Siren 0.64 (thr 0.59), 2nd Doorbell 0.46
+  doorbell trial 2: unknown  best Siren 0.59 (thr 0.59), 2nd Doorbell 0.53
+  doorbell trial 3: Doorbell  best Doorbell 0.55 (thr 0.50), 2nd Siren 0.51
+  doorbell trial 4: Siren  best Siren 0.61 (thr 0.59), 2nd Doorbell 0.55
+  doorbell trial 5: unknown  best Siren 0.53 (thr 0.59), 2nd Doorbell 0.51
+doorbell: 1/5 accepted as Doorbell
+  clapping: Water running  best Water running 0.53 (thr 0.50)
+  clapping: unknown  best Doorbell 0.41 (thr 0.50)
+  clapping: Doorbell  best Doorbell 0.51 (thr 0.50)
+clapping: 1/3 rejected
+  coughing: unknown  best Doorbell 0.30 (thr 0.50)
+  coughing: unknown  best Doorbell 0.37 (thr 0.50)
+  coughing: Doorbell  best Doorbell 0.55 (thr 0.50)
+coughing: 2/3 rejected
+  chime3: unknown  best Siren 0.49 (thr 0.59)
+  chime3: unknown  best Siren 0.46 (thr 0.59)
+  chime3: Alarm  best Alarm 0.63 (thr 0.58)
+chime3: 2/3 rejected
+untaught: 5/9 = 56% rejected

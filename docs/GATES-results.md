@@ -16,6 +16,248 @@
 | C4 mics | GO for left/right direction (H12) | Spacing 8 cm (ruler). The Mac speaker in line with the pair gave +3.2 samples on the left and −3.6 on the right, steady to ±0.2. That makes the maximum lag 3.4 samples (73 mm) and the channel offset −0.2. Mic 4 is the left mic. Level mic5 − mic4: −4.1 dB on hand claps, 0 to +1 dB from the speaker | See [C4 details](#c4-details) |
 | C5 duty | Done; CPU active 12.6% in a quiet room (target 10%, not a gate), NPU busy 0% | Quiet room, 60 s, release: CPU awake 12.6% (outside WFI), NPU busy 0.00 to 0.05%, 0 to 0.5 encoder runs a second (live view), 0 audio blocks dropped, IMU 805 samples/s with 0 errors. Before: 100% (busy loop), NPU 10 runs/s, ~1%. Steps, each measured: WFI when no audio block waits (E2; the cycle counter keeps counting through WFI, checked at boot) -> 90%; PC sampling over J-Link found 67% in `ARM_LPGPIO_GetValue`: the joystick's low-power GPIO read costs ~130 us, 5 per pass. Polling it every 10 ms with one port read -> 21%; live view skips unchanged rows and scrolls the spectrogram instead of 16,640 fills -> 14%; IMU read every 10 ms instead of 5 (each busy-waits on I3C) -> 12.6%. NPU gate (E1): the live encoder runs only on the home screen while the level is above the noise floor + 6 dB and 300 ms after; sound decisions always run their own inference, so G3 detection can't change. Not measured: continuous speech (no test sounds in the room) | `[SS] stats` lines in `gates/c5_rtt.log` (`active`, `npu busy`, passes/sleeps per second). E3 (CMSIS-DSP FFT) not done |
 
+## Alert delay (offline)
+
+HANDOFF-next.md item 11, done on the old laptop (et-venv, float encoder as shipped). Script: `model/delay_sweep.py`. Results: `model/out/delay_sweep_seed{5,6,7}.json` with logs; the numbers below are the mean of the 3 seeds.
+
+**Method.** Each clip goes through a host port of the board's onset detector (`ss_audio.c`) and main loop (HOLDOFF, the 8 dB gate). The 1 s window the board would encode at each delay is then rerun through the G1 measurements.
+- Room: 1 s of lead-in, pink noise under the clip, and the clip's loudest 20 ms set 10 to 25 dB over it. G3 on the board saw +8 to +22 dB.
+- Teaching: taught sounds are taught and tested at the same delay, since teaching also goes through `decide()`.
+- Built-in profiles: as shipped (each clip's loudest 1 s).
+- Pool size: the built-in pool is small (56 fold-5 clips), so its numbers move by 2 to 4 points between rooms.
+- What transfers to the board: absolute numbers don't (G3 live got 54% where offline gave 85%); the differences between delays are the result.
+
+**One decision at a shorter delay** (just changing `DECIDE_DELAY`). The alert shows about 0.05 s after the delay.
+
+| Delay | Built-ins recognised | Other sounds alerting | 5-way 5-shot | Taught accepted | Untaught rejected | AUROC |
+|---|---|---|---|---|---|---|
+| 0.8 s (today) | 83.8% | 5.1% | 69.9% | 37.9% | 68.8% | 0.634 |
+| 0.6 s | 82.0% | 4.8% | 68.9% | 41.3% | 65.7% | 0.637 |
+| 0.5 s | 77.6% | 5.3% | 69.8% | 44.0% | 64.4% | 0.644 |
+| 0.45 s | 74.7% | 6.6% | 69.2% | 44.9% | 61.7% | 0.639 |
+| 0.4 s | 74.9% | 6.2% | 68.7% | 45.4% | 60.0% | 0.635 |
+| 0.3 s | 66.4% | 4.3% | 67.3% | 47.2% | 56.8% | 0.636 |
+
+- **Built-ins:** 0.5 s costs about 6 points, 0.45 s about 9.
+- **Taught sounds:** separation (AUROC) and few-shot accuracy barely move. The threshold rule trades rejection for acceptance: −7 points of untaught rejection at 0.45 s.
+- **G1 framing for reference:** loudest 1 s, no room: 75.9% few-shot, 85.3% built-ins.
+
+**Two-stage decision.** Decide at 0.4 s when the best match is a built-in clearing its threshold by a margin; otherwise wait for 0.8 s as today.
+- Recognition doesn't change: built-ins (the 56 clips) are recognised 79.5% either way.
+- Wrong at 0.4 s: 0.7% of built-in sounds, i.e. a different built-in than the 0.8 s decision would give.
+
+| Early when | Built-in sounds alerted at ~0.45 s | Mean alert delay (recognised) | Other sounds alerting | Untrained sounds alerting |
+|---|---|---|---|---|
+| Never (today) | 0% | 0.85 s | 5.1% | 4.5% |
+| Over threshold | 64.2% | 0.53 s | 8.9% | 7.0% |
+| Threshold + 0.05 (the alerts that aren't "Maybe") | 54.7% | 0.57 s | 6.6% | 5.8% |
+| Threshold + 0.10 | 43.8% | 0.63 s | 5.3% | 5.3% |
+
+0.45 s and 0.5 s as the early delay came out the same or slightly worse (`two_stage` in the JSON).
+
+**Side finding:** built-in profiles made from windows framed the way the board frames them, instead of the loudest 1 s:
+- At 0.8 s: built-ins 83.8% → 90.2%; other sounds alerting 5.1% → 6.0%; untaught rejection 68.8% → 66.6%.
+- At shorter delays they let through far more false alerts (9.6% at 0.5 s), so this only helps at 0.8 s.
+- It's an `export_ss.py` change (a new `ss_builtin_profiles.h`), but G3 on the board is what should decide it.
+
+**Recommendation:** don't shorten `DECIDE_DELAY`. A two-stage decision gets most built-in alerts to about 0.45 s at no cost in recognition:
+- Early check at 0.4 s, margin 0.05: 55% of built-in sounds alert early; false alerts +1.5 points.
+- Margin 0.10 instead: 44% early, and false alerts no higher than today.
+
+**Firmware: flashed and tested on the board (10:50 AM): clear built-in alerts reach the screen in a median 437 ms, recognition unchanged** (`decide_early()` in `main.cpp`):
+- At 0.4 s after the onset (`EARLY_DELAY`), one extra encoder run (about 1 ms) checks the match.
+- It decides at once only if all of these hold:
+  - the best match is an alerting built-in
+  - it clears its threshold (knob included) by `MAYBE_MARGIN` (0.05), so it would not be a "Maybe"
+  - it isn't vetoed by a sound marked wrong (T4)
+  - it's 8 dB over the room in the 1 s the encoder saw (its own SNR window; `snr_of()` at 0.8 s still reads onset − 0.2 s to + 0.8 s)
+- Everything else waits for 0.8 s as before: taught sounds, "Maybe", felt-only knocks, teaching and `[CAL]`.
+- Each early decision logs `[SS] t=... early, N ms after the onset` before the usual decision line, so `g3_play.py` parses it unchanged.
+- Release build: ITCM 254,944 B (97.25%, +720 B).
+- Silent check after flashing (`gates/early_rtt.log`):
+  - Ready screen: ready after 1,479 ms, every check OK.
+  - `[C1]`: 0 of 1960 inputs differ, output within 1 LSB, cosine 0.9996, "dog" 0.79, NPU 1.0 ms. Same as before.
+  - Quiet room: CPU active 12.0 to 13.1%, 0 audio blocks dropped.
+  - Room noises gave 3 decisions; all were weak matches (best 0.20 to 0.41 against a threshold of 0.50), and all waited for 0.8 s as they should.
+- IMU `times back` read 95 µs, then 1.7 ms, then 3.0 ms in the first 40 s. The early path didn't cause it. **Found and fixed at 11:25 AM:** see [IMU times back](#imu-times-back-with-j-link-attached).
+- **G3 built-in run with the Mac speaker** (same 56 fold-5 clips, volume 88 as found; `gates/g3_builtin_early.txt`, `g3_results.json` entry at 10:51):
+  - Recognised: 30 of 56 (54%), the same as the run before the change.
+  - Per class (before → now): knock 5 → 1, dog 4 → 6, baby 4 → 4, alarm 6 → 6, glass 3 → 2, siren 3 → 3, water 5 → 8.
+  - The knock drop isn't from the early path: none of the knocks were felt this time (5 were before, from the speaker shaking the table), and two knocks that matched "Knock" under the threshold went to "unknown". Possible reasons: a different laptop or placement, or the IMU `times back` above.
+  - Early: 18 of the 30 recognised sounds alerted early (60%; offline said 55%): dog 5, water 6, alarm 5, knock 1, glass 1. Wrong early alerts: 0.
+  - Latency: early decisions came 403 to 442 ms after the onset; on screen a median 437 ms after the onset (403 to 490 ms). The rest still decide at 0.8 s and show about 65 ms later. Mean over recognised sounds: about 0.61 s, down from about 0.87 s.
+  - Draw time: decision to screen took 30 to 75 ms here, against 18 to 20 ms in C3 with fake detections. Not looked into.
+
+## Teaching: 8 examples, T2, T6
+
+Done at 11 AM. Offline numbers come from `model/shots_eval.py` (G1 pools, float encoder, 600 episodes; `model/out/shots_eval.log`).
+
+**8 examples per taught sound** (`SHOTS` 5 → 8; the teach screen shows two rows of 4):
+
+| Examples | Taught accepted | Untaught rejected | AUROC |
+|---|---|---|---|
+| 5 | 38.9% | 78.2% | 0.687 |
+| 8 | 44.6% | 77.1% | 0.709 |
+
+**T2 "unlike the others":** a shot is flagged when making it again would raise the profile's threshold by 0.10 or more. The threshold is the lowest leave-one-out similarity − 0.05, so one stray example drags it down for everything.
+- A plain "0.15 under the median" rule flagged 88% of ESC-50 teaches. Those classes are many different recordings, far more varied than one doorbell taught 8 times, so that rule was dropped.
+- The threshold rule flags 0.4% of ESC-50 teaches. A live, same-source teach is tight (the keys preview: threshold 0.81), and there one stray example would drop the threshold to 0.50.
+- The flagged shot turns orange ("unlike"), and UP makes it again; saving is still allowed.
+
+**T2 "loud room":** a shot taken while the room floor is over −40 dBFS (a quiet room here is about −50) is kept but flagged orange. Rejecting it would make teaching impossible in a noisy hall.
+
+**T6 "Sounds like …":** the new profile is compared with every other profile; at cosine 0.70 or more the screen says "Sounds like X (NN%): may mix up".
+- Two 8-example profiles of the same class score a median 0.79 (p10 0.59).
+- A held-out class against the closest built-in scores a median 0.37 (p90 0.56); 0.5% reach 0.70.
+- Two different held-out classes score a median 0.00 (p90 0.49).
+
+**On the board, no sound** (host command 17; `gates/teach8_rtt.log`; screenshots `gates/teach8_board_flag.png`, `gates/teach8_board_redo.png`):
+- Seven shots of the boot test clip and one of the room: leave-one-out 0.99 ×7 and 0.00. T2 flagged shot 8 (threshold 0.850 without it, 0.500 with it), and T6 said "Sounds like Dog barking" (0.79; the test clip is a dog).
+- UP, then one more clip shot: shot 8 was replaced and the threshold went to 0.850.
+- Cancelled without saving. Release build: ITCM 97.31%; the new teach code is in MRAM.
+
+**Live, the doorbell clip from the Mac speaker at volume 69** (`gates/ss_rtt.log`, `gates/g3_teach8.txt`, `gates/g3_trials8.txt`):
+- **First teach:** 6 shots were tight (leave-one-out 0.88-0.92) and 2 were stray (0.18 and 0.02). The test match was 0.817.
+  It showed two bugs, both fixed and flashed at 11:10 AM:
+  - "Loud room" flagged 6 of 8 shots. The room floor rises while the doorbell plays, so the check now
+    measures the 0.2 s before each sound (`level_db()`).
+  - T2 flagged neither stray shot: with two of them, leaving out one doesn't raise the threshold. T2
+    now tries leaving out the worst one, then the worst two. Without both, the threshold would be
+    about 0.83 instead of 0.50.
+- **Second teach, after the fixes:** shots at +11 to +17 dB, no "loud room" flags. The shots were loose
+  (leave-one-out 0.34-0.61, nothing for T2 to flag), so the threshold sat at the 0.50 floor. The test
+  match was 0.527. Saved, and restored after a reset.
+- **5 more doorbells:** 1 alerted as Doorbell, 2 as Siren, 2 didn't alert. Siren scored 0.53-0.64
+  against Doorbell's 0.46-0.55: through this speaker the doorbell clip sits close to the built-in Siren.
+- **9 untaught sounds** (clapping, coughing, a 3-tone chime): 5 rejected. Wrong alerts: 2 Doorbell
+  (0.51 and 0.55), 1 Water running, 1 Alarm.
+- **Reading:** a loose teach gives a 0.50 threshold that lets other sounds in. For the demo, teach
+  louder (about 75%, DEMO.md) or with a distinctive real sound such as keys, and redo any shot T2 flags.
+
+**Demo rehearsal at 12:00 PM, Mac volume 44 as found** (`gates/g3_teach_rehearsal.txt`; `g3_play.py teach doorbell`, then `trials doorbell --n 5`):
+- **Teach:** 8 of 8 shots taken (+14.3 to +17.9 dB), tight: leave-one-out 0.95-0.97, threshold 0.85
+  (the maximum). No "unlike" or "Sounds like" warnings. Saved, replacing the loose 0.50 profile.
+- **5 trials:** 4 alerted as Doorbell (0.95-0.96). The 5th was quieter (+10.4 dB) and scored 0.82
+  against 0.85, so nothing showed (not a wrong alert). Siren came second at 0.40-0.56, under its 0.59
+  threshold: no Siren confusions this time.
+- Trials 1-2 were also felt through the table (23 mg): the laptop speaker shakes it.
+- **Reading:** this time the clips came out tighter at volume 44 than at 69 earlier, possibly from the laptop's
+  position. A tight teach gives a strict 0.85 threshold: a doorbell 10 dB over the room can miss.
+  For the demo, play at a steady level, and turn the knob up (thresholds down by as much as 0.10) if
+  one misses.
+
+## Built-in calibration on the board (G3 row 7): tried, not kept
+
+At 12:05 PM, with the owner's OK (`gates/g3_calibrate.txt`, `gates/g3_builtin_cal.txt`):
+- `g3_play.py calibrate --n 10`: 7 to 12 board examples per built-in from ESC-50 folds 1-4 through
+  the Mac speaker. The Mac volume was 38 at the start; the owner changed it during the session (81,
+  then 100 for the test).
+  - Every measured threshold came out at the 0.50 floor: the clips in a class vary too much for
+    the leave-one-out rule.
+  - Knock's measured profile was far from the trained one (cosine 0.18). Dog, siren and alarm were
+    close (0.83, 0.81 and 0.94).
+- Gotcha: adding `assets/ss_board_profiles.h` doesn't rebuild `main.cpp` (the dependency file only
+  lists headers that existed). The first flash still had the trained profiles; touch `main.cpp`.
+- Test on fold 5, stopped by the owner after 2 of 7 classes (16 clips):
+  - Knock 3/8 (1/8 with the trained profiles), Dog 2/8 (6/8 before).
+  - 7 of the 16 alerted as the wrong sound (5 of them Water running), because every threshold sat at 0.50.
+- **Not kept:** the board is back on the trained profiles (flashed 12:15 PM). The owner watched the
+  trained profiles catch sounds well live. The measured header is kept in
+  `gates/ss_board_profiles_cal1.h`, out of the build.
+
+## Snooze (A8) and "Someone is talking nearby" (H8)
+
+Built and flashed at 12:20 PM, no sound. Board tests: smoke 16/16, `tools/ss_t7_test.py` 18/18
+(`gates/t7_test.txt`). ITCM 97.88% (5.4 KB free).
+- **Snooze:** DOWN on an alert (not on a "Maybe") snoozes that sound for 10 min. Its detections still go
+  into the timeline (marked read) but raise no alert, banner or lights. A notice says "Alarm snoozed:
+  no alerts for 10 min; still in the timeline". Settings > Sounds shows "Snoozed" on that row, and a
+  press ends the snooze. Forgetting or re-teaching a taught sound clears its snooze.
+  - Tested with injected alarms: DOWN snoozed (screen home); a second alarm was logged ("snoozed:
+    logged, no alert") and the screen stayed home; a press on the Alarm row ended it; the next alarm
+    alerted.
+- **Talking nearby:** while Speech is the best match over its threshold, and for 3 s after, the line over
+  the spectrogram turns into a yellow "Someone is talking nearby". It's redrawn only when it changes.
+  Rendered in the UI simulator (`demo/screens/29_home_talking.png`); seeing it on the board needs speech
+  in the room.
+
+## Full-app smoke test
+
+`tools/ss_smoke.py`, no sound, about 1 minute. It resets the board, then drives every screen and path
+with host commands:
+- alarm and knock injection; press to dismiss; LEFT marks wrong;
+- the boot test clip as a banner; the timeline, with row 0 marked right; stats;
+- DOWN opens the menu and LEFT leaves it;
+- teaching Keys with 8 silent shots, then cancelling;
+- 10 s of forced full redraws.
+
+**Result at 11:20 AM: 16 of 16 pass, 0 audio blocks dropped, 0 IMU errors** (`gates/smoke.txt`).
+
+The first run failed two checks: DOWN didn't open the menu, so the following LEFT went to the
+timeline. The firmware was fine. `tools/jlink.py` wrote `ss_arg` and `ss_cmd` in separate J-Link
+sessions and ignored a write that failed while the RTT logger held the probe, so the board took
+command 8 with the previous argument (0: no key). `Board.command()` (CLI: `jlink.py <elf> cmd C N`)
+now writes both in one session, and every write is checked. `g3_play.py` and `c2_power.py` use it.
+
+## IMU times back with J-Link attached
+
+`times back` (the largest backward step between IMU sample times) was not new: `gates/c3_rtt.log`
+already had 44 and 108 ms. Every jump came after a long full-screen draw (alert, teach: 50-125 ms),
+and the sensor clock reading spiked at the same time (+20,000 and +42,000 ppm against a steady +6,700).
+
+**Cause:** a J-Link detach clears DEMCR.TRCENA, which stops the DWT cycle counter until
+`ss_cycles()` sets it again. The RTT logger and every host command attach and detach. A detach
+during a draw stopped the counter for the rest of the draw, so cycle time fell behind real time.
+
+**Fix:** `SysTick_Handler` re-arms the counter every 1 ms, so a detach costs at most 1 ms.
+
+**Test:** 30 s of forced full redraws (host command 14) with the logger running (`gates/imu_back.txt`):
+
+| | times back, max | sensor clock reading |
+|---|---|---|
+| Before | 31.8 ms | +6,516 to +13,583 ppm |
+| After | 0.55 ms | +6,592 to +7,041 ppm |
+
+Without a debugger attached this never happened. Felt-knock matching (±100 ms) was only at risk
+when a detach landed between a knock and its conversion to milliseconds.
+
+## Sounds page (T7) and "still sounding" (H5)
+
+Settings > **Sounds** (`tools/ss_t7_test.py`, no sound; 10/10 at 11:40 AM, 14/14 with rename and
+room calibration at 11:50 AM; `gates/t7_test.txt`; board screenshot `gates/t7_board_sounds.png`):
+- Each built-in that alerts can be turned off: it is then not shown or logged, and doesn't start
+  "What was that?". A knock that is off isn't alerted when felt either. Saved in the flash record's
+  `builtin_mute` (already in the format, so earlier saves still load).
+  - Tested: Dog barking off, then the boot test clip (a dog, 0.79) gave "unknown" and no banner.
+    Still off after a reset (`[STORE] ... built-ins off: 0x2`). Back on.
+- Each taught sound's urgency cycles Info / Important / Urgent; it's saved and restored with the sound.
+  - Tested: Doorbell to Urgent, then an injected Doorbell alert was urgent. Back to Important.
+- **Rename:** RIGHT on a taught sound gives it the next preset name that no other taught sound has
+  (Keys, Doorbell, Clap, Microwave, Kettle, Phone, Washer, My name). The icon and colour come with the
+  name; the urgency set in the menu stays. There's no keyboard, so names come from that list.
+  - Tested: Doorbell became Clap, still Clap after a reset, then stepped back to Doorbell.
+- LEFT or RIGHT on the Sounds page goes back to Settings, on the Sounds row.
+- The Settings menu now holds 16 rows (it was 12; 4 settings + 8 taught + forget all + back was
+  already 14, which would have overflowed with 8 taught sounds).
+
+**Calibrate room (S5):** Settings > Calibrate room measures 10 s (500 blocks of 20 ms) and sets the
+floor to their median level, so a cough or a click during it doesn't count. The row shows progress,
+then the result ("−50 dB"), and the note says how loud a sound must be (floor + 8 dB). The floor keeps
+tracking the room afterwards as before. This is useful after a long loud sound has pulled the floor up.
+Tested: −50.5 dB in this room, the same as the running floor in the stats lines (−49 to −50). Board
+screenshot `gates/s5_board_settings.png`. ITCM 97.69%: putting the new code in MRAM and using `expf`
+(already linked) instead of `powf` took the first build's 98.02% down by 864 bytes.
+
+**"Still sounding" (H5):** a sound repeated and heard again within 15 s shows "still sounding" on the
+alert ("9 times, for 2 min, still sounding"), on the home list and in the timeline. The screen is
+redrawn when that stops being true. Tested: two injected alarms 2 s apart showed it, and it cleared
+15 s later. Detail lines now shrink to fit their row.
+
+The first run of the test failed 4 checks: a real sound in the room raised an alert just after a
+reset and ate a key press, so the test turned off Water running instead of Dog barking. The test
+now reads the menu selection from the board and moves to the row it wants. It also restores the
+settings it found (`--set 0 1` puts back all built-ins on and the taught sound at Important).
+
 ## C4 details
 
 **Recordings:** [c4_take1.wav](gates/audio/c4_take1.wav) has 16 claps at 1 m: 5 at position A, 6 at the middle position (a short end, about 1 m from the left mic), 5 at position B, plus the start and stop joystick clicks. [c4_take2.wav](gates/audio/c4_take2.wav) has 5 key jingles. Both came out of the PSRAM over J-Link at 64 KB/s. Analysis: `tools/mic_geometry.py`, written to [c4_mic_geometry.json](gates/c4_mic_geometry.json).

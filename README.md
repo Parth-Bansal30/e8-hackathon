@@ -16,9 +16,11 @@ delegated to the Ethos-U85.
 
 - **Recognises built-in sounds:** knock, dog, baby crying, alarm, glass breaking, siren, running
   water (plus speech and background, which never alert).
-- **Learns your sounds on the device:** press UP, make the sound 5 times, and it builds a profile
-  from the encoder's embeddings. Each example is checked (too quiet, clipped) and shown with its dB
-  over the room. A test match follows, then save. No retraining, no laptop.
+- **Learns your sounds on the device:** press UP, make the sound 8 times, and it builds a profile
+  from the encoder's embeddings. Each example is checked (too quiet, clipped, loud room) and shown
+  with its dB over the room. An example unlike the others is flagged and can be made again (UP).
+  A sound too close to one already known gets "Sounds like …". A test match follows, then save.
+  No retraining, no laptop.
 - **Remembers them:** taught sounds are saved in the 64 MB OSPI flash (two copies with CRC32) and
   restored at boot in 2.2 ms. Saving runs in the background without dropping audio.
 - **Felt vs heard:** the BMI323 accelerometer, read at 800 Hz, decides whether a knock was felt on
@@ -28,6 +30,21 @@ delegated to the Ethos-U85.
   photosensitivity). Urgent alerts stay until you press, and after 30 s the strobe doubles and the
   screen says how long it has waited. Low confidence shows as "Maybe: doorbell?", never as a certain alert.
 - **Timeline** of today's sounds, with repeats merged and "felt here" marked.
+- **Fixes its mistakes:** on an alert or the timeline, LEFT means wrong and RIGHT means right. A
+  wrong sound is kept as a counter-example, so a sound closer to it than to the profile is vetoed
+  (saved in flash for taught sounds). Right on a taught sound adds an example and rebuilds its
+  profile.
+- **"What was that?":** a loud sound that matches nothing gets a soft banner and a timeline entry;
+  UP teaches it, starting from that sound.
+- **Settings menu** (DOWN): night mode (the screen goes dark and only important and urgent sounds
+  light it), microphones off, a privacy note, sensitivity on the knob, **Sounds** (turn each built-in
+  on or off; set each taught sound to Info, Important or Urgent, or rename it; saved in the flash),
+  **Calibrate room** (10 s, then shows the room level and how loud a sound must be), and forgetting
+  one or all taught sounds.
+- **Ongoing sounds:** repeats merge into one entry with a count and how long it went on; a sound
+  heard again in the last 15 s reads "still sounding". DOWN on an alert snoozes that sound for 10 min
+  (still logged).
+- **Someone talking nearby:** the home screen says so while speech is heard.
 - **Live view:** scrolling spectrogram, room level against its noise floor, and the three best
   matches right now.
 - **Stats page,** live from the board: NPU time per run, CPU active %, NPU busy %, save time,
@@ -56,12 +73,12 @@ Details and logs: [docs/GATES-results.md](docs/GATES-results.md).
 | Built-in sounds | 88% offline (4% false accepts); 54% live from a laptop speaker (alarm 75%) |
 | Taught sounds | Work live; offline 38% accepted, 79% of untaught sounds rejected (borderline, see limits) |
 | Knock felt | 21 of 22 at 20 cm; IMU FIFO at 805 samples/s, 0 missed |
-| Alert delay | About 0.85 s after the sound starts (decides 0.8 s after the onset); on screen 18.4–19.5 ms after the decision |
+| Alert delay | Clear built-in match: on screen a **median 437 ms** after the sound starts (403–490 ms; 18 of 30 recognised sounds live, 0 wrong). Everything else decides 0.8 s after the onset, about 0.87 s. Drawing the alert: 18.4–19.5 ms on the bench, 30–75 ms in the live run |
 | Display | Live view 10.0 fps; urgent strobe plus 10 forced full redraws a second for 12 s: 0 audio blocks dropped |
 | Flash save | 223–266 ms over 101 saves (median 252), longest 304 ms over 1,000 more; across all 1,101: 0 audio blocks dropped, 0 failed read-backs. Restore 2.2 ms |
 | Power | CPU active **12.6%** in a quiet room (was 100%); NPU busy 0.00% when quiet |
 | Boot to Ready | 1.5 s |
-| Memory | ITCM 97.6% (all hot code), MRAM 1.03 MB of 2 MB (model, fonts, cold code) |
+| Memory | ITCM 97.5% (all hot code), MRAM 1.06 MB of 2 MB (model, fonts, cold code) |
 
 ## How it works
 
@@ -70,7 +87,7 @@ Details and logs: [docs/GATES-results.md](docs/GATES-results.md).
 ```
  PDM mics (16 kHz) ──> log-mel, 40 bands / 20 ms (M55) ──> 49x40 patch (~1 s) ──int8──> encoder (Ethos-U85)
                                                                                            │ 64-d embedding
- onset detector (M55) ── 0.8 s after a sound starts ──> cosine match against profiles <────┘
+ onset detector (M55) ── 0.4 s if clear, else 0.8 s ──> cosine match against profiles <────┘
                                                            │  built-in (9) + taught (up to 8, flash)
  BMI323 IMU, 800 Hz FIFO (I3C) ── knock felt within ±100 ms? ──┤
                                                            v
@@ -157,14 +174,20 @@ make -C tools/ui_sim                             # render every screen to tools/
 those if your paths differ. Exact tool versions and a second-machine setup:
 [docs/HANDOFF.md](docs/HANDOFF.md).
 
-**Using it:** the joystick does everything. UP teaches a sound, LEFT shows the timeline, RIGHT the
-stats, press is OK or dismiss. The demo run sheet, with laptop-played sounds for a repeatable
+**Using it:** the joystick does everything. On the home screen UP teaches a sound, LEFT shows the
+timeline, RIGHT the stats and DOWN the settings menu; press is OK or dismiss. On an alert or a
+timeline row, LEFT marks it wrong and RIGHT marks it right; DOWN on an alert snoozes that sound for 10 min. While teaching, LEFT starts over, UP
+makes a flagged example again, press saves and RIGHT cancels. The demo run sheet, with laptop-played sounds for a repeatable
 demo, is [docs/DEMO.md](docs/DEMO.md).
 
 **Host control over J-Link** (scripted tests, no joystick):
-`tools/jlink.py <elf> set ss_arg N` then `tools/jlink.py <elf> set ss_cmd C`, where C is 1 teach
+`tools/jlink.py <elf> cmd C N` (writes ss_arg N and ss_cmd C in one J-Link session), where C is 1 teach
 preset N, 2 save, 3 home, 4 forget taught sounds, 5 stats, 6 timeline, 7 set clock, 8 press keys,
-9 re-measure built-in N, 10 finish, 11 N flash saves, 12 fill the flash record with stand-ins.
+9 re-measure built-in N, 10 finish, 11 N flash saves, 12 fill the flash record with stand-ins,
+13 fake a detection of profile N (flags 0x100 maybe, 0x200 felt, 0x400 heard only), 14 full redraws
+10 times a second for N s, 15 classify the boot test clip, 16 mark timeline row N wrong (right with
+0x100), 17 a teach shot from the boot test clip (N = 0) or the room (N = 1). 13-17 test the UI and
+teaching without sound.
 `tools/jlink.py <elf> reset` resets the board without halting.
 
 **Python tools** need numpy, scipy and Pillow (`python3 -m venv .venv && .venv/bin/pip install
@@ -175,12 +198,17 @@ the datasets (ESC-50, Speech Commands), which aren't in git.
 
 - **Built-ins through a laptop speaker are weaker** (54% live, 88% offline): the speaker and an
   unfamiliar room change the sound. Teaching your own sounds is the strong path.
-- **Taught-sound acceptance is borderline offline at 5 examples** (38%); 8 examples per sound is
-  the planned fix.
+- **Taught-sound acceptance is borderline offline:** 45% at 8 examples (38% at 5), with 77% of
+  untaught sounds rejected, on recordings the encoder never heard. Live, with the same doorbell or
+  keys each time, the examples agree far more closely.
 - **Knocks are felt within about 20 cm** of the board on our table, hence "place me on the table
   by the door".
-- **Alert delay is about 0.85 s** against a 0.5 s target: the board waits for the whole sound.
-- Not built yet: night mode, fixing mistakes from the timeline, managing individual sounds. See [docs/STATUS.md](docs/STATUS.md).
+- **Only clear matches meet the 0.5 s alert target.** A clear built-in match alerts in about
+  0.44 s. Taught sounds, "Maybe" matches and anything unclear wait for the whole sound: about 0.87 s.
+- Built but not yet checked by hand at the board: sensitivity on the knob, and the backlight
+  turning off in night mode.
+- Not built yet: renaming sounds, per-sound urgency, turning built-ins off, smoke vs CO alarms.
+  See [docs/STATUS.md](docs/STATUS.md).
 
 ## Board bring-up (done before the project was chosen)
 

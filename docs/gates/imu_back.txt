@@ -1,0 +1,22 @@
+IMU times back, 30 s of forced full redraws (host command 14 30) with the RTT logger running, 2026-10-18
+
+Before (cycle counter re-armed only by ss_cycles()):
+draw: full max 53123 us 
+stats t=10000 times back 0 us, clock +6516 ppm draw: full max 0 us 
+stats t=20000 times back 4338 us, clock +8005 ppm draw: full max 35680 us 
+stats t=30000 times back 22237 us, clock +11577 ppm draw: full max 35682 us 
+stats t=40000 times back 26131 us, clock +6731 ppm draw: full max 35682 us 
+stats t=50000 times back 27361 us, clock +6708 ppm draw: full max 35682 us 
+stats t=60000 times back 31765 us, clock +13583 ppm draw: full max 0 us 
+stats t=70000 times back 31765 us, clock +6878 ppm
+
+
+After (also re-armed in SysTick_Handler every 1 ms):
+draw: full max 53138 us 
+stats t=10007 times back 0 us, clock +7041 ppm draw: full max 0 us 
+stats t=20007 times back 0 us, clock +6592 ppm draw: full max 35676 us 
+stats t=30010 times back 0 us, clock +6915 ppm draw: full max 35684 us 
+stats t=40019 times back 0 us, clock +7030 ppm draw: full max 35680 us 
+stats t=50025 times back 93 us, clock +6959 ppm draw: full max 35677 us 
+stats t=60025 times back 552 us, clock +6752 ppm
+

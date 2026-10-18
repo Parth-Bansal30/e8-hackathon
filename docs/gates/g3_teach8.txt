@@ -1,0 +1,12 @@
+  [TEACH] 'Doorbell': make the sound 8 times
+  [TEACH] shot 1/8: +16.5 dB
+  [TEACH] shot 2/8: +16.2 dB
+  [TEACH] shot 3/8: +12.5 dB
+  [TEACH] shot 4/8: +14.2 dB
+  [TEACH] shot 5/8: +11.1 dB
+  [TEACH] shot 6/8: +16.0 dB
+  [TEACH] shot 7/8: +14.5 dB
+  [TEACH] shot 8/8: +16.0 dB
+  [TEACH] profile: thr 0.500, leave-one-out 0.34 0.61 0.52 0.36 0.45 0.35 0.52 0.54; make it once more to test, press to save
+  [TEACH] test: match 0.527 (thr 0.500) accepted
+[TEACH] saved 'Doorbell' thr 0.500; 1 taught

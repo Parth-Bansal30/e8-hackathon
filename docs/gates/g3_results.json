@@ -1023,5 +1023,1445 @@
    }
   },
   "time": "07:36:23"
+ },
+ {
+  "test": "builtin",
+  "gain_db": 0.0,
+  "results": {
+   "knock": {
+    "n": 8,
+    "recognised": 1,
+    "maybe": 0,
+    "rows": [
+     {
+      "clip": "5-218980-A-30.wav",
+      "got": "unknown",
+      "d": {
+       "t": 226126,
+       "snr": 21.9,
+       "clipped": false,
+       "best": "Baby crying",
+       "score": 0.4,
+       "thr": 0.57,
+       "second": "Dog barking",
+       "score2": 0.39,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-218981-A-30.wav",
+      "got": "unknown",
+      "d": {
+       "t": 231873,
+       "snr": 22.6,
+       "clipped": false,
+       "best": "Glass breaking",
+       "score": 0.33,
+       "thr": 0.5,
+       "second": "Water running",
+       "score2": 0.12,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-235644-A-30.wav",
+      "got": "unknown",
+      "d": {
+       "t": 237758,
+       "snr": 23.7,
+       "clipped": false,
+       "best": "Knock",
+       "score": 0.43,
+       "thr": 0.62,
+       "second": "Water running",
+       "score2": 0.38,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-250026-A-30.wav",
+      "got": "unknown",
+      "d": {
+       "t": 243586,
+       "snr": 19.9,
+       "clipped": false,
+       "best": "Knock",
+       "score": 0.59,
+       "thr": 0.62,
+       "second": "Siren",
+       "score2": 0.39,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-250026-B-30.wav",
+      "got": "unknown",
+      "d": {
+       "t": 249066,
+       "snr": 21.3,
+       "clipped": false,
+       "best": "Water running",
+       "score": 0.24,
+       "thr": 0.5,
+       "second": "Siren",
+       "score2": 0.17,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-251426-A-30.wav",
+      "got": "Knock",
+      "d": {
+       "t": 254329,
+       "snr": 23.1,
+       "clipped": false,
+       "best": "Knock",
+       "score": 0.67,
+       "thr": 0.62,
+       "second": "Dog barking",
+       "score2": 0.44,
+       "felt": "no",
+       "maybe": false,
+       "result": "Knock"
+      }
+     },
+     {
+      "clip": "5-251426-B-30.wav",
+      "got": "unknown",
+      "d": {
+       "t": 260296,
+       "snr": 22.3,
+       "clipped": false,
+       "best": "Water running",
+       "score": 0.45,
+       "thr": 0.5,
+       "second": "Knock",
+       "score2": 0.43,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-256512-A-30.wav",
+      "got": "unknown",
+      "d": {
+       "t": 266021,
+       "snr": 25.0,
+       "clipped": false,
+       "best": "Dog barking",
+       "score": 0.42,
+       "thr": 0.52,
+       "second": "Knock",
+       "score2": 0.2,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     }
+    ]
+   },
+   "dog": {
+    "n": 8,
+    "recognised": 6,
+    "maybe": 0,
+    "rows": [
+     {
+      "clip": "5-203128-A-0.wav",
+      "got": "Dog barking",
+      "d": {
+       "t": 271726,
+       "snr": 20.7,
+       "clipped": false,
+       "best": "Dog barking",
+       "score": 0.83,
+       "thr": 0.52,
+       "second": "Siren",
+       "score2": 0.18,
+       "felt": "no",
+       "maybe": false,
+       "result": "Dog barking"
+      }
+     },
+     {
+      "clip": "5-203128-B-0.wav",
+      "got": "Dog barking",
+      "d": {
+       "t": 277224,
+       "snr": 21.2,
+       "clipped": false,
+       "best": "Dog barking",
+       "score": 0.71,
+       "thr": 0.52,
+       "second": "Siren",
+       "score2": 0.14,
+       "felt": "no",
+       "maybe": false,
+       "result": "Dog barking"
+      }
+     },
+     {
+      "clip": "5-208030-A-0.wav",
+      "got": "Dog barking",
+      "d": {
+       "t": 280882,
+       "snr": 10.1,
+       "clipped": false,
+       "best": "Dog barking",
+       "score": 0.61,
+       "thr": 0.52,
+       "second": "Water running",
+       "score2": 0.35,
+       "felt": "no",
+       "maybe": false,
+       "result": "Dog barking"
+      }
+     },
+     {
+      "clip": "5-212454-A-0.wav",
+      "got": "unknown",
+      "d": {
+       "t": 286491,
+       "snr": 12.3,
+       "clipped": false,
+       "best": "Water running",
+       "score": 0.44,
+       "thr": 0.5,
+       "second": "Dog barking",
+       "score2": 0.25,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-213855-A-0.wav",
+      "got": "Dog barking",
+      "d": {
+       "t": 294101,
+       "snr": 22.5,
+       "clipped": false,
+       "best": "Dog barking",
+       "score": 0.62,
+       "thr": 0.52,
+       "second": "Water running",
+       "score2": 0.46,
+       "felt": "no",
+       "maybe": false,
+       "result": "Dog barking"
+      }
+     },
+     {
+      "clip": "5-217158-A-0.wav",
+      "got": "Dog barking",
+      "d": {
+       "t": 299833,
+       "snr": 20.0,
+       "clipped": false,
+       "best": "Dog barking",
+       "score": 0.6,
+       "thr": 0.52,
+       "second": "Siren",
+       "score2": 0.35,
+       "felt": "no",
+       "maybe": false,
+       "result": "Dog barking"
+      }
+     },
+     {
+      "clip": "5-231762-A-0.wav",
+      "got": "Dog barking",
+      "d": {
+       "t": 305418,
+       "snr": 20.0,
+       "clipped": false,
+       "best": "Dog barking",
+       "score": 0.63,
+       "thr": 0.52,
+       "second": "Baby crying",
+       "score2": 0.27,
+       "felt": "no",
+       "maybe": false,
+       "result": "Dog barking"
+      }
+     },
+     {
+      "clip": "5-9032-A-0.wav",
+      "got": "unknown",
+      "d": {
+       "t": 311153,
+       "snr": 26.7,
+       "clipped": true,
+       "best": "Dog barking",
+       "score": 0.5,
+       "thr": 0.52,
+       "second": "Water running",
+       "score2": 0.1,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     }
+    ]
+   },
+   "baby": {
+    "n": 8,
+    "recognised": 4,
+    "maybe": 2,
+    "rows": [
+     {
+      "clip": "5-151085-A-20.wav",
+      "got": "unknown",
+      "d": {
+       "t": 316329,
+       "snr": 17.4,
+       "clipped": false,
+       "best": "Baby crying",
+       "score": 0.37,
+       "thr": 0.57,
+       "second": "Water running",
+       "score2": 0.12,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-198411-A-20.wav",
+      "got": "unknown",
+      "d": {
+       "t": 322054,
+       "snr": 16.9,
+       "clipped": false,
+       "best": "Baby crying",
+       "score": 0.27,
+       "thr": 0.57,
+       "second": "Water running",
+       "score2": 0.1,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-198411-B-20.wav",
+      "got": "Baby crying",
+      "d": {
+       "t": 327555,
+       "snr": 17.7,
+       "clipped": false,
+       "best": "Baby crying",
+       "score": 0.59,
+       "thr": 0.57,
+       "second": "Water running",
+       "score2": 0.2,
+       "felt": "no",
+       "maybe": true,
+       "result": "Baby crying"
+      }
+     },
+     {
+      "clip": "5-198411-C-20.wav",
+      "got": "Baby crying",
+      "d": {
+       "t": 333290,
+       "snr": 15.7,
+       "clipped": false,
+       "best": "Baby crying",
+       "score": 0.65,
+       "thr": 0.57,
+       "second": "Siren",
+       "score2": 0.53,
+       "felt": "no",
+       "maybe": false,
+       "result": "Baby crying"
+      }
+     },
+     {
+      "clip": "5-198411-D-20.wav",
+      "got": "unknown",
+      "d": {
+       "t": 339019,
+       "snr": 17.3,
+       "clipped": false,
+       "best": "Baby crying",
+       "score": 0.19,
+       "thr": 0.57,
+       "second": "Siren",
+       "score2": 0.14,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-198411-E-20.wav",
+      "got": "Baby crying",
+      "d": {
+       "t": 344758,
+       "snr": 16.5,
+       "clipped": false,
+       "best": "Baby crying",
+       "score": 0.58,
+       "thr": 0.57,
+       "second": "Alarm",
+       "score2": 0.21,
+       "felt": "no",
+       "maybe": true,
+       "result": "Baby crying"
+      }
+     },
+     {
+      "clip": "5-198411-F-20.wav",
+      "got": "unknown",
+      "d": {
+       "t": 350578,
+       "snr": 16.8,
+       "clipped": false,
+       "best": "Alarm",
+       "score": 0.43,
+       "thr": 0.58,
+       "second": "Siren",
+       "score2": 0.41,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-198411-G-20.wav",
+      "got": "Baby crying",
+      "d": {
+       "t": 356438,
+       "snr": 18.1,
+       "clipped": false,
+       "best": "Baby crying",
+       "score": 0.7,
+       "thr": 0.57,
+       "second": "Siren",
+       "score2": 0.37,
+       "felt": "no",
+       "maybe": false,
+       "result": "Baby crying"
+      }
+     }
+    ]
+   },
+   "alarm": {
+    "n": 8,
+    "recognised": 6,
+    "maybe": 1,
+    "rows": [
+     {
+      "clip": "5-210612-A-37.wav",
+      "got": "Alarm",
+      "d": {
+       "t": 361929,
+       "snr": 25.4,
+       "clipped": false,
+       "best": "Alarm",
+       "score": 0.71,
+       "thr": 0.58,
+       "second": "Glass breaking",
+       "score2": 0.36,
+       "felt": "no",
+       "maybe": false,
+       "result": "Alarm"
+      }
+     },
+     {
+      "clip": "5-211408-A-37.wav",
+      "got": "unknown",
+      "d": {
+       "t": 367670,
+       "snr": 17.0,
+       "clipped": false,
+       "best": "Alarm",
+       "score": 0.39,
+       "thr": 0.58,
+       "second": "Siren",
+       "score2": 0.1,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-219242-A-37.wav",
+      "got": "Alarm",
+      "d": {
+       "t": 373402,
+       "snr": 18.4,
+       "clipped": false,
+       "best": "Alarm",
+       "score": 0.93,
+       "thr": 0.58,
+       "second": "Glass breaking",
+       "score2": 0.3,
+       "felt": "no",
+       "maybe": false,
+       "result": "Alarm"
+      }
+     },
+     {
+      "clip": "5-219242-B-37.wav",
+      "got": "Alarm",
+      "d": {
+       "t": 378614,
+       "snr": 19.2,
+       "clipped": false,
+       "best": "Alarm",
+       "score": 0.94,
+       "thr": 0.58,
+       "second": "Siren",
+       "score2": 0.25,
+       "felt": "no",
+       "maybe": false,
+       "result": "Alarm"
+      }
+     },
+     {
+      "clip": "5-223176-A-37.wav",
+      "got": "unknown",
+      "d": {
+       "t": 384461,
+       "snr": 16.9,
+       "clipped": false,
+       "best": "Alarm",
+       "score": 0.42,
+       "thr": 0.58,
+       "second": "Glass breaking",
+       "score2": 0.27,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-233645-A-37.wav",
+      "got": "Alarm",
+      "d": {
+       "t": 390325,
+       "snr": 18.6,
+       "clipped": false,
+       "best": "Alarm",
+       "score": 0.92,
+       "thr": 0.58,
+       "second": "Siren",
+       "score2": 0.26,
+       "felt": "no",
+       "maybe": false,
+       "result": "Alarm"
+      }
+     },
+     {
+      "clip": "5-234247-A-37.wav",
+      "got": "Alarm",
+      "d": {
+       "t": 395814,
+       "snr": 15.3,
+       "clipped": false,
+       "best": "Alarm",
+       "score": 0.63,
+       "thr": 0.58,
+       "second": "Siren",
+       "score2": 0.1,
+       "felt": "no",
+       "maybe": true,
+       "result": "Alarm"
+      }
+     },
+     {
+      "clip": "5-250629-A-37.wav",
+      "got": "Alarm",
+      "d": {
+       "t": 401290,
+       "snr": 21.0,
+       "clipped": false,
+       "best": "Alarm",
+       "score": 0.91,
+       "thr": 0.58,
+       "second": "Glass breaking",
+       "score2": 0.24,
+       "felt": "no",
+       "maybe": false,
+       "result": "Alarm"
+      }
+     }
+    ]
+   },
+   "glass": {
+    "n": 8,
+    "recognised": 2,
+    "maybe": 0,
+    "rows": [
+     {
+      "clip": "5-221528-A-39.wav",
+      "got": "unknown",
+      "d": {
+       "t": 407284,
+       "snr": 25.3,
+       "clipped": false,
+       "best": "Glass breaking",
+       "score": 0.47,
+       "thr": 0.5,
+       "second": "Alarm",
+       "score2": 0.15,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-221529-A-39.wav",
+      "got": "unknown",
+      "d": {
+       "t": 412958,
+       "snr": 21.5,
+       "clipped": false,
+       "best": "Water running",
+       "score": 0.29,
+       "thr": 0.5,
+       "second": "Dog barking",
+       "score2": 0.16,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-233605-A-39.wav",
+      "got": "unknown",
+      "d": {
+       "t": 418912,
+       "snr": 25.2,
+       "clipped": false,
+       "best": "Glass breaking",
+       "score": 0.44,
+       "thr": 0.5,
+       "second": "Water running",
+       "score2": 0.12,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-233607-A-39.wav",
+      "got": "Glass breaking",
+      "d": {
+       "t": 424341,
+       "snr": 19.6,
+       "clipped": false,
+       "best": "Glass breaking",
+       "score": 0.64,
+       "thr": 0.5,
+       "second": "Alarm",
+       "score2": 0.3,
+       "felt": "no",
+       "maybe": false,
+       "result": "Glass breaking"
+      }
+     },
+     {
+      "clip": "5-257642-A-39.wav",
+      "got": "unknown",
+      "d": {
+       "t": 430333,
+       "snr": 19.9,
+       "clipped": false,
+       "best": "Glass breaking",
+       "score": 0.39,
+       "thr": 0.5,
+       "second": "Water running",
+       "score2": 0.28,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-260432-A-39.wav",
+      "got": "unknown",
+      "d": {
+       "t": 435675,
+       "snr": 21.9,
+       "clipped": false,
+       "best": "Glass breaking",
+       "score": 0.29,
+       "thr": 0.5,
+       "second": "Water running",
+       "score2": 0.16,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-260433-A-39.wav",
+      "got": "unknown",
+      "d": {
+       "t": 441411,
+       "snr": 25.3,
+       "clipped": false,
+       "best": "Water running",
+       "score": 0.26,
+       "thr": 0.5,
+       "second": "Dog barking",
+       "score2": 0.19,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-260434-A-39.wav",
+      "got": "Glass breaking",
+      "d": {
+       "t": 447563,
+       "snr": 22.5,
+       "clipped": false,
+       "best": "Glass breaking",
+       "score": 0.63,
+       "thr": 0.5,
+       "second": "Alarm",
+       "score2": 0.44,
+       "felt": "no",
+       "maybe": false,
+       "result": "Glass breaking"
+      }
+     }
+    ]
+   },
+   "siren": {
+    "n": 8,
+    "recognised": 3,
+    "maybe": 2,
+    "rows": [
+     {
+      "clip": "5-117118-A-42.wav",
+      "got": "Siren",
+      "d": {
+       "t": 452880,
+       "snr": 15.9,
+       "clipped": false,
+       "best": "Siren",
+       "score": 0.59,
+       "thr": 0.59,
+       "second": "Baby crying",
+       "score2": 0.42,
+       "felt": "no",
+       "maybe": true,
+       "result": "Siren"
+      }
+     },
+     {
+      "clip": "5-117120-A-42.wav",
+      "got": "unknown",
+      "d": {
+       "t": 458588,
+       "snr": 17.6,
+       "clipped": false,
+       "best": "Baby crying",
+       "score": 0.5,
+       "thr": 0.57,
+       "second": "Alarm",
+       "score2": 0.49,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-117122-A-42.wav",
+      "got": "unknown",
+      "d": {
+       "t": 464344,
+       "snr": 15.6,
+       "clipped": false,
+       "best": "Baby crying",
+       "score": 0.56,
+       "thr": 0.57,
+       "second": "Siren",
+       "score2": 0.43,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-133989-A-42.wav",
+      "got": "Siren",
+      "d": {
+       "t": 470074,
+       "snr": 14.5,
+       "clipped": false,
+       "best": "Siren",
+       "score": 0.59,
+       "thr": 0.59,
+       "second": "Baby crying",
+       "score2": 0.3,
+       "felt": "no",
+       "maybe": true,
+       "result": "Siren"
+      }
+     },
+     {
+      "clip": "5-133989-B-42.wav",
+      "got": "unknown",
+      "d": {
+       "t": 474647,
+       "snr": 9.8,
+       "clipped": false,
+       "best": "Glass breaking",
+       "score": 0.23,
+       "thr": 0.5,
+       "second": "Dog barking",
+       "score2": 0.17,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "clip": "5-150409-A-42.wav",
+      "got": "quiet",
+      "d": {
+       "t": 481300,
+       "snr": 7.8,
+       "clipped": false,
+       "best": "Siren",
+       "score": 0.47,
+       "thr": 0.59,
+       "second": "Knock",
+       "score2": 0.26,
+       "felt": "no",
+       "maybe": false,
+       "result": "quiet"
+      }
+     },
+     {
+      "clip": "5-160551-A-42.wav",
+      "got": "Siren",
+      "d": {
+       "t": 487033,
+       "snr": 19.7,
+       "clipped": false,
+       "best": "Siren",
+       "score": 0.72,
+       "thr": 0.59,
+       "second": "Knock",
+       "score2": 0.34,
+       "felt": "no",
+       "maybe": false,
+       "result": "Siren"
+      }
+     },
+     {
+      "clip": "5-184323-A-42.wav",
+      "got": "unknown",
+      "d": {
+       "t": 492775,
+       "snr": 8.8,
+       "clipped": false,
+       "best": "Alarm",
+       "score": 0.47,
+       "thr": 0.58,
+       "second": "Siren",
+       "score2": 0.47,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     }
+    ]
+   },
+   "water": {
+    "n": 8,
+    "recognised": 8,
+    "maybe": 0,
+    "rows": [
+     {
+      "clip": "5-205589-A-17.wav",
+      "got": "Water running",
+      "d": {
+       "t": 498531,
+       "snr": 12.8,
+       "clipped": false,
+       "best": "Water running",
+       "score": 0.62,
+       "thr": 0.5,
+       "second": "Alarm",
+       "score2": 0.26,
+       "felt": "no",
+       "maybe": false,
+       "result": "Water running"
+      }
+     },
+     {
+      "clip": "5-205589-B-17.wav",
+      "got": "Water running",
+      "d": {
+       "t": 504253,
+       "snr": 23.6,
+       "clipped": false,
+       "best": "Water running",
+       "score": 0.74,
+       "thr": 0.5,
+       "second": "Baby crying",
+       "score2": 0.28,
+       "felt": "no",
+       "maybe": false,
+       "result": "Water running"
+      }
+     },
+     {
+      "clip": "5-207781-A-17.wav",
+      "got": "Water running",
+      "d": {
+       "t": 510062,
+       "snr": 22.8,
+       "clipped": false,
+       "best": "Water running",
+       "score": 0.61,
+       "thr": 0.5,
+       "second": "Siren",
+       "score2": 0.26,
+       "felt": "no",
+       "maybe": false,
+       "result": "Water running"
+      }
+     },
+     {
+      "clip": "5-212730-A-17.wav",
+      "got": "Water running",
+      "d": {
+       "t": 515718,
+       "snr": 25.7,
+       "clipped": false,
+       "best": "Water running",
+       "score": 0.72,
+       "thr": 0.5,
+       "second": "Dog barking",
+       "score2": 0.22,
+       "felt": "no",
+       "maybe": false,
+       "result": "Water running"
+      }
+     },
+     {
+      "clip": "5-212734-A-17.wav",
+      "got": "Water running",
+      "d": {
+       "t": 521445,
+       "snr": 21.2,
+       "clipped": false,
+       "best": "Water running",
+       "score": 0.78,
+       "thr": 0.5,
+       "second": "Siren",
+       "score2": 0.35,
+       "felt": "no",
+       "maybe": false,
+       "result": "Water running"
+      }
+     },
+     {
+      "clip": "5-212736-A-17.wav",
+      "got": "Water running",
+      "d": {
+       "t": 527209,
+       "snr": 17.4,
+       "clipped": false,
+       "best": "Water running",
+       "score": 0.62,
+       "thr": 0.5,
+       "second": "Siren",
+       "score2": 0.35,
+       "felt": "no",
+       "maybe": false,
+       "result": "Water running"
+      }
+     },
+     {
+      "clip": "5-214362-A-17.wav",
+      "got": "Water running",
+      "d": {
+       "t": 532923,
+       "snr": 9.5,
+       "clipped": false,
+       "best": "Water running",
+       "score": 0.64,
+       "thr": 0.5,
+       "second": "Siren",
+       "score2": 0.36,
+       "felt": "no",
+       "maybe": false,
+       "result": "Water running"
+      }
+     },
+     {
+      "clip": "5-215634-A-17.wav",
+      "got": "Water running",
+      "d": {
+       "t": 538660,
+       "snr": 18.5,
+       "clipped": false,
+       "best": "Water running",
+       "score": 0.68,
+       "thr": 0.5,
+       "second": "Baby crying",
+       "score2": 0.35,
+       "felt": "no",
+       "maybe": false,
+       "result": "Water running"
+      }
+     }
+    ]
+   }
+  },
+  "total": 30,
+  "n": 56,
+  "time": "10:51:39"
+ },
+ {
+  "test": "teach",
+  "sound": "doorbell",
+  "lines": [
+   "[TEACH] shot 1/8: +17.7 dB, loud room",
+   "[TEACH] shot 2/8: +15.7 dB, loud room",
+   "[TEACH] shot 3/8: +15.1 dB, loud room",
+   "[TEACH] shot 4/8: +22.5 dB",
+   "[TEACH] shot 5/8: +18.5 dB, loud room",
+   "[TEACH] shot 6/8: +15.8 dB, loud room",
+   "[TEACH] shot 7: too quiet (+4.1 dB)",
+   "[TEACH] shot 7/8: +15.3 dB, loud room",
+   "[TEACH] shot 8/8: +14.7 dB",
+   "[TEACH] profile: thr 0.500, leave-one-out 0.89 0.88 0.89 0.18 0.92 0.91 0.91 0.02; make it once more to test, press to save",
+   "[TEACH] test: match 0.817 (thr 0.500) accepted"
+  ],
+  "saved": "[TEACH] saved 'Doorbell' thr 0.500; 1 taught",
+  "time": "11:09:36"
+ },
+ {
+  "test": "teach",
+  "sound": "doorbell",
+  "lines": [
+   "[TEACH] 'Doorbell': make the sound 8 times",
+   "[TEACH] shot 1/8: +16.5 dB",
+   "[TEACH] shot 2/8: +16.2 dB",
+   "[TEACH] shot 3/8: +12.5 dB",
+   "[TEACH] shot 4/8: +14.2 dB",
+   "[TEACH] shot 5/8: +11.1 dB",
+   "[TEACH] shot 6/8: +16.0 dB",
+   "[TEACH] shot 7/8: +14.5 dB",
+   "[TEACH] shot 8/8: +16.0 dB",
+   "[TEACH] profile: thr 0.500, leave-one-out 0.34 0.61 0.52 0.36 0.45 0.35 0.52 0.54; make it once more to test, press to save",
+   "[TEACH] test: match 0.527 (thr 0.500) accepted"
+  ],
+  "saved": "[TEACH] saved 'Doorbell' thr 0.500; 1 taught",
+  "time": "11:12:10"
+ },
+ {
+  "test": "trials",
+  "sound": "doorbell",
+  "n": 5,
+  "accepted": 1,
+  "rows": [
+   {
+    "got": "Siren",
+    "d": {
+     "t": 47320,
+     "snr": 15.9,
+     "clipped": false,
+     "best": "Siren",
+     "score": 0.64,
+     "thr": 0.59,
+     "second": "Doorbell",
+     "score2": 0.46,
+     "felt": "no",
+     "maybe": false,
+     "result": "Siren"
+    }
+   },
+   {
+    "got": "unknown",
+    "d": {
+     "t": 52690,
+     "snr": 13.9,
+     "clipped": false,
+     "best": "Siren",
+     "score": 0.59,
+     "thr": 0.59,
+     "second": "Doorbell",
+     "score2": 0.53,
+     "felt": "no",
+     "maybe": false,
+     "result": "unknown"
+    }
+   },
+   {
+    "got": "Doorbell",
+    "d": {
+     "t": 58576,
+     "snr": 14.7,
+     "clipped": false,
+     "best": "Doorbell",
+     "score": 0.55,
+     "thr": 0.5,
+     "second": "Siren",
+     "score2": 0.51,
+     "felt": "no",
+     "maybe": true,
+     "result": "Doorbell"
+    }
+   },
+   {
+    "got": "Siren",
+    "d": {
+     "t": 64478,
+     "snr": 15.7,
+     "clipped": false,
+     "best": "Siren",
+     "score": 0.61,
+     "thr": 0.59,
+     "second": "Doorbell",
+     "score2": 0.55,
+     "felt": "no",
+     "maybe": true,
+     "result": "Siren"
+    }
+   },
+   {
+    "got": "unknown",
+    "d": {
+     "t": 69847,
+     "snr": 15.2,
+     "clipped": false,
+     "best": "Siren",
+     "score": 0.53,
+     "thr": 0.59,
+     "second": "Doorbell",
+     "score2": 0.51,
+     "felt": "no",
+     "maybe": false,
+     "result": "unknown"
+    }
+   }
+  ],
+  "time": "11:12:48"
+ },
+ {
+  "test": "reject",
+  "results": {
+   "clapping": {
+    "n": 3,
+    "rejected": 1,
+    "rows": [
+     {
+      "got": "Water running",
+      "d": {
+       "t": 76992,
+       "snr": 9.0,
+       "clipped": false,
+       "best": "Water running",
+       "score": 0.53,
+       "thr": 0.5,
+       "second": "Doorbell",
+       "score2": 0.38,
+       "felt": "no",
+       "maybe": true,
+       "result": "Water running"
+      }
+     },
+     {
+      "got": "unknown",
+      "d": {
+       "t": 82587,
+       "snr": 14.9,
+       "clipped": false,
+       "best": "Doorbell",
+       "score": 0.41,
+       "thr": 0.5,
+       "second": "Dog barking",
+       "score2": 0.28,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "got": "Doorbell",
+      "d": {
+       "t": 89833,
+       "snr": 9.7,
+       "clipped": false,
+       "best": "Doorbell",
+       "score": 0.51,
+       "thr": 0.5,
+       "second": "Water running",
+       "score2": 0.2,
+       "felt": "no",
+       "maybe": true,
+       "result": "Doorbell"
+      }
+     }
+    ]
+   },
+   "coughing": {
+    "n": 3,
+    "rejected": 2,
+    "rows": [
+     {
+      "got": "unknown",
+      "d": {
+       "t": 93585,
+       "snr": 9.6,
+       "clipped": false,
+       "best": "Doorbell",
+       "score": 0.3,
+       "thr": 0.5,
+       "second": "Dog barking",
+       "score2": 0.1,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "got": "unknown",
+      "d": {
+       "t": 98705,
+       "snr": 16.6,
+       "clipped": false,
+       "best": "Doorbell",
+       "score": 0.37,
+       "thr": 0.5,
+       "second": "Water running",
+       "score2": 0.33,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "got": "Doorbell",
+      "d": {
+       "t": 104152,
+       "snr": 19.6,
+       "clipped": false,
+       "best": "Doorbell",
+       "score": 0.55,
+       "thr": 0.5,
+       "second": "Water running",
+       "score2": 0.17,
+       "felt": "no",
+       "maybe": false,
+       "result": "Doorbell"
+      }
+     }
+    ]
+   },
+   "chime3": {
+    "n": 3,
+    "rejected": 2,
+    "rows": [
+     {
+      "got": "unknown",
+      "d": {
+       "t": 109760,
+       "snr": 15.2,
+       "clipped": false,
+       "best": "Siren",
+       "score": 0.49,
+       "thr": 0.59,
+       "second": "Alarm",
+       "score2": 0.44,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "got": "unknown",
+      "d": {
+       "t": 115122,
+       "snr": 15.6,
+       "clipped": false,
+       "best": "Siren",
+       "score": 0.46,
+       "thr": 0.59,
+       "second": "Doorbell",
+       "score2": 0.38,
+       "felt": "no",
+       "maybe": false,
+       "result": "unknown"
+      }
+     },
+     {
+      "got": "Alarm",
+      "d": {
+       "t": 120533,
+       "snr": 19.2,
+       "clipped": false,
+       "best": "Alarm",
+       "score": 0.63,
+       "thr": 0.58,
+       "second": "Siren",
+       "score2": 0.41,
+       "felt": "no",
+       "maybe": false,
+       "result": "Alarm"
+      }
+     }
+    ]
+   }
+  },
+  "total": 5,
+  "n": 9,
+  "time": "11:13:38"
+ },
+ {
+  "test": "teach",
+  "sound": "doorbell",
+  "lines": [
+   "[TEACH] shot 1/8: +17.9 dB",
+   "[TEACH] shot 2/8: +16.1 dB",
+   "[TEACH] shot 3/8: +16.0 dB",
+   "[TEACH] shot 4/8: +15.9 dB",
+   "[TEACH] shot 5/8: +15.3 dB",
+   "[TEACH] shot 6/8: +15.4 dB",
+   "[TEACH] shot 7/8: +14.5 dB",
+   "[TEACH] shot 8/8: +14.3 dB",
+   "[TEACH] profile: thr 0.850, leave-one-out 0.95 0.97 0.95 0.95 0.97 0.97 0.95 0.96; make it once more to test, press to save"
+  ],
+  "saved": "[TEACH] saved 'Doorbell' thr 0.850; 1 taught",
+  "time": "11:58:18"
+ },
+ {
+  "test": "trials",
+  "sound": "doorbell",
+  "n": 5,
+  "accepted": 4,
+  "rows": [
+   {
+    "got": "Doorbell",
+    "d": {
+     "t": 443853,
+     "snr": 16.4,
+     "clipped": false,
+     "best": "Doorbell",
+     "score": 0.96,
+     "thr": 0.85,
+     "second": "Siren",
+     "score2": 0.4,
+     "felt": "yes",
+     "maybe": false,
+     "result": "Doorbell"
+    }
+   },
+   {
+    "got": "Doorbell",
+    "d": {
+     "t": 449754,
+     "snr": 15.3,
+     "clipped": false,
+     "best": "Doorbell",
+     "score": 0.96,
+     "thr": 0.85,
+     "second": "Siren",
+     "score2": 0.45,
+     "felt": "yes",
+     "maybe": false,
+     "result": "Doorbell"
+    }
+   },
+   {
+    "got": "Doorbell",
+    "d": {
+     "t": 455667,
+     "snr": 15.0,
+     "clipped": false,
+     "best": "Doorbell",
+     "score": 0.95,
+     "thr": 0.85,
+     "second": "Siren",
+     "score2": 0.42,
+     "felt": "no",
+     "maybe": false,
+     "result": "Doorbell"
+    }
+   },
+   {
+    "got": "Doorbell",
+    "d": {
+     "t": 461539,
+     "snr": 14.3,
+     "clipped": false,
+     "best": "Doorbell",
+     "score": 0.95,
+     "thr": 0.85,
+     "second": "Siren",
+     "score2": 0.43,
+     "felt": "no",
+     "maybe": false,
+     "result": "Doorbell"
+    }
+   },
+   {
+    "got": "unknown",
+    "d": {
+     "t": 467618,
+     "snr": 10.4,
+     "clipped": false,
+     "best": "Doorbell",
+     "score": 0.82,
+     "thr": 0.85,
+     "second": "Siren",
+     "score2": 0.56,
+     "felt": "no",
+     "maybe": false,
+     "result": "unknown"
+    }
+   }
+  ],
+  "time": "11:58:55"
+ },
+ {
+  "test": "calibrate",
+  "measured": {
+   "knock": {
+    "thr": 0.5
+   },
+   "dog": {
+    "thr": 0.5
+   },
+   "baby": {
+    "thr": 0.5
+   },
+   "alarm": {
+    "thr": 0.5
+   },
+   "glass": {
+    "thr": 0.5
+   },
+   "siren": {
+    "thr": 0.5
+   },
+   "water": {
+    "thr": 0.5
+   }
+  },
+  "time": "12:05:29"
  }
 ]

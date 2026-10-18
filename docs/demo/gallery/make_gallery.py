@@ -281,10 +281,14 @@ def main():
                     "Mics, NPU against a stored reference, saved sounds, IMU and lights: ready 1.5 s after reset (measured).",
                     [("14_ready.png", "All checks pass"), ("15_not_ready.png", "A failure stays on screen"),
                      ("16_home_npu_resting.png", "Quiet room: NPU resting")])
-    gallery_screens("07_alerts_timeline.png", "Honest, glanceable alerts",
-                    "Icon + word + time, colour-blind-safe. Unsure shows as \"Maybe\". Today's sounds on a timeline.",
-                    [("06_alert_maybe.png", "Low confidence: \"Maybe\""), ("07_banner_info.png", "Info sounds: a banner"),
-                     ("08_timeline.png", "Today's timeline")])
+    gallery_screens("07_alerts_timeline.png", "Honest alerts that learn from mistakes",
+                    "Unsure shows as \"Maybe\". LEFT marks a wrong alert, and that sound becomes a counter-example.",
+                    [("06_alert_maybe.png", "Low confidence: \"Maybe\""), ("02_alert_doorbell.png", "LEFT: wrong sound"),
+                     ("23_timeline_marked.png", "Marked on today's timeline")])
+    gallery_screens("08_more.png", "More on the board, no app",
+                    "Unknown loud sounds offer to be taught. A settings menu for night mode, mics off and forgetting sounds.",
+                    [("24_what_was_that.png", "\"What was that?\" UP teaches it"), ("19_menu.png", "Settings (DOWN)"),
+                     ("22_home_night.png", "Night mode: dark after 15 s")])
 
 
 if __name__ == "__main__":

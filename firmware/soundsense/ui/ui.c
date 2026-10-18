@@ -121,6 +121,7 @@ static void fmt_detail(char *b, size_t n, const ui_event *e, uint32_t now_ms, bo
         snprintf(part, sizeof part, "%sfor %s", b[0] ? SEP : "", d);
         strncat(b, part, n - strlen(b) - 1);
     }
+    if (ui_still_sounding(e, now_ms)) strncat(b, b[0] ? SEP "still sounding" : "still sounding", n - strlen(b) - 1);
     if (e->felt == UI_FELT_YES) strncat(b, b[0] ? SEP "felt here" : "felt here", n - strlen(b) - 1);
     if (e->felt == UI_FELT_HEARD_ONLY) strncat(b, b[0] ? SEP "heard only" : "heard only", n - strlen(b) - 1);
 }
@@ -409,13 +410,13 @@ static void draw_recent(const ui_home *h, uint32_t now_ms)
     for (int i = 0; i < h->n_recent && i < 3; i++) {
         const ui_event *e = &h->recent[i];
         const int y = RECENT_Y + 32 + i * 76;
-        char label[48], detail[64];
+        char label[48], detail[96];
         gfx_round_rect(16, y, 448, 68, 16, PANEL);
         badge(e->icon, e->cat, 52, y + 34, 24);
         snprintf(label, sizeof label, e->maybe ? "Maybe: %s?" : "%s", e->label);
         gfx_text(B, 90, y + 8, label, e->maybe ? MUTED : TEXT, 26);
         fmt_detail(detail, sizeof detail, e, now_ms, true);
-        gfx_text(L, 90, y + 40, detail, MUTED, 18);
+        gfx_text(L, 90, y + 40, detail, MUTED, gfx_fit_px(L, detail, 340, 18));
         if (!e->acked) gfx_circle(444, (float)(y + 34), 7, ui_cat_color(e->cat));
     }
 }
@@ -423,16 +424,29 @@ static void draw_recent(const ui_home *h, uint32_t now_ms)
 /* What the live parts showed last, so an update can skip what hasn't changed (C5: in a quiet room the
  * top matches and the level rarely change, and redrawing them 10 times a second cost ~10% CPU). */
 static ui_guess shown_top[3];
-static int shown_db = 9999, shown_fx = -1, shown_loud = -1;
+static int shown_db = 9999, shown_fx = -1, shown_loud = -1, shown_talk = -1;
+
+/* The line above the spectrogram: the mode, or (H8) a yellow "Someone is talking nearby" */
+static void draw_mode(const ui_home *h)
+{
+    gfx_fill(28, LIVE_Y + 6, 424, 34, PANEL);
+    if (h->talking) {
+        gfx_round_rect(28, LIVE_Y + 6, 300, 34, 17, YELLOW);
+        gfx_text(B, 44, LIVE_Y + 12, "Someone is talking nearby", INK, 20);
+        return;
+    }
+    char mode[32];
+    snprintf(mode, sizeof mode, "Now hearing  " UI_DOT "  %s mode", h->mode ? h->mode : "Home");
+    gfx_text(L, 32, LIVE_Y + 14, mode, MUTED, 20);
+}
 
 void ui_home_draw(const ui_home *h, uint32_t now_ms)
 {
     gfx_fill(0, 0, GFX_W, GFX_H, BG);
     header("Sound Sense", h->listening ? "Listening" : "Mic off", h->listening ? GREEN : VERMILLION);
     gfx_round_rect(16, LIVE_Y, 448, TOP_Y + 96 - LIVE_Y, 18, PANEL);
-    char mode[32];
-    snprintf(mode, sizeof mode, "Now hearing  " UI_DOT "  %s mode", h->mode ? h->mode : "Home");
-    gfx_text(L, 32, LIVE_Y + 14, mode, MUTED, 20);
+    draw_mode(h);
+    shown_talk = h->talking;
     draw_spectro();
     draw_top(h);
     draw_level(h);
@@ -455,6 +469,10 @@ static bool same_top(const ui_home *h)
 void ui_home_update_live(const ui_home *h)
 {
     scroll_spectro();
+    if (h->talking != shown_talk) {
+        draw_mode(h);
+        shown_talk = h->talking;
+    }
     if (!same_top(h)) {
         draw_top(h);
         memcpy(shown_top, h->top, sizeof(shown_top));
@@ -520,9 +538,10 @@ void ui_alert_draw(const ui_event *e, uint32_t now_ms, int phase)
     if (e->count > 1 || e->dur_ms >= 10000) {
         char d[16];
         fmt_dur(d, sizeof d, e->dur_ms);
-        if (e->dur_ms >= 10000) snprintf(line, sizeof line, "%u times, for %s", (unsigned)e->count, d);
-        else snprintf(line, sizeof line, "%u times", (unsigned)e->count);
-        gfx_text_center(L, GFX_W / 2, y, line, ink, 28);
+        const char *still = ui_still_sounding(e, now_ms) ? ", still sounding" : "";
+        if (e->dur_ms >= 10000) snprintf(line, sizeof line, "%u times, for %s%s", (unsigned)e->count, d, still);
+        else snprintf(line, sizeof line, "%u times%s", (unsigned)e->count, still);
+        gfx_text_center(L, GFX_W / 2, y, line, ink, gfx_fit_px(L, line, 440, 28));
     }
     if (e->unanswered_ms) {   /* A5: escalated, so the reason and the way out are bigger */
         char d[16];
@@ -533,8 +552,8 @@ void ui_alert_draw(const ui_event *e, uint32_t now_ms, int phase)
         gfx_text_center(B, GFX_W / 2, GFX_H - 84, "Press to dismiss", bg, 32);
         return;
     }
-    gfx_text_center(L, GFX_W / 2, GFX_H - 70, e->maybe ? "RIGHT it was   LEFT it wasn't   PRESS ok"
-                                                       : "PRESS ok   LEFT wrong sound", mix(bg, ink, 0.7f), 24);
+    const char *keys = e->maybe ? "RIGHT it was   LEFT it wasn't   PRESS ok" : "PRESS ok   LEFT wrong   DOWN snooze 10 min";
+    gfx_text_center(L, GFX_W / 2, GFX_H - 70, keys, mix(bg, ink, 0.7f), gfx_fit_px(L, keys, 440, 24));
 }
 
 void ui_banner_draw(const ui_event *e, uint32_t now_ms)
@@ -544,12 +563,12 @@ void ui_banner_draw(const ui_event *e, uint32_t now_ms)
     gfx_round_rect(12, 12, GFX_W - 24, 112, 22, bg);
     gfx_circle(70, 68, 40, mix(bg, ink, 0.16f));
     ui_icon_draw(e->icon, 70, 68, 52, ink, mix(bg, ink, 0.16f));
-    char label[48], detail[64];
+    char label[48], detail[96];
     snprintf(label, sizeof label, e->maybe ? "Maybe: %s?" : "%s", e->label);
     gfx_text(B, 128, 30, label, ink, gfx_fit_px(B, label, 320, 40));
     fmt_detail(detail, sizeof detail, e, now_ms, true);
     if (e->icon == UI_ICON_UNKNOWN) snprintf(detail, sizeof detail, "Matches nothing. UP: teach it");   /* H6 */
-    gfx_text(L, 128, 80, detail, mix(bg, ink, 0.8f), 20);
+    gfx_text(L, 128, 80, detail, mix(bg, ink, 0.8f), gfx_fit_px(L, detail, 330, 20));
 }
 
 UI_COLD void ui_toast_draw(const char *title, const char *detail, int pct)
@@ -559,6 +578,7 @@ UI_COLD void ui_toast_draw(const char *title, const char *detail, int pct)
     gfx_text(B, 32, 24, title, TEXT, 30);
     gfx_text(L, 32, 64, detail, MUTED, 20);
     const int x = 32, w = GFX_W - 64, y = 96;
+    if (pct < 0) return;                   /* a notice without a bar (snooze) */
     gfx_round_rect(x, y, w, 12, 6, PANEL);
     if (pct > 0) gfx_round_rect(x, y, w * (pct > 100 ? 100 : pct) / 100, 12, 6, YELLOW);
 }
@@ -574,7 +594,7 @@ UI_COLD void ui_timeline_draw(const ui_event *ev, int n, uint32_t now_ms, int fi
     for (int i = first, row = 0; i < n && row < 8; i++, row++) {
         const ui_event *e = &ev[i];
         const int y = 92 + row * 82;
-        char when[24], label[48], detail[64];
+        char when[24], label[48], detail[96];
         gfx_round_rect(16, y, 448, 74, 16, row == 0 ? PANEL2 : PANEL);
         gfx_round_rect(16, y, 8, 74, 4, e->urgency == UI_URGENT ? VERMILLION
                                          : e->urgency == UI_IMPORTANT ? TEXT : FAINT);
@@ -594,7 +614,7 @@ UI_COLD void ui_timeline_draw(const ui_event *ev, int n, uint32_t now_ms, int fi
         if (!detail[0]) snprintf(detail, sizeof detail, "%u%% sure", e->confidence);
         if (e->fixed == 2) gfx_text(B, 186, y + 42, "Marked wrong", VERMILLION, 18);
         else if (e->fixed == 1) gfx_text(B, 186, y + 42, "Marked right", GREEN, 18);
-        else gfx_text(L, 186, y + 42, detail, MUTED, 18);
+        else gfx_text(L, 186, y + 42, detail, MUTED, gfx_fit_px(L, detail, 250, 18));
         if (!e->acked) gfx_circle(444, (float)(y + 37), 7, ui_cat_color(e->cat));
     }
     footer("UP / DOWN pick   LEFT wrong   RIGHT right   PRESS back");
@@ -607,42 +627,56 @@ UI_COLD void ui_teach_draw(const ui_teach *t)
     gfx_fill(0, 0, GFX_W, GFX_H, BG);
     header("Teach a sound", NULL, BG);
 
-    badge(t->icon, t->cat, GFX_W / 2.0f, 176, 64);
-    gfx_text_center(B, GFX_W / 2, 256, t->label, TEXT, 44);
+    /* up to 5 examples in one row; more in two rows of 4 under a smaller badge */
+    const bool two = t->n_shots > 5;
+    const int per_row = two ? 4 : t->n_shots, r = two ? 26 : 32;
+    badge(t->icon, t->cat, GFX_W / 2.0f, two ? 150.0f : 176.0f, two ? 48 : 64);
+    gfx_text_center(B, GFX_W / 2, two ? 212 : 256, t->label, TEXT, 44);
 
-    int done = 0;
-    for (int i = 0; i < t->n_shots; i++) done += t->shot[i] == UI_SHOT_OK;
+    int next = -1;   /* the first shot still to make */
+    for (int i = 0; i < t->n_shots && next < 0; i++)
+        if (t->shot[i] != UI_SHOT_OK && t->shot[i] != UI_SHOT_WARN) next = i;
     char prompt[48];
-    if (done < t->n_shots) snprintf(prompt, sizeof prompt, "Make the sound now  (%d of %d)", done + 1, t->n_shots);
+    if (next >= 0) snprintf(prompt, sizeof prompt, "Make the sound now  (%d of %d)", next + 1, t->n_shots);
     else snprintf(prompt, sizeof prompt, "Got all %d. Test it once more.", t->n_shots);
-    gfx_text_center(L, GFX_W / 2, 320, prompt, MUTED, 24);
+    const int py = two ? 268 : 320;
+    gfx_text_center(L, GFX_W / 2, py, prompt, MUTED, 24);
+    if (t->warn) gfx_text_center(L, GFX_W / 2, py + 28, t->warn, ORANGE, 18);
 
-    const int step = 84, x0 = GFX_W / 2 - (t->n_shots - 1) * step / 2;
+    const int step = 84, x0 = GFX_W / 2 - (per_row - 1) * step / 2;
     for (int i = 0; i < t->n_shots; i++) {
-        const float cx = (float)(x0 + i * step), cy = 408.0f;
+        const float cx = (float)(x0 + (i % per_row) * step);
+        const float cy = two ? 352.0f + (float)(i / per_row) * 80.0f : 408.0f;
+        const float k = (float)r / 32.0f;   /* tick and cross scale with the circle */
         char num[4], note[16];
         switch (t->shot[i]) {
         case UI_SHOT_OK:
-            gfx_circle(cx, cy, 32, GREEN);
-            gfx_line(cx - 14, cy + 1, cx - 4, cy + 11, 6, INK);
-            gfx_line(cx - 4, cy + 11, cx + 15, cy - 11, 6, INK);
+            gfx_circle(cx, cy, r, GREEN);
+            gfx_line(cx - 14 * k, cy + 1 * k, cx - 4 * k, cy + 11 * k, 6 * k, INK);
+            gfx_line(cx - 4 * k, cy + 11 * k, cx + 15 * k, cy - 11 * k, 6 * k, INK);
             snprintf(note, sizeof note, "+%d dB", t->shot_db[i]);
+            if (t->shot_note[i] && strcmp(t->shot_note[i], "ok")) snprintf(note, sizeof note, "%s", t->shot_note[i]);
+            break;
+        case UI_SHOT_WARN:
+            gfx_circle(cx, cy, r, ORANGE);
+            gfx_text_center(B, (int)cx, (int)(cy - 15 * k), "!", INK, (int)(28 * k));
+            snprintf(note, sizeof note, "%s", t->shot_note[i] ? t->shot_note[i] : "check");
             break;
         case UI_SHOT_BAD:
-            gfx_circle(cx, cy, 32, VERMILLION);
-            gfx_line(cx - 11, cy - 11, cx + 11, cy + 11, 6, WHITE);
-            gfx_line(cx - 11, cy + 11, cx + 11, cy - 11, 6, WHITE);
+            gfx_circle(cx, cy, r, VERMILLION);
+            gfx_line(cx - 11 * k, cy - 11 * k, cx + 11 * k, cy + 11 * k, 6 * k, WHITE);
+            gfx_line(cx - 11 * k, cy + 11 * k, cx + 11 * k, cy - 11 * k, 6 * k, WHITE);
             snprintf(note, sizeof note, "%s", t->shot_note[i] ? t->shot_note[i] : "retry");
             break;
         default:
-            gfx_ring(cx, cy, 32, 4, FAINT);
+            gfx_ring(cx, cy, r, 4, FAINT);
             snprintf(num, sizeof num, "%d", i + 1);
-            gfx_text_center(B, (int)cx, (int)cy - 14, num, FAINT, 28);
+            gfx_text_center(B, (int)cx, (int)(cy - 14 * k), num, FAINT, (int)(28 * k));
             note[0] = 0;
             break;
         }
-        if (note[0]) gfx_text_center(L, (int)cx, (int)cy + 42, note,
-                                     t->shot[i] == UI_SHOT_BAD ? VERMILLION : MUTED, 16);
+        if (note[0]) gfx_text_center(L, (int)cx, (int)cy + r + 8, note,
+                                     t->shot[i] == UI_SHOT_BAD ? VERMILLION : t->shot[i] == UI_SHOT_WARN ? ORANGE : MUTED, 16);
     }
 
     /* live level with the capture trigger (noise floor + 10 dB) */

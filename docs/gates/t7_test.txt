@@ -1,0 +1,21 @@
+start: builtin_mute 0x0, taught urgency 1, name preset 1
+PASS  Dog barking turned off: builtin_mute 0x2
+PASS  LEFT on the Sounds page goes back to Settings
+PASS  LEFT again goes home
+PASS  the dog clip doesn't alert: 79 (thr 0.52), 2nd 'Knock' 0.27, felt no (0.0 mg) -> unknown
+PASS  still off after a reset: [STORE] loaded 1 taught sounds from copy B, seq 1240, in 465 us; built-ins off: 0x2
+PASS  taught sound's urgency changed: [SS] 'Doorbell' urgency: Urgent
+PASS  its alert has that urgency: screen 2, urgency 2
+PASS  RIGHT renames the taught sound: [SS] renamed 'Doorbell' to 'Clap'
+PASS  the new name is kept after a reset: preset 2
+PASS  settings restored: builtin_mute 0x0, urgency 1, preset 1
+PASS  repeated alarm: still sounding: still_shown 1, count 2
+PASS  15 s after the last repeat: not any more: still_shown 0, screen 1
+PASS  calibration running
+PASS  room calibrated after 10 s: [S5] room calibrated: floor -48.5 dB (median of 10 s); sounds need -40.5 dB
+PASS  DOWN on an alert snoozes it: screen 1, snooze_until 768145
+PASS  a snoozed alarm is logged, not alerted: [SS] 'Alarm' snoozed: logged, no alert
+PASS  a press on its Sounds row ends the snooze: snooze_until 0, builtin_mute 0x0
+PASS  it alerts again
+18/18 checks pass
+T7 TEST PASS

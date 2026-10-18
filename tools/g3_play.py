@@ -7,7 +7,7 @@ sound ("[SS] t=.. +18.2 dB best 'Dog barking' 0.71 (thr 0.52) ... -> Dog barking
 back from the log. Results are appended to docs/gates/g3_results.json.
 
     tools/g3_play.py builtin                 # ESC-50 fold 5 (never trained on): 8 clips per built-in
-    tools/g3_play.py teach doorbell          # teach a generated sound over J-Link (5 examples), save it
+    tools/g3_play.py teach doorbell          # teach a generated sound over J-Link (8 examples), save it
     tools/g3_play.py trials doorbell --n 10  # play it again, expecting its label
     tools/g3_play.py reject                  # untaught: clapping, coughing (ESC-50 fold 5), another chime
     tools/g3_play.py noise --minutes 3       # spoken words and typing; counts the alerts
@@ -169,18 +169,24 @@ def board():
 
 
 def command(cmd, arg=0):
-    """Write a host command and check the board took it (ss_cmd back to 0). The RTT logger shares the
-    probe, so a J-Link call can fail now and then: retry."""
+    """Write a host command and wait until the board takes it (ss_cmd back to 0). The RTT logger shares the
+    probe, so a J-Link call can fail now and then: retry a write that didn't land, never one that did."""
     b = board()
     for _ in range(6):
         try:
-            b.set("ss_arg", arg)
-            b.set("ss_cmd", cmd)
-            time.sleep(0.3)
+            b.command(cmd, arg)
+            break
+        except RuntimeError:
+            time.sleep(0.5)
+    else:
+        raise RuntimeError(f"couldn't write command {cmd}")
+    for _ in range(20):
+        time.sleep(0.25)
+        try:
             if b.get("ss_cmd") == 0:
                 return
         except RuntimeError:
-            time.sleep(0.5)
+            pass
     raise RuntimeError(f"board did not take command {cmd}")
 
 
@@ -381,7 +387,7 @@ def main():
     ap.add_argument("--n", type=int, default=8)
     ap.add_argument("--only", help="built-ins to run, comma separated")
     ap.add_argument("--gain-db", type=float, default=0.0)
-    ap.add_argument("--max-plays", type=int, default=10)
+    ap.add_argument("--max-plays", type=int, default=12)
     ap.add_argument("--minutes", type=float, default=3)
     a = ap.parse_args()
     {"builtin": run_builtin, "teach": run_teach, "trials": run_trials, "reject": run_reject, "noise": run_noise,

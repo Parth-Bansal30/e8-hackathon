@@ -18,6 +18,10 @@ static uint32_t blocks, refract_until;
 static ss_onset evq[EVQ];
 static uint32_t ev_w, ev_r;
 static ss_audio_tap_fn tap;
+static uint16_t cal_hist[100];                /* S5: block levels, 1 dB bins from -100 dBFS */
+static uint32_t cal_left, cal_total;
+static int cal_done;
+static float cal_db;
 
 void ss_audio_init(void)
 {
@@ -31,6 +35,37 @@ void ss_audio_set_tap(ss_audio_tap_fn fn) { tap = fn; }
 uint32_t ss_audio_samples(void) { return n_samples; }
 float ss_audio_block_db(void) { return block_db; }
 float ss_audio_floor_db(void) { return 10.0f * log10f(floor_pow + 1e-12f); }
+
+SS_COLD void ss_audio_room_cal(uint32_t n_blocks)
+{
+    for (int i = 0; i < 100; i++) cal_hist[i] = 0;
+    cal_done = 0;
+    cal_total = cal_left = n_blocks;
+}
+
+SS_COLD int ss_audio_room_cal_state(float *frac, float *db)
+{
+    if (cal_left) {
+        *frac = 1.0f - (float)cal_left / (float)cal_total;
+        return 1;
+    }
+    if (cal_done) {
+        cal_done = 0;
+        *db = cal_db;
+        return 2;
+    }
+    return 0;
+}
+
+SS_COLD static void room_cal_finish(void)
+{
+    uint32_t n = 0;
+    int m = 0;
+    while (m < 99 && (n += cal_hist[m]) * 2 < cal_total) m++;
+    cal_db = (float)m - 99.5f;            /* bin m holds -100+m .. -99+m dBFS */
+    floor_pow = expf(cal_db * 0.230258509f);   /* 10^(dB/10) */
+    cal_done = 1;
+}
 
 uint32_t ss_audio_sample_cyc(uint32_t sample)
 {
@@ -85,6 +120,11 @@ void kws_block_hook(const int16_t *stereo, int n, uint32_t done_cycles)
     else if (pow_blk < 10.0f * floor_pow) floor_pow += 0.02f * (pow_blk - floor_pow);
     else floor_pow += 0.001f * (pow_blk - floor_pow);
     if (floor_pow < 1e-10f) floor_pow = 1e-10f;
+    if (cal_left) {
+        int bin = (int)(block_db + 100.0f);
+        cal_hist[bin < 0 ? 0 : bin > 99 ? 99 : bin]++;
+        if (--cal_left == 0) room_cal_finish();
+    }
 
     if (tap) tap(stereo, n, done_cycles);
 }

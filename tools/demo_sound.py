@@ -2,11 +2,11 @@
 """Play a demo sound from this Mac's speaker for Sound Sense (docs/DEMO.md).
 
 The built-ins use the ESC-50 clips the board recognised best in G3 (never trained on). Doorbell and
-microwave are generated, for teaching: play one 5 times with --times 5 while the board's teach
+microwave are generated, for teaching: play one 8 times with --times 8 while the board's teach
 screen is recording.
 
     tools/demo_sound.py alarm
-    tools/demo_sound.py doorbell --times 5      # teach it: UP, pick Doorbell, press, then run this
+    tools/demo_sound.py doorbell --times 8      # teach it: UP, pick Doorbell, press, then run this
     tools/demo_sound.py list
 """
 import argparse

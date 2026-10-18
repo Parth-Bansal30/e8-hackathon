@@ -1,0 +1,16 @@
+  [TEACH] shot 1/8: +17.9 dB
+  [TEACH] shot 2/8: +16.1 dB
+  [TEACH] shot 3/8: +16.0 dB
+  [TEACH] shot 4/8: +15.9 dB
+  [TEACH] shot 5/8: +15.3 dB
+  [TEACH] shot 6/8: +15.4 dB
+  [TEACH] shot 7/8: +14.5 dB
+  [TEACH] shot 8/8: +14.3 dB
+  [TEACH] profile: thr 0.850, leave-one-out 0.95 0.97 0.95 0.95 0.97 0.97 0.95 0.96; make it once more to test, press to save
+[TEACH] saved 'Doorbell' thr 0.850; 1 taught
+  doorbell trial 1: Doorbell  best Doorbell 0.96 (thr 0.85), 2nd Siren 0.40
+  doorbell trial 2: Doorbell  best Doorbell 0.96 (thr 0.85), 2nd Siren 0.45
+  doorbell trial 3: Doorbell  best Doorbell 0.95 (thr 0.85), 2nd Siren 0.42
+  doorbell trial 4: Doorbell  best Doorbell 0.95 (thr 0.85), 2nd Siren 0.43
+  doorbell trial 5: unknown  best Doorbell 0.82 (thr 0.85), 2nd Siren 0.56
+doorbell: 4/5 accepted as Doorbell

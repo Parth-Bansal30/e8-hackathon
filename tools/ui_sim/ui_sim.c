@@ -216,10 +216,10 @@ int main(void)
     save("08_timeline");
 
     ui_teach teach = {
-        .label = "Our doorbell", .icon = UI_ICON_DOORBELL, .cat = UI_CAT_DOOR, .n_shots = 5,
-        .shot = {UI_SHOT_OK, UI_SHOT_OK, UI_SHOT_BAD, UI_SHOT_OK, UI_SHOT_WAITING},
-        .shot_db = {24, 21, 4, 26, 0},
-        .shot_note = {"ok", "ok", "too quiet", "ok", NULL},
+        .label = "Our doorbell", .icon = UI_ICON_DOORBELL, .cat = UI_CAT_DOOR, .n_shots = 8,
+        .shot = {UI_SHOT_OK, UI_SHOT_OK, UI_SHOT_BAD, UI_SHOT_OK, UI_SHOT_OK, UI_SHOT_WAITING},
+        .shot_db = {24, 21, 4, 26, 22, 0},
+        .shot_note = {"ok", "ok", "too quiet", "ok", "ok", NULL},
         .level_db = -36.0f, .floor_db = -58.0f, .test_score = -1,
     };
     ui_teach_draw(&teach);
@@ -238,8 +238,14 @@ int main(void)
     teach.shot[2] = UI_SHOT_OK;
     teach.shot_db[2] = 22;
     teach.shot_note[2] = "ok";
-    teach.shot[4] = UI_SHOT_OK;
-    teach.shot_db[4] = 23;
+    for (int i = 5; i < 8; i++) {
+        teach.shot[i] = UI_SHOT_OK;
+        teach.shot_db[i] = (int8_t)(20 + i);
+        teach.shot_note[i] = "ok";
+    }
+    teach.shot[6] = UI_SHOT_WARN;
+    teach.shot_note[6] = "unlike";
+    teach.warn = "Shot 7 is unlike the others: UP redoes it";
     teach.test_score = 87;
     teach.level_db = -55.0f;
     ui_teach_draw(&teach);
@@ -325,6 +331,36 @@ int main(void)
     int y0, y1;
     gfx_dirty_rows(&y0, &y1);
     printf("live update touches rows %d..%d (%d of %d)\n", y0, y1, y1 - y0 + 1, GFX_H);
+
+    /* T7: the Sounds page: built-ins on/off, taught sounds' urgency */
+    ui_menu snd = {.title = "Sounds", .n = 10, .sel = 6};
+    const char *bi[] = {"Knock", "Dog barking", "Baby crying", "Alarm", "Glass breaking", "Siren", "Water running"};
+    for (int i = 0; i < 7; i++) snd.item[i] = bi[i], snd.value[i] = i == 6 ? "Off" : "On";
+    snd.item[7] = "Doorbell (taught)", snd.value[7] = "Important";
+    snd.item[8] = "Keys (taught)", snd.value[8] = "Urgent";
+    snd.item[9] = "Back";
+    snd.note = "Off: not shown or logged. Press for on";
+    ui_menu_draw(&snd);
+    save("26_menu_sounds");
+    /* H5: an alarm heard again 4 s ago: still sounding */
+    ui_event alarm = {"Alarm", UI_ICON_ALARM, UI_CAT_SAFETY, UI_IMPORTANT, false, UI_FELT_NA, 87, 9, NOW - 3 * MIN, 3 * MIN - 4000, false, 0, 0};
+    ui_alert_draw(&alarm, NOW, 0);
+    save("27_alert_still_sounding");
+    ui_event tl2[N_EVENTS];
+    memcpy(tl2, events, sizeof(tl2));
+    tl2[0] = alarm;
+    ui_timeline_draw(tl2, N_EVENTS, NOW, 0);
+    save("28_timeline_still_sounding");
+
+    /* H8: someone talking nearby; A8: a sound just snoozed */
+    home.talking = true;
+    home.top[0] = (ui_guess){"Speech", 71, true};
+    ui_home_draw(&home, NOW);
+    save("29_home_talking");
+    home.talking = false;
+    ui_home_draw(&home, NOW);
+    ui_toast_draw("Alarm snoozed", "No alerts for 10 min; still in the timeline", -1);
+    save("30_snoozed");
 
     write_png("out/sheet.png", &sheet[0][0][0], SHEET_W, SHEET_H);
     led_trace();

@@ -1,0 +1,5 @@
+5 examples: taught accepted 0.389, untaught rejected 0.782, AUROC 0.687, mean taught thr 0.502
+8 examples: taught accepted 0.446, untaught rejected 0.771, AUROC 0.709, mean taught thr 0.501
+T2 'unlike the others' (> 0.15 under the median): flagged in 89.6% of 8-example teaches; mean thr 0.501 -> 0.502 after one redo
+T6: new profile's cosine to the closest alerting built-in: median 0.37, p90 0.56, max 0.77; share over 0.80: 0.0%, over 0.70: 0.5%
+T6: two different taught sounds, profile cosine: median -0.00, p90 0.49, max 0.84

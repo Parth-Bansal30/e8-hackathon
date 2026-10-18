@@ -28,6 +28,12 @@ int ss_audio_onset(ss_onset *o);       /* pop the next onset; 1 if one was retur
 uint32_t ss_audio_samples(void);       /* samples captured so far = index of the next sample */
 float ss_audio_floor_db(void);         /* noise floor as an RMS level, dBFS */
 float ss_audio_block_db(void);         /* level of the latest 20 ms block, dBFS */
+
+/* S5: room calibration. Measures the next n blocks (50 a second), then sets the floor to their median
+ * level, so short noises during it don't count. State: 0 idle, 1 measuring (*frac done so far),
+ * 2 just finished (*db the new floor; reported once, then idle). */
+void ss_audio_room_cal(uint32_t n_blocks);
+int ss_audio_room_cal_state(float *frac, float *db);
 uint32_t ss_audio_sample_cyc(uint32_t sample);   /* DWT time of a sample still in the ring */
 
 /* Copy n samples starting at 'first' into out (int16). Returns 0, or -1 if they aren't all in the

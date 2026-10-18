@@ -1,0 +1,36 @@
+streams built in 0 s: heldout 400, built-in 56, neg 264, speech 500
+loudest: a 0.759  b ok 0.389 rej 0.782  c rec 0.853 negFA 0.057
+delay 0.30 product_profiles: a 0.681  b ok 0.471 rej 0.555  c rec 0.714 (every 0.737, w/ undecided 0.588) negFA 0.039  speechFA 0.000
+delay 0.30 onset_profiles  : a 0.681  b ok 0.444 rej 0.463  c rec 0.821 (every 0.829, w/ undecided 0.676) negFA 0.160  speechFA 0.007
+delay 0.30: decided h 0.81, bi 0.79, neg 0.78, sp 0.88; 76 built-in decisions; 8 s
+delay 0.40 product_profiles: a 0.690  b ok 0.456 rej 0.604  c rec 0.776 (every 0.805, w/ undecided 0.662) negFA 0.073  speechFA 0.000
+delay 0.40 onset_profiles  : a 0.690  b ok 0.440 rej 0.545  c rec 0.810 (every 0.818, w/ undecided 0.691) negFA 0.117  speechFA 0.000
+delay 0.40: decided h 0.80, bi 0.82, neg 0.78, sp 0.89; 77 built-in decisions; 8 s
+delay 0.45 product_profiles: a 0.703  b ok 0.461 rej 0.622  c rec 0.772 (every 0.789, w/ undecided 0.647) negFA 0.080  speechFA 0.000
+delay 0.45 onset_profiles  : a 0.703  b ok 0.446 rej 0.557  c rec 0.842 (every 0.855, w/ undecided 0.706) negFA 0.109  speechFA 0.000
+delay 0.45: decided h 0.81, bi 0.80, neg 0.76, sp 0.90; 76 built-in decisions; 8 s
+delay 0.50 product_profiles: a 0.702  b ok 0.441 rej 0.644  c rec 0.825 (every 0.829, w/ undecided 0.691) negFA 0.065  speechFA 0.000
+delay 0.50 onset_profiles  : a 0.702  b ok 0.426 rej 0.587  c rec 0.877 (every 0.895, w/ undecided 0.735) negFA 0.101  speechFA 0.000
+delay 0.50: decided h 0.80, bi 0.80, neg 0.75, sp 0.91; 76 built-in decisions; 8 s
+delay 0.60 product_profiles: a 0.697  b ok 0.427 rej 0.655  c rec 0.842 (every 0.846, w/ undecided 0.706) negFA 0.052  speechFA 0.000
+delay 0.60 onset_profiles  : a 0.697  b ok 0.414 rej 0.602  c rec 0.895 (every 0.897, w/ undecided 0.750) negFA 0.072  speechFA 0.000
+delay 0.60: decided h 0.80, bi 0.80, neg 0.73, sp 0.93; 78 built-in decisions; 8 s
+delay 0.80 product_profiles: a 0.708  b ok 0.387 rej 0.696  c rec 0.825 (every 0.855, w/ undecided 0.691) negFA 0.056  speechFA 0.000
+delay 0.80 onset_profiles  : a 0.708  b ok 0.381 rej 0.664  c rec 0.912 (every 0.921, w/ undecided 0.765) negFA 0.051  speechFA 0.002
+delay 0.80: decided h 0.80, bi 0.80, neg 0.74, sp 0.96; 76 built-in decisions; 8 s
+two-stage 0.40/0.80 margin 0.00: built-ins 0.778 (early 0.644, wrong early 0.000, mean latency 0.52 s)  false alerts: other sounds 0.103 untrained 0.078 speech 0.000
+two-stage 0.40/0.80 margin 0.05: built-ins 0.778 (early 0.533, wrong early 0.000, mean latency 0.58 s)  false alerts: other sounds 0.072 untrained 0.062 speech 0.000
+two-stage 0.40/0.80 margin 0.10: built-ins 0.778 (early 0.467, wrong early 0.000, mean latency 0.61 s)  false alerts: other sounds 0.056 untrained 0.059 speech 0.000
+two-stage 0.40/0.80 margin 0.15: built-ins 0.778 (early 0.400, wrong early 0.000, mean latency 0.64 s)  false alerts: other sounds 0.056 untrained 0.050 speech 0.000
+two-stage 0.40/0.80 margin inf: built-ins 0.778 (early 0.000, wrong early 0.000, mean latency 0.85 s)  false alerts: other sounds 0.056 untrained 0.047 speech 0.000
+two-stage 0.45/0.80 margin 0.00: built-ins 0.756 (early 0.622, wrong early 0.022, mean latency 0.56 s)  false alerts: other sounds 0.108 untrained 0.069 speech 0.000
+two-stage 0.45/0.80 margin 0.05: built-ins 0.778 (early 0.556, wrong early 0.000, mean latency 0.60 s)  false alerts: other sounds 0.072 untrained 0.062 speech 0.000
+two-stage 0.45/0.80 margin 0.10: built-ins 0.778 (early 0.556, wrong early 0.000, mean latency 0.60 s)  false alerts: other sounds 0.067 untrained 0.056 speech 0.000
+two-stage 0.45/0.80 margin 0.15: built-ins 0.778 (early 0.422, wrong early 0.000, mean latency 0.66 s)  false alerts: other sounds 0.056 untrained 0.053 speech 0.000
+two-stage 0.45/0.80 margin inf: built-ins 0.778 (early 0.000, wrong early 0.000, mean latency 0.85 s)  false alerts: other sounds 0.056 untrained 0.047 speech 0.000
+two-stage 0.50/0.80 margin 0.00: built-ins 0.778 (early 0.689, wrong early 0.022, mean latency 0.58 s)  false alerts: other sounds 0.087 untrained 0.069 speech 0.000
+two-stage 0.50/0.80 margin 0.05: built-ins 0.756 (early 0.600, wrong early 0.022, mean latency 0.61 s)  false alerts: other sounds 0.072 untrained 0.059 speech 0.000
+two-stage 0.50/0.80 margin 0.10: built-ins 0.778 (early 0.533, wrong early 0.000, mean latency 0.64 s)  false alerts: other sounds 0.067 untrained 0.056 speech 0.000
+two-stage 0.50/0.80 margin 0.15: built-ins 0.778 (early 0.511, wrong early 0.000, mean latency 0.65 s)  false alerts: other sounds 0.062 untrained 0.050 speech 0.000
+two-stage 0.50/0.80 margin inf: built-ins 0.778 (early 0.000, wrong early 0.000, mean latency 0.85 s)  false alerts: other sounds 0.056 untrained 0.047 speech 0.000
+wrote out/delay_sweep_seed6.json in 75 s
