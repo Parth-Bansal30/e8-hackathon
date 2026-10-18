@@ -18,7 +18,7 @@ numbers are samples; quote the measured ones below.
 - **Joystick** (directions as you face the screen):
   - **UP:** teach a sound (or teach the "What was that?" sound while its banner shows).
   - **DOWN:** settings menu: night mode, microphones off, sensitivity (the knob), privacy, Sounds
-    (built-ins on/off, taught sounds' urgency), forget sounds.
+    (built-ins on/off; taught sounds' urgency, RIGHT renames), Calibrate room (10 s), forget sounds.
   - **LEFT:** timeline.
   - **RIGHT:** stats.
   - **Press:** OK or dismiss.

@@ -38,7 +38,8 @@ delegated to the Ethos-U85.
   UP teaches it, starting from that sound.
 - **Settings menu** (DOWN): night mode (the screen goes dark and only important and urgent sounds
   light it), microphones off, a privacy note, sensitivity on the knob, **Sounds** (turn each built-in
-  on or off; set each taught sound to Info, Important or Urgent; saved in the flash), and forgetting
+  on or off; set each taught sound to Info, Important or Urgent, or rename it; saved in the flash),
+  **Calibrate room** (10 s, then shows the room level and how loud a sound must be), and forgetting
   one or all taught sounds.
 - **Ongoing sounds:** repeats merge into one entry with a count and how long it went on; a sound
   heard again in the last 15 s reads "still sounding".

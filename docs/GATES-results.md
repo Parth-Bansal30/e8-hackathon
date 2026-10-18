@@ -79,7 +79,7 @@ HANDOFF-next.md item 11, done on the old laptop (et-venv, float encoder as shipp
   - `[C1]`: 0 of 1960 inputs differ, output within 1 LSB, cosine 0.9996, "dog" 0.79, NPU 1.0 ms. Same as before.
   - Quiet room: CPU active 12.0 to 13.1%, 0 audio blocks dropped.
   - Room noises gave 3 decisions; all were weak matches (best 0.20 to 0.41 against a threshold of 0.50), and all waited for 0.8 s as they should.
-- IMU `times back` read 95 µs, then 1.7 ms, then 3.0 ms in the first 40 s. The early path didn't cause it. **Found and fixed at 11:40 AM:** see [IMU times back](#imu-times-back-with-j-link-attached).
+- IMU `times back` read 95 µs, then 1.7 ms, then 3.0 ms in the first 40 s. The early path didn't cause it. **Found and fixed at 11:25 AM:** see [IMU times back](#imu-times-back-with-j-link-attached).
 - **G3 built-in run with the Mac speaker** (same 56 fold-5 clips, volume 88 as found; `gates/g3_builtin_early.txt`, `g3_results.json` entry at 10:51):
   - Recognised: 30 of 56 (54%), the same as the run before the change.
   - Per class (before → now): knock 5 → 1, dog 4 → 6, baby 4 → 4, alarm 6 → 6, glass 3 → 2, siren 3 → 3, water 5 → 8.
@@ -176,8 +176,8 @@ when a detach landed between a knock and its conversion to milliseconds.
 
 ## Sounds page (T7) and "still sounding" (H5)
 
-Settings > **Sounds** (`tools/ss_t7_test.py`, no sound, 10/10 pass at 11:55 AM; `gates/t7_test.txt`;
-board screenshot `gates/t7_board_sounds.png`):
+Settings > **Sounds** (`tools/ss_t7_test.py`, no sound; 10/10 at 11:40 AM, 14/14 with rename and
+room calibration at 11:50 AM; `gates/t7_test.txt`; board screenshot `gates/t7_board_sounds.png`):
 - Each built-in that alerts can be turned off: it is then not shown or logged, and doesn't start
   "What was that?". A knock that is off isn't alerted when felt either. Saved in the flash record's
   `builtin_mute` (already in the format, so earlier saves still load).
@@ -185,9 +185,21 @@ board screenshot `gates/t7_board_sounds.png`):
     Still off after a reset (`[STORE] ... built-ins off: 0x2`). Back on.
 - Each taught sound's urgency cycles Info / Important / Urgent; it's saved and restored with the sound.
   - Tested: Doorbell to Urgent, then an injected Doorbell alert was urgent. Back to Important.
+- **Rename:** RIGHT on a taught sound gives it the next preset name that no other taught sound has
+  (Keys, Doorbell, Clap, Microwave, Kettle, Phone, Washer, My name). The icon and colour come with the
+  name; the urgency set in the menu stays. There's no keyboard, so names come from that list.
+  - Tested: Doorbell became Clap, still Clap after a reset, then stepped back to Doorbell.
 - LEFT or RIGHT on the Sounds page goes back to Settings, on the Sounds row.
 - The Settings menu now holds 16 rows (it was 12; 4 settings + 8 taught + forget all + back was
   already 14, which would have overflowed with 8 taught sounds).
+
+**Calibrate room (S5):** Settings > Calibrate room measures 10 s (500 blocks of 20 ms) and sets the
+floor to their median level, so a cough or a click during it doesn't count. The row shows progress,
+then the result ("−50 dB"), and the note says how loud a sound must be (floor + 8 dB). The floor keeps
+tracking the room afterwards as before. This is useful after a long loud sound has pulled the floor up.
+Tested: −50.5 dB in this room, the same as the running floor in the stats lines (−49 to −50). Board
+screenshot `gates/s5_board_settings.png`. ITCM 97.69%: putting the new code in MRAM and using `expf`
+(already linked) instead of `powf` took the first build's 98.02% down by 864 bytes.
 
 **"Still sounding" (H5):** a sound repeated and heard again within 15 s shows "still sounding" on the
 alert ("9 times, for 2 min, still sounding"), on the home list and in the timeline. The screen is

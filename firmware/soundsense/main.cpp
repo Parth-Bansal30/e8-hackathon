@@ -1048,7 +1048,7 @@ SS_COLD static void taught_forget_all(void)
     printf("[SS] taught sounds cleared\r\n");
 }
 
-enum mitem { MI_NIGHT, MI_MIC, MI_SENS, MI_PRIVACY, MI_SOUNDS, MI_FORGET, MI_FORGET_ALL, MI_BACK, MI_BUILTIN, MI_URGENCY };
+enum mitem { MI_NIGHT, MI_MIC, MI_SENS, MI_PRIVACY, MI_SOUNDS, MI_ROOM, MI_FORGET, MI_FORGET_ALL, MI_BACK, MI_BUILTIN, MI_URGENCY };
 static struct {
     mitem kind[UI_MENU_MAX];
     int arg[UI_MENU_MAX];
@@ -1058,6 +1058,12 @@ static struct {
 } menu;
 
 static const char *const kUrgName[] = {"Info", "Important", "Urgent"};
+
+/* S5: "Calibrate room": 10 s, then the floor is the median 20 ms level (ss_audio_room_cal) */
+#define ROOM_CAL_BLOCKS 500
+static bool room_cal_on;
+static float room_cal_frac, room_db = 1.0f;   /* last result; > 0: not calibrated yet */
+static uint32_t room_cal_draw_ms;
 
 SS_COLD static void menu_build(void)
 {
@@ -1088,6 +1094,8 @@ SS_COLD static void menu_build(void)
     menu.arg[menu.n++] = 0;
     menu.kind[menu.n] = MI_SOUNDS;
     menu.arg[menu.n++] = 0;
+    menu.kind[menu.n] = MI_ROOM;
+    menu.arg[menu.n++] = 0;
     for (int k = 0; k < n_taught; k++) {
         menu.kind[menu.n] = MI_FORGET;
         menu.arg[menu.n++] = k;
@@ -1102,6 +1110,25 @@ SS_COLD static void menu_build(void)
     menu.confirm = -1;
 }
 
+/* S5: progress while measuring (the menu redraws twice a second), then the result */
+SS_COLD static void room_cal_poll(uint32_t now)
+{
+    float db = 0.0f;
+    const int st = ss_audio_room_cal_state(&room_cal_frac, &db);
+    if (st == 2) {
+        room_cal_on = false;
+        room_db = db;
+        printf("[S5] room calibrated: floor %.1f dB (median of 10 s); sounds need %.1f dB\r\n", (double)db,
+               (double)(db + MIN_SNR_DB));
+        if (scr == MENU) redraw = true;
+    } else if (st == 0) {
+        room_cal_on = false;
+    } else if (scr == MENU && now - room_cal_draw_ms >= 500) {
+        room_cal_draw_ms = now;
+        redraw = true;
+    }
+}
+
 SS_COLD static void menu_open(void)
 {
     menu.sel = 0;
@@ -1109,6 +1136,24 @@ SS_COLD static void menu_open(void)
     menu_build();
     scr = MENU;
     redraw = true;
+}
+
+/* T7: a taught sound takes the next name from the presets that no other taught sound has (its icon and
+ * colour come with the name; the urgency set in the menu stays) */
+SS_COLD static void taught_rename(int k)
+{
+    profile &p = prof[SS_NUM_BUILTIN + k];
+    for (int step = 1; step < N_PRESETS; step++) {
+        const int q = (p.preset + step) % N_PRESETS;
+        bool used = false;
+        for (int j = 0; j < n_taught; j++) used = used || prof[SS_NUM_BUILTIN + j].preset == q;
+        if (used) continue;
+        printf("[SS] renamed '%s' to '%s'\r\n", p.lk->label, kPresets[q].label);
+        p.preset = q;
+        p.lk = &kPresets[q];
+        store_save();
+        return;
+    }
 }
 
 /* Back: from the sounds page to settings (on the Sounds row), from settings to home */
@@ -1144,6 +1189,14 @@ SS_COLD static void menu_choose(void)
         menu.sel = 0;
         menu_build();
         return;
+    case MI_ROOM:
+        if (!room_cal_on) {
+            room_cal_on = true;
+            room_cal_frac = 0.0f;
+            ss_audio_room_cal(ROOM_CAL_BLOCKS);
+            printf("[S5] measuring the room for 10 s (floor now %.1f dB)\r\n", (double)ss_audio_floor_db());
+        }
+        break;
     case MI_BUILTIN: {
         const int b = menu.arg[i];
         builtin_mute ^= 1u << b;
@@ -1208,6 +1261,13 @@ SS_COLD static void menu_draw(void)
             m.value[i] = menu.text[i];
             break;
         }
+        case MI_ROOM:
+            m.item[i] = "Calibrate room";
+            if (room_cal_on) snprintf(menu.text[i], sizeof(menu.text[i]), "%d%%", (int)(room_cal_frac * 100.0f));
+            else if (room_db <= 0.0f) snprintf(menu.text[i], sizeof(menu.text[i]), "%.0f dB", (double)room_db);
+            else menu.text[i][0] = 0;
+            m.value[i] = menu.text[i][0] ? menu.text[i] : NULL;
+            break;
         case MI_BUILTIN:
             m.item[i] = prof[menu.arg[i]].lk->label;
             m.value[i] = prof[menu.arg[i]].alerting ? "On" : "Off";
@@ -1250,15 +1310,22 @@ SS_COLD static void menu_draw(void)
         m.note = "Nothing is recorded or sent. Sound is kept 1 s";
     } else if (menu.kind[menu.sel] == MI_SOUNDS) {
         m.note = "Turn sounds on or off, set urgency";
+    } else if (menu.kind[menu.sel] == MI_ROOM) {
+        if (room_cal_on) m.note = "Measuring the room: keep quiet for 10 s";
+        else if (room_db <= 0.0f) {
+            snprintf(menu.note, sizeof(menu.note), "Room %.0f dB: sounds need %.0f dB. Press to redo", (double)room_db,
+                     (double)(room_db + MIN_SNR_DB));
+            m.note = menu.note;
+        } else m.note = "Press, then keep quiet for 10 s";
     } else if (menu.kind[menu.sel] == MI_BUILTIN) {
         const profile &p = prof[menu.arg[menu.sel]];
         if (p.alerting) snprintf(menu.note, sizeof(menu.note), "Press to turn %s off", p.lk->label);
         else snprintf(menu.note, sizeof(menu.note), "Off: not shown or logged. Press for on");
         m.note = menu.note;
     } else if (menu.kind[menu.sel] == MI_URGENCY) {
-        static const char *const what[] = {"Info: a banner, no full screen", "Important: full screen for 15 s",
-                                           "Urgent: stays until you press"};
-        m.note = what[prof[SS_NUM_BUILTIN + menu.arg[menu.sel]].urg];
+        static const char *const what[] = {"Info: a banner", "Important: full screen", "Urgent: stays till pressed"};
+        snprintf(menu.note, sizeof(menu.note), "%s. RIGHT renames", what[prof[SS_NUM_BUILTIN + menu.arg[menu.sel]].urg]);
+        m.note = menu.note;
     }
     ui_menu_draw(&m);
 }
@@ -1343,6 +1410,7 @@ static void on_keys(uint32_t k)
     case MENU:
         if (k & SS_JOY_UP) { if (menu.sel > 0) menu.sel--; menu.confirm = -1; }
         else if (k & SS_JOY_DOWN) { if (menu.sel + 1 < menu.n) menu.sel++; menu.confirm = -1; }
+        else if (k & SS_JOY_RIGHT && menu.page == 1 && menu.kind[menu.sel] == MI_URGENCY) taught_rename(menu.arg[menu.sel]);
         else if (k & (SS_JOY_LEFT | SS_JOY_RIGHT)) menu_back();
         else if (k & SS_JOY_CENTER) menu_choose();
         redraw = true;
@@ -1776,6 +1844,7 @@ int main(void)
             banner_on = false;
             if (scr == HOME) redraw = true;
         }
+        if (room_cal_on) room_cal_poll(now);   /* S5 */
         /* H5: "still sounding" ends UI_STILL_MS after the last repeat: redraw the screens that say it */
         const bool still = n_events && ui_still_sounding(&events[0], now);
         if (still != still_shown) {

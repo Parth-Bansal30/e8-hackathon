@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""T7 and H5 on the board, no sound: the Sounds page (built-ins on/off, taught urgency) and "still sounding".
+"""T7, H5 and S5 on the board, no sound: the Sounds page (built-ins on/off, taught urgency and name),
+"still sounding", and "Calibrate room" (it measures the room as it is).
 
 Needs the release build flashed, one taught sound in slot 0 (profile 9), and the RTT logger running.
-Leaves the settings as it found them (all built-ins on, the taught sound back to its urgency).
+Leaves the settings as it found them (built-ins, the taught sound's urgency and name).
     /opt/anaconda3/bin/python3 tools/ss_t7_test.py
     /opt/anaconda3/bin/python3 tools/ss_t7_test.py --set 0 1   # all built-ins on, taught sound Important
 """
@@ -23,13 +24,18 @@ DOWN, LEFT, RIGHT, UP, PRESS = 1, 2, 4, 8, 16
 results = []
 
 
-def get(name, off=0):
-    for _ in range(8):
+def rd(addr, n=1):
+    """Read n words; retry while the RTT logger holds the probe."""
+    for _ in range(10):
         try:
-            return b.read32(b.addr(name) + off)[0]
+            return b.read32(addr, n)
         except RuntimeError:
             time.sleep(0.4)
-    return None
+    raise RuntimeError(f"can't read 0x{addr:08X}")
+
+
+def get(name, off=0):
+    return rd(b.addr(name) + off)[0]
 
 
 def cmd(c, a=0):
@@ -72,12 +78,16 @@ PROF = b.addr("_ZL4prof")                    # 24 bytes each; urg (1 byte) at 20
 
 
 def menu_sel_page():
-    n, sel, _, page = b.read32(MENU + 80, 4)
+    n, sel, _, page = rd(MENU + 80, 4)
     return sel, page
 
 
 def urg_of(p):
-    return b.read32(PROF + 24 * p + 20)[0] & 0xFF
+    return rd(PROF + 24 * p + 20)[0] & 0xFF
+
+
+def preset_of(p):
+    return rd(PROF + 24 * p + 16)[0]
 
 
 def goto(row):
@@ -112,7 +122,7 @@ def mute():
     return get("_ZL12builtin_mute")
 
 
-def set_state(m, u):
+def set_state(m, u, pr=None):
     for i in range(7):                       # Sounds rows 0-6 are the built-ins that alert, in order
         if (mute() ^ m) >> i & 1:
             sounds_press(i)
@@ -120,8 +130,13 @@ def set_state(m, u):
         if urg_of(9) == u:
             break
         sounds_press(7)
+    if pr is not None and preset_of(9) != pr and open_sounds() and goto(7):
+        for _ in range(8):                   # RIGHT steps through the free names
+            if preset_of(9) == pr:
+                break
+            keys(RIGHT)
     cmd(3)
-    return mute() == m and urg_of(9) == u
+    return mute() == m and urg_of(9) == u and (pr is None or preset_of(9) == pr)
 
 
 if len(sys.argv) == 4 and sys.argv[1] == "--set":   # put the settings to builtin_mute MUTE, taught urgency URG
@@ -130,8 +145,8 @@ if len(sys.argv) == 4 and sys.argv[1] == "--set":   # put the settings to builti
     sys.exit(0 if ok else 1)
 
 cmd(3)
-mute0, urg0 = mute(), urg_of(9)
-print(f"start: builtin_mute 0x{mute0:x}, taught urgency {urg0}")
+mute0, urg0, pr0 = mute(), urg_of(9), preset_of(9)
+print(f"start: builtin_mute 0x{mute0:x}, taught urgency {urg0}, name preset {pr0}")
 
 # 1. Dog barking off (Sounds row 1): the boot test clip (a dog) no longer alerts
 want = mute0 | 2
@@ -169,10 +184,22 @@ time.sleep(0.6)
 urg = get("_ZL8alert_ev", 4) >> 16 & 0xFF   # ui_event: 1-byte enums, urgency at byte 6
 check("its alert has that urgency", urg == u1, f"screen {get('_ZL3scr')}, urgency {urg}")
 
-# 4. Put everything back as it was
-check("settings restored", set_state(mute0, urg0), f"builtin_mute 0x{mute():x}, urgency {urg_of(9)}")
+# 4. Rename (RIGHT on the taught row): the next free preset name, kept across a reset
+n5 = os.path.getsize(LOG)
+open_sounds() and goto(7) and keys(RIGHT)
+r = re.findall(r"\[SS\] renamed[^\r\n]*", log_since(n5))
+pr1 = preset_of(9)
+check("RIGHT renames the taught sound", pr1 != pr0 and bool(r), r[-1] if r else f"preset {pr1}")
+cmd(3)
+subprocess.run([os.path.join(ROOT, "tools/jlink.py"), ELF, "reset"], check=True, capture_output=True)
+time.sleep(6)
+check("the new name is kept after a reset", preset_of(9) == pr1, f"preset {preset_of(9)}")
 
-# 5. H5: an alarm heard twice reads "still sounding" until 15 s after the second
+# 5. Put everything back as it was
+check("settings restored", set_state(mute0, urg0, pr0),
+      f"builtin_mute 0x{mute():x}, urgency {urg_of(9)}, preset {preset_of(9)}")
+
+# 6. H5: an alarm heard twice reads "still sounding" until 15 s after the second
 cmd(13, 3)
 time.sleep(2)
 cmd(13, 3)
@@ -183,6 +210,19 @@ check("repeated alarm: still sounding", s1 == 1, f"still_shown {s1}, count {cnt}
 time.sleep(16)
 s2 = get("_ZL11still_shown") & 0xFF
 check("15 s after the last repeat: not any more", s2 == 0, f"still_shown {s2}, screen {get('_ZL3scr')}")
+# 7. S5: Calibrate room (Settings row 5): 10 s, then the floor is the median level
+cmd(3)
+keys(DOWN)
+goto(5)
+n6 = os.path.getsize(LOG)
+keys(PRESS)
+time.sleep(1.5)
+check("calibration running", get("_ZL11room_cal_on") & 0xFF == 1)
+time.sleep(10)
+c = re.findall(r"\[S5\] room calibrated: floor (-?[\d.]+) dB[^\r\n]*", log_since(n6))
+fl = re.findall(r"\[S5\] room calibrated[^\r\n]*", log_since(n6))
+check("room calibrated after 10 s", bool(c) and -90 < float(c[-1]) < -20 and get("_ZL11room_cal_on") & 0xFF == 0,
+      fl[-1] if fl else "no result line")
 cmd(3)
 print(f"{sum(results)}/{len(results)} checks pass")
 print("T7 TEST", "PASS" if all(results) else "FAIL")

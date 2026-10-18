@@ -9,7 +9,7 @@ behind every "Done" are in [GATES-results.md](GATES-results.md).
 | Priority | Total | Done | Partial | Not started |
 |---|---|---|---|---|
 | **P0** (must-have product) | 16 | **16** | 0 | 0 |
-| **P1** (makes it good) | 16 | 12 | 3 | 1 (H4) |
+| **P1** (makes it good) | 16 | 14 | 1 | 1 (H4) |
 | **P2** (nice to have) | 20 | 0 | 4 | 16 |
 | **P3** (stretch) | 7 | 0 | 0 | 7 |
 
@@ -81,7 +81,7 @@ examples, 38% at 5 (they work well live; the offline test uses unseen clips from
 | T4 | Fix mistakes from the timeline | P1 | Done | Timeline (selected top row) or alert: LEFT = wrong, RIGHT = right. Wrong keeps the sound's embedding as a counter-example: a sound closer to it than to the profile is vetoed (saved in flash for taught sounds; built-ins until restart). Right on a taught sound adds an example and rebuilds its profile and threshold. Tested silently with the boot test clip (host command 15) |
 | T5 | Sensitivity on the knob | P1 | Done (not checked by hand) | The blue R79 knob moves every threshold by up to ±0.10 (one setting for all sounds, not per sound); a notice with a bar shows when it's turned; menu shows the value. Wherever the knob was left, the board starts as taught until it's turned. The ADC read 0% at boot; turning it hasn't been tried yet |
 | T6 | Similar-sound warning | P1 | Done | "Sounds like X (NN%): may mix up" when the new profile is within cosine 0.70 of any other; saving still allowed, no merge. Tested on the board (the dog test clip vs "Dog barking", 0.79) |
-| T7 | Manage sounds (rename, delete, factory reset) | P1 | Partial | Settings > Sounds: each built-in on or off (off: not shown or logged), each taught sound Info / Important / Urgent; both saved in the flash and restored at boot. Forget one taught sound or all (press twice). Tested on the board, 10/10 (`tools/ss_t7_test.py`). No rename |
+| T7 | Manage sounds (rename, delete, factory reset) | P1 | Done | Settings > Sounds: each built-in on or off (off: not shown or logged), each taught sound Info / Important / Urgent, and RIGHT renames it to the next free preset name; all saved in the flash and restored at boot. Forget one taught sound or all (press twice). Tested on the board, 14/14 (`tools/ss_t7_test.py`) |
 
 **Timeline**
 
@@ -100,7 +100,7 @@ examples, 38% at 5 (they work well live; the offline test uses unseen clips from
 | S2 | Saved sounds survive power loss | P0 | Done | OSPI flash, two copies with CRC32 |
 | S3 | Live spectrogram and top 3 | P0 | Done | Shows "Quiet: NPU resting" when the NPU is gated off |
 | S4 | Stats page | P0 | Done | NPU ms, CPU active %, NPU busy %, save ms, model size |
-| S5 | Noise-floor calibration | P1 | Partial | The floor tracks the room continuously; no explicit 10 s calibration |
+| S5 | Noise-floor calibration | P1 | Done | The floor tracks the room continuously. Settings > Calibrate room: 10 s, then the floor is the median 20 ms level; shows the result and the level sounds need. Tested: −50.5 dB, matching the running floor |
 | S6 | Privacy screen and mic mute | P1/P2 | Done | Menu: Microphones On/Off (off: nothing classified or shown, header says "Mic off"), Privacy: "Nothing is recorded or sent. Sound is kept 1 s". From the menu, not a long press |
 | S7 | First-run wizard | P2 | Not started | |
 | S8 | Knock placement check | P2 | Not started | |

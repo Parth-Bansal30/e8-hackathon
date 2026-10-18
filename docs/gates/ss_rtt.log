@@ -1788,3 +1788,295 @@
 [SS] stats t=200000 level -52 dB floor -51 dB, npu 1006 us runner 1034 us feat 303 us, 0.0 inf/s, busy 6%, active 12.5% (3609 passes/s, 3559 sleeps/s, 245 us each), npu busy 0.00%, dropped 0, imu 160636 samples 0 errors (times back 513 us, clock +6706 ppm), knocks 0, events 3, saves 4
 [SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8301 us
 [SS] stats t=210000 level -51 dB floor -51 dB, npu 1006 us runner 1034 us feat 303 us, 0.0 inf/s, busy 6%, active 12.2% (3621 passes/s, 3571 sleeps/s, 245 us each), npu busy 0.00%, dropped 0, imu 168689 samples 0 errors (times back 513 us, clock +6867 ppm), knocks 0, events 3, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8306 us
+[SS] stats t=220000 level -50 dB floor -50 dB, npu 1006 us runner 1034 us feat 303 us, 0.0 inf/s, busy 6%, active 12.7% (3601 passes/s, 3551 sleeps/s, 245 us each), npu busy 0.00%, dropped 0, imu 176743 samples 0 errors (times back 513 us, clock +6875 ppm), knocks 0, events 3, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8303 us
+[SS] stats t=230000 level -50 dB floor -49 dB, npu 1006 us runner 1034 us feat 303 us, 0.0 inf/s, busy 6%, active 12.2% (3622 passes/s, 3572 sleeps/s, 245 us each), npu busy 0.00%, dropped 0, imu 184796 samples 0 errors (times back 513 us, clock +6853 ppm), knocks 0, events 3, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8309 us
+[SS] stats t=240000 level -52 dB floor -50 dB, npu 1006 us runner 1034 us feat 303 us, 0.0 inf/s, busy 6%, active 12.3% (3614 passes/s, 3564 sleeps/s, 245 us each), npu busy 0.00%, dropped 0, imu 192850 samples 0 errors (times back 513 us, clock +6608 ppm), knocks 0, events 3, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8300 us
+[SS] stats t=250000 level -51 dB floor -50 dB, npu 1006 us runner 1034 us feat 303 us, 0.0 inf/s, busy 6%, active 12.0% (3626 passes/s, 3576 sleeps/s, 245 us each), npu busy 0.00%, dropped 0, imu 200903 samples 0 errors (times back 513 us, clock +6692 ppm), knocks 0, events 3, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8302 us
+[SS] stats t=260000 level -51 dB floor -50 dB, npu 1006 us runner 1034 us feat 303 us, 0.0 inf/s, busy 7%, active 12.9% (3593 passes/s, 3543 sleeps/s, 245 us each), npu busy 0.00%, dropped 0, imu 208957 samples 0 errors (times back 513 us, clock +6906 ppm), knocks 0, events 3, saves 4
+[SS] t=263458 +9.3 dB best 'Water running' 0.44 (thr 0.50), 2nd 'Doorbell' 0.23, felt no (0.0 mg) -> unknown
+[SS] t=264983 +12.3 dB best 'Doorbell' 0.59 (thr 0.50), 2nd 'Glass breaking' 0.44, felt no (0.0 mg) -> Doorbell
+[C3] alert on screen 45911 us after the decision (draw 42394 us, present 3516 us)
+[SS] draw: full max 42394 us + present 3516 us; live view 5.8 fps, max 15615 us
+[SS] stats t=270000 level -50 dB floor -50 dB, npu 1006 us runner 1033 us feat 303 us, 1.4 inf/s, busy 5%, active 11.5% (3662 passes/s, 3612 sleeps/s, 244 us each), npu busy 0.14%, dropped 0, imu 217011 samples 0 errors (times back 513 us, clock +6842 ppm), knocks 0, events 4, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 0.0 fps, max 0 us
+[SS] stats t=280000 level -51 dB floor -51 dB, npu 1006 us runner 1033 us feat 303 us, 0.0 inf/s, busy 0%, active 6.6% (3851 passes/s, 3801 sleeps/s, 245 us each), npu busy 0.00%, dropped 0, imu 225065 samples 0 errors (times back 513 us, clock +6854 ppm), knocks 0, events 4, saves 4
+[C3] alert 'Doorbell' ended after 15001 ms: 1 full redraws, longest draw 42394 us + present 3516 us, 0 audio blocks dropped
+[SS] draw: full max 50437 us + present 3516 us; live view 9.0 fps, max 14015 us
+[SS] stats t=290000 level -50 dB floor -51 dB, npu 1007 us runner 1035 us feat 303 us, 0.3 inf/s, busy 7%, active 13.2% (3541 passes/s, 3491 sleeps/s, 248 us each), npu busy 0.03%, dropped 0, imu 233120 samples 0 errors (times back 513 us, clock +6903 ppm), knocks 0, events 4, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 9.8 fps, max 8380 us
+[SS] stats t=300000 level -50 dB floor -50 dB, npu 1007 us runner 1035 us feat 303 us, 0.0 inf/s, busy 7%, active 13.4% (3528 passes/s, 3478 sleeps/s, 248 us each), npu busy 0.00%, dropped 0, imu 241173 samples 0 errors (times back 513 us, clock +6815 ppm), knocks 0, events 4, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 9.8 fps, max 8387 us
+[SS] stats t=310000 level -50 dB floor -50 dB, npu 1007 us runner 1035 us feat 303 us, 0.0 inf/s, busy 7%, active 12.9% (3549 passes/s, 3499 sleeps/s, 248 us each), npu busy 0.00%, dropped 0, imu 249227 samples 0 errors (times back 513 us, clock +6808 ppm), knocks 0, events 4, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 9.7 fps, max 8384 us
+[SS] stats t=320000 level -50 dB floor -50 dB, npu 1007 us runner 1035 us feat 303 us, 0.0 inf/s, busy 6%, active 12.6% (3563 passes/s, 3513 sleeps/s, 248 us each), npu busy 0.00%, dropped 0, imu 257281 samples 0 errors (times back 513 us, clock +6695 ppm), knocks 0, events 4, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 9.8 fps, max 8376 us
+[SS] stats t=330000 level -50 dB floor -50 dB, npu 1007 us runner 1035 us feat 303 us, 0.0 inf/s, busy 6%, active 12.6% (3559 passes/s, 3509 sleeps/s, 248 us each), npu busy 0.00%, dropped 0, imu 265334 samples 0 errors (times back 513 us, clock +6582 ppm), knocks 0, events 4, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 9.8 fps, max 8380 us
+[SS] stats t=340000 level -51 dB floor -50 dB, npu 1007 us runner 1035 us feat 302 us, 0.0 inf/s, busy 7%, active 12.8% (3553 passes/s, 3503 sleeps/s, 248 us each), npu busy 0.00%, dropped 0, imu 273388 samples 0 errors (times back 513 us, clock +6851 ppm), knocks 0, events 4, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 9.8 fps, max 8383 us
+[SS] stats t=350000 level -49 dB floor -50 dB, npu 1007 us runner 1035 us feat 303 us, 0.0 inf/s, busy 6%, active 12.7% (3559 passes/s, 3509 sleeps/s, 248 us each), npu busy 0.00%, dropped 0, imu 281441 samples 0 errors (times back 513 us, clock +6837 ppm), knocks 0, events 4, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 9.8 fps, max 8377 us
+[SS] stats t=360000 level -49 dB floor -49 dB, npu 1007 us runner 1035 us feat 303 us, 0.0 inf/s, busy 6%, active 12.2% (3577 passes/s, 3527 sleeps/s, 248 us each), npu busy 0.00%, dropped 0, imu 289495 samples 0 errors (times back 513 us, clock +6838 ppm), knocks 0, events 4, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 9.9 fps, max 8300 us
+[SS] stats t=370000 level -50 dB floor -51 dB, npu 1007 us runner 1035 us feat 302 us, 0.0 inf/s, busy 6%, active 12.4% (3572 passes/s, 3522 sleeps/s, 248 us each), npu busy 0.00%, dropped 0, imu 297548 samples 0 errors (times back 513 us, clock +6628 ppm), knocks 0, events 4, saves 4
+[SS] t=377312 +8.1 dB best 'Water running' 0.51 (thr 0.50), 2nd 'Doorbell' 0.46, felt no (0.0 mg) -> maybe Water running
+[C3] banner on screen 64343 us after the decision (draw 60504 us, present 3529 us)
+[SS] draw: full max 60504 us + present 3529 us; live view 9.5 fps, max 15069 us
+[SS] stats t=380000 level -50 dB floor -50 dB, npu 1006 us runner 1034 us feat 302 us, 0.8 inf/s, busy 7%, active 13.6% (3532 passes/s, 3482 sleeps/s, 248 us each), npu busy 0.08%, dropped 0, imu 305602 samples 0 errors (times back 513 us, clock +6615 ppm), knocks 0, events 5, saves 4
+[SS] draw: full max 50687 us + present 3542 us; live view 9.9 fps, max 10440 us
+[SS] stats t=390000 level -50 dB floor -51 dB, npu 1006 us runner 1034 us feat 303 us, 0.0 inf/s, busy 7%, active 13.4% (3608 passes/s, 3558 sleeps/s, 243 us each), npu busy 0.00%, dropped 0, imu 313655 samples 0 errors (times back 513 us, clock +6808 ppm), knocks 0, events 5, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8303 us
+[SS] stats t=400000 level -50 dB floor -50 dB, npu 1006 us runner 1034 us feat 303 us, 0.0 inf/s, busy 6%, active 12.3% (3708 passes/s, 3658 sleeps/s, 239 us each), npu busy 0.00%, dropped 0, imu 321709 samples 0 errors (times back 513 us, clock +6885 ppm), knocks 0, events 5, saves 4
+[SS] t=407624 +6.5 dB best 'Glass breaking' 0.31 (thr 0.50), 2nd 'Water running' 0.30, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 9.9 fps, max 14426 us
+[SS] stats t=410000 level -49 dB floor -49 dB, npu 1008 us runner 1035 us feat 303 us, 0.6 inf/s, busy 7%, active 13.1% (3670 passes/s, 3620 sleeps/s, 239 us each), npu busy 0.06%, dropped 0, imu 329763 samples 0 errors (times back 513 us, clock +6908 ppm), knocks 0, events 5, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8304 us
+[SS] stats t=420000 level -49 dB floor -50 dB, npu 1008 us runner 1035 us feat 303 us, 0.0 inf/s, busy 6%, active 12.4% (3706 passes/s, 3656 sleeps/s, 239 us each), npu busy 0.00%, dropped 0, imu 337817 samples 0 errors (times back 513 us, clock +6839 ppm), knocks 0, events 5, saves 4
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8302 us
+[SS] stats t=430000 level -50 dB floor -50 dB, npu 1008 us runner 1035 us feat 303 us, 0.0 inf/s, busy 7%, active 12.9% (3685 passes/s, 3635 sleeps/s, 239 us each), npu busy 0.00%, dropped 0, imu 345870 samples 0 errors (times back 513 us, clock +6550 ppm), knocks 0, events 5, saves 4
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11882 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1026 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 1207), copy B valid (seq 1206)
+[STORE] loaded 1 taught sounds from copy A, seq 1207, in 465 us; built-ins off: 0x0
+[S1] mics: left -51.2 dB (peak 256), right -59.7 dB (peak 187) over 8000 samples
+[S1] ready after 1480 ms: mics left -51 dB, right -60 dB; npu matches the reference, 1.0 ms; saved sounds 1 taught sound restored; imu knocks can be felt; lights ok
+[C5] cycle counter through WFI: 100% of wall time -> sleeping between audio blocks
+[SS] listening; 9 built-in sounds
+[SS] knob at 0%: sensitivity as taught until it's turned
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11881 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1026 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 1207), copy B valid (seq 1206)
+[STORE] loaded 1 taught sounds from copy A, seq 1207, in 465 us; built-ins off: 0x0
+[S1] mics: left -50.4 dB (peak 384), right -58.5 dB (peak 187) over 8000 samples
+[S1] ready after 1278 ms: mics left -50 dB, right -58 dB; npu matches the reference, 1.0 ms; saved sounds 1 taught sound restored; imu knocks can be felt; lights ok
+[C5] cycle counter through WFI: 99% of wall time -> sleeping between audio blocks
+[SS] listening; 9 built-in sounds
+[SS] knob at 0%: sensitivity as taught until it's turned
+[SS] t=6202 injected 'Alarm' (host command 13, no sound)
+[C3] alert on screen 29079 us after the decision (draw 25561 us, present 3517 us)
+[C3] alert 'Alarm' ended after 1232 ms: 1 full redraws, longest draw 25561 us + present 3517 us, 0 audio blocks dropped
+[SS] t=8642 injected 'Knock' (host command 13, no sound)
+[C3] alert on screen 41235 us after the decision (draw 37703 us, present 3531 us)
+[SS] 'Knock' marked wrong: kept as counter-example 1 (built-in: until restart)
+[C3] alert 'Knock' ended after 1214 ms: 1 full redraws, longest draw 37703 us + present 3531 us, 0 audio blocks dropped
+[SS] draw: full max 53127 us + present 3542 us; live view 4.2 fps, max 10377 us
+[SS] stats t=10000 level -49 dB floor -49 dB, npu 1000 us runner 1026 us feat 304 us, 1.2 inf/s, busy 9%, active 12.1% (3878 passes/s, 3829 sleeps/s, 229 us each), npu busy 0.12%, dropped 0, imu 7625 samples 0 errors (times back 163 us, clock +6889 ppm), knocks 0, events 2, saves 0
+[SS] command 15: the boot test clip ('dog') as if just heard
+[SS] t=12261 +20.0 dB best 'Dog barking' 0.79 (thr 0.52), 2nd 'Doorbell' 0.32, felt no (0.0 mg) -> Dog barking
+[C3] banner on screen 61017 us after the decision (draw 57494 us, present 3523 us)
+[SS] 'Dog barking' marked right
+[SS] draw: full max 58227 us + present 3549 us; live view 4.6 fps, max 14018 us
+[SS] stats t=20000 level -51 dB floor -50 dB, npu 1007 us runner 1035 us feat 303 us, 0.4 inf/s, busy 9%, active 14.9% (3757 passes/s, 3708 sleeps/s, 229 us each), npu busy 0.04%, dropped 0, imu 15679 samples 0 errors (times back 228 us, clock +7532 ppm), knocks 0, events 3, saves 0
+[TEACH] 'Keys': make the sound 8 times
+[TEACH] command 17: shot from the boot test clip
+[TEACH] shot 1/8: +20.0 dB
+[TEACH] command 17: shot from the boot test clip
+[TEACH] shot 2/8: +20.0 dB
+[TEACH] command 17: shot from the boot test clip
+[TEACH] shot 3/8: +20.0 dB
+[TEACH] command 17: shot from the boot test clip
+[TEACH] shot 4/8: +20.0 dB
+[TEACH] command 17: shot from the boot test clip
+[TEACH] shot 5/8: +20.0 dB
+[TEACH] command 17: shot from the boot test clip
+[TEACH] shot 6/8: +20.0 dB
+[TEACH] command 17: shot from the boot test clip
+[TEACH] shot 7/8: +20.0 dB
+[TEACH] command 17: shot from the boot test clip
+[TEACH] shot 8/8: +20.0 dB
+[TEACH] profile: thr 0.850, leave-one-out 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00; make it once more to test, press to save
+[TEACH] T6: sounds like 'Dog barking' (0.79)
+[TEACH] cancelled
+[SS] draw: full max 48710 us + present 3553 us; live view 3.9 fps, max 10358 us
+[SS] stats t=30013 level -49 dB floor -50 dB, npu 1001 us runner 1031 us feat 304 us, 0.8 inf/s, busy 24%, active 29.4% (3101 passes/s, 3057 sleeps/s, 230 us each), npu busy 0.08%, dropped 0, imu 23743 samples 0 errors (times back 228 us, clock +7893 ppm), knocks 0, events 3, saves 0
+[SS] t=34398 +3.7 dB best 'Doorbell' 0.46 (thr 0.50), 2nd 'Water running' 0.44, felt no (0.0 mg) -> quiet
+[SS] draw: full max 48705 us + present 3544 us; live view 9.3 fps, max 14250 us
+[SS] stats t=40013 level -51 dB floor -51 dB, npu 1007 us runner 1035 us feat 303 us, 0.5 inf/s, busy 13%, active 19.2% (3557 passes/s, 3509 sleeps/s, 230 us each), npu busy 0.05%, dropped 0, imu 31792 samples 0 errors (times back 228 us, clock +6987 ppm), knocks 0, events 3, saves 0
+[SS] draw: full max 53910 us + present 3546 us; live view 4.1 fps, max 10391 us
+[SS] stats t=50013 level -52 dB floor -50 dB, npu 1007 us runner 1035 us feat 304 us, 0.0 inf/s, busy 5%, active 11.0% (3914 passes/s, 3864 sleeps/s, 230 us each), npu busy 0.00%, dropped 0, imu 39849 samples 0 errors (times back 228 us, clock +7311 ppm), knocks 0, events 3, saves 0
+[SS] t=51512 +18.9 dB best 'Doorbell' 0.49 (thr 0.50), 2nd 'Water running' 0.19, felt no (0.0 mg) -> unknown
+[SS] t=51512 what was that? +18.9 dB, matches nothing; UP teaches it
+[SS] 'Dog barking' off: not shown or logged
+[STORE] save 1 ok: copy B seq 1208, 824 bytes, 183 ms (max 183), longest step 120756 us, dropped 0
+[SS] command 15: the boot test clip ('dog') as if just heard
+[SS] t=59883 +20.0 dB best 'Dog barking' 0.79 (thr 0.52), 2nd 'Doorbell' 0.32, felt no (0.0 mg) -> unknown
+[SS] draw: full max 55898 us + present 3544 us; live view 1.0 fps, max 10378 us
+[SS] stats t=60013 level -50 dB floor -50 dB, npu 1005 us runner 1035 us feat 303 us, 0.3 inf/s, busy 6%, active 13.5% (3803 passes/s, 3755 sleeps/s, 230 us each), npu busy 0.03%, dropped 0, imu 47901 samples 0 errors (times back 228 us, clock +7613 ppm), knocks 0, events 4, saves 1
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11878 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1026 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 1207), copy B valid (seq 1208)
+[STORE] loaded 1 taught sounds from copy B, seq 1208, in 465 us; built-ins off: 0x2
+[S1] mics: left -50.5 dB (peak 384), right -53.6 dB (peak 187) over 8000 samples
+[S1] ready after 1278 ms: mics left -50 dB, right -54 dB; npu matches the reference, 1.0 ms; saved sounds 1 taught sound restored; imu knocks can be felt; lights ok
+[C5] cycle counter through WFI: 100% of wall time -> sleeping between audio blocks
+[SS] listening; 9 built-in sounds
+[SS] knob at 0%: sensitivity as taught until it's turned
+[SS] draw: full max 53612 us + present 3532 us; live view 6.5 fps, max 10369 us
+[SS] stats t=10000 level -51 dB floor -51 dB, npu 1000 us runner 1026 us feat 303 us, 1.2 inf/s, busy 9%, active 12.3% (3874 passes/s, 3824 sleeps/s, 229 us each), npu busy 0.12%, dropped 0, imu 7621 samples 0 errors (times back 0 us, clock +6876 ppm), knocks 0, events 0, saves 0
+[SS] draw: full max 55847 us + present 3545 us; live view 0.0 fps, max 0 us
+[SS] stats t=20000 level -48 dB floor -49 dB, npu 1000 us runner 1026 us feat 304 us, 0.0 inf/s, busy 6%, active 12.1% (3875 passes/s, 3826 sleeps/s, 229 us each), npu busy 0.00%, dropped 0, imu 15677 samples 0 errors (times back 0 us, clock +7308 ppm), knocks 0, events 0, saves 0
+[SS] 'Doorbell' urgency: Urgent
+[STORE] save 1 ok: copy A seq 1209, 824 bytes, 170 ms (max 170), longest step 108657 us, dropped 0
+[SS] t=26567 injected 'Doorbell' (host command 13, no sound)
+[C3] alert on screen 49361 us after the decision (draw 45832 us, present 3528 us)
+[C3] alert 'Doorbell' ended after 1657 ms: 4 full redraws, longest draw 46711 us + present 3554 us, 0 audio blocks dropped
+[SS] draw: full max 53954 us + present 3554 us; live view 1.4 fps, max 10353 us
+[SS] stats t=30000 level -51 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 0.0 inf/s, busy 6%, active 13.4% (3801 passes/s, 3752 sleeps/s, 230 us each), npu busy 0.00%, dropped 0, imu 23729 samples 0 errors (times back 345 us, clock +6720 ppm), knocks 0, events 1, saves 1
+[SS] t=38738 +6.9 dB best 'Doorbell' 0.48 (thr 0.50), 2nd 'Water running' 0.44, felt no (0.0 mg) -> quiet
+[SS] draw: full max 55615 us + present 3538 us; live view 0.0 fps, max 0 us
+[SS] stats t=40000 level -50 dB floor -48 dB, npu 1007 us runner 1035 us feat 302 us, 0.1 inf/s, busy 3%, active 9.4% (3996 passes/s, 3947 sleeps/s, 229 us each), npu busy 0.01%, dropped 0, imu 31778 samples 0 errors (times back 345 us, clock +6585 ppm), knocks 0, events 1, saves 1
+[SS] draw: full max 38613 us + present 3529 us; live view 0.2 fps, max 10335 us
+[SS] stats t=50000 level -51 dB floor -50 dB, npu 1007 us runner 1035 us feat 303 us, 0.0 inf/s, busy 1%, active 7.2% (4078 passes/s, 4028 sleeps/s, 230 us each), npu busy 0.00%, dropped 0, imu 39833 samples 0 errors (times back 345 us, clock +6839 ppm), knocks 0, events 1, saves 1
+[SS] 'Dog barking' on
+[STORE] save 2 ok: copy B seq 1210, 824 bytes, 186 ms (max 186), longest step 123042 us, dropped 0
+[SS] draw: full max 55871 us + present 3546 us; live view 0.5 fps, max 8381 us
+[SS] stats t=60000 level -49 dB floor -50 dB, npu 1007 us runner 1035 us feat 304 us, 0.0 inf/s, busy 5%, active 12.6% (3846 passes/s, 3798 sleeps/s, 229 us each), npu busy 0.00%, dropped 0, imu 47892 samples 0 errors (times back 345 us, clock +7449 ppm), knocks 0, events 1, saves 2
+[SS] t=63654 +10.1 dB best 'Water running' 0.43 (thr 0.50), 2nd 'Doorbell' 0.39, felt no (0.0 mg) -> unknown
+[SS] t=65036 +20.7 dB best 'Baby crying' 0.43 (thr 0.57), 2nd 'Dog barking' 0.25, felt no (0.0 mg) -> unknown
+[SS] t=65036 what was that? +20.7 dB, matches nothing; UP teaches it
+[SS] t=66454 +13.8 dB best 'Doorbell' 0.50 (thr 0.50), 2nd 'Water running' 0.27, felt no (0.0 mg) -> maybe Doorbell
+[C3] alert on screen 126206 us after the decision (draw 122686 us, present 3519 us)
+[SS] draw: full max 122686 us + present 3519 us; live view 0.0 fps, max 0 us
+[SS] stats t=70000 level -50 dB floor -49 dB, npu 1008 us runner 1034 us feat 303 us, 0.6 inf/s, busy 2%, active 8.3% (4098 passes/s, 4048 sleeps/s, 226 us each), npu busy 0.06%, dropped 0, imu 55940 samples 0 errors (times back 345 us, clock +6866 ppm), knocks 0, events 3, saves 2
+[SS] draw: full max 0 us + present 0 us; live view 0.0 fps, max 0 us
+[SS] stats t=80000 level -50 dB floor -50 dB, npu 1008 us runner 1034 us feat 303 us, 0.0 inf/s, busy 0%, active 6.6% (4138 passes/s, 4088 sleeps/s, 228 us each), npu busy 0.00%, dropped 0, imu 63994 samples 0 errors (times back 345 us, clock +6923 ppm), knocks 0, events 3, saves 2
+[C3] alert 'Doorbell' ended after 13277 ms: 1 full redraws, longest draw 122686 us + present 3519 us, 0 audio blocks dropped
+[SS] draw: full max 55476 us + present 3546 us; live view 0.8 fps, max 10353 us
+[SS] stats t=90000 level -49 dB floor -50 dB, npu 1008 us runner 1034 us feat 303 us, 0.0 inf/s, busy 7%, active 13.1% (3816 passes/s, 3768 sleeps/s, 230 us each), npu busy 0.00%, dropped 0, imu 72049 samples 0 errors (times back 542 us, clock +7570 ppm), knocks 0, events 3, saves 2
+[SS] 'Doorbell' urgency: Info
+[STORE] save 3 ok: copy A seq 1211, 824 bytes, 171 ms (max 186), longest step 123042 us, dropped 0
+[SS] draw: full max 55305 us + present 3560 us; live view 0.9 fps, max 10351 us
+[SS] stats t=100000 level -51 dB floor -50 dB, npu 1008 us runner 1034 us feat 304 us, 0.0 inf/s, busy 7%, active 13.8% (3788 passes/s, 3740 sleeps/s, 230 us each), npu busy 0.00%, dropped 0, imu 80105 samples 0 errors (times back 542 us, clock +7467 ppm), knocks 0, events 3, saves 3
+[SS] 'Doorbell' urgency: Important
+[STORE] save 4 ok: copy B seq 1212, 824 bytes, 185 ms (max 186), longest step 123042 us, dropped 0
+[SS] draw: full max 53126 us + present 3552 us; live view 1.5 fps, max 10364 us
+[SS] stats t=110000 level -48 dB floor -49 dB, npu 1008 us runner 1034 us feat 304 us, 0.0 inf/s, busy 7%, active 14.7% (3739 passes/s, 3692 sleeps/s, 231 us each), npu busy 0.00%, dropped 0, imu 88157 samples 0 errors (times back 542 us, clock +7625 ppm), knocks 0, events 3, saves 4
+[SS] 'Dog barking' off: not shown or logged
+[STORE] save 5 ok: copy A seq 1213, 824 bytes, 165 ms (max 186), longest step 123042 us, dropped 0
+[SS] draw: full max 55802 us + present 3544 us; live view 1.6 fps, max 10372 us
+[SS] stats t=120000 level -49 dB floor -50 dB, npu 1008 us runner 1034 us feat 303 us, 0.0 inf/s, busy 7%, active 14.1% (3770 passes/s, 3722 sleeps/s, 230 us each), npu busy 0.00%, dropped 0, imu 96208 samples 0 errors (times back 542 us, clock +7450 ppm), knocks 0, events 3, saves 5
+[SS] command 15: the boot test clip ('dog') as if just heard
+[SS] t=121620 +20.0 dB best 'Dog barking' 0.79 (thr 0.52), 2nd 'Doorbell' 0.32, felt no (0.0 mg) -> unknown
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11879 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1026 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 1213), copy B valid (seq 1212)
+[STORE] loaded 1 taught sounds from copy A, seq 1213, in 465 us; built-ins off: 0x2
+[S1] mics: left -50.7 dB (peak 256), right -58.5 dB (peak 187) over 8000 samples
+[S1] ready after 1278 ms: mics left -51 dB, right -58 dB; npu matches the reference, 1.0 ms; saved sounds 1 taught sound restored; imu knocks can be felt; lights ok
+[C5] cycle counter through WFI: 100% of wall time -> sleeping between audio blocks
+[SS] listening; 9 built-in sounds
+[SS] knob at 0%: sensitivity as taught until it's turned
+[SS] draw: full max 53695 us + present 3534 us; live view 6.4 fps, max 10366 us
+[SS] stats t=10000 level -51 dB floor -50 dB, npu 1000 us runner 1026 us feat 304 us, 1.2 inf/s, busy 9%, active 12.6% (3641 passes/s, 3592 sleeps/s, 243 us each), npu busy 0.12%, dropped 0, imu 7618 samples 0 errors (times back 0 us, clock +6972 ppm), knocks 0, events 0, saves 0
+[SS] draw: full max 55362 us + present 3552 us; live view 0.0 fps, max 0 us
+[SS] stats t=20000 level -50 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 0.0 inf/s, busy 3%, active 9.4% (3749 passes/s, 3700 sleeps/s, 244 us each), npu busy 0.00%, dropped 0, imu 15678 samples 0 errors (times back 585 us, clock +6808 ppm), knocks 0, events 0, saves 0
+[SS] 'Doorbell' urgency: Urgent
+[STORE] save 1 ok: copy B seq 1214, 824 bytes, 180 ms (max 180), longest step 118509 us, dropped 0
+[SS] draw: full max 53723 us + present 3543 us; live view 0.0 fps, max 0 us
+[SS] stats t=30000 level -51 dB floor -51 dB, npu 1000 us runner 1026 us feat 303 us, 0.0 inf/s, busy 5%, active 12.1% (3672 passes/s, 3624 sleeps/s, 242 us each), npu busy 0.00%, dropped 0, imu 23726 samples 0 errors (times back 585 us, clock +7456 ppm), knocks 0, events 0, saves 1
+[SS] t=31369 injected 'Doorbell' (host command 13, no sound)
+[C3] alert on screen 50253 us after the decision (draw 46254 us, present 3526 us)
+[C3] alert 'Doorbell' ended after 1632 ms: 4 full redraws, longest draw 46716 us + present 3543 us, 0 audio blocks dropped
+[SS] draw: full max 55268 us + present 3548 us; live view 1.7 fps, max 10353 us
+[SS] stats t=40000 level -50 dB floor -50 dB, npu 1000 us runner 1026 us feat 304 us, 0.0 inf/s, busy 8%, active 14.4% (3560 passes/s, 3512 sleeps/s, 243 us each), npu busy 0.00%, dropped 0, imu 31781 samples 0 errors (times back 585 us, clock +7388 ppm), knocks 0, events 1, saves 1
+[SS] renamed 'Doorbell' to 'Clap'
+[STORE] save 2 ok: copy A seq 1215, 824 bytes, 168 ms (max 180), longest step 118509 us, dropped 0
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11880 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1026 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 1215), copy B valid (seq 1214)
+[STORE] loaded 1 taught sounds from copy A, seq 1215, in 465 us; built-ins off: 0x2
+[S1] mics: left -50.8 dB (peak 384), right -58.7 dB (peak 187) over 8000 samples
+[S1] ready after 1278 ms: mics left -51 dB, right -59 dB; npu matches the reference, 1.0 ms; saved sounds 1 taught sound restored; imu knocks can be felt; lights ok
+[C5] cycle counter through WFI: 100% of wall time -> sleeping between audio blocks
+[SS] listening; 9 built-in sounds
+[SS] knob at 0%: sensitivity as taught until it's turned
+[SS] draw: full max 55125 us + present 3549 us; live view 3.9 fps, max 10374 us
+[SS] stats t=10000 level -49 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 1.2 inf/s, busy 9%, active 12.7% (3787 passes/s, 3738 sleeps/s, 233 us each), npu busy 0.12%, dropped 0, imu 7620 samples 0 errors (times back 79 us, clock +6973 ppm), knocks 0, events 0, saves 0
+[SS] 'Dog barking' on
+[STORE] save 1 ok: copy B seq 1216, 824 bytes, 183 ms (max 183), longest step 120785 us, dropped 0
+[SS] draw: full max 55251 us + present 3542 us; live view 0.8 fps, max 10346 us
+[SS] stats t=20000 level -50 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 0.0 inf/s, busy 6%, active 13.6% (3741 passes/s, 3693 sleeps/s, 234 us each), npu busy 0.00%, dropped 0, imu 15673 samples 0 errors (times back 364 us, clock +7596 ppm), knocks 0, events 0, saves 1
+[SS] draw: full max 54532 us + present 3543 us; live view 0.0 fps, max 0 us
+[SS] stats t=30000 level -49 dB floor -49 dB, npu 1000 us runner 1026 us feat 304 us, 0.0 inf/s, busy 5%, active 11.5% (3864 passes/s, 3816 sleeps/s, 232 us each), npu busy 0.00%, dropped 0, imu 23730 samples 0 errors (times back 364 us, clock +7382 ppm), knocks 0, events 0, saves 1
+[SS] 'Clap' urgency: Info
+[STORE] save 2 ok: copy A seq 1217, 824 bytes, 169 ms (max 183), longest step 120785 us, dropped 0
+[SS] draw: full max 55319 us + present 3552 us; live view 1.1 fps, max 10352 us
+[SS] stats t=40000 level -50 dB floor -50 dB, npu 1000 us runner 1026 us feat 304 us, 0.0 inf/s, busy 5%, active 12.1% (3825 passes/s, 3776 sleeps/s, 232 us each), npu busy 0.00%, dropped 0, imu 31784 samples 0 errors (times back 364 us, clock +7150 ppm), knocks 0, events 0, saves 2
+[SS] 'Clap' urgency: Important
+[STORE] save 3 ok: copy B seq 1218, 824 bytes, 182 ms (max 183), longest step 120785 us, dropped 0
+[SS] draw: full max 53851 us + present 3545 us; live view 0.8 fps, max 10335 us
+[SS] stats t=50000 level -51 dB floor -51 dB, npu 1000 us runner 1026 us feat 302 us, 0.0 inf/s, busy 7%, active 14.0% (3747 passes/s, 3700 sleeps/s, 232 us each), npu busy 0.00%, dropped 0, imu 39834 samples 0 errors (times back 364 us, clock +7452 ppm), knocks 0, events 0, saves 3
+[SS] draw: full max 55097 us + present 3549 us; live view 0.0 fps, max 0 us
+[SS] stats t=60000 level -50 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 0.0 inf/s, busy 7%, active 12.6% (3786 passes/s, 3738 sleeps/s, 233 us each), npu busy 0.00%, dropped 0, imu 47890 samples 0 errors (times back 364 us, clock +7479 ppm), knocks 0, events 0, saves 3
+[SS] renamed 'Clap' to 'Microwave'
+[STORE] save 4 ok: copy A seq 1219, 824 bytes, 168 ms (max 183), longest step 120785 us, dropped 0
+[SS] renamed 'Microwave' to 'Kettle'
+[STORE] save 5 ok: copy B seq 1220, 824 bytes, 182 ms (max 183), longest step 120785 us, dropped 0
+[SS] renamed 'Kettle' to 'Phone'
+[STORE] save 6 ok: copy A seq 1221, 824 bytes, 166 ms (max 183), longest step 120785 us, dropped 0
+[SS] renamed 'Phone' to 'Washer'
+[STORE] save 7 ok: copy B seq 1222, 824 bytes, 186 ms (max 186), longest step 123030 us, dropped 0
+[SS] renamed 'Washer' to 'My name'
+[STORE] save 8 ok: copy A seq 1223, 824 bytes, 164 ms (max 186), longest step 123030 us, dropped 0
+[SS] renamed 'My name' to 'Keys'
+[STORE] save 9 ok: copy B seq 1224, 824 bytes, 189 ms (max 189), longest step 125380 us, dropped 0
+[SS] renamed 'Keys' to 'Doorbell'
+[STORE] save 10 ok: copy A seq 1225, 824 bytes, 170 ms (max 189), longest step 125380 us, dropped 0
+[SS] draw: full max 53635 us + present 3560 us; live view 1.1 fps, max 10339 us
+[SS] stats t=70000 level -49 dB floor -51 dB, npu 1000 us runner 1026 us feat 303 us, 0.0 inf/s, busy 6%, active 19.6% (3531 passes/s, 3485 sleeps/s, 230 us each), npu busy 0.00%, dropped 0, imu 55943 samples 0 errors (times back 364 us, clock +7598 ppm), knocks 0, events 0, saves 10
+[SS] t=70600 injected 'Alarm' (host command 13, no sound)
+[C3] alert on screen 28554 us after the decision (draw 25022 us, present 3531 us)
+[SS] t=73462 injected 'Alarm' (host command 13, no sound)
+[C3] alert on screen 32151 us after the decision (draw 28613 us, present 3537 us)
+[SS] draw: full max 28613 us + present 3537 us; live view 0.6 fps, max 8302 us
+[SS] stats t=80000 level -50 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 0.0 inf/s, busy 1%, active 7.7% (3996 passes/s, 3946 sleeps/s, 233 us each), npu busy 0.00%, dropped 0, imu 63996 samples 0 errors (times back 364 us, clock +7109 ppm), knocks 0, events 1, saves 10
+[C3] alert 'Alarm' ended after 17893 ms: 3 full redraws, longest draw 28613 us + present 3537 us, 0 audio blocks dropped
+[SS] draw: full max 38108 us + present 3535 us; live view 1.5 fps, max 10356 us
+[SS] stats t=90000 level -49 dB floor -50 dB, npu 1000 us runner 1026 us feat 304 us, 0.0 inf/s, busy 2%, active 8.2% (3967 passes/s, 3917 sleeps/s, 234 us each), npu busy 0.00%, dropped 0, imu 72051 samples 0 errors (times back 364 us, clock +6677 ppm), knocks 0, events 1, saves 10
+[S5] measuring the room for 10 s (floor now -50.6 dB)
+[SS] draw: full max 56071 us + present 3540 us; live view 2.8 fps, max 10347 us
+[SS] stats t=100000 level -49 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 0.0 inf/s, busy 8%, active 14.6% (3707 passes/s, 3659 sleeps/s, 233 us each), npu busy 0.00%, dropped 0, imu 80102 samples 0 errors (times back 364 us, clock +7436 ppm), knocks 0, events 1, saves 10
+[S5] room calibrated: floor -50.5 dB (median of 10 s); sounds need -42.5 dB
+[SS] draw: full max 56093 us + present 3552 us; live view 0.0 fps, max 0 us
+[SS] stats t=110000 level -48 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 0.0 inf/s, busy 10%, active 16.4% (3595 passes/s, 3548 sleeps/s, 235 us each), npu busy 0.00%, dropped 0, imu 88158 samples 0 errors (times back 364 us, clock +6731 ppm), knocks 0, events 1, saves 10
+[SS] draw: full max 37692 us + present 3533 us; live view 3.7 fps, max 10365 us
+[SS] stats t=120000 level -51 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 0.0 inf/s, busy 3%, active 9.0% (3977 passes/s, 3927 sleeps/s, 231 us each), npu busy 0.00%, dropped 0, imu 96212 samples 0 errors (times back 364 us, clock +6708 ppm), knocks 0, events 1, saves 10
+[SS] draw: full max 55538 us + present 3533 us; live view 8.7 fps, max 10381 us
+[SS] stats t=130000 level -49 dB floor -49 dB, npu 1000 us runner 1026 us feat 304 us, 0.0 inf/s, busy 7%, active 13.6% (3828 passes/s, 3779 sleeps/s, 228 us each), npu busy 0.00%, dropped 0, imu 104265 samples 0 errors (times back 364 us, clock +6768 ppm), knocks 0, events 1, saves 10
+[SS] draw: full max 56177 us + present 3547 us; live view 0.0 fps, max 0 us
+[SS] stats t=140000 level -48 dB floor -50 dB, npu 1000 us runner 1026 us feat 305 us, 0.0 inf/s, busy 3%, active 8.9% (3962 passes/s, 3913 sleeps/s, 232 us each), npu busy 0.00%, dropped 0, imu 112321 samples 0 errors (times back 364 us, clock +6554 ppm), knocks 0, events 1, saves 10
+[SS] draw: full max 0 us + present 0 us; live view 0.0 fps, max 0 us
+[SS] stats t=150000 level -50 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 0.0 inf/s, busy 0%, active 6.6% (4040 passes/s, 3990 sleeps/s, 234 us each), npu busy 0.00%, dropped 0, imu 120375 samples 0 errors (times back 364 us, clock +6790 ppm), knocks 0, events 1, saves 10
+[SS] draw: full max 37363 us + present 3549 us; live view 7.0 fps, max 10368 us
+[SS] stats t=160000 level -50 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 0.0 inf/s, busy 5%, active 11.2% (3878 passes/s, 3828 sleeps/s, 231 us each), npu busy 0.00%, dropped 0, imu 128426 samples 0 errors (times back 364 us, clock +6586 ppm), knocks 0, events 1, saves 10
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8310 us
+[SS] stats t=170000 level -50 dB floor -50 dB, npu 1000 us runner 1026 us feat 303 us, 0.0 inf/s, busy 6%, active 12.3% (3849 passes/s, 3799 sleeps/s, 230 us each), npu busy 0.00%, dropped 0, imu 136480 samples 0 errors (times back 364 us, clock +6860 ppm), knocks 0, events 1, saves 10
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8476 us
+[SS] stats t=180000 level -52 dB floor -50 dB, npu 1000 us runner 1026 us feat 302 us, 0.0 inf/s, busy 6%, active 12.5% (3827 passes/s, 3777 sleeps/s, 231 us each), npu busy 0.00%, dropped 0, imu 144533 samples 0 errors (times back 364 us, clock +6883 ppm), knocks 0, events 1, saves 10
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8301 us
+[SS] stats t=190000 level -50 dB floor -51 dB, npu 1000 us runner 1026 us feat 303 us, 0.0 inf/s, busy 7%, active 12.8% (3787 passes/s, 3737 sleeps/s, 233 us each), npu busy 0.00%, dropped 0, imu 152587 samples 0 errors (times back 364 us, clock +6829 ppm), knocks 0, events 1, saves 10

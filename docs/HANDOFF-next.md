@@ -1,6 +1,6 @@
 # Handoff: continuing Sound Sense (2026-10-18)
 
-**Updated 12:00 PM PDT.** The board's J-Link is now on the laptop with the et-venv (it has torch,
+**Updated 11:55 AM PDT.** The board's J-Link is now on the laptop with the et-venv (it has torch,
 the datasets and the toolchain), so offline work and board work happen on one machine.
 
 Since 10:10 AM:
@@ -14,10 +14,13 @@ Since 10:10 AM:
 - 11:10-11:25 AM: live 8-example teach. Two bugs found and fixed ("loud room" during the sound, T2
   with two stray shots). Full-app smoke test `tools/ss_smoke.py`: 16/16 pass. `tools/jlink.py cmd`
   sends host commands safely while the RTT logger runs.
-- 11:30 AM-12 PM, no sound: IMU `times back` explained and fixed (J-Link detach stopped the cycle
-  counter; re-armed every 1 ms now). T7: Settings > Sounds turns built-ins on/off and sets taught
-  sounds' urgency, saved in the flash. H5: "still sounding". Board tests: smoke 16/16,
-  `tools/ss_t7_test.py` 10/10.
+- 11:20-11:55 AM, no sound:
+  - IMU `times back` explained and fixed: a J-Link detach stopped the cycle counter; it's re-armed every 1 ms now.
+  - T7: Settings > Sounds turns built-ins on/off, sets each taught sound's urgency, and renames it
+    (RIGHT steps through the free preset names). All saved in the flash.
+  - H5: "still sounding".
+  - S5: Settings > Calibrate room (10 s, median level).
+  - Board tests: smoke 16/16, `tools/ss_t7_test.py` 14/14.
 
 Done between 9 and 10:10 AM, without playing any sound:
 
@@ -71,10 +74,10 @@ Work stays on branch **`gates`**. Read in this order:
 
 | Area | Status |
 |---|---|
-| App `firmware/soundsense/` | Release build flashed at 11:45 AM: two-stage decision, 8 examples, T2, T6, host command 17, Sounds page (T7), "still sounding" (H5), cycle counter re-armed in SysTick. Smoke test 16/16, T7 test 10/10. ITCM 97.52% |
+| App `firmware/soundsense/` | Release build flashed at 11:47 AM: two-stage decision, 8 examples, T2, T6, host command 17, Sounds page (T7: on/off, urgency, rename), "still sounding" (H5), Calibrate room (S5), cycle counter re-armed in SysTick. Smoke test 16/16, T7 test 14/14. ITCM 97.69% |
 | Gates | G1 SOFT, G2 SOFT, G3 SOFT (short run), C1 GO, C2 GO, C3 rows 1-4 pass (row 5: backlight on/off only, no dimming), C4 GO, C5 done (12.6%, target 10%) |
 | P0 | 16 of 16 done |
-| P1 | 12 done, 3 partial (H7, S5, T7: no rename), 1 not started (H4 smoke vs CO) |
+| P1 | 14 done, 1 partial (H7: "My name" not tried on speech), 1 not started (H4 smoke vs CO) |
 | Not yet checked by eye or hand | Night mode turning the backlight off; turning the knob (T5) |
 
 ## Setting up a new machine
@@ -216,7 +219,7 @@ To check the result, read variables over J-Link:
 | `tools/build_flash.sh <project> [debug\|release] [noflash]` | Build (and flash). The log goes to `/tmp/build_<project>.log`; read it when cbuild's error is vague ("read .../firmware: is a directory" was an ITCM overflow). |
 | `tools/jlink.py <elf> get\|set\|cmd\|rtt\|reset` | Read and write variables, send a host command, follow RTT, reset |
 | `tools/ss_smoke.py` | Full-app smoke test over J-Link, no sound: resets the board, 16 checks, about 1 minute |
-| `tools/ss_t7_test.py` | Sounds page and "still sounding" on the board, no sound, 10 checks; restores the settings. `--set 0 1`: all built-ins on, taught sound Important |
+| `tools/ss_t7_test.py` | Sounds page (on/off, urgency, rename), "still sounding" and Calibrate room on the board, no sound, 14 checks, about 3 minutes; restores the settings. `--set 0 1`: all built-ins on, taught sound Important |
 | `tools/c3_ui.py [log]` | C3 rows 2-4 without sound: fake detections plus the board's own timing |
 | `tools/pc_profile.py [elf] [samples]` | Statistical CPU profile (DWT PC sampling). WFI sleep shows inside `main`. |
 | `tools/ss_screen.py` | Screenshot of the frame buffer over J-Link (12 s; tears during redraws) |
@@ -235,7 +238,7 @@ To check the result, read variables over J-Link:
 - **Time differences use `since(t, now)`**, never `now - t`. The loop reads `now` once at the top,
   and a decision stamps its times after a >1 ms inference, so `now - t` wrapped and closed banners
   at once (fixed 10-18).
-- **ITCM is 97.5% full** (255,632 of 256 KB; all `.text` lands there). New boot-only or rare code
+- **ITCM is 97.7% full** (256,080 of 256 KB; all `.text` lands there). New boot-only or rare code
   goes to MRAM:
   - mark the function `SS_COLD` (`ss_board.h`) or `UI_COLD` (`ui/ui.c`), or
   - add an object pattern to the MRAM section of the shared linker script
@@ -278,9 +281,8 @@ To check the result, read variables over J-Link:
 5. **Done: docs pass.** The controls (menu, marking, teach keys) and host commands 13-17 are in
    README and DEMO.md.
 6. **Smaller P1 gaps, if there's time:**
-   - Done at 12 PM: H5 "still sounding"; T7 built-ins on/off and urgency (Settings > Sounds)
-   - S5 explicit 10 s calibration
-   - T7 rename
+   - Done at 11:40 AM: H5 "still sounding"; T7 built-ins on/off and urgency (Settings > Sounds)
+   - Done at 11:50 AM: S5 "Calibrate room"; T7 rename
    - C3 row 5 PWM dimming: needs the RTE UTIMER4 driver and masking its per-cycle IRQs
    - H4 smoke vs CO (a bigger job)
 
@@ -314,7 +316,7 @@ To check the result, read variables over J-Link:
     - **Tested with sound at 10:50 AM** (`g3_play.py builtin`, `docs/gates/g3_builtin_early.txt`).
       Recognition is unchanged (30/56, 54%). 18 of 30 recognised sounds alerted early, median 437 ms
       from onset to screen, 0 wrong. Knocks fell 5 → 1 because none were felt this time.
-    - The IMU `times back` was a J-Link artefact, fixed at 11:40 AM (see
+    - The IMU `times back` was a J-Link artefact, fixed at 11:25 AM (see
       [GATES-results.md](GATES-results.md#imu-times-back-with-j-link-attached)).
     - README and DEMO.md now give the measured numbers (median 437 ms for a clear built-in match,
       else about 0.87 s). SUBMISSION.md, VIDEO-SCRIPT.md, HANDOFF-submission.md and make_gallery.py
