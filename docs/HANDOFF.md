@@ -24,7 +24,7 @@ Snapshot date: 2026-10-18. Reference machine: MacBook Air M2 (8 GB), macOS 26.6.
 | Mic gain | fixed: 0x800 instead of Alif's demo value 0x0D (+44 dB) | `hw_test`, `app/kws.c` |
 | OSPI flash, **64 MB** (XIP 74 MB/s) | passing; see [HANDOFF-memory.md](HANDOFF-memory.md) | `flash_test` |
 | OSPI PSRAM, **64 MB APS512XXN** (107 MB/s) | passing with the pack 2.2.1 driver; see [HANDOFF-memory.md](HANDOFF-memory.md) | `psram_test` |
-| **Final project: voice + motion controller** | keyword model trained; keyword app **built and flashed but not tested**, see §7 | `model/*kws*`, `firmware/app` |
+| **Final project: voice + motion controller** | keyword app runs on the board; **boot self-test bit-exact with Python**; live detection not yet tuned, see §7 | `model/*kws*`, `firmware/app` |
 
 ---
 
@@ -251,7 +251,7 @@ cp mnist_int8io_io.h ../firmware/npu_display/assets/model_io.h
 
 Expect float 98.00% / int8 98.05% on the host and a 105,696-byte .pte.
 
-### Keyword spotting (trained and exported; board app built but not tested)
+### Keyword spotting (trained, exported, running on the board)
 
 The trained checkpoint `kws_model.pth` and the exported `kws_ethos_u85.pte` / `_io.h` are
 committed. Only retrain if you change the model or the features; `python export_kws.py`
@@ -322,8 +322,8 @@ The dataset, cache and training log are git-ignored.
      entirely to the NPU.
    - Trained it: 94.9% test accuracy, and int8 loses nothing (94.53% vs 94.50% float).
    - Wrote the board-side capture and feature code (`firmware/app/kws.c`).
-   - Turned `firmware/app` into the live keyword app. It builds and was flashed once, but
-     work stopped before anyone looked at the screen or the log. **Untested.**
+   - Turned `firmware/app` into the live keyword app. Its boot self-test passes, bit-exact
+     with Python (2026-10-18, debug build, see §7 step 2).
 10. **Reproducibility:** pinned `ethos-u-core-driver@1.26.5`, made the scripts find the
     toolchain on their own, added `model/requirements-lock.txt`, and wrote this document.
 
@@ -332,7 +332,7 @@ The dataset, cache and training log are git-ignored.
 ## 7. Next steps (the plan for the final app)
 
 1. ~~Train and export KWS~~ (done, see §5).
-2. **Test the keyword app (built, flashed once, never checked).** What's in it:
+2. **Keyword app: self-test passes; live detection still to be checked.** What's in it:
    - `main.cpp`:
      - 16 kHz PDM capture.
      - One log-mel frame every 20 ms.
@@ -349,13 +349,34 @@ The dataset, cache and training log are git-ignored.
    - The first log line, `[KWS] self-test: …`, should show inputs within 1 LSB of Python and
      predict `'yes'`. If it doesn't, the C features don't match `model/kws_common.py`; fix
      that before trying live speech.
+   - **Result on the board (2026-10-18, debug build):**
+
+     ```
+     [KWS] self-test: features 59476 us, 0/1960 inputs differ from Python (max 0 LSB); output max diff 0 LSB; predicted 'yes' (98%), expected 'yes'; npu 448 us, runner 484 us
+     [KWS] t=2057 ms level -53 dBFS top '_unknown_' 34% npu 454 us runner 488 us feat 649 us dropped 0
+     ```
+
+     | Metric | Value |
+     |---|---|
+     | C features vs Python | identical (0 of 1,960 int8 inputs differ) |
+     | NPU output vs host int8 model | identical (max diff 0 LSB) |
+     | NPU execute per inference | 448–454 µs |
+     | Whole runner call (program reload + execute) | 483–488 µs, so reloading costs only ~35 µs |
+     | Streaming features per inference (normalize + quantize 49x40) | 649 µs |
+     | Features for a full 1 s clip at once (49 FFT frames) | 59.5 ms, about 1.2 ms per frame |
+     | Room noise at mic gain 0x800 | −53 dBFS |
+     | Dropped audio blocks | 0 |
+
+     In the first few seconds it also reported `'on' 79%` with nobody deliberately speaking.
+     That could be a false alarm or background speech: check the false-alarm rate in a quiet
+     room before raising the threshold.
    - Then say the keywords about 30 cm from the board and watch for `[KWS] … 'word' NN%` lines.
      `dropped` in the status line should stay at 0.
    - Things that might need tuning:
      - **Mic channel:** only mic 4 (left of the pair) is used.
      - **Detection threshold:** 0.70.
      - **Speed:** the debug build redraws slowly; try `release`.
-     - **The runner reloads the program on every call:** compare `runner` against `NPU` time.
+     - **Program reload per call:** measured at ~35 µs (`runner` − `NPU`), so not worth optimizing yet.
 4. Gesture model:
    - Record labeled BMI323 windows from the board over RTT (shake, flick left/right, tilt, idle).
    - Train a small 1D CNN and export it the same way.

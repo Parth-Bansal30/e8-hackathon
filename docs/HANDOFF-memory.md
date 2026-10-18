@@ -163,6 +163,26 @@ Expected:
 The two 64 MB pattern passes take about 10 s, so run `rtt_dump.sh` again if the log stops at
 `pattern pass 1`.
 
+**Rerun on the reference Mac (2026-10-18, debug build): PASS.** Every line matched the expected
+output within a few percent (sequential read 106.9 MB/s, memcpy 107.5 / 111.6 MB/s, random read
+347 ns), except the two 64 MB pattern timings, which were **2.5–3x faster**:
+
+```
+[RAM] pattern write (CPU)              72.0 MB/s  (65536 KB in 931006 us)
+[RAM] pattern verify (CPU)             77.4 MB/s  (65536 KB in 866539 us)
+```
+
+Both runs used the same commit (`a2de3cf`) and had 0 errors. The cause isn't known yet; a
+different build type or local edits on the machine that made the expected log are the first
+things to check. Correctness isn't affected.
+
+`flash_test` on the same Mac matched its expected output: erase 84.9 ms instead of 81.7 ms,
+every other number identical.
+
+`rtt_dump.sh` sometimes prints the same block several times when it's called repeatedly while
+a test runs. That's a log-reading artifact, not a reset: the `first word` value and the
+timings are identical in every copy.
+
 The test checks the RAM's ID before any memory-mapped access. On a board with a different RAM
 it prints `not an APS512XXN` and stops, instead of hanging the bus. Send the MR0/MR1/MR2 line
 back if that happens.
