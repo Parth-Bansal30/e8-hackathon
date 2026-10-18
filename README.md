@@ -25,7 +25,8 @@ delegated to the Ethos-U85.
   the table (a real knock at the door) or only heard (probably the TV).
 - **Accessible alerts:** full-screen card with icon, word and time; colour-blind-safe palette; an
   LED pattern per sound; three urgency levels, with a 1 Hz strobe for urgent sounds (safe for
-  photosensitivity). Low confidence shows as "Maybe: doorbell?", never as a certain alert.
+  photosensitivity). Urgent alerts stay until you press, and after 30 s the strobe doubles and the
+  screen says how long it has waited. Low confidence shows as "Maybe: doorbell?", never as a certain alert.
 - **Timeline** of today's sounds, with repeats merged and "felt here" marked.
 - **Live view:** scrolling spectrogram, room level against its noise floor, and the three best
   matches right now.
@@ -55,7 +56,8 @@ Details and logs: [docs/GATES-results.md](docs/GATES-results.md).
 | Built-in sounds | 88% offline (4% false accepts); 54% live from a laptop speaker (alarm 75%) |
 | Taught sounds | Work live; offline 38% accepted, 79% of untaught sounds rejected (borderline, see limits) |
 | Knock felt | 21 of 22 at 20 cm; IMU FIFO at 805 samples/s, 0 missed |
-| Alert delay | About 0.85 s after the sound starts (decides 0.8 s after the onset) |
+| Alert delay | About 0.85 s after the sound starts (decides 0.8 s after the onset); on screen 18.4–19.5 ms after the decision |
+| Display | Live view 10.0 fps; urgent strobe plus 10 forced full redraws a second for 12 s: 0 audio blocks dropped |
 | Flash save | 223–266 ms over 101 saves (median 252), longest 304 ms over 1,000 more; across all 1,101: 0 audio blocks dropped, 0 failed read-backs. Restore 2.2 ms |
 | Power | CPU active **12.6%** in a quiet room (was 100%); NPU busy 0.00% when quiet |
 | Boot to Ready | 1.5 s |
@@ -178,8 +180,7 @@ the datasets (ESC-50, Speech Commands), which aren't in git.
 - **Knocks are felt within about 20 cm** of the board on our table, hence "place me on the table
   by the door".
 - **Alert delay is about 0.85 s** against a 0.5 s target: the board waits for the whole sound.
-- Not built yet: repeating urgent alerts, night mode, fixing mistakes from the timeline, managing
-  individual sounds. See [docs/STATUS.md](docs/STATUS.md).
+- Not built yet: night mode, fixing mistakes from the timeline, managing individual sounds. See [docs/STATUS.md](docs/STATUS.md).
 
 ## Board bring-up (done before the project was chosen)
 

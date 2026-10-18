@@ -74,11 +74,13 @@ overlay text for the edit.
   edge). The full-screen **Alarm** card appears and the LEDs blink. Hold 3 seconds on the LEDs, then
   press to dismiss.
 - **Optional (full cut only):** `tools/demo_sound.py glass` for the urgent orange screen that
-  strobes once a second.
+  strobes once a second. Urgent alerts don't time out; press to dismiss. (Left alone for 30 s, the
+  strobe doubles and the screen says "No response for ...": worth a 3-second cutaway if you have
+  the time.)
 - **VO:** "Seven sounds are built in: knock, dog, baby, alarm, glass, siren and running water. Here's
   an alarm: a full-screen card with an icon, a word and the time, in colours that work with colour
   blindness, and the lights flash a pattern of their own. Urgent sounds, like breaking glass,
-  strobe once a second, which is safe for photosensitivity."
+  strobe once a second and stay until you press."
 - **Fallback:** if the alarm shows as "Maybe: Alarm?", keep it: it's the honest low-confidence
   style. Say "When it isn't sure, it says so."
 

@@ -115,9 +115,11 @@ Sound Sense runs entirely on the Alif Ensemble E8 DevKit (Cortex-M55 + Ethos-U85
   on ("Felt here + heard") from a knock it only hears, like one on the TV ("Heard only (TV?)").
   A heard-only knock shows as a banner, not a full-screen alert.
 - **Accessible alerts:** a full-screen card with icon, word and time, in a colour-blind-safe
-  palette, plus an LED pattern for each sound. There are three urgency levels, and urgent sounds
-  (glass breaking, siren) strobe once a second, which is safe for photosensitivity. Low
-  confidence shows as "Maybe: Dog barking?", never as a certain alert.
+  palette, plus an LED pattern for each sound. There are three urgency levels. Urgent sounds
+  (glass breaking, siren) strobe once a second and stay on screen until you press; after 30 s
+  with no response the strobe doubles to 2 flashes a second (still under 3 Hz, the
+  photosensitivity limit) and the screen says how long it has waited. Low confidence shows as
+  "Maybe: Dog barking?", never as a certain alert.
 - **Timeline** of today's sounds, with repeats merged and "felt here" marked.
 - **Live view:** a scrolling spectrogram, the room level against its noise floor, and the three best
   matches right now. In a quiet room it reads "Quiet: NPU resting".
@@ -196,7 +198,9 @@ All on the DK-E8 (M55-HP at 400 MHz, Ethos-U85-256), release build, 2026-10-18. 
 - **Power:** CPU active **12.6%** in a quiet room (it was 100%); NPU busy 0.00-0.05% when quiet; 0
   audio blocks dropped.
 - **Alert delay:** about 0.85 s after a sound starts. The board decides 0.8 s after the onset so the
-  whole sound is in the window.
+  whole sound is in the window; the alert is on screen 18.4-19.5 ms after that decision.
+- **Display:** live view at 10.0 fps. With the urgent strobe plus 10 forced full redraws a second
+  for 12 s, 0 audio blocks dropped.
 - **Flash save:** 223-266 ms (median 252 ms) over 101 back-to-back saves of a full record; 1,000
   more saves had a longest of 304 ms. Across all 1,101 saves: 0 audio blocks dropped and 0 failed
   read-backs. Restore at boot: 2.2 ms.
@@ -255,7 +259,8 @@ All on the DK-E8 (M55-HP at 400 MHz, Ethos-U85-256), release build, 2026-10-18. 
 - 8 examples per taught sound instead of 5, plus the missing quality checks ("unlike the others",
   "background too loud").
 - Fix mistakes from the timeline: a wrong alert becomes a counter-example.
-- Urgent alerts that repeat until acknowledged, and a night mode.
+- A night mode: only urgent and chosen sounds, with the screen dark (the backlight switches on
+  and off today; dimming needs PWM).
 - Smoke vs CO alarm from the beep pattern.
 - An always-on listener on the M55-HE core that wakes the main core.
 - Left/right direction from the two mics (the 8 cm spacing measured well enough to tell them
@@ -292,9 +297,8 @@ started from Arm's alif-ethos-u85-npu-mnist learning path.
 - [ ] Upload the gallery images (thumbnail first).
 - [ ] Add the team members.
 - [ ] Check the preview: the code block and the bold text render.
-- [ ] Re-check against the board just before pasting. Uncommitted work in progress at 9:20 AM:
-      urgent alerts that wait for a press and escalate after 30 s (A5). If it lands, move it
-      from "What's next" to "What it does", and from README "Known limits" to "What it does".
-      If teaching moves to 8 examples, change "5 times"/"5 examples" in "What it does" and the
-      elevator pitch.
+- [ ] Re-check against `gates` just before pasting: the board session is still adding features.
+      Urgent-alert escalation (A5, 48e697b) is already in this draft. If teaching moves to 8
+      examples, change "5 times"/"5 examples" in "What it does", "What's next" and the elevator
+      pitch, and in VIDEO-SCRIPT.md.
 - [ ] Submit before 4:30 PM (the page's hard deadline is 5:00 PM PDT).
