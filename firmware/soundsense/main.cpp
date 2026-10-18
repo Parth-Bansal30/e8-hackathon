@@ -7,6 +7,8 @@
  * profiles; the best one counts if it clears its threshold. Knocks are paired with the BMI323
  * (ss_imu.c) to tell a knock felt through the table from one only heard (TV).
  *
+ * Taught sounds are saved in the OSPI flash (ss_store.c) after each teach and loaded at boot.
+ *
  * Joystick, as read facing the screen: UP teach a sound, LEFT timeline, RIGHT stats, press = OK.
  * Host control over J-Link: ss_cmd / ss_arg, see host_command(). Logs go to RTT ([SS], [TEACH],
  * [C1] lines).
@@ -27,6 +29,7 @@
 #include "ss_gfx.h"
 #include "ss_imu.h"
 #include "ss_match.h"
+#include "ss_store.h"
 #include "ui.h"
 #include "ui_fonts.h"
 #include "ui_led.h"
@@ -97,6 +100,9 @@ struct profile {
 static profile prof[MAX_PROF];
 static int n_prof, n_taught;
 static float taught_proto[MAX_TAUGHT][SS_EMB];
+static int8_t taught_ex[MAX_TAUGHT][SS_STORE_MAX_EX][SS_EMB];   /* the examples, for the flash copy */
+static uint8_t taught_n_ex[MAX_TAUGHT];
+static_assert(MAX_TAUGHT <= SS_STORE_MAX_PROF && SHOTS <= SS_STORE_MAX_EX, "flash record too small");
 static int knock_prof = -1;
 
 static const look kFallback = {"?", "Sound", UI_ICON_UNKNOWN, UI_CAT_OTHER, UI_INFO};
@@ -135,8 +141,8 @@ static void profiles_init(void)
     }
 }
 
-/* Taught profile for a preset: replaces an earlier one of the same name. */
-static void profile_add(int preset, const float *proto, float thr)
+/* Taught profile for a preset: replaces an earlier one of the same name. ex: n int8 examples. */
+static void profile_add(int preset, const float *proto, float thr, const int8_t (*ex)[SS_EMB], int n)
 {
     int slot = -1;
     for (int k = 0; k < n_taught; k++)
@@ -146,8 +152,92 @@ static void profile_add(int preset, const float *proto, float thr)
         else slot = n_taught++;
     }
     memcpy(taught_proto[slot], proto, sizeof(taught_proto[slot]));
+    if (n > SS_STORE_MAX_EX) n = SS_STORE_MAX_EX;
+    memcpy(taught_ex[slot], ex, (size_t)n * SS_EMB);
+    taught_n_ex[slot] = (uint8_t)n;
     prof[SS_NUM_BUILTIN + slot] = {&kPresets[preset], taught_proto[slot], thr, true, preset};
     n_prof = SS_NUM_BUILTIN + n_taught;
+}
+
+/* ---------- flash copy of the taught sounds ---------- */
+
+static bool store_ok;
+static uint32_t store_repeat;   /* host command 11: saves still to run back to back (C2 row 1) */
+static ss_store_data store_img;
+
+static void store_save(void)
+{
+    if (!store_ok) return;
+    memset(&store_img, 0, sizeof(store_img));
+    store_img.n_prof = n_taught;
+    for (int k = 0; k < n_taught; k++) {
+        const profile &p = prof[SS_NUM_BUILTIN + k];
+        ss_store_prof &s = store_img.prof[k];
+        strncpy(s.key, p.lk->key, SS_STORE_KEY - 1);
+        s.icon = (uint8_t)p.lk->icon;
+        s.urgency = (uint8_t)p.lk->urg;
+        s.cat = (uint8_t)p.lk->cat;
+        s.thr = p.thr;
+        memcpy(s.proto, p.proto, sizeof(s.proto));
+        s.n_ex = taught_n_ex[k];
+        memcpy(s.ex, taught_ex[k], sizeof(s.ex));
+    }
+    ss_store_save(&store_img);
+}
+
+/* C2 bench: every taught slot filled with a stand-in (a built-in's profile under a preset's name,
+ * threshold 0.99 so it never alerts) for a full-size record. Command 4 forgets them. */
+static void store_fill_test(void)
+{
+    int8_t ex[SHOTS][SS_EMB];
+    for (int k = 0; k < MAX_TAUGHT; k++) {
+        const float *p = builtin_proto[k % SS_NUM_BUILTIN];
+        for (int j = 0; j < SHOTS; j++) ss_store_q8(p, ex[j]);
+        profile_add(k % N_PRESETS, p, 0.99f, ex, SHOTS);
+    }
+    printf("[STORE] %d stand-in taught sounds for the C2 bench\r\n", n_taught);
+    store_save();
+}
+
+static void store_load(void)
+{
+    const int ir = ss_store_init();
+    store_ok = ir == 0;
+    if (!store_ok) {
+        printf("[STORE] flash init failed (%d): taught sounds won't be kept\r\n", ir);
+        return;
+    }
+    if (ss_store_load(&store_img) != 0) {
+        printf("[STORE] nothing saved yet (%lu us)\r\n", (unsigned long)ss_store_get_stats()->load_us);
+        return;
+    }
+    for (int i = 0; i < store_img.n_prof; i++) {
+        const ss_store_prof &s = store_img.prof[i];
+        int preset = -1;
+        for (int k = 0; k < N_PRESETS; k++)
+            if (!strcmp(kPresets[k].key, s.key)) preset = k;
+        if (preset < 0) {
+            printf("[STORE] skipped unknown sound '%s'\r\n", s.key);
+            continue;
+        }
+        profile_add(preset, s.proto, s.thr, s.ex, s.n_ex);
+    }
+    const ss_store_stats *st = ss_store_get_stats();
+    printf("[STORE] loaded %d taught sounds from copy %c, seq %lu, in %lu us\r\n", n_taught, 'A' + st->copy,
+           (unsigned long)st->seq, (unsigned long)st->load_us);
+}
+
+/* One step of a running save, between other work (one sector erase blocks about 82 ms). */
+static void store_step(void)
+{
+    const int r = ss_store_step();
+    if (r == 0) return;
+    const ss_store_stats *st = ss_store_get_stats();
+    printf("[STORE] save %lu %s: copy %c seq %lu, %lu bytes, %lu ms (max %lu), longest step %lu us, dropped %lu\r\n",
+           (unsigned long)st->saves, r > 0 ? "ok" : "FAILED", st->copy < 0 ? '-' : 'A' + st->copy, (unsigned long)st->seq,
+           (unsigned long)st->last_len, (unsigned long)st->last_ms, (unsigned long)st->max_ms,
+           (unsigned long)st->step_max_us, (unsigned long)kws_audio_dropped());
+    if (store_repeat && --store_repeat) store_save();
 }
 
 /* ---------- encoder ---------- */
@@ -313,7 +403,10 @@ static void teach_open(int preset, bool start)
 static void teach_save(void)
 {
     if (tc.ph != T_TEST) return;
-    profile_add(tc.preset, tc.proto, tc.thr);
+    int8_t ex[SHOTS][SS_EMB];
+    for (int k = 0; k < SHOTS; k++) ss_store_q8(tc.emb[k], ex[k]);
+    profile_add(tc.preset, tc.proto, tc.thr, ex, SHOTS);
+    store_save();
     printf("[TEACH] saved '%s' thr %.3f; %d taught\r\n", kPresets[tc.preset].label, (double)tc.thr, n_taught);
     scr = HOME;
     redraw = true;
@@ -368,6 +461,7 @@ static void stats_fill(ui_stats *s)
     s->n_taught = n_taught;
     s->uptime_s = ss_ms() / 1000;
     s->dropped = kws_audio_dropped();
+    s->save_ms = ss_store_get_stats()->last_ms;
 }
 
 /* ---------- decisions ---------- */
@@ -547,7 +641,8 @@ static uint32_t host_keys;
 /* 1 teach preset ss_arg (straight to recording), 2 save the taught sound, 3 home / cancel,
  * 4 forget taught sounds, 5 stats, 6 timeline, 7 clock (ss_arg = ms after midnight now),
  * 8 press joystick keys (ss_arg = SS_JOY_* bits), 9 re-measure built-in ss_arg from the next sounds,
- * 10 finish re-measuring. */
+ * 10 finish re-measuring, 11 save to flash ss_arg times back to back (C2 row 1), 12 fill every taught
+ * slot with a stand-in (C2 bench, full-size record). */
 static void host_command(void)
 {
     const uint32_t c = ss_cmd, a = ss_arg;
@@ -557,7 +652,7 @@ static void host_command(void)
     case 1: teach_open((int)(a % N_PRESETS), true); break;
     case 2: teach_save(); break;
     case 3: go_home(); break;
-    case 4: n_taught = 0; n_prof = SS_NUM_BUILTIN; printf("[SS] taught sounds cleared\r\n"); break;
+    case 4: n_taught = 0; n_prof = SS_NUM_BUILTIN; store_save(); printf("[SS] taught sounds cleared\r\n"); break;
     case 5: scr = STATS; redraw = true; break;
     case 6: scr = TIMELINE; tl_first = 0; redraw = true; break;
     case 7: ui_set_clock(a - ss_ms()); redraw = true; break;
@@ -565,6 +660,8 @@ static void host_command(void)
     case 9: cal_finish(); cal_idx = (int)(a % SS_NUM_BUILTIN); cal_n = 0;
             printf("[CAL] '%s': measuring\r\n", ss_builtin_names[cal_idx]); break;
     case 10: cal_finish(); break;
+    case 11: store_repeat = a ? a : 1; store_save(); break;
+    case 12: store_fill_test(); break;
     }
 }
 
@@ -686,6 +783,7 @@ int main(void)
     executorch_set_verbose(0);
     profiles_init();
     self_test();
+    store_load();
 
     const int ir = ss_imu_init();
     imu_ok = ir == 0;
@@ -803,6 +901,8 @@ int main(void)
         if (redraw) {
             redraw = false;
             draw(now, false);
+        } else if (ss_store_busy()) {
+            store_step();   /* not in the same pass as a full redraw: together they could outlast the audio ring */
         }
         set_leds(now);
 
@@ -815,11 +915,12 @@ int main(void)
             win_ms0 = now;
             const ss_imu_stats *is = ss_imu_get_stats();
             printf("[SS] stats t=%lu level %d dB floor %d dB, npu %lu us runner %lu us feat %lu us, %.1f inf/s, "
-                   "busy %.0f%%, dropped %lu, imu %lu samples %lu errors, knocks %lu, events %d\r\n",
+                   "busy %.0f%%, dropped %lu, imu %lu samples %lu errors, knocks %lu, events %d, saves %lu\r\n",
                    (unsigned long)now, (int)ss_audio_block_db(), (int)ss_audio_floor_db(), (unsigned long)npu_us,
                    (unsigned long)runner_us, (unsigned long)feat_us, (double)infer_rate, (double)cpu_pct,
                    (unsigned long)kws_audio_dropped(), (unsigned long)(imu_ok ? is->samples : 0),
-                   (unsigned long)(imu_ok ? is->errors : 0), (unsigned long)n_knocks, n_events);
+                   (unsigned long)(imu_ok ? is->errors : 0), (unsigned long)n_knocks, n_events,
+                   (unsigned long)ss_store_get_stats()->saves);
         }
     }
 }

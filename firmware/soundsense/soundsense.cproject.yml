@@ -2,7 +2,8 @@
 # Sound Sense: home sound monitor for deaf and hard-of-hearing people (docs/SOUND-SENSE.md).
 # Encoder on the Ethos-U85 through the shared ExecuTorch runner (../mnist_executorch), features from
 # ../app/kws.c, BMI323 knock fusion through the patched driver in vendor/ (so the pack's
-# BSP:External peripherals:BMI323 must NOT be selected), screens from ui/.
+# BSP:External peripherals:BMI323 must NOT be selected), screens from ui/, taught sounds saved in the
+# OSPI1 flash (ss_store.c, the CMSIS flash driver as in ../flash_test).
 project:
   groups:
     - group: App
@@ -13,6 +14,7 @@ project:
         - file: ss_gfx.c
         - file: ss_audio.c
         - file: ss_imu.c
+        - file: ss_store.c
         - file: ../app/kws.c
         - file: ../mnist_executorch/executorch_runner.cpp
     - group: UI
@@ -51,6 +53,8 @@ project:
     - component: AlifSemiconductor::BSP:External peripherals:ILI9806E LCD panel
     - component: AlifSemiconductor::Device:SOC Peripherals:PDM
     - component: AlifSemiconductor::Device:SOC Peripherals:I3C
+    - component: AlifSemiconductor::Device:SOC Peripherals:OSPI
+    - component: AlifSemiconductor::BSP:External peripherals:OSPI Flash ISSI
 
   define:
     - C10_USING_CUSTOM_GENERATED_MACROS

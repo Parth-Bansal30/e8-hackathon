@@ -1,0 +1,156 @@
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11877 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1026 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 5), copy B valid (seq 4)
+[STORE] loaded 0 taught sounds from copy A, seq 5, in 133 us
+[SS] listening; 9 built-in sounds
+[SS] stats t=10000 level -52 dB floor -51 dB, npu 1000 us runner 1027 us feat 303 us, 11.0 inf/s, busy 22%, dropped 0, imu 7569 samples 0 errors, knocks 0, events 0, saves 0
+[STORE] 8 stand-in taught sounds for the C2 bench
+[STORE] save 1 ok: copy B seq 6, 4832 bytes, 252 ms (max 252), longest step 87307 us, dropped 0
+[STORE] save 2 ok: copy A seq 7, 4832 bytes, 233 ms (max 252), longest step 87307 us, dropped 0
+[STORE] save 3 ok: copy B seq 8, 4832 bytes, 259 ms (max 259), longest step 110228 us, dropped 0
+[STORE] save 4 ok: copy A seq 9, 4832 bytes, 235 ms (max 259), longest step 110228 us, dropped 0
+[STORE] save 5 ok: copy B seq 10, 4832 bytes, 258 ms (max 259), longest step 110228 us, dropped 0
+[STORE] save 6 ok: copy A seq 11, 4832 bytes, 233 ms (max 259), longest step 110228 us, dropped 0
+[STORE] save 7 ok: copy B seq 12, 4832 bytes, 257 ms (max 259), longest step 110228 us, dropped 0
+[STORE] save 8 ok: copy A seq 13, 4832 bytes, 230 ms (max 259), longest step 110228 us, dropped 0
+[STORE] save 9 ok: copy B seq 14, 4832 bytes, 255 ms (max 259), longest step 110228 us, dropped 0
+[STORE] save 10 ok: copy A seq 15, 4832 bytes, 230 ms (max 259), longest step 110228 us, dropped 0
+[STORE] save 11 ok: copy B seq 16, 4832 bytes, 261 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 12 ok: copy A seq 17, 4832 bytes, 224 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 13 ok: copy B seq 18, 4832 bytes, 258 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 14 ok: copy A seq 19, 4832 bytes, 226 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 15 ok: copy B seq 20, 4832 bytes, 257 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 16 ok: copy A seq 21, 4832 bytes, 223 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 17 ok: copy B seq 22, 4832 bytes, 253 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 18 ok: copy A seq 23, 4832 bytes, 228 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 19 ok: copy B seq 24, 4832 bytes, 254 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 20 ok: copy A seq 25, 4832 bytes, 232 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 21 ok: copy B seq 26, 4832 bytes, 252 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 22 ok: copy A seq 27, 4832 bytes, 229 ms (max 261), longest step 110228 us, dropped 0
+[SS] stats t=20014 level -51 dB floor -51 dB, npu 1000 us runner 1027 us feat 302 us, 9.0 inf/s, busy 19%, dropped 0, imu 15526 samples 0 errors, knocks 0, events 0, saves 22
+[STORE] save 23 ok: copy B seq 28, 4832 bytes, 255 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 24 ok: copy A seq 29, 4832 bytes, 229 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 25 ok: copy B seq 30, 4832 bytes, 259 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 26 ok: copy A seq 31, 4832 bytes, 228 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 27 ok: copy B seq 32, 4832 bytes, 258 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 28 ok: copy A seq 33, 4832 bytes, 231 ms (max 261), longest step 110228 us, dropped 0
+[STORE] save 29 ok: copy B seq 34, 4832 bytes, 264 ms (max 264), longest step 110228 us, dropped 0
+[STORE] save 30 ok: copy A seq 35, 4832 bytes, 227 ms (max 264), longest step 110228 us, dropped 0
+[STORE] save 31 ok: copy B seq 36, 4832 bytes, 266 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 32 ok: copy A seq 37, 4832 bytes, 229 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 33 ok: copy B seq 38, 4832 bytes, 262 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 34 ok: copy A seq 39, 4832 bytes, 226 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 35 ok: copy B seq 40, 4832 bytes, 265 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 36 ok: copy A seq 41, 4832 bytes, 228 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 37 ok: copy B seq 42, 4832 bytes, 260 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 38 ok: copy A seq 43, 4832 bytes, 228 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 39 ok: copy B seq 44, 4832 bytes, 263 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 40 ok: copy A seq 45, 4832 bytes, 231 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 41 ok: copy B seq 46, 4832 bytes, 258 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 42 ok: copy A seq 47, 4832 bytes, 227 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 43 ok: copy B seq 48, 4832 bytes, 256 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 44 ok: copy A seq 49, 4832 bytes, 228 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 45 ok: copy B seq 50, 4832 bytes, 256 ms (max 266), longest step 115731 us, dropped 0
+[SS] t=25072 +7.8 dB best 'Dog barking' 0.28 (thr 0.52), 2nd 'Doorbell' 0.28, felt no (0.0 mg) -> quiet
+[STORE] save 46 ok: copy A seq 51, 4832 bytes, 232 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 47 ok: copy B seq 52, 4832 bytes, 258 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 48 ok: copy A seq 53, 4832 bytes, 228 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 49 ok: copy B seq 54, 4832 bytes, 256 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 50 ok: copy A seq 55, 4832 bytes, 226 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 51 ok: copy B seq 56, 4832 bytes, 254 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 52 ok: copy A seq 57, 4832 bytes, 229 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 53 ok: copy B seq 58, 4832 bytes, 256 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 54 ok: copy A seq 59, 4832 bytes, 231 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 55 ok: copy B seq 60, 4832 bytes, 254 ms (max 266), longest step 115731 us, dropped 0
+[SS] t=27446 +6.1 dB best 'Water running' 0.28 (thr 0.50), 2nd 'Washer' 0.28, felt no (0.0 mg) -> quiet
+[STORE] save 56 ok: copy A seq 61, 4832 bytes, 235 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 57 ok: copy B seq 62, 4832 bytes, 262 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 58 ok: copy A seq 63, 4832 bytes, 231 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 59 ok: copy B seq 64, 4832 bytes, 255 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 60 ok: copy A seq 65, 4832 bytes, 233 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 61 ok: copy B seq 66, 4832 bytes, 258 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 62 ok: copy A seq 67, 4832 bytes, 227 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 63 ok: copy B seq 68, 4832 bytes, 260 ms (max 266), longest step 115731 us, dropped 0
+[SS] stats t=30037 level -50 dB floor -50 dB, npu 1000 us runner 1031 us feat 298 us, 8.4 inf/s, busy 18%, dropped 0, imu 23398 samples 0 errors, knocks 1, events 0, saves 63
+[STORE] save 64 ok: copy A seq 69, 4832 bytes, 233 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 65 ok: copy B seq 70, 4832 bytes, 261 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 66 ok: copy A seq 71, 4832 bytes, 238 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 67 ok: copy B seq 72, 4832 bytes, 261 ms (max 266), longest step 115731 us, dropped 0
+[SS] t=30323 +11.7 dB best 'Dog barking' 0.53 (thr 0.52), 2nd 'Doorbell' 0.53, felt no (0.0 mg) -> maybe Dog barking
+[STORE] save 68 ok: copy A seq 73, 4832 bytes, 266 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 69 ok: copy B seq 74, 4832 bytes, 257 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 70 ok: copy A seq 75, 4832 bytes, 236 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 71 ok: copy B seq 76, 4832 bytes, 257 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 72 ok: copy A seq 77, 4832 bytes, 239 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 73 ok: copy B seq 78, 4832 bytes, 257 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 74 ok: copy A seq 79, 4832 bytes, 236 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 75 ok: copy B seq 80, 4832 bytes, 257 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 76 ok: copy A seq 81, 4832 bytes, 232 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 77 ok: copy B seq 82, 4832 bytes, 260 ms (max 266), longest step 115731 us, dropped 0
+[SS] t=32737 +8.4 dB best 'Water running' 0.31 (thr 0.50), 2nd 'Washer' 0.31, felt no (0.0 mg) -> unknown
+[STORE] save 78 ok: copy A seq 83, 4832 bytes, 242 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 79 ok: copy B seq 84, 4832 bytes, 260 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 80 ok: copy A seq 85, 4832 bytes, 235 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 81 ok: copy B seq 86, 4832 bytes, 260 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 82 ok: copy A seq 87, 4832 bytes, 234 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 83 ok: copy B seq 88, 4832 bytes, 259 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 84 ok: copy A seq 89, 4832 bytes, 232 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 85 ok: copy B seq 90, 4832 bytes, 260 ms (max 266), longest step 115731 us, dropped 0
+[SS] t=34894 +5.5 dB best 'Water running' 0.17 (thr 0.50), 2nd 'Washer' 0.17, felt no (0.0 mg) -> quiet
+[STORE] save 86 ok: copy A seq 91, 4832 bytes, 236 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 87 ok: copy B seq 92, 4832 bytes, 257 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 88 ok: copy A seq 93, 4832 bytes, 232 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 89 ok: copy B seq 94, 4832 bytes, 261 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 90 ok: copy A seq 95, 4832 bytes, 229 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 91 ok: copy B seq 96, 4832 bytes, 257 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 92 ok: copy A seq 97, 4832 bytes, 235 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 93 ok: copy B seq 98, 4832 bytes, 255 ms (max 266), longest step 115731 us, dropped 0
+[SS] t=36863 +10.4 dB best 'Water running' 0.43 (thr 0.50), 2nd 'Washer' 0.43, felt no (0.0 mg) -> unknown
+[STORE] save 94 ok: copy A seq 99, 4832 bytes, 231 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 95 ok: copy B seq 100, 4832 bytes, 265 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 96 ok: copy A seq 101, 4832 bytes, 229 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 97 ok: copy B seq 102, 4832 bytes, 261 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 98 ok: copy A seq 103, 4832 bytes, 230 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 99 ok: copy B seq 104, 4832 bytes, 264 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 100 ok: copy A seq 105, 4832 bytes, 228 ms (max 266), longest step 115731 us, dropped 0
+[STORE] save 101 ok: copy B seq 106, 4832 bytes, 265 ms (max 266), longest step 115731 us, dropped 0
+[SS] stats t=40037 level -49 dB floor -50 dB, npu 1000 us runner 1027 us feat 303 us, 8.5 inf/s, busy 18%, dropped 0, imu 31422 samples 0 errors, knocks 1, events 1, saves 101
+[SS] stats t=50037 level -52 dB floor -51 dB, npu 1000 us runner 1027 us feat 303 us, 10.0 inf/s, busy 21%, dropped 0, imu 39473 samples 0 errors, knocks 1, events 1, saves 101
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11878 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1026 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 105), copy B valid (seq 106)
+[STORE] loaded 8 taught sounds from copy B, seq 106, in 2166 us
+[SS] listening; 9 built-in sounds
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11881 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1026 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 105), copy B valid (seq 106)
+[STORE] loaded 8 taught sounds from copy B, seq 106, in 2166 us
+[SS] listening; 9 built-in sounds
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11879 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1026 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 105), copy B valid (seq 106)
+[STORE] loaded 8 taught sounds from copy B, seq 106, in 2166 us
+[SS] listening; 9 built-in sounds
+[SS] stats t=10000 level -50 dB floor -50 dB, npu 1000 us runner 1027 us feat 302 us, 10.9 inf/s, busy 22%, dropped 0, imu 7730 samples 0 errors, knocks 0, events 0, saves 0
+[SS] stats t=20019 level -51 dB floor -51 dB, npu 1000 us runner 1031 us feat 298 us, 10.0 inf/s, busy 22%, dropped 0, imu 15800 samples 0 errors, knocks 0, events 0, saves 0
+[SS] stats t=30020 level -51 dB floor -51 dB, npu 1000 us runner 1026 us feat 302 us, 9.9 inf/s, busy 21%, dropped 0, imu 23854 samples 0 errors, knocks 0, events 0, saves 0
+[SS] t=37979 +10.8 dB best 'Dog barking' 0.29 (thr 0.52), 2nd 'Doorbell' 0.29, felt no (0.0 mg) -> unknown
+[SS] stats t=40033 level -51 dB floor -50 dB, npu 1000 us runner 1027 us feat 303 us, 10.1 inf/s, busy 21%, dropped 0, imu 31920 samples 0 errors, knocks 0, events 0, saves 0
+[SS] t=45984 +4.7 dB best 'Water running' 0.44 (thr 0.50), 2nd 'Washer' 0.44, felt no (0.0 mg) -> quiet
+[SS] stats t=50033 level -50 dB floor -51 dB, npu 1000 us runner 1026 us feat 302 us, 10.0 inf/s, busy 21%, dropped 0, imu 39971 samples 0 errors, knocks 0, events 0, saves 0

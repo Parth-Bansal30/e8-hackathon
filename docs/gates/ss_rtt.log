@@ -436,3 +436,61 @@
 [SS] stats t=170055 level -58 dB floor -56 dB, npu 1000 us runner 1028 us feat 302 us, 10.0 inf/s, busy 21%, dropped 0, imu 136646 samples 0 errors, knocks 3, events 1
 [SS] stats t=180055 level -56 dB floor -56 dB, npu 1000 us runner 1026 us feat 303 us, 9.9 inf/s, busy 20%, dropped 0, imu 144698 samples 0 errors, knocks 3, events 1
 [SS] stats t=190068 level -56 dB floor -56 dB, npu 999 us runner 1027 us feat 302 us, 10.0 inf/s, busy 21%, dropped 0, imu 152765 samples 0 errors, knocks 3, events 1
+[SS] t=6380 +5.1 dB best 'Alarm' 0.35 (thr 0.58), 2nd 'Water running' 0.24, felt no (0.0 mg) -> quiet
+[SS] t=7868 +7.0 dB best 'Dog barking' 0.30 (thr 0.52), 2nd 'Water running' 0.26, felt no (0.0 mg) -> quiet
+[SS] t=9113 +6.3 dB best 'Alarm' 0.30 (thr 0.58), 2nd 'Siren' 0.25, felt no (0.0 mg) -> quiet
+[SS] stats t=10000 level -51 dB floor -50 dB, npu 999 us runner 1026 us feat 302 us, 11.2 inf/s, busy 22%, dropped 0, imu 7730 samples 0 errors, knocks 0, events 0, saves 0
+[SS] stats t=20010 level -50 dB floor -50 dB, npu 1000 us runner 1033 us feat 298 us, 10.0 inf/s, busy 22%, dropped 0, imu 15796 samples 0 errors, knocks 0, events 0, saves 0
+[SS] t=21724 +6.7 dB best 'Alarm' 0.28 (thr 0.58), 2nd 'Water running' 0.18, felt no (0.0 mg) -> quiet
+[SS] stats t=30010 level -50 dB floor -50 dB, npu 1001 us runner 1028 us feat 302 us, 10.0 inf/s, busy 22%, dropped 0, imu 23847 samples 0 errors, knocks 0, events 0, saves 0
+[SS] t=30030 +5.8 dB best 'Alarm' 0.40 (thr 0.58), 2nd 'Water running' 0.22, felt no (0.0 mg) -> quiet
+[SS] stats t=40017 level -50 dB floor -50 dB, npu 1001 us runner 1028 us feat 303 us, 10.1 inf/s, busy 22%, dropped 0, imu 31910 samples 0 errors, knocks 0, events 0, saves 0
+[SS] stats t=50017 level -50 dB floor -50 dB, npu 999 us runner 1026 us feat 302 us, 9.9 inf/s, busy 21%, dropped 0, imu 39961 samples 0 errors, knocks 0, events 0, saves 0
+[SS] stats t=60017 level -51 dB floor -51 dB, npu 1000 us runner 1028 us feat 302 us, 10.0 inf/s, busy 22%, dropped 0, imu 48016 samples 0 errors, knocks 0, events 0, saves 0
+[SS] t=63495 +8.0 dB best 'Water running' 0.33 (thr 0.50), 2nd 'Alarm' 0.33, felt yes (37.8 mg) -> quiet
+[SS] stats t=70017 level -51 dB floor -50 dB, npu 1001 us runner 1028 us feat 303 us, 10.0 inf/s, busy 22%, dropped 0, imu 56070 samples 0 errors, knocks 1, events 0, saves 0
+[TEACH] 'Doorbell': make the sound 5 times
+[TEACH] shot 1: too quiet (+2.9 dB)
+[SS] stats t=80017 level -38 dB floor -43 dB, npu 1062 us runner 1088 us feat 304 us, 10.1 inf/s, busy 21%, dropped 0, imu 64124 samples 0 errors, knocks 9, events 0, saves 0
+[TEACH] shot 1: too quiet (+7.6 dB)
+[TEACH] shot 1: too quiet (+4.5 dB)
+[SS] stats t=90017 level -50 dB floor -50 dB, npu 999 us runner 1025 us feat 303 us, 10.1 inf/s, busy 17%, dropped 0, imu 72180 samples 0 errors, knocks 14, events 0, saves 0
+[TEACH] shot 1: too quiet (+6.1 dB)
+[TEACH] shot 1: too quiet (+3.3 dB)
+[SS] stats t=100017 level -51 dB floor -50 dB, npu 1005 us runner 1033 us feat 303 us, 10.1 inf/s, busy 17%, dropped 0, imu 80233 samples 0 errors, knocks 20, events 0, saves 0
+[SS] stats t=110017 level -50 dB floor -51 dB, npu 999 us runner 1026 us feat 302 us, 9.9 inf/s, busy 16%, dropped 0, imu 88285 samples 0 errors, knocks 21, events 0, saves 0
+[SS] stats t=120017 level -51 dB floor -50 dB, npu 999 us runner 1026 us feat 303 us, 9.9 inf/s, busy 16%, dropped 0, imu 96339 samples 0 errors, knocks 31, events 0, saves 0
+[TEACH] shot 1/5: +16.0 dB
+[TEACH] shot 2/5: +12.4 dB
+[SS] stats t=130017 level -49 dB floor -48 dB, npu 999 us runner 1026 us feat 303 us, 10.1 inf/s, busy 17%, dropped 0, imu 104395 samples 0 errors, knocks 40, events 0, saves 0
+[TEACH] shot 3/5: +12.7 dB
+[SS] stats t=140017 level -46 dB floor -48 dB, npu 999 us runner 1026 us feat 303 us, 10.0 inf/s, busy 16%, dropped 0, imu 112449 samples 0 errors, knocks 41, events 0, saves 0
+[TEACH] shot 4/5: +17.5 dB
+[TEACH] shot 5/5: +17.0 dB
+[TEACH] profile: thr 0.500, leave-one-out 0.36 0.44 -0.03 0.07 -0.12; make it once more to test, press to save
+[TEACH] test: match 0.274 (thr 0.500) rejected
+[TEACH] test: match 0.315 (thr 0.500) rejected
+[SS] stats t=150017 level -51 dB floor -47 dB, npu 999 us runner 1026 us feat 303 us, 10.2 inf/s, busy 19%, dropped 0, imu 120501 samples 0 errors, knocks 42, events 0, saves 0
+[SS] t=154421 +12.0 dB best 'Dog barking' 0.58 (thr 0.52), 2nd 'Baby crying' 0.13, felt no (0.0 mg) -> Dog barking
+[SS] stats t=160031 level -51 dB floor -48 dB, npu 1001 us runner 1028 us feat 303 us, 10.0 inf/s, busy 21%, dropped 0, imu 128570 samples 0 errors, knocks 42, events 1, saves 0
+[SS] t=159293 +11.8 dB best 'Water running' 0.45 (thr 0.50), 2nd 'Baby crying' 0.25, felt no (0.0 mg) -> unknown
+[TEACH] 'Doorbell': make the sound 5 times
+[TEACH] shot 1/5: +14.2 dB
+[TEACH] shot 2: too quiet (+9.7 dB)
+[SS] stats t=170031 level -49 dB floor -46 dB, npu 1001 us runner 1029 us feat 303 us, 10.2 inf/s, busy 20%, dropped 0, imu 136624 samples 0 errors, knocks 60, events 1, saves 0
+[TEACH] shot 2: too quiet (+6.6 dB)
+[TEACH] shot 2: too quiet (+9.1 dB)
+[SS] stats t=180031 level -51 dB floor -46 dB, npu 1001 us runner 1028 us feat 303 us, 10.1 inf/s, busy 17%, dropped 0, imu 144675 samples 0 errors, knocks 68, events 1, saves 0
+[TEACH] shot 2: too quiet (+8.5 dB)
+[SS] stats t=190031 level -50 dB floor -50 dB, npu 1001 us runner 1028 us feat 303 us, 10.0 inf/s, busy 16%, dropped 0, imu 152730 samples 0 errors, knocks 68, events 1, saves 0
+[TEACH] shot 2/5: +23.4 dB
+[TEACH] shot 3: too quiet (+3.4 dB)
+[SS] stats t=200031 level -50 dB floor -50 dB, npu 1001 us runner 1028 us feat 303 us, 10.1 inf/s, busy 17%, dropped 0, imu 160783 samples 0 errors, knocks 68, events 1, saves 0
+[TEACH] shot 3: too quiet (+4.1 dB)
+[SS] stats t=210031 level -51 dB floor -50 dB, npu 1001 us runner 1029 us feat 302 us, 10.0 inf/s, busy 16%, dropped 0, imu 168840 samples 0 errors, knocks 68, events 1, saves 0
+[TEACH] shot 3/5: +15.2 dB
+[SS] stats t=220031 level -50 dB floor -50 dB, npu 1001 us runner 1028 us feat 302 us, 10.0 inf/s, busy 16%, dropped 0, imu 176895 samples 0 errors, knocks 69, events 1, saves 0
+[TEACH] shot 4: too quiet (+7.2 dB)
+[SS] stats t=230031 level -49 dB floor -49 dB, npu 999 us runner 1026 us feat 303 us, 10.0 inf/s, busy 17%, dropped 0, imu 184948 samples 0 errors, knocks 71, events 1, saves 0
+[TEACH] shot 4: too quiet (+4.6 dB)
+[SS] stats t=240031 level -50 dB floor -49 dB, npu 1001 us runner 1028 us feat 302 us, 10.1 inf/s, busy 17%, dropped 0, imu 193001 samples 0 errors, knocks 71, events 1, saves 0

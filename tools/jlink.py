@@ -7,6 +7,7 @@ on-board tests (tools/pull_audio.sh, tools/g3_live.py).
     tools/jlink.py <elf> set rec_cmd 1            write a uint32 variable
     tools/jlink.py <elf> dump 0xA0000000 4096 out.bin
     tools/jlink.py <elf> rtt                      print new RTT output (like tools/rtt_dump.sh)
+    tools/jlink.py <elf> reset                    reset the core and let it run (a reboot without a power pull)
 
 Each call attaches and detaches; J-Link clears DEMCR.TRCENA on detach, so firmware timing must
 re-arm the cycle counter on every read (ss_cycles() does).
@@ -119,6 +120,8 @@ def main():
         b.dump(int(sys.argv[3], 0), int(sys.argv[4], 0), sys.argv[5])
     elif cmd == "rtt":
         sys.stdout.write(b.rtt())
+    elif cmd == "reset":
+        b.run(["r", "g"])
     else:
         sys.exit(__doc__)
 
