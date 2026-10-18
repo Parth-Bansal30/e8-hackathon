@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 
+#include "Driver_ADC.h"
 #include "Driver_IO.h"
 #include "board_config.h"
 #include "gpio.h"
@@ -115,6 +116,43 @@ int ss_led_init(void)
     ss_led_set(0, 0);
     ss_led_set(1, 0);
     return 0;
+}
+
+extern ARM_DRIVER_ADC ARM_Driver_ADC12(BOARD_POTENTIOMETER_ADC12_INSTANCE);
+static ARM_DRIVER_ADC *const pot_adc = &ARM_Driver_ADC12(BOARD_POTENTIOMETER_ADC12_INSTANCE);
+static volatile int32_t pot_val = -1;
+static volatile bool pot_busy;
+static bool pot_ok;
+
+static void pot_cb(uint32_t event, uint8_t channel, uint32_t value)
+{
+    (void)channel;
+    if (event & ARM_ADC_EVENT_CONVERSION_COMPLETE) {
+        pot_val = (int32_t)value;
+        pot_busy = false;
+    }
+}
+
+int ss_pot_init(void)
+{
+    if (pot_adc->Initialize(pot_cb) || pot_adc->PowerControl(ARM_POWER_FULL) ||
+        pot_adc->Control(ARM_ADC_CONVERSION_MODE_CTRL, ARM_ADC_SINGLE_SHOT_CH_CONV) ||
+        pot_adc->Control(ARM_ADC_CHANNEL_INIT_VAL, BOARD_POTENTIOMETER_ADC12_INPUT)) {
+        return -1;
+    }
+    pot_ok = true;
+    return 0;
+}
+
+int32_t ss_pot_read(void)
+{
+    if (!pot_ok) return -1;
+    if (!pot_busy) {
+        pot_adc->Stop();
+        pot_busy = true;
+        if (pot_adc->Start() != ARM_DRIVER_OK) pot_busy = false;
+    }
+    return pot_val;
 }
 
 extern ARM_DRIVER_GPIO ARM_Driver_GPIO_(BOARD_LCD_BACKLIGHT_GPIO_PORT);

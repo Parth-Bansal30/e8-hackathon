@@ -124,6 +124,9 @@ void ui_spectro_push(const uint8_t col[40]);        /* one 20 ms mel column, 0 (
 
 /* Full-screen alert for important and urgent sounds; `phase` alternates the urgent strobe. */
 void ui_alert_draw(const ui_event *e, uint32_t now_ms, int phase);
+/* A short notice in the banner's place, with a 0-100 bar (the knob's sensitivity, T5). */
+void ui_toast_draw(const char *title, const char *detail, int pct);
+
 /* Info-level sounds: a banner across the top of the home screen. */
 void ui_banner_draw(const ui_event *e, uint32_t now_ms);
 

@@ -53,6 +53,11 @@ void ss_led_set(int led, uint32_t colour);   /* led 0 or 1; colour = SS_LED_* bi
  * would need PWM from UTIMER4 (P6_1 alt function 4), see docs/GATES-results.md C3 row 5. */
 void ss_backlight(int on);
 
+/* The blue R79 knob (ADC12 instance 1, input 1), read in the background. ss_pot_read() starts the next
+ * conversion and returns the latest value, 0..4095, or -1 before the first one or without an ADC. */
+int ss_pot_init(void);
+int32_t ss_pot_read(void);
+
 #ifdef __cplusplus
 }
 #endif

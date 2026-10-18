@@ -65,6 +65,7 @@
 #define GATE_HOLD_MS   300                    /* ... and for this long after */
 #define READY_MS       2500                   /* "Ready" screen, then home (stays on a failure) */
 #define NIGHT_DARK_MS  15000                  /* night mode: home screen goes dark after this without a press (A6) */
+#define SENS_SPAN      0.10f                  /* T5: the knob moves every threshold up to this much either way */
 #define WHAT_DB        15.0f                  /* H6: an unknown sound this far over the room gets "What was that?" */
 #define WHAT_GAP_MS    60000                  /* ... at most once a minute as a banner (always in the timeline) */
 
@@ -441,6 +442,15 @@ static int alert_phase, tl_first;
  * no live encoder) NIGHT_DARK_MS after the last press or alert; important and urgent alerts light it. */
 static bool night, dark;
 static uint32_t last_wake;
+static bool mic_off;   /* S6: microphones off from the menu: nothing is classified, shown, or kept */
+/* T5: the blue knob. Its position, 0-100% (-1: no reading), and the threshold offset it gives:
+ * 100% = every threshold 0.10 lower (more alerts), 0% = 0.10 higher (fewer), 50% = as taught.
+ * It only counts once turned after boot: wherever it was left, the board starts as taught. */
+static int sens_pct = -1, sens_boot_pct = -1;
+static bool sens_live;
+static float sens_off;
+static uint32_t sens_toast_ms;   /* show the setting on the home screen until then */
+static char sens_text[2][40];
 
 /* C3: time from a decision to the alert on screen, and what drawing costs (draw = into the back buffer,
  * present = copy of the changed rows to the scanned frame buffer) */
@@ -717,8 +727,10 @@ static void classify(const float *e, const float *s, float snr, int clipped, uin
     float mg = 0.0f;
     const ui_felt felt = felt_at(onset_ms, &mg);
     const float cxs = cx_score(b, e);
-    const bool veto = s[b] >= prof[b].thr && cxs >= CX_MIN && cxs > s[b];   /* T4: like a sound marked wrong */
-    const bool over = s[b] >= prof[b].thr && !veto;
+    float thr = prof[b].thr + sens_off;   /* T5: the knob */
+    thr = thr < 0.35f ? 0.35f : thr > 0.95f ? 0.95f : thr;
+    const bool veto = s[b] >= thr && cxs >= CX_MIN && cxs > s[b];   /* T4: like a sound marked wrong */
+    const bool over = s[b] >= thr && !veto;
     const bool loud = snr >= MIN_SNR_DB;
 
     const look *lk = NULL;
@@ -727,7 +739,7 @@ static void classify(const float *e, const float *s, float snr, int clipped, uin
     float score = s[b];
     if (loud && over && prof[b].alerting && b != knock_prof) {
         lk = prof[b].lk;
-        maybe = s[b] < prof[b].thr + MAYBE_MARGIN;
+        maybe = s[b] < thr + MAYBE_MARGIN;
     } else if (loud && ((b == knock_prof && over) || felt == UI_FELT_YES)) {
         /* a knock: the encoder says so, or the table felt it (then "maybe" unless both agree) */
         lk = prof[knock_prof].lk;
@@ -737,7 +749,7 @@ static void classify(const float *e, const float *s, float snr, int clipped, uin
     }
     printf("[SS] t=%lu +%.1f dB%s best '%s' %.2f (thr %.2f), 2nd '%s' %.2f, felt %s (%.1f mg) -> %s%s\r\n",
            (unsigned long)onset_ms, (double)snr, clipped ? " clipped" : "", prof[b].lk->label, (double)s[b],
-           (double)prof[b].thr, b2 >= 0 ? prof[b2].lk->label : "-", b2 >= 0 ? (double)s[b2] : 0.0,
+           (double)thr, b2 >= 0 ? prof[b2].lk->label : "-", b2 >= 0 ? (double)s[b2] : 0.0,
            felt == UI_FELT_YES ? "yes" : felt == UI_FELT_HEARD_ONLY ? "no" : "n/a", (double)mg,
            lk ? (maybe ? "maybe " : "") : "", lk ? lk->label : (loud ? "unknown" : "quiet"));
     if (veto) printf("[SS] '%s' vetoed: %.2f to a sound marked wrong\r\n", prof[b].lk->label, (double)cxs);
@@ -871,7 +883,7 @@ SS_COLD static void taught_forget_all(void)
     printf("[SS] taught sounds cleared\r\n");
 }
 
-enum mitem { MI_NIGHT, MI_FORGET, MI_FORGET_ALL, MI_BACK };
+enum mitem { MI_NIGHT, MI_MIC, MI_SENS, MI_PRIVACY, MI_FORGET, MI_FORGET_ALL, MI_BACK };
 static struct {
     mitem kind[UI_MENU_MAX];
     int arg[UI_MENU_MAX];
@@ -883,6 +895,12 @@ SS_COLD static void menu_build(void)
 {
     menu.n = 0;
     menu.kind[menu.n] = MI_NIGHT;
+    menu.arg[menu.n++] = 0;
+    menu.kind[menu.n] = MI_MIC;
+    menu.arg[menu.n++] = 0;
+    menu.kind[menu.n] = MI_SENS;
+    menu.arg[menu.n++] = 0;
+    menu.kind[menu.n] = MI_PRIVACY;
     menu.arg[menu.n++] = 0;
     for (int k = 0; k < n_taught; k++) {
         menu.kind[menu.n] = MI_FORGET;
@@ -914,6 +932,13 @@ SS_COLD static void menu_choose(void)
         night = !night;
         printf("[SS] night mode %s\r\n", night ? "on" : "off");
         break;
+    case MI_MIC:
+        mic_off = !mic_off;
+        printf("[SS] microphones %s\r\n", mic_off ? "off: nothing is classified" : "on");
+        break;
+    case MI_SENS:
+    case MI_PRIVACY:
+        break;
     case MI_FORGET:
     case MI_FORGET_ALL:
         if (menu.confirm != i) {   /* forgetting can't be undone: press twice */
@@ -943,6 +968,17 @@ SS_COLD static void menu_draw(void)
             m.item[i] = "Night mode";
             m.value[i] = night ? "On" : "Off";
             break;
+        case MI_MIC:
+            m.item[i] = "Microphones";
+            m.value[i] = mic_off ? "Off" : "On";
+            break;
+        case MI_SENS:
+            m.item[i] = "Sensitivity";
+            m.value[i] = sens_pct < 0 ? "no knob" : sens_text[0] + 12;   /* "NN%" */
+            break;
+        case MI_PRIVACY:
+            m.item[i] = "Privacy";
+            break;
         case MI_FORGET:
             snprintf(menu.text[i], sizeof(menu.text[i]), "Forget %s", prof[SS_NUM_BUILTIN + menu.arg[i]].lk->label);
             m.item[i] = menu.text[i];
@@ -968,6 +1004,12 @@ SS_COLD static void menu_draw(void)
         m.note = menu.note;
     } else if (menu.kind[menu.sel] == MI_NIGHT) {
         m.note = night ? "Night: screen dark, info sounds only logged" : "Press for night mode";
+    } else if (menu.kind[menu.sel] == MI_MIC) {
+        m.note = mic_off ? "Press to listen again" : "Press to turn listening off";
+    } else if (menu.kind[menu.sel] == MI_SENS) {
+        m.note = sens_pct < 0 ? "The knob isn't answering" : sens_text[1];
+    } else if (menu.kind[menu.sel] == MI_PRIVACY) {
+        m.note = "Nothing is recorded or sent. Sound is kept 1 s";
     }
     ui_menu_draw(&m);
 }
@@ -1182,7 +1224,7 @@ static void draw(uint32_t now, bool live_only)
         ui_ready_draw(&ready);
         break;
     case HOME:
-        home.listening = true;
+        home.listening = !mic_off;
         home.mode = night ? "Night" : "Home";
         home.room_db = ss_audio_block_db();
         home.floor_db = ss_audio_floor_db();
@@ -1193,7 +1235,8 @@ static void draw(uint32_t now, bool live_only)
             ui_home_update_live(&home);
         } else {
             ui_home_draw(&home, now);
-            if (banner_on) ui_banner_draw(&banner_ev, now);
+            if (sens_toast_ms) ui_toast_draw(sens_text[0], sens_text[1], sens_pct);
+            else if (banner_on) ui_banner_draw(&banner_ev, now);
         }
         break;
     case ALERT:
@@ -1281,6 +1324,7 @@ int main(void)
     ss_gfx_init();
     ss_joy_init();
     const bool led_ok = ss_led_init() == 0;
+    if (ss_pot_init() != 0) printf("[SS] knob (ADC) init failed: sensitivity stays as taught\r\n");
     if (!led_ok) printf("[SS] LED init failed\r\n");
     printf("\r\n[SS] Sound Sense starting\r\n");
 
@@ -1343,7 +1387,7 @@ int main(void)
     uint32_t pend_sample = 0, pend_ms = 0, last_onset = 0;
     bool any_onset = false;
     uint32_t last_imu = 0, last_live_draw = 0, last_slow = 0, last_log = 0, last_key = 0;
-    uint32_t win_ms0 = ss_ms(), last_loud = 0, last_joy = 0, last_stress = 0;
+    uint32_t win_ms0 = ss_ms(), last_loud = 0, last_joy = 0, last_stress = 0, last_pot = 0;
     bool any_loud = false;
 
     for (;;) {
@@ -1376,6 +1420,33 @@ int main(void)
             last_joy = now;
             keys |= ss_joy_pressed();
         }
+        if (now - last_pot >= 100) {   /* T5: the knob, 10 times a second */
+            last_pot = now;
+            const int32_t v = ss_pot_read();
+            const int pct = v < 0 ? -1 : (int)(v * 100 / 4095);
+            if (pct >= 0 && sens_boot_pct < 0) {
+                sens_boot_pct = sens_pct = pct;
+                snprintf(sens_text[0], sizeof(sens_text[0]), "Sensitivity %d%%", pct);
+                snprintf(sens_text[1], sizeof(sens_text[1]), "As taught until the knob is turned");
+                printf("[SS] knob at %d%%: sensitivity as taught until it's turned\r\n", pct);
+            } else if (pct >= 0 && abs(pct - sens_pct) >= 3) {
+                sens_live = true;
+                sens_pct = pct;
+                sens_off = SENS_SPAN * (1.0f - 2.0f * (float)pct / 100.0f);
+                snprintf(sens_text[0], sizeof(sens_text[0]), "Sensitivity %d%%", pct);
+                snprintf(sens_text[1], sizeof(sens_text[1]), "%s (thresholds %+.2f)",
+                         sens_off < -0.02f ? "More alerts" : sens_off > 0.02f ? "Fewer alerts" : "As taught",
+                         (double)sens_off);
+                printf("[SS] knob: sensitivity %d%%, thresholds %+.3f\r\n", pct, (double)sens_off);
+                sens_toast_ms = now + 2500;
+                last_wake = now;
+                if (scr == HOME || scr == MENU) redraw = true;
+            }
+        }
+        if (sens_toast_ms && (int32_t)(now - sens_toast_ms) >= 0) {
+            sens_toast_ms = 0;
+            if (scr == HOME) redraw = true;
+        }
         if (keys && now - last_key >= 250) {
             last_key = now;
             last_key_ms = now;
@@ -1394,12 +1465,15 @@ int main(void)
         }
         if (pend && ss_audio_samples() >= pend_sample + DECIDE_DELAY) {
             pend = false;
-            decide(pend_sample, pend_ms);
+            if (!mic_off) decide(pend_sample, pend_ms);
         }
 
         /* live view: spectrogram columns every 100 ms; the encoder and best three matches only on the
          * home screen while the room is above its noise floor (E1) */
-        if (frames >= LIVE_EVERY) {
+        if (frames >= LIVE_EVERY && mic_off) {
+            frames = 0;
+            for (int i = 0; i < 3; i++) top3[i] = {i ? NULL : "Microphones off", 0, false};
+        } else if (frames >= LIVE_EVERY) {
             const int n_new = frames > KWS_FRAMES ? KWS_FRAMES : frames;
             frames = 0;
             const uint32_t t0 = ss_cycles();

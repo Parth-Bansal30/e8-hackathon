@@ -552,6 +552,17 @@ void ui_banner_draw(const ui_event *e, uint32_t now_ms)
     gfx_text(L, 128, 80, detail, mix(bg, ink, 0.8f), 20);
 }
 
+UI_COLD void ui_toast_draw(const char *title, const char *detail, int pct)
+{
+    gfx_fill(0, 0, GFX_W, 132, BG);
+    gfx_round_rect(12, 12, GFX_W - 24, 112, 22, PANEL2);
+    gfx_text(B, 32, 24, title, TEXT, 30);
+    gfx_text(L, 32, 64, detail, MUTED, 20);
+    const int x = 32, w = GFX_W - 64, y = 96;
+    gfx_round_rect(x, y, w, 12, 6, PANEL);
+    if (pct > 0) gfx_round_rect(x, y, w * (pct > 100 ? 100 : pct) / 100, 12, 6, YELLOW);
+}
+
 /* ---------- timeline ---------- */
 
 UI_COLD void ui_timeline_draw(const ui_event *ev, int n, uint32_t now_ms, int first)

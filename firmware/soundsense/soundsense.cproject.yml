@@ -15,6 +15,7 @@ project:
         - file: ss_audio.c
         - file: ss_imu.c
         - file: ss_store.c
+        - file: ../hw_test/vendor/sys_ctrl_analog.c   # ADC reference counters, missing from pack 2.0.4 (as hw_test)
         - file: ../app/kws.c
         - file: ../mnist_executorch/executorch_runner.cpp
     - group: UI
@@ -55,6 +56,7 @@ project:
     - component: AlifSemiconductor::Device:SOC Peripherals:I3C
     - component: AlifSemiconductor::Device:SOC Peripherals:OSPI
     - component: AlifSemiconductor::BSP:External peripherals:OSPI Flash ISSI
+    - component: AlifSemiconductor::Device:SOC Peripherals:ADC
 
   define:
     - C10_USING_CUSTOM_GENERATED_MACROS

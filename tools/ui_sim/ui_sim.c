@@ -308,6 +308,10 @@ int main(void)
     ui_home_draw(&home, NOW);
     ui_banner_draw(&what, NOW);
     save("24_what_was_that");
+    /* T5: the knob was just turned */
+    ui_home_draw(&home, NOW);
+    ui_toast_draw("Sensitivity 70%", "More alerts (thresholds -0.04)", 70);
+    save("25_knob_sensitivity");
     home.mode = "Night";
     ui_home_draw(&home, NOW);
     save("22_home_night");
