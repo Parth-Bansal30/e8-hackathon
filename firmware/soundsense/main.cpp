@@ -65,6 +65,8 @@
 #define GATE_HOLD_MS   300                    /* ... and for this long after */
 #define READY_MS       2500                   /* "Ready" screen, then home (stays on a failure) */
 #define NIGHT_DARK_MS  15000                  /* night mode: home screen goes dark after this without a press (A6) */
+#define WHAT_DB        15.0f                  /* H6: an unknown sound this far over the room gets "What was that?" */
+#define WHAT_GAP_MS    60000                  /* ... at most once a minute as a banner (always in the timeline) */
 
 extern "C" {
 volatile uint32_t ss_cmd, ss_arg;   /* host commands, written over J-Link */
@@ -133,6 +135,8 @@ static float cx_score(int p, const float *e)
 }
 
 static const look kFallback = {"?", "Sound", UI_ICON_UNKNOWN, UI_CAT_OTHER, UI_INFO};
+/* H6: a loud sound that matches nothing, offered for teaching */
+static const look kUnknown = {"unknown", "What was that?", UI_ICON_UNKNOWN, UI_CAT_OTHER, UI_INFO};
 
 /* Built-in profiles in RAM, so they can be re-measured on the board (G3 row 7): the trained ones,
  * replaced by assets/ss_board_profiles.h where that has a board measurement. */
@@ -452,6 +456,11 @@ static struct {
     ui_teach ui;
 } tc;
 
+/* H6: the last "What was that?" sound, which becomes example 1 if the user teaches it right away */
+static float what_emb[SS_EMB], what_snr;
+static bool seed_pending;
+static void teach_shot(const float *e, float snr, int clipped);
+
 static void teach_open(int preset, bool start)
 {
     memset(&tc, 0, sizeof(tc));
@@ -462,6 +471,11 @@ static void teach_open(int preset, bool start)
     scr = TEACH;
     redraw = true;
     if (start) printf("[TEACH] '%s': make the sound %d times\r\n", kPresets[preset].label, SHOTS);
+    if (start && seed_pending) {
+        seed_pending = false;
+        printf("[TEACH] example 1 is the sound just heard\r\n");
+        teach_shot(what_emb, what_snr, 0);
+    }
 }
 
 static void teach_save(void)
@@ -486,6 +500,7 @@ SS_COLD static void alert_end_log(void)
 
 static void go_home(void)
 {
+    seed_pending = false;
     if (scr == ALERT) {
         alert_end_log();
         for (int i = 0; i < n_events; i++)
@@ -659,6 +674,7 @@ SS_COLD static void cal_finish(void)
 }
 
 static void classify(const float *e, const float *s, float snr, int clipped, uint32_t onset_ms);
+static void what_was_that(const float *e, float snr, uint32_t onset_ms);
 
 static void decide(uint32_t onset, uint32_t onset_ms)
 {
@@ -725,7 +741,11 @@ static void classify(const float *e, const float *s, float snr, int clipped, uin
            felt == UI_FELT_YES ? "yes" : felt == UI_FELT_HEARD_ONLY ? "no" : "n/a", (double)mg,
            lk ? (maybe ? "maybe " : "") : "", lk ? lk->label : (loud ? "unknown" : "quiet"));
     if (veto) printf("[SS] '%s' vetoed: %.2f to a sound marked wrong\r\n", prof[b].lk->label, (double)cxs);
-    if (!lk) return;
+    if (!lk) {
+        /* H6: loud, matches nothing, and not talking or room noise (those profiles don't alert) */
+        if (snr >= WHAT_DB && prof[b].alerting) what_was_that(e, snr, onset_ms);
+        return;
+    }
 
     bool merged;
     ui_event *ev = add_event(lk, maybe, f, score, onset_ms, &merged, e, lk == prof[knock_prof].lk ? knock_prof : b);
@@ -733,6 +753,25 @@ static void classify(const float *e, const float *s, float snr, int clipped, uin
     if (lk == prof[knock_prof].lk && f == UI_FELT_HEARD_ONLY) ev->urgency = UI_INFO;
     lat[n_lat++ % 16] = ss_ms() - onset_ms;
     alert_raise(ev);
+    if (scr == HOME) redraw = true;
+}
+
+/* ---------- "What was that?" (H6) ---------- */
+
+SS_COLD static void what_was_that(const float *e, float snr, uint32_t onset_ms)
+{
+    static uint32_t last_banner = 0x80000000u;
+    memcpy(what_emb, e, sizeof(what_emb));
+    what_snr = snr;
+    bool merged;
+    ui_event *ev = add_event(&kUnknown, false, UI_FELT_NA, 0.0f, onset_ms, &merged, e, -1);
+    const bool banner = ss_ms() - last_banner >= WHAT_GAP_MS;
+    printf("[SS] t=%lu what was that? +%.1f dB, matches nothing%s\r\n", (unsigned long)onset_ms, (double)snr,
+           banner ? "; UP teaches it" : " (banner shown less than a minute ago)");
+    if (banner) {
+        last_banner = ss_ms();
+        alert_raise(ev);
+    }
     if (scr == HOME) redraw = true;
 }
 
@@ -765,7 +804,11 @@ SS_COLD static void event_mark(int i, bool right)
     if (i < 0 || i >= n_events) return;
     ui_event *ev = &events[i];
     const int p = ev_prof[i];
-    if (p < 0 || p >= n_prof || prof[p].lk->label != ev->label) {
+    if (p < 0) {
+        printf("[SS] '%s' isn't a known sound: nothing to mark (UP teaches it)\r\n", ev->label);
+        return;
+    }
+    if (p >= n_prof || prof[p].lk->label != ev->label) {
         printf("[SS] can't mark '%s': that sound was forgotten\r\n", ev->label);
         return;
     }
@@ -994,7 +1037,11 @@ static void on_keys(uint32_t k)
         go_home();
         break;
     case HOME:
-        if (k & SS_JOY_UP) teach_open(0, false);
+        if (k & SS_JOY_UP) {
+            const bool seed = banner_on && banner_ev.label == kUnknown.label;   /* H6: teach what was just heard */
+            teach_open(0, false);
+            seed_pending = seed;
+        }
         else if (k & SS_JOY_LEFT) { scr = TIMELINE; tl_first = 0; redraw = true; }
         else if (k & SS_JOY_RIGHT) { scr = STATS; redraw = true; }
         else if (k & SS_JOY_DOWN) menu_open();
@@ -1207,11 +1254,16 @@ static void draw(uint32_t now, bool live_only)
     }
 }
 
+/* ms from t to now, 0 if t is later: the loop reads `now` once, and a decision in the same pass (an
+ * inference takes over 1 ms) stamps its alert after it. Plain `now - t` would wrap to ~49 days, and the
+ * alert or banner would close (or an urgent one escalate) in the pass that opened it. */
+static inline uint32_t since(uint32_t t, uint32_t now) { return (int32_t)(now - t) > 0 ? now - t : 0; }
+
 static void set_leds(uint32_t now)
 {
     ui_led led[2] = {};
-    if (scr == ALERT) ui_led_pattern(alert_ev.urgency, alert_ev.cat, alert_ev.maybe, now - alert_t0, led);
-    else if (banner_on) ui_led_pattern(UI_INFO, banner_ev.cat, banner_ev.maybe, now - banner_t0, led);
+    if (scr == ALERT) ui_led_pattern(alert_ev.urgency, alert_ev.cat, alert_ev.maybe, since(alert_t0, now), led);
+    else if (banner_on) ui_led_pattern(UI_INFO, banner_ev.cat, banner_ev.maybe, since(banner_t0, now), led);
     else if (scr == TEACH && tc.ph != T_NAMING) led[0].g = (now / 500) & 1;   /* slow green: recording */
     else if (scr == READY && ready_fail) led[0].r = led[1].r = (now / 500) & 1;   /* slow red: not ready */
     static uint32_t shown[2] = {~0u, ~0u};
@@ -1389,14 +1441,14 @@ int main(void)
 
         /* timeouts, the urgent strobe (one flash a second) and slow refreshes */
         if (scr == READY && !ready_fail && now - ready_t > READY_MS) go_home();
-        if (banner_on && now - banner_t0 > BANNER_MS) {
+        if (banner_on && since(banner_t0, now) > BANNER_MS) {
             banner_on = false;
             if (scr == HOME) redraw = true;
         }
         if (scr == ALERT) {
             const bool urgent = alert_ev.urgency == UI_URGENT && !alert_ev.maybe;
-            const uint32_t up = now - alert_t0;
-            if (!urgent && now - alert_last > ALERT_MS) {
+            const uint32_t up = since(alert_t0, now);
+            if (!urgent && since(alert_last, now) > ALERT_MS) {
                 alert_end_log();
                 scr = HOME;
                 redraw = true;
@@ -1418,7 +1470,7 @@ int main(void)
             }
         }
         /* night mode: dark on the home screen after a while; a press or an alert lights it again */
-        const bool want_dark = night && scr == HOME && !banner_on && now - last_wake >= NIGHT_DARK_MS;
+        const bool want_dark = night && scr == HOME && !banner_on && since(last_wake, now) >= NIGHT_DARK_MS;
         if (want_dark != dark) {
             dark = want_dark;
             ss_backlight(!dark);

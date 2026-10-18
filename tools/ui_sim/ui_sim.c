@@ -303,6 +303,11 @@ int main(void)
     tl[2].fixed = 1, tl[2].acked = true;
     ui_timeline_draw(tl, N_EVENTS, NOW, 0);
     save("23_timeline_marked");
+    /* H6: a loud sound that matches nothing */
+    ui_event what = {"What was that?", UI_ICON_UNKNOWN, UI_CAT_OTHER, UI_INFO, false, UI_FELT_NA, 0, 1, NOW - 2000, 0, false, 0, 0};
+    ui_home_draw(&home, NOW);
+    ui_banner_draw(&what, NOW);
+    save("24_what_was_that");
     home.mode = "Night";
     ui_home_draw(&home, NOW);
     save("22_home_night");

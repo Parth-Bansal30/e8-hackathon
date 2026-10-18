@@ -9,7 +9,7 @@ behind every "Done" are in [GATES-results.md](GATES-results.md).
 | Priority | Total | Done | Partial | Not started |
 |---|---|---|---|---|
 | **P0** (must-have product) | 16 | **15** | 1 (T2) | 0 |
-| **P1** (makes it good) | 16 | 7 | 5 | 4 |
+| **P1** (makes it good) | 16 | 8 | 5 | 3 |
 | **P2** (nice to have) | 20 | 0 | 4 | 16 |
 | **P3** (stretch) | 7 | 0 | 0 | 7 |
 
@@ -42,7 +42,7 @@ examples (they work well live; the offline test uses unseen clips from strangers
 | H3 | Reject unknown sounds | P0 | Done | 79% offline; live run not measured |
 | H4 | Smoke vs CO from the beep pattern | P1 | Not started | |
 | H5 | Ongoing sounds ("for 6 min") | P1 | Partial | Repeats within 30 s merge with a count and duration; no "still sounding" |
-| H6 | "What was that?" with teach-this | P1 | Not started | Unknown loud sounds are only logged |
+| H6 | "What was that?" with teach-this | P1 | Done | A sound 15 dB over the room that matches nothing (and isn't speech or room noise) gets a soft banner, at most once a minute, and a timeline entry; UP opens teaching with that sound as example 1 |
 | H7 | Your name called | P1 | Partial | "My name" can be taught like any sound; not tested on speech |
 | H8 | Talking-nearby indicator | P2 | Partial | "Speech" appears in the live top 3 only |
 | H9 | Noise meter | P2 | Partial | Live level bar only |

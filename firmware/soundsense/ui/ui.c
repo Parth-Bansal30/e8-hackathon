@@ -548,6 +548,7 @@ void ui_banner_draw(const ui_event *e, uint32_t now_ms)
     snprintf(label, sizeof label, e->maybe ? "Maybe: %s?" : "%s", e->label);
     gfx_text(B, 128, 30, label, ink, gfx_fit_px(B, label, 320, 40));
     fmt_detail(detail, sizeof detail, e, now_ms, true);
+    if (e->icon == UI_ICON_UNKNOWN) snprintf(detail, sizeof detail, "Matches nothing. UP: teach it");   /* H6 */
     gfx_text(L, 128, 80, detail, mix(bg, ink, 0.8f), 20);
 }
 
