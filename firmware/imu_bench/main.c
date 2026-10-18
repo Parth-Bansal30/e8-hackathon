@@ -42,6 +42,12 @@ uint32_t bench_audio_blkcyc[RAW_AUDIO_N / KWS_HOP] __attribute__((section(".bss.
 imu_rec bench_imu[RAW_IMU_N] __attribute__((section(".bss.at_sram1"), aligned(16)));
 volatile uint32_t bench_audio_n, bench_imu_n;
 
+/* ms since boot of an event stamped with the cycle counter (events are under a second old). */
+static uint32_t ev_ms(uint32_t cyc)
+{
+    return ss_ms() - (ss_cycles() - cyc) / (SystemCoreClock / 1000u);
+}
+
 static void audio_tap(const int16_t *stereo, int n, uint32_t done_cycles)
 {
     const uint32_t base = bench_audio_n;
@@ -95,15 +101,15 @@ static void pair_events(void)
             imu[best].used = true;
             bench_both++;
             if (n_dt < 256) dt_ms[n_dt++] = best_dt;
-            printf("[G2] trial %lu FELT+HEARD dt=%+.1f ms  imu %.1f mg (noise %.2f)  audio peak %.0f dBFS\r\n",
-                   (unsigned long)bench_trial, (double)best_dt, (double)imu[best].a, (double)imu[best].b,
+            printf("[G2] trial %lu t=%lu FELT+HEARD dt=%+.1f ms  imu %.1f mg (noise %.2f)  audio peak %.0f dBFS\r\n",
+                   (unsigned long)bench_trial, (unsigned long)ev_ms(a->cyc), (double)best_dt, (double)imu[best].a, (double)imu[best].b,
                    (double)(20.0f * log10f(a->a + 1e-9f)));
             snprintf(last_msg, sizeof(last_msg), "FELT + HEARD  dt %+.1f ms", (double)best_dt);
             led_flash(0, SS_LED_GREEN);
         } else {
             bench_heard++;
-            printf("[G2] trial %lu HEARD ONLY  audio peak %.0f dBFS (floor %.0f dBFS)\r\n",
-                   (unsigned long)bench_trial, (double)(20.0f * log10f(a->a + 1e-9f)),
+            printf("[G2] trial %lu t=%lu HEARD ONLY  audio peak %.0f dBFS (floor %.0f dBFS)\r\n",
+                   (unsigned long)bench_trial, (unsigned long)ev_ms(a->cyc), (double)(20.0f * log10f(a->a + 1e-9f)),
                    (double)(20.0f * log10f(a->b + 1e-9f)));
             snprintf(last_msg, sizeof(last_msg), "heard only");
             led_flash(0, SS_LED_BLUE);
@@ -114,7 +120,8 @@ static void pair_events(void)
         if (m->used || !m->cyc || ms_between(now, m->cyc) < SETTLE_MS + PAIR_WIN_MS) continue;
         m->used = true;
         bench_felt++;
-        printf("[G2] trial %lu FELT ONLY  imu %.1f mg (noise %.2f)\r\n", (unsigned long)bench_trial,
+        printf("[G2] trial %lu t=%lu FELT ONLY  imu %.1f mg (noise %.2f)\r\n", (unsigned long)bench_trial,
+               (unsigned long)ev_ms(m->cyc),
                (double)m->a, (double)m->b);
         snprintf(last_msg, sizeof(last_msg), "felt only  %.1f mg", (double)m->a);
         led_flash(1, SS_LED_RED);
