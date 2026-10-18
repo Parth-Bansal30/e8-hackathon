@@ -7,7 +7,7 @@
 | G3 live | pending | | |
 | C1 NPU | pending | | |
 | C2 flash | pending | | |
-| C3 UI | pending | | |
+| C3 UI | Row 1 (LEDs) passes; rows 2 to 5 pending | LEDs: both RGB LEDs showed red, green, blue and white exactly as commanded, confirmed by eye at the board. Blinks at 2, 4 and 8 Hz are visible across the room | Pins as in `docs/bringup-notes.md`; check run by `firmware/imu_bench` at boot (`[C3]` lines in its RTT log) |
 | C4 mics | GO for left/right direction (H12) | Spacing 8 cm (ruler). The Mac speaker in line with the pair gave +3.2 samples on the left and −3.6 on the right, steady to ±0.2. That makes the maximum lag 3.4 samples (73 mm) and the channel offset −0.2. Mic 4 is the left mic. Level mic5 − mic4: −4.1 dB on hand claps, 0 to +1 dB from the speaker | See [C4 details](#c4-details) |
 | C5 duty | pending | | |
 
