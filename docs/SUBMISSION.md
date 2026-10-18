@@ -121,6 +121,15 @@ Sound Sense runs entirely on the Alif Ensemble E8 DevKit (Cortex-M55 + Ethos-U85
   photosensitivity limit) and the screen says how long it has waited. Low confidence shows as
   "Maybe: Dog barking?", never as a certain alert.
 - **Timeline** of today's sounds, with repeats merged and "felt here" marked.
+- **Learns from its mistakes:** on an alert or the timeline, LEFT means wrong and RIGHT means
+  right. A wrong sound is kept as a counter-example, so a sound closer to it than to the profile
+  is vetoed (kept in flash for taught sounds). Right on a taught sound adds an example and rebuilds
+  its profile and threshold.
+- **"What was that?":** a loud sound that matches nothing gets a soft banner and a timeline entry.
+  Press UP and teaching starts with that sound as the first example.
+- **Settings on the board** (DOWN): night mode (the screen goes dark; info sounds are only logged,
+  important and urgent ones light it up), microphones off, a privacy note, sensitivity on the
+  knob, and forgetting one or all taught sounds. No app and no account.
 - **Live view:** a scrolling spectrogram, the room level against its noise floor, and the three best
   matches right now. In a quiet room it reads "Quiet: NPU resting".
 - **Stats page,** live from the board: NPU time per run, CPU active %, NPU busy %, save time,
@@ -227,8 +236,10 @@ All on the DK-E8 (M55-HP at 400 MHz, Ethos-U85-256), release build, 2026-10-18. 
 - **ITCM full.** All the fast code lives in 256 KB of ITCM, now 97.6% full. Boot-only and rare
   code, including the flash driver, moved to MRAM with a section attribute and linker patterns.
 - **Felt vs heard.** The IMU had to run at 800 Hz through its FIFO to catch a knock. On our table,
-  knocks are felt within about 20 cm (21 of 22) but not at 50 cm (0 of 20), so setup says "place
-  me on the table by the door".
+  knocks are felt within about 20 cm (21 of 22) but not at 50 cm (0 of 20), so the instructions say
+  "place me on the table by the door". Pairing a knock with its sound also exposed a timing bug: our
+  computed IMU frame times jumped back by up to 54 ms while the sensor's own clock ran on smoothly.
+  Frames are now timed from the BMI323's clock (we haven't re-measured the pairing since).
 - **A speaker isn't a dog.** Built-in sounds played from a laptop speaker in an unfamiliar room were
   recognised 54% of the time, against 88% offline. That's why teaching your own sounds, with your
   own sources in your own room, became the centre of the product.
@@ -236,7 +247,8 @@ All on the DK-E8 (M55-HP at 400 MHz, Ethos-U85-256), release build, 2026-10-18. 
 ## Accomplishments that we're proud of
 
 - The whole product runs on the board end to end: listen, recognise, teach, alert, save to flash,
-  self-test at boot. 15 of our 16 must-have features are done.
+  self-test at boot. 15 of our 16 must-have features are done, plus 10 of the 16 features on
+  our "makes it good" list.
 - A custom PyTorch encoder with every operator on the Ethos-U85, at 1.00 ms per run, matching the
   host model within 1 LSB.
 - CPU active time cut from 100% to 12.6%, one measured step at a time.
@@ -258,9 +270,8 @@ All on the DK-E8 (M55-HP at 400 MHz, Ethos-U85-256), release build, 2026-10-18. 
 
 - 8 examples per taught sound instead of 5, plus the missing quality checks ("unlike the others",
   "background too loud").
-- Fix mistakes from the timeline: a wrong alert becomes a counter-example.
-- A night mode: only urgent and chosen sounds, with the screen dark (the backlight switches on
-  and off today; dimming needs PWM).
+- Managing sounds one by one: rename, per-sound urgency and LED colour, built-ins on or off.
+- Dimming the screen in night mode instead of switching the backlight off (needs PWM).
 - Smoke vs CO alarm from the beep pattern.
 - An always-on listener on the M55-HE core that wakes the main core.
 - Left/right direction from the two mics (the 8 cm spacing measured well enough to tell them
@@ -275,6 +286,8 @@ All on the DK-E8 (M55-HP at 400 MHz, Ethos-U85-256), release build, 2026-10-18. 
   They work live at the board; 8 examples is the planned fix.
 - Knocks are felt within about 20 cm of the board.
 - Alerts come about 0.85 s after a sound starts, against our 0.5 s target.
+- Built but not yet checked by hand at the board: sensitivity on the knob, and the backlight
+  turning off in night mode.
 
 ## Built with
 

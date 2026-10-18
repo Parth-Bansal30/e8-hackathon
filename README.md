@@ -28,6 +28,15 @@ delegated to the Ethos-U85.
   photosensitivity). Urgent alerts stay until you press, and after 30 s the strobe doubles and the
   screen says how long it has waited. Low confidence shows as "Maybe: doorbell?", never as a certain alert.
 - **Timeline** of today's sounds, with repeats merged and "felt here" marked.
+- **Fixes its mistakes:** on an alert or the timeline, LEFT means wrong and RIGHT means right. A
+  wrong sound is kept as a counter-example, so a sound closer to it than to the profile is vetoed
+  (saved in flash for taught sounds). Right on a taught sound adds an example and rebuilds its
+  profile.
+- **"What was that?":** a loud sound that matches nothing gets a soft banner and a timeline entry;
+  UP teaches it, starting from that sound.
+- **Settings menu** (DOWN): night mode (the screen goes dark and only important and urgent sounds
+  light it), microphones off, a privacy note, sensitivity on the knob, and forgetting one or all
+  taught sounds.
 - **Live view:** scrolling spectrogram, room level against its noise floor, and the three best
   matches right now.
 - **Stats page,** live from the board: NPU time per run, CPU active %, NPU busy %, save time,
@@ -157,8 +166,9 @@ make -C tools/ui_sim                             # render every screen to tools/
 those if your paths differ. Exact tool versions and a second-machine setup:
 [docs/HANDOFF.md](docs/HANDOFF.md).
 
-**Using it:** the joystick does everything. UP teaches a sound, LEFT shows the timeline, RIGHT the
-stats, press is OK or dismiss. The demo run sheet, with laptop-played sounds for a repeatable
+**Using it:** the joystick does everything. On the home screen UP teaches a sound, LEFT shows the
+timeline, RIGHT the stats and DOWN the settings menu; press is OK or dismiss. On an alert or a
+timeline row, LEFT marks it wrong and RIGHT marks it right. The demo run sheet, with laptop-played sounds for a repeatable
 demo, is [docs/DEMO.md](docs/DEMO.md).
 
 **Host control over J-Link** (scripted tests, no joystick):
@@ -180,7 +190,10 @@ the datasets (ESC-50, Speech Commands), which aren't in git.
 - **Knocks are felt within about 20 cm** of the board on our table, hence "place me on the table
   by the door".
 - **Alert delay is about 0.85 s** against a 0.5 s target: the board waits for the whole sound.
-- Not built yet: night mode, fixing mistakes from the timeline, managing individual sounds. See [docs/STATUS.md](docs/STATUS.md).
+- Built but not yet checked by hand at the board: sensitivity on the knob, and the backlight
+  turning off in night mode.
+- Not built yet: renaming sounds, per-sound urgency, turning built-ins off, smoke vs CO alarms.
+  See [docs/STATUS.md](docs/STATUS.md).
 
 ## Board bring-up (done before the project was chosen)
 

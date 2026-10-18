@@ -17,7 +17,8 @@ says which is which.
 | 4 | [gallery/04_teach.png](gallery/04_teach.png) | Teaching a sound on the device: five checked examples, a test match, saved to flash. Simulator renders; sample values. |
 | 5 | [gallery/05_felt_vs_heard.png](gallery/05_felt_vs_heard.png) | Felt vs heard: the accelerometer tells a knock on this table from a knock on the TV. 21 of 22 knocks felt at 20 cm (measured). |
 | 6 | [gallery/06_self_test.png](gallery/06_self_test.png) | Boot self-test: mics, NPU against a reference, saved sounds, IMU and lights. Ready 1.5 s after reset on the board; the renders show sample times. |
-| 7 | [gallery/07_alerts_timeline.png](gallery/07_alerts_timeline.png) | Honest alerts: "Maybe" when unsure, banners for info sounds, and today's timeline. Simulator renders; sample sounds and values. |
+| 7 | [gallery/07_alerts_timeline.png](gallery/07_alerts_timeline.png) | Honest alerts that learn: "Maybe" when unsure; LEFT marks a wrong alert, which becomes a counter-example. Simulator renders; sample values. |
+| 8 | [gallery/08_more.png](gallery/08_more.png) | "What was that?" offers to teach an unknown sound; settings on the board: night mode, mics off, forget sounds. Simulator renders; sample values. |
 
 ## Still to add (owner, from the board)
 
@@ -39,12 +40,6 @@ A frame grabbed from the demo video works for both. Shoot in landscape, 3:2 or 1
   smoke from CO isn't built yet. On the board, the urgent sounds are glass breaking and siren.
 - `screens.png` (the older contact sheet): it includes the same Stats sample values.
 
-## Wording on the renders that the board doesn't back yet
-
-These strings are in the firmware's UI code, so they also appear on the real board:
-- "Tap anywhere to dismiss" (alert footer): touch isn't wired up; the joystick press dismisses.
-- "Tap: right / wrong" (Maybe card) and "Tap a sound: right / wrong / teach" (timeline): fixing
-  mistakes from the timeline (T4) isn't built.
-
-Changing them to "Press to dismiss" (and dropping right / wrong until T4 lands) is a one-line
-change in `firmware/soundsense/ui/ui.c` (lines 521 and 569) for the board session.
+The renders in 07 and 08 come from the 9:45-9:50 AM UI (fixing mistakes, "What was that?", the
+settings menu); their footers match the board's joystick controls. Knob sensitivity
+(`screens/25_knob_sensitivity.png`) is left out until someone has turned the knob at the board.
