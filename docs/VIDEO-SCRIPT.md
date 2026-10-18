@@ -192,6 +192,9 @@ Same shots, shorter. Cut between teach examples instead of showing every pause.
   [demo/captions_3min.srt](demo/captions_3min.srt), made from the VO lines above by
   `docs/demo/make_captions.py` and timed to the script's slots. Nudge them to the real footage, or
   rerun the script after changing a VO line.
+- Cards and overlays in [demo/video/](demo/video/) (1920x1080): `title_card.png` to open (2-3 s),
+  `end_card.png` to close (4-5 s), and one transparent `overlay_NN_*.png` per "On screen" line, to
+  lay over that segment as a lower third. Rebuild with `docs/demo/video/make_cards.py`.
 - Upload to YouTube (or Vimeo). "Unlisted" lets judges watch with the link; whether it's
   unlisted or public is the owner's call. Paste the link into the Devpost form and into
   SUBMISSION.md section 1.
