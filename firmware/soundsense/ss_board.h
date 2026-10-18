@@ -34,6 +34,9 @@ uint32_t ss_ms(void);
 /* Joystick: 5 switches on LPGPIO15, active low (the idle level is read at init).
  * The bit order follows the board files' names A, B, C, D, centre. */
 enum { SS_JOY_A = 1u, SS_JOY_B = 2u, SS_JOY_C = 4u, SS_JOY_D = 8u, SS_JOY_CENTER = 16u };
+/* Directions as seen by someone reading the screen (checked at the board, 2026-10-18). The switches
+ * are not debounced: one press can register twice. */
+enum { SS_JOY_UP = SS_JOY_D, SS_JOY_DOWN = SS_JOY_A, SS_JOY_LEFT = SS_JOY_B, SS_JOY_RIGHT = SS_JOY_C };
 int ss_joy_init(void);
 uint32_t ss_joy_state(void);     /* switches held now */
 uint32_t ss_joy_pressed(void);   /* switches newly pressed since the previous call */
