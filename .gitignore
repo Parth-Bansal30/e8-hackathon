@@ -17,7 +17,6 @@ model/mnist_ethos_u85.pte
 model/speech_commands/
 model/kws_cache/
 model/kws_train.log
-model/kws_ethos_u85*
 __pycache__/
 *.pyc
 .venv/

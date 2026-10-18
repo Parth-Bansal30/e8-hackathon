@@ -249,7 +249,11 @@ cp mnist_int8io_io.h ../firmware/npu_display/assets/model_io.h
 
 Expect float 98.00% / int8 98.05% on the host and a 105,696-byte .pte.
 
-### Keyword spotting (in progress)
+### Keyword spotting (trained and exported; not on the board yet)
+
+The trained checkpoint `kws_model.pth` and the exported `kws_ethos_u85.pte` / `_io.h` are
+committed. Only retrain if you change the model or the features; `python export_kws.py`
+alone rebuilds the .pte from the checkpoint in about a minute.
 
 ```bash
 cd model && source ../et-venv/bin/activate
@@ -263,10 +267,21 @@ python export_kws.py --untrained --out /tmp/x.pte          # only checks that th
   yes/no/up/down/left/right/on/off/stop/go.
 - **Input:** 49x40 log-mel. The feature definition is in `model/kws_common.py`; the board's C
   version must match it exactly.
-- **Untrained lowering result:** all 12 operators run on the NPU and none fall back to the
-  CPU. The .pte is 36 KB, with a Vela estimate of 0.36 ms per inference.
+- **Results (25 epochs, 42–65 s each on an M2):**
 
-The dataset, cache and log are git-ignored.
+  | Metric | Value |
+  |---|---|
+  | Validation accuracy (best epoch) | 95.27% |
+  | Test accuracy, float, full test set (5,092 clips) | 94.89% |
+  | Float (BatchNorm folded) vs int8, on 3,000 test clips | 94.50% vs **94.53%** |
+  | NPU operators | 12 of 12 (none on the CPU) |
+  | .pte size | 36,064 bytes |
+  | Vela estimate | 0.36 ms per inference, 68 KiB SRAM |
+  | int8 IO | input scale 0.02646, zp −30; output scale 0.05939, zp 1 |
+
+  Main confusions: go -> no (16), down -> no (16), go/unknown (17). Silence is 509/509.
+
+The dataset, cache and training log are git-ignored.
 
 ---
 
@@ -303,7 +318,7 @@ The dataset, cache and log are git-ignored.
    - Downloaded Speech Commands v0.02.
    - Wrote the feature, model, training and export scripts, and checked that the model lowers
      entirely to the NPU.
-   - Training started.
+   - Trained it: 94.9% test accuracy, and int8 loses nothing (94.53% vs 94.50% float).
    - Wrote the board-side capture and feature code (`firmware/app/kws.c`, not built yet).
 10. **Reproducibility:** pinned `ethos-u-core-driver@1.26.5`, made the scripts find the
     toolchain on their own, added `model/requirements-lock.txt`, and wrote this document.
@@ -312,7 +327,7 @@ The dataset, cache and log are git-ignored.
 
 ## 7. Next steps (the plan for the final app)
 
-1. Finish KWS training. Run `export_kws.py` and record the float and int8 accuracy.
+1. ~~Train and export KWS~~ (done, see §5).
 2. Build `firmware/app` with KWS:
    - Add `kws.c` and the PDM component to `app.cproject.yml`.
    - Convert the .pte with `tools/pte2h.py`.
