@@ -8,17 +8,17 @@
 | C1 NPU | pending | | |
 | C2 flash | pending | | |
 | C3 UI | pending | | |
-| C4 mics | Direction feasible; needs one calibration constant per board | Spacing 8 cm (ruler), so at most 3.7 samples of lag. Clapping 1 m off the left mic, in line with the pair, gave +2.2 samples; positions A and B to the side gave −1.0 and −1.7. That fits a constant offset between the channels of −1.35 samples and a measured maximum of 3.55. Mic 4 is the left mic. Front-clap level mic5 − mic4 −4.1 dB | See [C4 details](#c4-details); the right-side claps (expected about −4.9) are still to do |
+| C4 mics | Direction feasible; needs one calibration constant per board | Spacing 8 cm (ruler), so at most 3.7 samples of lag. Clapping about 1 m off the left mic gave +2.2 samples; positions A and B to the side gave −1.0 and −1.7. That fits a constant offset between the channels of −1.35 samples and a measured maximum of 3.55. Mic 4 is the left mic. Front-clap level mic5 − mic4 −4.1 dB | See [C4 details](#c4-details); the right-side claps (expected about −4.9) are still to do |
 | C5 duty | pending | | |
 
 ## C4 details
 
-**Recordings:** [c4_take1.wav](gates/audio/c4_take1.wav) has 16 claps at 1 m: 5 at position A, 6 at the middle position (1 m off the left mic, in line with the pair), 5 at position B, plus the start and stop joystick clicks. [c4_take2.wav](gates/audio/c4_take2.wav) has 5 key jingles. Both came out of the PSRAM over J-Link at 64 KB/s. Analysis: `tools/mic_geometry.py`, written to [c4_mic_geometry.json](gates/c4_mic_geometry.json).
+**Recordings:** [c4_take1.wav](gates/audio/c4_take1.wav) has 16 claps at 1 m: 5 at position A, 6 at the middle position (a short end, about 1 m from the left mic), 5 at position B, plus the start and stop joystick clicks. [c4_take2.wav](gates/audio/c4_take2.wav) has 5 key jingles. Both came out of the PSRAM over J-Link at 64 KB/s. Analysis: `tools/mic_geometry.py`, written to [c4_mic_geometry.json](gates/c4_mic_geometry.json).
 
 **Mic positions:** the DK-E8 user guide (Figures 2A/2B) puts the two microphones on the underside, one at the middle of each long edge, each with a sound hole through the board. The ruler gives 8 cm between them.
 
 **Lags:** each position gives a repeatable lag (within ±0.3 samples). Positive means mic 5 hears it later.
-- **Middle position** (6 claps): about 1 m off the *left* microphone, in line with the pair, as the person at the board confirmed. Lag +2.2, so mic 4 is the left mic, as `docs/HANDOFF.md` says.
+- **Middle position** (6 claps): the person at the board stood off a short end, about 1 m from the *left* microphone. The lag, +2.2, says this position was nearly in line with the pair, and that mic 4 is the left mic, as `docs/HANDOFF.md` says. Being in line with the pair from a short end doesn't fit the user guide's layout (one mic on each long edge), so the layout on this board is unconfirmed.
 - **A and B** (5 claps each): roughly to the side of the pair. Lags −1.0 and −1.7.
 - **Reading:** taking −1.35 samples (84 µs) as a constant offset between the two channels fits all three positions. A and B then come out at ±0.35, close to broadside. The left end comes out at +3.55, which matches the 8 cm spacing (3.7 at most). Without an offset, the left end would mean 4.7 cm of spacing, which contradicts the ruler.
 - The two channels' PDM phase settings differ (`0x1F` and `0x03` in `kws.c`). That is too small to cause 84 µs on its own, so where the offset comes from is open. It only needs measuring once per board.
