@@ -1,8 +1,9 @@
 # Devpost gallery: images and captions
 
 Upload in this order; the first is the thumbnail. All are 1500x1000 (3:2, the ratio Devpost
-recommends) PNGs under 400 KB. Rebuild them with `python3 docs/demo/gallery/make_gallery.py` after
-`make -C tools/ui_sim` if the screens change.
+recommends) PNGs under 400 KB. Rebuild them with `python3 docs/demo/gallery/make_gallery.py [DejaVu font folder]` after
+`make -C tools/ui_sim` (and copying its `out/` renders to `screens/`) if the screens change.
+Rebuilt at 1:50 PM for the judged firmware (8 examples, 437 ms alerts, Sounds page, snooze).
 
 The phone screens in these images are **UI simulator renders** (`tools/ui_sim`, the firmware's own
 UI code drawn on a laptop), so the values on them are samples. Every number printed *outside* the
@@ -13,12 +14,12 @@ says which is which.
 |---|---|---|
 | 1 | [gallery/01_cover.png](gallery/01_cover.png) | Sound Sense: home sound alerts for deaf and hard-of-hearing people, on the Alif E8. Screens are UI simulator renders with sample values. |
 | 2 | [gallery/02_architecture.png](gallery/02_architecture.png) | Architecture: features, matching, fusion and UI on the Cortex-M55; the int8 encoder on the Ethos-U85 through ExecuTorch. Numbers measured on the board. |
-| 3 | [gallery/03_numbers.png](gallery/03_numbers.png) | Measured on the DK-E8, release build: 1.00 ms per embedding on the NPU, CPU active 12.6% in a quiet room, 0 audio dropped in 1,101 flash saves. |
-| 4 | [gallery/04_teach.png](gallery/04_teach.png) | Teaching a sound on the device: five checked examples, a test match, saved to flash. Simulator renders; sample values. |
+| 3 | [gallery/03_numbers.png](gallery/03_numbers.png) | Measured on the DK-E8, release build: 1.00 ms per embedding on the NPU, CPU active 12.6% in a quiet room, clear matches alerted in a median 437 ms, 0 audio dropped in 1,101 flash saves. |
+| 4 | [gallery/04_teach.png](gallery/04_teach.png) | Teaching a sound on the device: eight checked examples (one unlike the others is flagged and redone), a test match, saved to flash. Simulator renders; sample values. |
 | 5 | [gallery/05_felt_vs_heard.png](gallery/05_felt_vs_heard.png) | Felt vs heard: the accelerometer tells a knock on this table from a knock on the TV. 21 of 22 knocks felt at 20 cm (measured). |
 | 6 | [gallery/06_self_test.png](gallery/06_self_test.png) | Boot self-test: mics, NPU against a reference, saved sounds, IMU and lights. Ready 1.5 s after reset on the board; the renders show sample times. |
 | 7 | [gallery/07_alerts_timeline.png](gallery/07_alerts_timeline.png) | Honest alerts that learn: "Maybe" when unsure; LEFT marks a wrong alert, which becomes a counter-example. Simulator renders; sample values. |
-| 8 | [gallery/08_more.png](gallery/08_more.png) | "What was that?" offers to teach an unknown sound; settings on the board: night mode, mics off, forget sounds. Simulator renders; sample values. |
+| 8 | [gallery/08_more.png](gallery/08_more.png) | "What was that?" offers to teach an unknown sound; Settings > Sounds turns each sound on or off and sets its urgency; DOWN on an alert snoozes it for 10 min. Simulator renders; sample values. |
 
 ## Still to add (owner, from the board)
 
