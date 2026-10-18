@@ -284,7 +284,7 @@ enough to drop audio, save only during silence, or split erase and program acros
 |---|---|---|
 | 1 | Both RGB LEDs, every colour, **confirmed by eye** (never done; pins in [bringup-notes.md](bringup-notes.md#peripherals)). Blink patterns at 2–8 Hz; visible across a room? | Confirmed |
 | 2 | Alert card: time from decision to `present()` done, debug and release | ≤ 100 ms |
-| 3 | Full-screen strobe: alternate white and red frames at 4 Hz for 10 s while listening. Measure `present()` (it copies 1.15 MB per frame). Also try handing the display a pointer instead (`Driver_CDC200.Control(CDC200_FRAMEBUF_UPDATE_VSYNC, addr)`, in pack 2.0.4's `Driver_CDC200.h`) | `dropped` stays 0 |
+| 3 | Full-screen strobe: alternate white and red frames once a second (toggle every 500 ms; never 3 Hz or faster, which risks photosensitive seizures) for 10 s while listening. To stress the copy, also call `present()` 10 times a second on a screen that changes without flashing (a moving bar). Measure `present()` (it copies 1.15 MB per frame). Also try handing the display a pointer instead (`Driver_CDC200.Control(CDC200_FRAMEBUF_UPDATE_VSYNC, addr)`, in pack 2.0.4's `Driver_CDC200.h`) | `dropped` stays 0 |
 | 4 | Live spectrogram strip (200x40 px, scrolling one column per 20 ms) plus top-3 bars: achieved fps | ≥ 10 fps, `dropped` 0 |
 | 5 | Backlight: `LCD_BACKLIGHT` is GPIO6_1 (pack `board_defs.h`). Test on/off, then software PWM (about 1 kHz from a timer) for dimming: any flicker? | Dimming works, or document that it's on/off only, in which case night mode uses a dark UI |
 
