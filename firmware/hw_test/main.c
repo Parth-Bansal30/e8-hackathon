@@ -296,7 +296,12 @@ static void imu_poll(void)
     }
 }
 
-/* PDM microphones: channels 4+5 on PDM_D2, 8 kHz, interleaved 16-bit */
+/* PDM microphones: channels 4+5 on PDM_D2, 8 kHz, interleaved 16-bit.
+ * The gain register is linear (measured: 4x the value = +12 dB). Alif's demo values
+ * (0x0D/0x13) leave speech near -50 dBFS; 0x800 puts room noise near -54 dBFS and
+ * speech around -30. Channel 5 keeps the demo's 1.46x ratio to match the mics. */
+#define MIC_GAIN_CH4 0x800
+#define MIC_GAIN_CH5 0xBB0
 #define MIC_SAMPLES 1600   /* 100 ms of both channels */
 static int16_t mic_buf[MIC_SAMPLES];
 static volatile int mic_event;   /* 1 complete, 2 error */
@@ -325,10 +330,10 @@ static void mic_init(void)
         p->Control(ARM_PDM_SELECT_CHANNEL, ARM_PDM_MASK_CHANNEL_4 | ARM_PDM_MASK_CHANNEL_5, 0) ||
         p->Control(ARM_PDM_MODE, ARM_PDM_MODE_AUDIOFREQ_8K_DECM_64, 0) ||
         p->Control(ARM_PDM_BYPASS_IIR_FILTER, 1, 0) ||
-        p->Control(ARM_PDM_CHANNEL_PHASE, 4, 0x1F) || p->Control(ARM_PDM_CHANNEL_GAIN, 4, 0x0D) ||
+        p->Control(ARM_PDM_CHANNEL_PHASE, 4, 0x1F) || p->Control(ARM_PDM_CHANNEL_GAIN, 4, MIC_GAIN_CH4) ||
         p->Control(ARM_PDM_CHANNEL_PEAK_DETECT_TH, 4, 0x00060002) ||
         p->Control(ARM_PDM_CHANNEL_PEAK_DETECT_ITV, 4, 0x0004002D) ||
-        p->Control(ARM_PDM_CHANNEL_PHASE, 5, 0x03) || p->Control(ARM_PDM_CHANNEL_GAIN, 5, 0x13) ||
+        p->Control(ARM_PDM_CHANNEL_PHASE, 5, 0x03) || p->Control(ARM_PDM_CHANNEL_GAIN, 5, MIC_GAIN_CH5) ||
         p->Control(ARM_PDM_CHANNEL_PEAK_DETECT_TH, 5, 0x00060002) ||
         p->Control(ARM_PDM_CHANNEL_PEAK_DETECT_ITV, 5, 0x00020027)) {
         set_st(&c_mic, ST_FAIL, "PDM init failed");

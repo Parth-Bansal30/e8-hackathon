@@ -15,7 +15,7 @@ solution:
     - pack: ARM::CMSIS@6.0.0
     - pack: ARM::CMSIS-Compiler@2.1.0
     - pack: Keil::MDK-Middleware@8.2.0
-    - pack: ARM::ethos-u-core-driver
+    - pack: ARM::ethos-u-core-driver@1.26.5
 
   target-types:
     - type: E7-HE
@@ -72,3 +72,4 @@ solution:
     - project: npu_display/npu_display.cproject.yml
     - project: npu_draw/npu_draw.cproject.yml
     - project: hw_test/hw_test.cproject.yml
+    - project: cam_test/cam_test.cproject.yml

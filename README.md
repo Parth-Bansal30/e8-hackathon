@@ -18,9 +18,10 @@ What has been verified on the board so far:
 | MIPI DSI display, 480x800 | working | `lcd_image` |
 | ExecuTorch on Ethos-U85 (MNIST) | working: 304 µs per inference, int8 output matches the host | `mnist_executorch`, `npu_display` |
 | Touch drawing -> NPU digit recognition | working | `npu_draw` |
-| Joystick, BMI323 IMU, PDM mics, touch | pass the self-test | `hw_test` |
-| RGB LEDs, user pot (R79) | self-test written, not confirmed yet | `hw_test` |
-| ICM-42670P IMU, cameras | not tested yet | |
+| Joystick, user pot (R79), BMI323 IMU, PDM mics, touch | pass the self-test | `hw_test` |
+| RGB LEDs | self-test written, not confirmed yet | `hw_test` |
+| ICM-42670P IMU | not tested yet | |
+| Camera (MIPI CSI-2) | no camera module in our kit; capture test ready | `cam_test` |
 
 ## Performance (MNIST CNN, int8)
 
@@ -63,6 +64,7 @@ Ethos-U55s.
 firmware/            CMSIS csolution, based on alifsemi/alif_vscode-template
   app/               final hackathon app (placeholder)
   hw_test/           peripheral self-test dashboard (LEDs, joystick, pot, IMU, mics, touch, NPU)
+  cam_test/          ARX3A0 camera capture to the LCD (untested: no module)
   npu_draw/          draw a digit on the touchscreen; the NPU recognizes it live
   npu_display/       cycles MNIST test digits through the NPU with on-screen results
   mnist_executorch/  minimal ExecuTorch runner + RTT output (shared executorch_runner.cpp)
@@ -74,6 +76,10 @@ docs/                bring-up notes (all the board gotchas and their fixes)
 ```
 
 ## Build and run
+
+Setting up a second machine? [docs/HANDOFF.md](docs/HANDOFF.md) has the exact tool versions,
+the setup steps and a test sequence.
+
 
 Prerequisites (macOS shown; Linux works too):
 

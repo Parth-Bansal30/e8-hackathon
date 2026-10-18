@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/tools/projmgr/2.6.0/tools/projmgr/schemas/cproject.schema.json
+# ARX3A0 camera bring-up: MIPI CSI-2 capture with a live preview on the LCD.
+# Uses the fonts from ../npu_display.
+project:
+  groups:
+    - group: App
+      files:
+        - file: main.c
+
+    - group: SEGGER_RTT
+      files:
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT.c
+        - file: ../libs/SEGGER_RTT_V796h/RTT/SEGGER_RTT_printf.c
+        - file: ../libs/SEGGER_RTT_V796h/Syscalls/SEGGER_RTT_Syscalls_GCC.c
+
+  output:
+    base-name: $Project$
+    type:
+      - elf
+      - bin
+
+  layers:
+    - layer: ../device/ensemble/alif-ensemble.clayer.yml
+
+  packs:
+    - pack: AlifSemiconductor::Ensemble
+
+  components:
+    - component: AlifSemiconductor::Device:SOC Peripherals:CDC
+    - component: AlifSemiconductor::Device:SOC Peripherals:MIPI DSI
+    - component: AlifSemiconductor::Device:SOC Peripherals:MIPI DSI CSI2 DPHY
+    - component: AlifSemiconductor::BSP:External peripherals:ILI9806E LCD panel
+    - component: AlifSemiconductor::Device:SOC Peripherals:CPI
+    - component: AlifSemiconductor::Device:SOC Peripherals:MIPI CSI2
+    - component: AlifSemiconductor::BSP:External peripherals:CAMERA Sensor ARX3A0
+    - component: AlifSemiconductor::CMSIS Driver:I2C
+
+  define:
+    - BUFFER_SIZE_UP: 4096
+
+  add-path:
+    - .
+    - ../npu_display
+    - ../mnist_executorch          # SEGGER_RTT_Conf.h
+    - ../libs/SEGGER_RTT_V796h/RTT

@@ -6,7 +6,7 @@
 # buffer fills after a minute or so and the firmware drops everything after (RTT's default no-block mode).
 set -e
 ELF=${1:?usage: rtt_dump.sh <app.elf>}
-GCC=${CMSIS_TOOLS:-~/.vcpkg/artifacts/2139c4c6}/compilers.arm.arm.none.eabi.gcc/13.3.1/bin
+GCC=${CMSIS_TOOLS:-$(print -l ~/.vcpkg/artifacts/*/compilers.arm.arm.none.eabi.gcc/13.3.1(N:h:h) | head -1)}/compilers.arm.arm.none.eabi.gcc/13.3.1/bin
 DEV=AE822FA0E5597LS0_M55_HP
 TMP=$(mktemp -d)
 trap 'rm -rf $TMP' EXIT

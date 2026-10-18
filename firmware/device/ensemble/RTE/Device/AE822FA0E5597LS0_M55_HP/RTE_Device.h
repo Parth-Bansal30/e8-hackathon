@@ -358,7 +358,7 @@
 
 // <e> ISP (ISP) [Driver_ISP]
 // <i> Configuration settings for Driver_ISP in component ::Drivers:ISP
-#define RTE_ISP 1
+#define RTE_ISP 0   /* off: cam_test captures raw frames; Driver_CPI needs the ISP component when on */
 #if RTE_ISP
 
 // <o> ISP IRQ priority <0-255>

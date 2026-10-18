@@ -53,9 +53,9 @@ app's `platform_init()`.
 | Joystick | LPGPIO15 pins 0..4 | Active low; the app reads the idle level at start |
 | User pot | Blue knob **R79** beside the joystick, into ADC121 input 1 (0..1.8 V) | Single-shot conversion |
 | IMUs | BMI323 and ICM-42670P on I3C, flex I/O P7_6/P7_7 | Needs `vdd_ioflex_3V3 = IOFLEX_LEVEL_1V8`. Only one IMU driver can be linked (duplicate symbols). RTE_Device.h and board_defs disagree on the INT pins, so poll instead of using interrupts |
-| PDM mics | Channels 4/5 (PDM_D2_B, PDM_C2_A) | Clock `CLKEN_HFOSCx2`; settings copied from Alif's `demo_pdm.c` |
+| PDM mics | Channels 4/5 (PDM_D2_B, PDM_C2_A) | Clock `CLKEN_HFOSCx2`; filter settings from Alif's `demo_pdm.c`. Its gains (0x0D/0x13) are far too low: speech peaks near -50 dBFS. The gain register is linear (4x = +12 dB, max 0xFFF); 0x800/0xBB0 puts room noise near -53 dBFS |
 | Touch | GT911 on I2C1, INT GPIO9_4, RST GPIO6_5 | Raw coordinates equal screen pixels. `GetState` only reports on a new interrupt, so treat 150 ms with no reports as lift-off |
-| Camera | ARX3A0 / AR0144 on CSI-2, I2C1, power GPIO7_5, reset GPIO9_1 | Not brought up yet |
+| Camera | Two onsemi IAS flat-flex sockets: Camera 1 = J22 (top, right edge), Camera 2 = J16 (underside, left edge). ARX3A0 driver: I2C1 addr 0x36, power GPIO7_5, reset GPIO9_1, C1/C2 select GPIO14_3 | **Our kit has no camera module.** `cam_test` is ready for one: with nothing plugged in, only 0x1a answers on I2C1 and sensor init returns -1 |
 
 - `Driver_ADC.h` and `Driver_PDM.h` don't compile as C++ (`typedef const struct`), so
   `hw_test` is plain C.

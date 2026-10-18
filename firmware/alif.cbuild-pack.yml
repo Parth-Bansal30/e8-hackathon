@@ -14,6 +14,7 @@ cbuild-pack:
     - resolved-pack: ARM::ethos-u-core-driver@1.26.5
       selected-by-pack:
         - ARM::ethos-u-core-driver
+        - ARM::ethos-u-core-driver@1.26.5
     - resolved-pack: AlifSemiconductor::Ensemble@2.0.4
       selected-by-pack:
         - AlifSemiconductor::Ensemble
