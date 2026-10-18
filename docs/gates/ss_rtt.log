@@ -1352,3 +1352,7 @@
 [SS] t=126058 +5.1 dB best 'Water running' 0.40 (thr 0.50), 2nd 'Alarm' 0.22, felt no (0.0 mg) -> quiet
 [SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8321 us
 [SS] stats t=130000 level -48 dB floor -49 dB, npu 1006 us runner 1033 us feat 303 us, 0.2 inf/s, busy 7%, active 13.4% (3618 passes/s, 3568 sleeps/s, 242 us each), npu busy 0.02%, dropped 0, imu 104268 samples 0 errors (times back 0 us, clock +6868 ppm), knocks 0, events 3, saves 0
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8360 us
+[SS] stats t=140000 level -50 dB floor -50 dB, npu 1006 us runner 1033 us feat 302 us, 0.0 inf/s, busy 7%, active 13.2% (3625 passes/s, 3575 sleeps/s, 242 us each), npu busy 0.00%, dropped 0, imu 112321 samples 0 errors (times back 0 us, clock +6865 ppm), knocks 0, events 3, saves 0
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8347 us
+[SS] stats t=150000 level -49 dB floor -50 dB, npu 1006 us runner 1033 us feat 303 us, 0.0 inf/s, busy 7%, active 13.2% (3625 passes/s, 3575 sleeps/s, 242 us each), npu busy 0.00%, dropped 0, imu 120375 samples 0 errors (times back 0 us, clock +6608 ppm), knocks 0, events 3, saves 0

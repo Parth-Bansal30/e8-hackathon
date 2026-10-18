@@ -311,8 +311,9 @@ To check the result, read variables over J-Link:
       from onset to screen, 0 wrong. Knocks fell 5 → 1 because none were felt this time.
     - The IMU `times back` read up to 3 ms after this flash (it was 0 in `c3_rtt.log`). It isn't from
       the early path; flash the previous build to see whether it's new.
-    - Confirmed, so the 0.85 s claims need updating (not done yet; ask the owner): README (lines 68, 82, 192), DEMO.md "Alert
-      timing", SUBMISSION.md "Alert delay", HANDOFF-submission.md. Tell the submission session.
+    - README and DEMO.md now give the measured numbers (median 437 ms for a clear built-in match,
+      else about 0.87 s). SUBMISSION.md, VIDEO-SCRIPT.md, HANDOFF-submission.md and make_gallery.py
+      still say about 0.85 s; that's for the submission session (note given at 11 AM).
 
 ## Wrap-up (board session, by about 3:45 PM)
 
