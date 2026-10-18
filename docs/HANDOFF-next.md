@@ -1,6 +1,6 @@
 # Handoff: continuing Sound Sense (2026-10-18)
 
-**Updated 2:00 PM PDT: board packed for judging.** Firmware frozen at `v1.0-judged` = `32177ea` (the 12:14 release build is flashed; Ready 1279 ms, all rows pass). Board laptop list from HANDOFF-split.md is done: hand checks pass, photos in `demo/board/`, video recorded, rehearsal run.** The board's J-Link is now on the laptop with the et-venv (it has torch,
+**Updated 2:00 PM PDT: board packed for judging.** Firmware frozen at `v1.0-judged` = `32177ea` (the 12:14 release build is flashed; Ready 1279 ms, all rows pass). Board laptop list from HANDOFF-split.md is done: hand checks pass, photos in `demo/board/`, video recorded, rehearsal run. The board's J-Link is now on the laptop with the et-venv (it has torch,
 the datasets and the toolchain), so offline work and board work happen on one machine.
 
 Since 10:10 AM:
