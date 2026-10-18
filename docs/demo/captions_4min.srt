@@ -1,0 +1,234 @@
+1
+00:00:00,300 --> 00:00:05,403
+Deaf and hard-of-hearing people miss the
+sounds that matter at home:
+
+2
+00:00:05,453 --> 00:00:07,677
+the door, the alarm, the baby.
+
+3
+00:00:07,727 --> 00:00:11,693
+Sound Sense is a small box for the table
+by the door.
+
+4
+00:00:11,743 --> 00:00:15,027
+It listens, alerts on its screen and
+lights,
+
+5
+00:00:15,077 --> 00:00:19,650
+and runs entirely on this Alif E8 board.
+Nothing is recorded.
+
+6
+00:00:20,300 --> 00:00:22,148
+Every start runs a self-test:
+
+7
+00:00:22,198 --> 00:00:26,323
+both microphones, the neural processor
+against a stored reference,
+
+8
+00:00:26,373 --> 00:00:29,740
+the saved sounds, the vibration sensor and
+the lights.
+
+9
+00:00:29,790 --> 00:00:32,650
+It's ready one and a half seconds after
+reset.
+
+10
+00:00:33,300 --> 00:00:35,909
+The home screen shows what it hears:
+
+11
+00:00:35,959 --> 00:00:41,967
+a spectrogram, the room level against its
+noise floor, and the three best matches.
+
+12
+00:00:42,017 --> 00:00:45,218
+In a quiet room the NPU rests to save
+power.
+
+13
+00:00:45,268 --> 00:00:49,650
+When I talk, the encoder wakes up and the
+matches come back.
+
+14
+00:00:50,300 --> 00:00:52,219
+Seven sounds are built in:
+
+15
+00:00:52,269 --> 00:00:57,011
+knock, dog, baby, alarm, glass, siren and
+running water. Here's an alarm:
+
+16
+00:00:57,061 --> 00:01:01,869
+a full-screen card with an icon, a word
+and the time, in colours that work
+
+17
+00:01:01,919 --> 00:01:06,267
+with colour blindness, and the lights
+flash a pattern of their own.
+
+18
+00:01:06,317 --> 00:01:11,650
+Urgent sounds, like breaking glass, strobe
+once a second and stay until you press.
+
+19
+00:01:12,300 --> 00:01:16,312
+Here's what a microphone alone can't do.
+
+20
+00:01:16,362 --> 00:01:21,998
+I knock on the table, twenty centimetres
+from the board.
+
+21
+00:01:22,048 --> 00:01:27,380
+The accelerometer, read eight hundred
+times a second,
+
+22
+00:01:27,430 --> 00:01:33,372
+feels it, and the microphones hear it:
+felt here and heard.
+
+23
+00:01:33,422 --> 00:01:40,683
+Now the same knock from the laptop, held
+in the air, like a knock on TV.
+
+24
+00:01:40,733 --> 00:01:48,604
+The microphones hear it, but nothing
+touched the table, so it's only a banner:
+
+25
+00:01:48,654 --> 00:01:51,650
+heard only.
+
+26
+00:01:52,300 --> 00:01:59,016
+Every home sounds different, so you teach
+it your own.
+
+27
+00:01:59,066 --> 00:02:05,657
+Press up, pick a name, here Keys, and
+press to start.
+
+28
+00:02:05,707 --> 00:02:09,416
+I jingle my keys eight times.
+
+29
+00:02:09,466 --> 00:02:13,175
+Each example is checked:
+
+30
+00:02:13,225 --> 00:02:21,570
+too quiet, clipped, a loud room, or unlike
+the others gets flagged,
+
+31
+00:02:21,620 --> 00:02:28,587
+and a good one turns green with its level
+over the room.
+
+32
+00:02:28,637 --> 00:02:32,472
+One more jingle tests it. Save.
+
+33
+00:02:32,522 --> 00:02:36,231
+No laptop and no retraining:
+
+34
+00:02:36,281 --> 00:02:44,125
+the board builds a profile from the NPU's
+embeddings, and saves
+
+35
+00:02:44,175 --> 00:02:50,891
+it to flash in the background without
+missing a sound.
+
+36
+00:02:50,941 --> 00:02:54,650
+And now it knows my keys.
+
+37
+00:02:55,300 --> 00:02:58,209
+Now I reset the board.
+
+38
+00:02:58,259 --> 00:03:05,606
+The self-test restores the taught sounds
+from flash in under a millisecond.
+
+39
+00:03:05,656 --> 00:03:09,650
+Jingle again, and it still knows my keys.
+
+40
+00:03:10,300 --> 00:03:13,460
+Left shows today's timeline:
+
+41
+00:03:13,510 --> 00:03:19,452
+every sound, with repeats merged and felt
+knocks marked.
+
+42
+00:03:19,502 --> 00:03:23,197
+If it got one wrong, left marks it.
+
+43
+00:03:23,247 --> 00:03:31,650
+That sound becomes a counter-example, so
+it won't set off the same alert again.
+
+44
+00:03:32,300 --> 00:03:35,565
+Right shows the numbers, live from the
+board.
+
+45
+00:03:35,615 --> 00:03:40,794
+The encoder is our own PyTorch model,
+quantized to int8 and run through
+
+46
+00:03:40,844 --> 00:03:44,992
+ExecuTorch, with all fourteen operators on
+the Ethos-U85:
+
+47
+00:03:45,042 --> 00:03:47,202
+about one millisecond per run.
+
+48
+00:03:47,252 --> 00:03:50,517
+In a quiet room the CPU is awake twelve
+point
+
+49
+00:03:50,567 --> 00:03:53,831
+six percent of the time, down from a
+hundred.
+
+50
+00:03:53,881 --> 00:03:59,650
+Sound Sense learns your home, feels your
+door, and keeps your sounds to itself.
+

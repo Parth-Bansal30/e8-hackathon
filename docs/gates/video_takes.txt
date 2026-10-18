@@ -1,0 +1,86 @@
+Video recording at the board, 2026-10-18 about 1:33-1:45 PM PDT, release build of 32177ea.
+The owner filmed and used the joystick; laptop sounds from tools/demo_sound.py at Mac output volume 100
+(as found, not raised). The board log lines for every take follow the notes.
+
+Takes (what the board decided):
+- Seg 4 alarm: Alarm 0.93, early alert 414 ms after the onset, +16.6 dB. Glass: 0.71, early at 416 ms,
+  +21.7 dB, clipped (volume 100).
+- Seg 5 shot B (laptop in the air): Knock 0.68, not felt -> "Heard only (TV?)" banner.
+- Seg 5 shot A (table knock):
+  - On the leather desk pad: felt (29-79 mg) but only +3 to +7 dB, so "quiet" (no alert).
+  - On a hard surface: one "Maybe: Knock?" felt at 22 mg; one heard but not felt (too far away).
+  - Loud, right next to the board: Knock 0.73, +27.8 dB, felt at 81.5 mg -> "Felt here + heard".
+- Seg 6 Keys teach, 8 shots:
+  - Clipped: 3, 4, 6, 7. "Loud room": 3, 5, 6, 7, 8 (jingles close together). One too-quiet shot redone.
+  - Leave-one-out 0.39-0.85. T2 flagged shots 1 and 6; without them the threshold would be 0.697.
+  - Test 0.791 accepted. Saved at thr 0.500 before a redo (seq 1255, 178 ms, 0 dropped).
+- Seg 7 reset: 2 taught sounds restored in 0.7 ms, Ready 1481 ms. Keys alert 0.74.
+- Seg 8: an alarm (0.93) for a built-in row. But the row marked wrong was Keys:
+  "kept as counter-example 1, saved" (seq 1256).
+
+Store after recording (left as is, by the owner's choice):
+- Doorbell: thr 0.85, Important, 0 wrong marks.
+- Keys: thr 0.50, 1 wrong mark.
+- All built-ins on.
+- To return to the pre-recording state: Settings > Forget Keys (two presses).
+
+Board log:
+[SS] t=378034 early, 405 ms after the onset
+[SS] t=378034 +19.7 dB clipped best 'Alarm' 0.90 (thr 0.58), 2nd 'Glass breaking' 0.31, felt no (0.0 mg) -> Alarm
+[SS] t=379265 early, 414 ms after the onset
+[SS] t=379265 +16.6 dB best 'Alarm' 0.93 (thr 0.58), 2nd 'Glass breaking' 0.33, felt no (0.0 mg) -> Alarm
+[SS] t=396625 early, 416 ms after the onset
+[SS] t=396625 +21.7 dB clipped best 'Glass breaking' 0.71 (thr 0.50), 2nd 'Alarm' 0.33, felt no (0.0 mg) -> Glass breaking
+[SS] t=428353 +7.2 dB best 'Glass breaking' 0.08 (thr 0.50), 2nd 'Alarm' 0.05, felt yes (28.5 mg) -> quiet
+[SS] t=429578 +3.9 dB best 'Glass breaking' 0.12 (thr 0.50), 2nd 'Water running' 0.05, felt yes (46.8 mg) -> quiet
+[SS] t=435660 +21.0 dB best 'Knock' 0.68 (thr 0.62), 2nd 'Dog barking' 0.39, felt no (0.0 mg) -> Knock
+[SS] t=444522 +2.7 dB best 'Glass breaking' 0.07 (thr 0.50), 2nd 'Water running' 0.04, felt yes (78.7 mg) -> quiet
+[SS] t=494617 +9.7 dB best 'Glass breaking' 0.22 (thr 0.50), 2nd 'Alarm' 0.13, felt yes (21.7 mg) -> maybe Knock
+[SS] t=496806 +6.5 dB best 'Glass breaking' 0.29 (thr 0.50), 2nd 'Alarm' 0.07, felt no (0.0 mg) -> quiet
+[SS] t=503220 +24.3 dB best 'Knock' 0.65 (thr 0.62), 2nd 'Glass breaking' 0.21, felt no (0.0 mg) -> Knock
+[SS] t=543033 early, 410 ms after the onset
+[SS] t=543033 +27.8 dB clipped best 'Knock' 0.73 (thr 0.62), 2nd 'Dog barking' 0.41, felt yes (81.5 mg) -> Knock
+[SS] t=558496 +9.8 dB best 'Glass breaking' 0.17 (thr 0.50), 2nd 'Alarm' 0.09, felt no (0.0 mg) -> unknown
+[SS] t=604517 +3.8 dB best 'Quiet' 0.12 (thr 0.50), 2nd 'Water running' 0.04, felt no (0.0 mg) -> quiet
+[SS] t=609125 +8.5 dB best 'Glass breaking' 0.19 (thr 0.50), 2nd 'Alarm' -0.03, felt no (0.0 mg) -> unknown
+[SS] t=611234 +5.9 dB best 'Quiet' 0.25 (thr 0.50), 2nd 'Glass breaking' 0.21, felt no (0.0 mg) -> quiet
+[SS] t=612947 +12.9 dB best 'Glass breaking' 0.38 (thr 0.50), 2nd 'Water running' 0.04, felt no (0.0 mg) -> unknown
+[SS] t=614181 +5.9 dB best 'Glass breaking' 0.32 (thr 0.50), 2nd 'Quiet' 0.21, felt no (0.0 mg) -> quiet
+[SS] t=617616 +11.9 dB best 'Glass breaking' 0.15 (thr 0.50), 2nd 'Alarm' 0.11, felt yes (73.7 mg) -> maybe Knock
+[TEACH] 'Keys': make the sound 8 times
+[TEACH] shot 1/8: +25.6 dB
+[TEACH] shot 2/8: +19.6 dB
+[TEACH] shot 3/8: +21.3 dB, clipped, loud room
+[TEACH] shot 4/8: +23.3 dB, clipped
+[TEACH] shot 5/8: +12.5 dB, loud room
+[TEACH] shot 6/8: +21.8 dB, clipped, loud room
+[TEACH] shot 7: too quiet (+9.6 dB)
+[TEACH] shot 7/8: +17.1 dB, clipped, loud room
+[TEACH] shot 8/8: +10.4 dB, loud room
+[TEACH] profile: thr 0.500, leave-one-out 0.39 0.85 0.75 0.85 0.81 0.62 0.85 0.70; make it once more to test, press to save
+[TEACH] T2: shot 1 and another unlike the others (0.39); without them thr 0.697 instead of 0.500
+[TEACH] T2: the other is shot 6 (0.62)
+[TEACH] test: match 0.791 (thr 0.500) accepted
+[TEACH] saved 'Keys' thr 0.500; 2 taught
+[STORE] save 1 ok: copy A seq 1255, 1616 bytes, 178 ms (max 178), longest step 105463 us, dropped 0
+[SS] t=725040 +4.9 dB best 'Water running' 0.20 (thr 0.50), 2nd 'Siren' 0.18, felt no (0.0 mg) -> quiet
+[STORE] copy A valid (seq 1255), copy B valid (seq 1254)
+[STORE] loaded 2 taught sounds from copy A, seq 1255, in 692 us; built-ins off: 0x0
+[S1] ready after 1481 ms: mics left -50 dB, right -53 dB; npu matches the reference, 1.0 ms; saved sounds 2 taught sounds restored; imu knocks can be felt; lights ok
+[C5] cycle counter through WFI: 100% of wall time -> sleeping between audio blocks
+[SS] t=5869 +23.9 dB best 'Keys' 0.74 (thr 0.50), 2nd 'Glass breaking' 0.37, felt no (0.0 mg) -> Keys
+[SS] t=30163 early, 403 ms after the onset
+[SS] t=30163 +20.3 dB clipped best 'Alarm' 0.92 (thr 0.58), 2nd 'Keys' 0.36, felt no (0.0 mg) -> Alarm
+[SS] t=31395 early, 411 ms after the onset
+[SS] t=31395 +16.3 dB best 'Alarm' 0.93 (thr 0.58), 2nd 'Keys' 0.31, felt no (0.0 mg) -> Alarm
+[SS] t=41828 +24.4 dB best 'Keys' 0.44 (thr 0.50), 2nd 'Glass breaking' 0.11, felt yes (30.7 mg) -> maybe Knock
+[SS] t=43587 +11.7 dB best 'Keys' 0.53 (thr 0.50), 2nd 'Glass breaking' 0.34, felt yes (29.2 mg) -> maybe Keys
+[SS] 'Keys' marked wrong: kept as counter-example 1, saved
+[STORE] save 1 ok: copy B seq 1256, 1680 bytes, 195 ms (max 195), longest step 123113 us, dropped 0
+[SS] t=46170 +12.1 dB best 'Keys' 0.43 (thr 0.50), 2nd 'Glass breaking' 0.28, felt yes (157.9 mg) -> maybe Knock
+[SS] t=49508 +7.9 dB best 'Keys' 0.34 (thr 0.50), 2nd 'Glass breaking' 0.21, felt yes (228.1 mg) -> quiet
+[SS] t=59437 +11.0 dB best 'Water running' 0.35 (thr 0.50), 2nd 'Keys' 0.32, felt no (0.0 mg) -> unknown
+[SS] t=85690 +21.0 dB best 'Keys' 0.72 (thr 0.50), 2nd 'Water running' 0.31, felt no (0.0 mg) -> Keys
+[SS] t=87007 +11.2 dB best 'Keys' 0.85 (thr 0.50), 2nd 'Glass breaking' 0.21, felt no (0.0 mg) -> Keys
+[SS] t=88589 +21.5 dB best 'Keys' 0.55 (thr 0.50), 2nd 'Glass breaking' 0.30, felt yes (87.0 mg) -> Keys
+[SS] t=92407 +23.1 dB best 'Knock' 0.69 (thr 0.62), 2nd 'Doorbell' 0.26, felt no (0.0 mg) -> Knock

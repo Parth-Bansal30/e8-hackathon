@@ -142,7 +142,7 @@ def architecture():
     box(d, (370, 330, 900, 440), "Cosine match against profiles", ["9 built-in + up to 8 taught; own threshold each",
                                                                   "\"Maybe: x?\" when close to it"])
     box(d, (370, 460, 900, 550), "Felt vs heard", ["Knock felt by the IMU within ±100 ms of the sound?"])
-    box(d, (370, 570, 625, 740), "Teach", ["5 examples, checked", "-> new profile", "in milliseconds"])
+    box(d, (370, 570, 625, 740), "Teach", ["8 examples, checked", "-> new profile", "in milliseconds"])
     box(d, (645, 570, 900, 740), "UI", ["Alerts, timeline,", "live view, stats,", "Ready self-test"])
 
     # U85
@@ -158,7 +158,7 @@ def architecture():
 
     # outputs + memory
     box(d, (1030, 500, 1460, 600), "Outputs", ["480x800 MIPI DSI LCD, 2 RGB LEDs", "LED pattern per sound, 1 Hz urgent strobe"])
-    box(d, (1030, 620, 1460, 760), "Memory", ["MRAM: model (.pte 240 KB), fonts, cold code", "ITCM 97.6%: all hot code",
+    box(d, (1030, 620, 1460, 760), "Memory", ["MRAM: model (.pte 240 KB), fonts, cold code", "ITCM 97.9%: all hot code",
                                               "OSPI flash: taught sounds, A/B + CRC32"])
 
     # arrows
@@ -194,7 +194,7 @@ def numbers():
         ("0 dropped", "audio blocks in 1,101", "flash saves while listening", GREEN),
         ("2.2 ms", "restore at boot", "taught sounds, OSPI flash", BLUE),
         ("1.5 s", "reset to Ready", "self-test included", BLUE),
-        ("~0.85 s", "sound start to alert", "target was 0.5 s", ORANGE),
+        ("437 ms", "clear match to alert", "median; others ~0.87 s", GREEN),
     ]
     cols, tw, th, gx, gy = 5, 268, 270, 18, 26
     x0 = (W - (cols * tw + (cols - 1) * gx)) // 2
@@ -206,7 +206,7 @@ def numbers():
         d.text((x + 18, y + 110), big, font=fit(d, big, 50, tw - 36, True), fill=INK, anchor="ls")
         d.text((x + 18, y + 160), l1, font=fit(d, l1, 21, tw - 36, True), fill=INK)
         d.text((x + 18, y + 196), l2, font=fit(d, l2, 19, tw - 36), fill=MUTED)
-    d.text((W // 2, 835), "Limits: built-ins 54% live from a laptop speaker (88% offline); taught sounds 38% accepted offline at 5 examples.",
+    d.text((W // 2, 835), "Limits: built-ins 54% live from a laptop speaker (88% offline); taught sounds 45% accepted offline at 8 examples.",
            font=F(19), fill=MUTED, anchor="mm")
     footer(d, "Method and logs: docs/GATES-results.md in the repo.", y=H - 60)
     save(im, "03_numbers.png")
@@ -268,15 +268,41 @@ def cover():
     save(im, "01_cover.png")
 
 
+BOARD = os.path.join(HERE, "..", "board")
+
+
+def on_the_board():
+    """The two board photos (docs/demo/board/), upright and side by side."""
+    im, d = canvas()
+    header(d, "Running on the board", "Photos of the DK-E8 running the judged build (v1.0-judged); values are live.")
+    home = Image.open(os.path.join(BOARD, "board_table.jpg")).rotate(90, expand=True).crop((110, 240, 800, 1350))
+    stats = Image.open(os.path.join(BOARD, "stats_page.jpg")).crop((120, 180, 880, 1360))
+    h = 740
+    shots = [(home, "Home screen, a knock just felt"), (stats, "Stats page, live from the board")]
+    widths = [round(p.width * h / p.height) for p, _ in shots]
+    gap = 90
+    x = (W - sum(widths) - gap) // 2
+    for (p, label), w in zip(shots, widths):
+        p = p.resize((w, h), Image.LANCZOS)
+        d.rounded_rectangle([x - 3, 147, x + w + 2, 150 + h + 2], radius=14, outline=LINE, width=3)
+        im.paste(p, (x, 150))
+        d.text((x + w // 2, 150 + h + 36), label, font=F(24, True), fill=INK, anchor="mm")
+        x += w + gap
+    footer(d, "The 809 ms on the Stats page is for \"Maybe\" knocks, which wait for the whole sound; "
+              "clear built-in matches alert in a median 437 ms.")
+    save(im, "09_on_the_board.png")
+
+
 def main():
     cover()
     architecture()
     numbers()
     gallery_screens("04_teach.png", "Teach it your own sounds",
-                    "Five examples on the device, each checked; a test match; saved to flash. No laptop, no retraining.",
+                    "Eight examples on the device, each checked; a test match; saved to flash. No laptop, no retraining.",
                     [("09_teach.png", "Each example checked"), ("11_teach_done.png", "Test match, then Save"),
                      ("02_alert_doorbell.png", "Your sound, recognised")])
     felt_vs_heard()
+    on_the_board()
     gallery_screens("06_self_test.png", "Ready at every start",
                     "Mics, NPU against a stored reference, saved sounds, IMU and lights: ready 1.5 s after reset (measured).",
                     [("14_ready.png", "All checks pass"), ("15_not_ready.png", "A failure stays on screen"),
@@ -286,9 +312,9 @@ def main():
                     [("06_alert_maybe.png", "Low confidence: \"Maybe\""), ("02_alert_doorbell.png", "LEFT: wrong sound"),
                      ("23_timeline_marked.png", "Marked on today's timeline")])
     gallery_screens("08_more.png", "More on the board, no app",
-                    "Unknown loud sounds offer to be taught. A settings menu for night mode, mics off and forgetting sounds.",
-                    [("24_what_was_that.png", "\"What was that?\" UP teaches it"), ("19_menu.png", "Settings (DOWN)"),
-                     ("22_home_night.png", "Night mode: dark after 15 s")])
+                    "Unknown loud sounds offer to be taught. Settings: each sound on or off, urgency, rename, night mode, mics off.",
+                    [("24_what_was_that.png", "\"What was that?\" UP teaches it"), ("26_menu_sounds.png", "Settings > Sounds"),
+                     ("30_snoozed.png", "DOWN on an alert: snooze 10 min")])
 
 
 if __name__ == "__main__":

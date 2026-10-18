@@ -1,0 +1,172 @@
+1
+00:00:00,300 --> 00:00:05,074
+Deaf and hard-of-hearing people miss the
+sounds that matter at home:
+
+2
+00:00:05,124 --> 00:00:07,202
+the door, the alarm, the baby.
+
+3
+00:00:07,252 --> 00:00:10,323
+It listens, alerts on its screen and
+lights,
+
+4
+00:00:10,373 --> 00:00:14,650
+and runs entirely on this Alif E8 board.
+Nothing is recorded.
+
+5
+00:00:15,300 --> 00:00:18,982
+Every start runs a self-test of the mics,
+the NPU, the
+
+6
+00:00:19,032 --> 00:00:22,438
+saved sounds, the vibration sensor and the
+lights.
+
+7
+00:00:22,488 --> 00:00:24,650
+Ready in one and a half seconds.
+
+8
+00:00:25,300 --> 00:00:31,681
+In a quiet room the NPU rests to save
+power.
+
+9
+00:00:31,731 --> 00:00:36,650
+When I talk, the encoder wakes up.
+
+10
+00:00:37,300 --> 00:00:42,164
+Seven sounds are built in. Here's an
+alarm:
+
+11
+00:00:42,214 --> 00:00:47,079
+icon, word and time, colour-blind-safe,
+and
+
+12
+00:00:47,129 --> 00:00:51,650
+the lights flash a pattern of their own.
+
+13
+00:00:52,300 --> 00:00:55,796
+Here's what a microphone alone can't do.
+
+14
+00:00:55,846 --> 00:01:00,761
+I knock on the table, twenty centimetres
+from the board.
+
+15
+00:01:00,811 --> 00:01:05,460
+The accelerometer, read eight hundred
+times a second,
+
+16
+00:01:05,510 --> 00:01:10,691
+feels it, and the microphones hear it:
+felt here and heard.
+
+17
+00:01:10,741 --> 00:01:17,075
+Now the same knock from the laptop, held
+in the air, like a knock on TV.
+
+18
+00:01:17,125 --> 00:01:23,990
+The microphones hear it, but nothing
+touched the table, so it's only a banner:
+
+19
+00:01:24,040 --> 00:01:26,650
+heard only.
+
+20
+00:01:27,300 --> 00:01:33,149
+Every home sounds different, so you teach
+it your own.
+
+21
+00:01:33,199 --> 00:01:38,938
+Press up, pick a name, here Keys, and
+press to start.
+
+22
+00:01:38,988 --> 00:01:42,215
+I jingle my keys eight times.
+
+23
+00:01:42,265 --> 00:01:45,493
+Each example is checked:
+
+24
+00:01:45,543 --> 00:01:52,811
+too quiet, clipped, a loud room, or unlike
+the others gets flagged,
+
+25
+00:01:52,861 --> 00:01:58,929
+and a good one turns green with its level
+over the room.
+
+26
+00:01:58,979 --> 00:02:02,315
+One more jingle tests it. Save.
+
+27
+00:02:02,365 --> 00:02:05,592
+No laptop and no retraining:
+
+28
+00:02:05,642 --> 00:02:12,474
+the board builds a profile from the NPU's
+embeddings, and saves
+
+29
+00:02:12,524 --> 00:02:18,373
+it to flash in the background without
+missing a sound.
+
+30
+00:02:18,423 --> 00:02:21,650
+And now it knows my keys.
+
+31
+00:02:22,300 --> 00:02:24,592
+Now I reset the board.
+
+32
+00:02:24,642 --> 00:02:30,449
+The self-test restores the taught sounds
+from flash in under a millisecond.
+
+33
+00:02:30,499 --> 00:02:33,650
+Jingle again, and it still knows my keys.
+
+34
+00:02:44,300 --> 00:02:47,372
+Right shows the numbers, live from the
+board:
+
+35
+00:02:47,422 --> 00:02:51,742
+our own PyTorch model, all fourteen
+operators on the Ethos-U85,
+
+36
+00:02:51,792 --> 00:02:55,072
+about one millisecond per run, and the CPU
+awake
+
+37
+00:02:55,122 --> 00:02:59,650
+twelve point six percent of the time in a
+quiet room. Sound Sense.
+

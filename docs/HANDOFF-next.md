@@ -1,6 +1,6 @@
 # Handoff: continuing Sound Sense (2026-10-18)
 
-**Updated 1:05 PM PDT. Feature work stopped (owner). Tagged `v1.0-judged` = `32177ea`; PR #2 merged into `main` (`ae723fa`); screen tour done, board store back to its pre-tour content.** The board's J-Link is now on the laptop with the et-venv (it has torch,
+**Updated 2:00 PM PDT: board packed for judging.** Firmware frozen at `v1.0-judged` = `32177ea` (the 12:14 release build is flashed; Ready 1279 ms, all rows pass). Board laptop list from HANDOFF-split.md is done: hand checks pass, photos in `demo/board/`, video recorded, rehearsal run. The board's J-Link is now on the laptop with the et-venv (it has torch,
 the datasets and the toolchain), so offline work and board work happen on one machine.
 
 Since 10:10 AM:
@@ -82,12 +82,14 @@ Work stays on branch **`gates`**. Read in this order:
 
 | Area | Status |
 |---|---|
-| App `firmware/soundsense/` | Release build flashed at 12:20 PM, trained built-in profiles: two-stage decision, 8 examples, T2, T6, host command 17, Sounds page (T7: on/off, urgency, rename), "still sounding" (H5), Calibrate room (S5), snooze (A8), talking nearby (H8), cycle counter re-armed in SysTick. Board holds a tight Doorbell (thr 0.85). Smoke 16/16, feature test 18/18. ITCM 97.88% |
+| App `firmware/soundsense/` | Release build flashed at 12:20 PM, trained built-in profiles: two-stage decision, 8 examples, T2, T6, host command 17, Sounds page (T7: on/off, urgency, rename), "still sounding" (H5), Calibrate room (S5), snooze (A8), talking nearby (H8), cycle counter re-armed in SysTick. Board holds a tight Doorbell (thr 0.85). Since the 1:40 PM video recording, the board also holds Keys:
+thr 0.50, with 1 wrong mark from segment 8 (store seq 1256). The owner chose to keep it; Settings > Forget
+Keys removes it (`gates/video_takes.txt`). Smoke 16/16, feature test 18/18. ITCM 97.88% |
 | Gates | G1 SOFT, G2 SOFT, G3 SOFT (short run), C1 GO, C2 GO, C3 rows 1-4 pass (row 5: backlight on/off only, no dimming), C4 GO, C5 done (12.6%, target 10%) |
 | P0 | 16 of 16 done |
 | P1 | 14 done, 1 partial (H7: "My name" not tried on speech), 1 not started (H4 smoke vs CO) |
 | P2 | 2 done (A8 snooze, H8 talking nearby), 3 partial, 15 not started |
-| Not yet checked by eye or hand | Night mode turning the backlight off; turning the knob (T5) |
+| Hand checks (1:25 PM) | Pass: night mode turns the backlight off (seen by the owner); the knob shows its notice and bar. Knob left at 50% |
 
 ## Setting up a new machine
 
@@ -372,3 +374,30 @@ Agreed with the owner at about 10 AM; also in SUBMISSION.md.
      content as before the tour: Doorbell taught, threshold 0.85, Important; all built-ins on.
 7. Give the submission session the hash **`32177ea`** (full: `32177eaeabfa0ecd9c5577c0500474ee2ca85cb9`). It
    replaces `<hash>` in SUBMISSION.md section 1 and in "About the project".
+
+## Packed for judging (2:00 PM, board laptop)
+
+- **Board:**
+  - Release build of `32177ea`; Ready after 1279 ms, all rows pass.
+  - Store seq 1257, 3 taught sounds: Doorbell (thr 0.85, Important, 0 wrong marks), Keys (thr 0.50,
+    1 wrong mark, kept by the owner), Microwave (thr 0.835, 0 marks).
+  - All built-ins on, night mode off. The knob is near the middle (47%), so the board runs as taught
+    until it's turned.
+- **For the live demo** (also in DEMO.md):
+  - Play the Doorbell at Mac volume about 44, the level it was taught at. At 100 it was only "Maybe",
+    or missed.
+  - Knock loud, right beside the board, off the desk pad.
+  - Mark only built-in rows wrong.
+- **Done today on this laptop:**
+  - Hand checks (`gates/hand_checks.txt`) and board photos (`demo/board/`, the Stats one is portrait).
+  - Video takes (`gates/video_takes.txt`; the footage stays off git) and the rehearsal
+    (`gates/demo_rehearsal.txt`).
+- **Left for the owner:**
+  - Edit and upload the video, and submit on Devpost.
+  - The desk laptop opens the docs PR `gates` → `main`.
+  - The cables, the board and this laptop go together; the RTT logger can be stopped before
+    unplugging.
+
+**2:10 PM update:** the board holds 5 taught sounds: Doorbell 0.85, Keys 0.50 (1 mark), Microwave 0.835,
+Clap 0.50 (taught by hand) and Phone 0.85. Phone was taught from the laptop: `tools/demo_sound.py chime3`
+alerts as Phone (0.94, 0.95), but a clipped play missed. See `gates/teach_phone.txt`.

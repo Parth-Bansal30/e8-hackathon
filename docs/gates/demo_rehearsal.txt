@@ -1,0 +1,77 @@
+Demo rehearsal (DEMO.md "Run of show"), 2026-10-18 about 1:47-1:55 PM PDT, release build of 32177ea.
+The owner drove the joystick and knocked. Claude played the laptop sounds at Mac volume 100 (as found)
+and read the board log. Not timed end to end, because of the back-and-forth; the board-side times are below.
+
+1-2. Pitch, live view: the owner's part, not logged.
+3. Alarm: 0.93, early alert 414 ms after the onset. About 15 s including the dismiss.
+4. Knock:
+   - Table: "Maybe: Knock?", felt 24 mg at only +10.3 dB. Knock louder, right beside the board.
+   - Laptop in the air: Knock 0.72, not felt -> "Heard only (TV?)".
+5. Teach, laptop version:
+   - Microwave instead of Doorbell, to keep the saved 0.85 Doorbell.
+   - The first try didn't open the teach screen. The 8 beeps were classified on Home, mostly "Maybe:
+     Alarm?" at 0.57-0.66: an untaught microwave beep looks like an alarm to the built-ins.
+   - Second try, opened over J-Link (cmd 1 3): 8 of 8 shots, all clipped at volume 100. thr 0.835,
+     leave-one-out 0.89-0.98, test 0.942. 44 s for 8 shots plus the test.
+   - Saved on the board ("saved 'Microwave' thr 0.835; 3 taught").
+   - Saved Doorbell from the laptop at volume 100: 0.88 ("Maybe: Doorbell?"), then 0.85 (just under
+     0.852, so no alert). It was taught at volume 44; play it at about 44 in the live demo.
+6-7. Timeline and Stats: the owner's part.
+
+Board after the rehearsal:
+- Taught: Doorbell (thr 0.85, 0 marks), Keys (thr 0.50, 1 mark), Microwave (thr 0.835).
+- Knob at 49% (+0.002). All built-ins on.
+
+Board log:
+[SS] t=220080 +3.7 dB best 'Keys' 0.40 (thr 0.50), 2nd 'Glass breaking' 0.24, felt no (0.0 mg) -> quiet
+[SS] t=228099 +11.3 dB best 'Baby crying' 0.52 (thr 0.57), 2nd 'Dog barking' 0.32, felt no (0.0 mg) -> unknown
+[SS] t=261505 +10.3 dB best 'Keys' 0.48 (thr 0.50), 2nd 'Glass breaking' 0.30, felt yes (24.1 mg) -> maybe Knock
+[SS] t=266047 early, 421 ms after the onset
+[SS] t=266047 +22.2 dB best 'Knock' 0.72 (thr 0.62), 2nd 'Siren' 0.40, felt no (0.0 mg) -> Knock
+[SS] t=269832 +23.9 dB best 'Glass breaking' 0.34 (thr 0.50), 2nd 'Keys' 0.32, felt yes (191.2 mg) -> maybe Knock
+[SS] t=289055 +16.3 dB clipped best 'Siren' 0.60 (thr 0.59), 2nd 'Alarm' 0.57, felt no (0.0 mg) -> maybe Siren
+[SS] t=293968 early, 402 ms after the onset
+[SS] t=293968 +18.8 dB clipped best 'Alarm' 0.66 (thr 0.59), 2nd 'Doorbell' 0.46, felt no (0.0 mg) -> Alarm
+[SS] t=298912 +15.5 dB clipped best 'Alarm' 0.63 (thr 0.59), 2nd 'Siren' 0.60, felt no (0.0 mg) -> maybe Alarm
+[SS] t=303846 early, 405 ms after the onset
+[SS] t=303846 +18.9 dB clipped best 'Alarm' 0.66 (thr 0.59), 2nd 'Doorbell' 0.57, felt no (0.0 mg) -> Alarm
+[SS] t=308781 +16.4 dB clipped best 'Alarm' 0.57 (thr 0.59), 2nd 'Siren' 0.39, felt no (0.0 mg) -> unknown
+[SS] t=313727 +15.9 dB clipped best 'Alarm' 0.62 (thr 0.59), 2nd 'Doorbell' 0.55, felt no (0.0 mg) -> maybe Alarm
+[SS] t=318667 +16.2 dB clipped best 'Alarm' 0.61 (thr 0.59), 2nd 'Siren' 0.42, felt no (0.0 mg) -> maybe Alarm
+[SS] t=323598 +16.5 dB clipped best 'Alarm' 0.62 (thr 0.59), 2nd 'Siren' 0.49, felt no (0.0 mg) -> maybe Alarm
+[SS] 'Alarm' marked wrong: kept as counter-example 1 (built-in: until restart)
+[SS] t=334891 +1.7 dB best 'Keys' 0.31 (thr 0.50), 2nd 'Quiet' 0.18, felt yes (116.1 mg) -> quiet
+[TEACH] 'Microwave': make the sound 8 times
+[TEACH] shot 1: too quiet (+4.9 dB)
+[TEACH] shot 1/8: +16.7 dB, clipped
+[TEACH] shot 2/8: +16.0 dB, clipped
+[TEACH] shot 3/8: +16.2 dB, clipped
+[TEACH] shot 4/8: +15.7 dB, clipped
+[TEACH] shot 5/8: +16.5 dB, clipped
+[TEACH] shot 6/8: +15.8 dB, clipped
+[TEACH] shot 7/8: +16.0 dB, clipped
+[TEACH] shot 8/8: +16.6 dB, clipped
+[TEACH] profile: thr 0.835, leave-one-out 0.98 0.98 0.98 0.92 0.97 0.89 0.97 0.98; make it once more to test, press to save
+[TEACH] test: match 0.942 (thr 0.835) accepted
+[TEACH] saved 'Microwave' thr 0.835; 3 taught
+[STORE] save 2 ok: copy A seq 1257, 2472 bytes, 176 ms (max 195), longest step 123113 us, dropped 0
+[SS] t=414163 +18.5 dB best 'Doorbell' 0.88 (thr 0.85), 2nd 'Microwave' 0.42, felt no (0.0 mg) -> maybe Doorbell
+[SS] t=420677 +13.8 dB best 'Keys' 0.40 (thr 0.50), 2nd 'Dog barking' 0.16, felt yes (32.0 mg) -> maybe Knock
+[SS] 'Knock' marked right
+[SS] t=438235 +5.9 dB best 'Keys' 0.40 (thr 0.50), 2nd 'Quiet' 0.22, felt no (0.0 mg) -> quiet
+[SS] t=443996 +9.5 dB best 'Dog barking' 0.75 (thr 0.52), 2nd 'Doorbell' 0.08, felt no (0.0 mg) -> Dog barking
+[SS] t=445224 +17.6 dB best 'Doorbell' 0.85 (thr 0.85), 2nd 'Siren' 0.46, felt no (0.0 mg) -> unknown
+[SS] t=479951 +7.7 dB best 'Keys' 0.44 (thr 0.50), 2nd 'Microwave' 0.06, felt no (0.0 mg) -> quiet
+[SS] t=481216 +9.3 dB best 'Keys' 0.52 (thr 0.50), 2nd 'Glass breaking' 0.13, felt yes (163.4 mg) -> maybe Knock
+[SS] 'Keys' vetoed: 0.74 to a sound marked wrong
+[SS] t=482516 +12.6 dB best 'Keys' 0.46 (thr 0.50), 2nd 'Glass breaking' 0.27, felt no (0.0 mg) -> unknown
+[SS] t=484519 +8.2 dB best 'Keys' 0.48 (thr 0.50), 2nd 'Microwave' 0.19, felt yes (28.2 mg) -> maybe Knock
+[SS] t=485943 +9.5 dB best 'Keys' 0.47 (thr 0.50), 2nd 'Glass breaking' 0.13, felt yes (87.6 mg) -> maybe Knock
+[SS] t=487742 +13.3 dB best 'Keys' 0.53 (thr 0.50), 2nd 'Glass breaking' 0.20, felt yes (53.8 mg) -> maybe Knock
+[SS] 'Keys' vetoed: 0.81 to a sound marked wrong
+[SS] t=489509 +6.1 dB best 'Keys' 0.44 (thr 0.50), 2nd 'Glass breaking' 0.15, felt no (0.0 mg) -> quiet
+[SS] t=491269 +13.1 dB best 'Keys' 0.45 (thr 0.50), 2nd 'Quiet' 0.12, felt yes (145.7 mg) -> maybe Knock
+[SS] t=492981 +7.1 dB best 'Keys' 0.56 (thr 0.50), 2nd 'Glass breaking' 0.21, felt yes (114.3 mg) -> quiet
+[SS] 'Keys' vetoed: 0.83 to a sound marked wrong
+[SS] t=494681 +6.6 dB best 'Keys' 0.46 (thr 0.50), 2nd 'Microwave' 0.16, felt no (0.0 mg) -> quiet
+[SS] t=497722 +6.0 dB best 'Keys' 0.43 (thr 0.50), 2nd 'Glass breaking' 0.22, felt yes (151.9 mg) -> quiet

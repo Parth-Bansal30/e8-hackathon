@@ -12,14 +12,15 @@ that fits.
 **Every number in the voice-over** comes from [GATES-results.md](GATES-results.md) or the README.
 The Stats page shows live values, which can differ a little from the voice-over; that's expected.
 
-**If the board changes before you record:** the teach count is in segments 6 and 7 ("five times",
-"5 circles"). If the board moves to 8 examples (HANDOFF-next step 4), change both to eight. If the
-alert delay changes, the voice-over doesn't quote it, so nothing else changes.
+**Matches the judged firmware** (`v1.0-judged` = `32177ea`, updated 1:17 PM): 8 examples per
+taught sound, the teach checks ("loud room", "unlike the others", "Sounds like …"), the two-stage
+alert decision, and the settings and snooze added since 10 AM.
 
 ## Before recording
 
-- **Board:** release build, flat on the table where you'll knock. Taught sounds cleared if you want
-  the teach segment to start clean (`tools/jlink.py <elf> set ss_cmd 4`, see DEMO.md).
+- **Board:** release build, flat on the table where you'll knock. **Don't clear the taught
+  sounds:** the board holds the tight Doorbell (threshold 0.85) that the live demo relies on.
+  Teaching a name again replaces its old profile, so on camera teach **Keys**, never Doorbell.
 - **Camera:** a phone on a stand, landscape, 1080p, about 45° above the board so the screen fills
   most of the frame. Lock focus and exposure on the LCD (press and hold on the phone screen), or the
   white alert cards will blow out. Turn off auto-brightness on the phone.
@@ -83,6 +84,7 @@ overlay text for the edit.
   strobe once a second and stay until you press."
 - **Fallback:** if the alarm shows as "Maybe: Alarm?", keep it: it's the honest low-confidence
   style. Say "When it isn't sure, it says so."
+- **On screen:** "Clear matches on screen in a median 437 ms"
 
 ### 5. Knock: felt vs heard (1:12-1:52)
 
@@ -104,34 +106,44 @@ overlay text for the edit.
 
 - **Shot:** close on the screen, with your hand and keys in frame.
   1. Press **UP**. The name screen starts on **Keys**. Press to start.
-  2. Jingle the keys 5 times, about 2 s apart. Each circle turns green and shows its dB over the
-     room.
+  2. Jingle the keys 8 times, about 2 s apart. Each circle turns green and shows its dB over the
+     room. If one turns orange ("unlike the others"), press **UP** and jingle once more to replace
+     it; that's worth keeping in the cut.
   3. Jingle once more: **Test match: xx%**. Press to **Save**.
   4. Jingle again: a **Keys** alert.
-- **Done when:** 5 green circles, the test match, and the Keys alert are all on camera.
+- **Done when:** 8 green circles, the test match, and the Keys alert are all on camera.
 - **VO:** "Every home sounds different, so you teach it your own. Press up, pick a name, here Keys,
-  and press to start. I jingle my keys five times. Each example is checked: too quiet or clipped
-  gets flagged, and a good one turns green with its level over the room. One more jingle tests
-  it. Save. No laptop and no retraining: the board builds a profile from the NPU's embeddings, and
-  saves it to flash in the background without missing a sound. And now it knows my keys."
-- **Fallback (repeatable, uses the laptop):** on the name screen press DOWN once for **Doorbell**,
-  then `tools/demo_sound.py doorbell --times 5`, then `tools/demo_sound.py doorbell` for the test,
-  Save, and once more for the alert. Change "keys" to "doorbell" in the VO.
+  and press to start. I jingle my keys eight times. Each example is checked: too quiet, clipped, a
+  loud room, or unlike the others gets flagged, and a good one turns green with its level over the
+  room. One more jingle tests it. Save. No laptop and no retraining: the board builds a profile
+  from the NPU's embeddings, and saves it to flash in the background without missing a sound. And
+  now it knows my keys."
+- **Fallback (repeatable, uses the laptop):** on the name screen press DOWN three times for
+  **Microwave** (not Doorbell: that would replace the live demo's profile), then
+  `tools/demo_sound.py microwave --times 8`, then `tools/demo_sound.py microwave` for the test,
+  Save, and once more for the alert. Change "keys" to "the microwave" in the VO. If it warns
+  "Sounds like …", the new sound is close to one it already knows; cancel (RIGHT) and use the take
+  you have.
 - **On screen:** "Taught on the device · saved in 223-266 ms, 0 audio dropped"
 
 ### 7. Survives a reset (2:55-3:10)
 
-- **Shot:** press reset. The Ready screen's **Saved sounds** row says the taught sound was restored.
-  Jingle the keys: **Keys** alert.
-- **VO:** "Now I reset the board. The self-test restores the taught sound from flash, in two
-  milliseconds. Jingle again, and it still knows my keys."
-- **On screen:** "Restored from OSPI flash in 2.2 ms"
+- **Shot:** press reset. The Ready screen's **Saved sounds** row says the taught sounds were
+  restored (2 with the Doorbell already on the board). Jingle the keys: **Keys** alert.
+- **VO:** "Now I reset the board. The self-test restores the taught sounds from flash in under a
+  millisecond. Jingle again, and it still knows my keys."
+- **On screen:** "Restored from OSPI flash in 0.7 ms (2.2 ms for a full store)"
+- **As recorded (1:33-1:45 PM):** 2 taught sounds restored in 0.7 ms, Ready in 1.48 s, Keys alert
+  at 0.74 (`gates/video_takes.txt`).
 
 ### 8. Timeline and fixing a mistake (3:10-3:32)
 
 - **Shot:** press **LEFT**. Today's timeline, with the alarm, the knocks and the keys from this
   take. The top row is the selected one (UP/DOWN moves). Pick the laptop knock (or the alarm) and
   press **LEFT**: the row says **Marked wrong**. Press to go back.
+- **Mark only a built-in row wrong, never Keys or Doorbell.** A wrong mark on a taught sound is
+  saved to flash as a counter-example and vetoes about half its real matches (found by the 1 PM
+  screen tour). Never press LEFT on an injected alert (host command 13).
 - **VO:** "Left shows today's timeline: every sound, with repeats merged and felt knocks marked.
   If it got one wrong, left marks it. That sound becomes a counter-example, so it won't set off
   the same alert again."
@@ -152,8 +164,11 @@ overlay text for the edit.
 
 ### Optional cutaways (if a take runs short)
 
-- **Settings (5 s):** on the home screen press **DOWN**: night mode, microphones off, privacy,
-  forget sounds. Overlay: "Settings on the board: no app, no account".
+- **Settings (8 s):** on the home screen press **DOWN**: night mode, microphones off, sensitivity,
+  privacy, Sounds (built-ins on/off, urgency, rename), Calibrate room, forget sounds. Overlay:
+  "Settings on the board: no app, no account".
+- **Snooze (5 s):** on any alert press **DOWN**: that sound is snoozed for 10 minutes. Overlay:
+  "DOWN snoozes a sound for 10 min".
 - **"What was that?" (8 s):** a loud sound it doesn't know (a pan lid, a cupboard door) gets a
   yellow banner; UP would start teaching it from that sound. Needs about 15 dB over the room.
 
@@ -168,16 +183,22 @@ Same shots, shorter. Cut between teach examples instead of showing every pause.
 | 3. Live view | 0:25-0:37 | VO: "In a quiet room the NPU rests to save power. When I talk, the encoder wakes up." |
 | 4. Built-in alert | 0:37-0:52 | No glass. VO: "Seven sounds are built in. Here's an alarm: icon, word and time, colour-blind-safe, and the lights flash a pattern of their own." |
 | 5. Knock | 0:52-1:27 | Full VO from the 4:00 cut. This is the fusion point; don't cut it. |
-| 6. Teach | 1:27-2:22 | Cut between the 5 examples (show the first and the fifth landing). Full VO. |
+| 6. Teach | 1:27-2:22 | Cut between the 8 examples (show the first and the eighth landing, and a redo if one was flagged). Full VO. |
 | 7. Reset | 2:22-2:34 | Full VO. |
 | 8. Timeline and a mistake | 2:34-2:44 | Show one row marked wrong. No VO; overlay "Today's timeline. LEFT marks a mistake, which becomes a counter-example". |
 | 9. Stats and close | 2:44-3:00 | VO: "Right shows the numbers, live from the board: our own PyTorch model, all fourteen operators on the Ethos-U85, about one millisecond per run, and the CPU awake twelve point six percent of the time in a quiet room. Sound Sense." |
 
 ## After recording
 
-- Export at 1080p. Add the captions (the VO lines above).
+- Export at 1080p. Add the captions: [demo/captions_4min.srt](demo/captions_4min.srt) or
+  [demo/captions_3min.srt](demo/captions_3min.srt), made from the VO lines above by
+  `docs/demo/make_captions.py` and timed to the script's slots. Nudge them to the real footage, or
+  rerun the script after changing a VO line.
+- Cards and overlays in [demo/video/](demo/video/) (1920x1080): `title_card.png` to open (2-3 s),
+  `end_card.png` to close (4-5 s), and one transparent `overlay_NN_*.png` per "On screen" line, to
+  lay over that segment as a lower third. Rebuild with `docs/demo/video/make_cards.py`.
 - Upload to YouTube (or Vimeo). "Unlisted" lets judges watch with the link; whether it's
   unlisted or public is the owner's call. Paste the link into the Devpost form and into
   SUBMISSION.md section 1.
-- Take two stills from the footage for the gallery (see [demo/GALLERY.md](demo/GALLERY.md)): the
-  board on the table, and the real Stats page.
+- Board photos are already in the gallery (image 2, from `docs/demo/board/`). A sharper still from
+  the footage can replace them; see [demo/GALLERY.md](demo/GALLERY.md).

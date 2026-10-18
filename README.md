@@ -10,6 +10,10 @@ Entry for the [Arm + ExecuTorch Edge AI hackathon](https://arm-executorch.devpos
 is a PyTorch audio encoder, quantized to int8 and run through ExecuTorch with every operator
 delegated to the Ethos-U85.
 
+**Judged version:** tag [`v1.0-judged`](https://github.com/Parth-Bansal30/e8-hackathon/tree/v1.0-judged)
+(commit `32177ea`), the firmware flashed on the board for judging. Later commits change docs, the
+gallery and test tools, not the firmware.
+
 ![Sound Sense: alert and teach screens, rendered by the UI simulator (values on the screens are samples)](docs/demo/gallery/01_cover.png)
 
 ## What it does
@@ -56,7 +60,7 @@ delegated to the Ethos-U85.
   the room is louder than its noise floor. CPU active 12.6% in a quiet room, NPU idle.
 
 Full feature list with priorities: [docs/SOUND-SENSE.md](docs/SOUND-SENSE.md). What's done and what
-isn't: [docs/STATUS.md](docs/STATUS.md) (15 of 16 must-have features done).
+isn't: [docs/STATUS.md](docs/STATUS.md) (all 16 must-have features done, and 14 of the 16 on the "makes it good" list).
 
 ## Measured on the board
 
@@ -71,14 +75,14 @@ Details and logs: [docs/GATES-results.md](docs/GATES-results.md).
 | Board vs Python | Features: 0 of 1960 values differ. Embedding within 1 LSB (cosine 0.9996) |
 | Few-shot accuracy (offline, 10 classes never trained on) | 5-way 5-shot 75.8% int8 (float 75.9%); 10-way 63.0% |
 | Built-in sounds | 88% offline (4% false accepts); 54% live from a laptop speaker (alarm 75%) |
-| Taught sounds | Work live; offline 38% accepted, 79% of untaught sounds rejected (borderline, see limits) |
+| Taught sounds | Live: a Doorbell taught from the laptop was recognised in 4 of 5 trials; a Phone taught from a laptop chime (threshold 0.85, test 0.97) alerted at 0.94 and 0.95. Offline at 8 examples: 45% accepted, 77% of untaught sounds rejected (38% accepted at 5; borderline, see limits) |
 | Knock felt | 21 of 22 at 20 cm; IMU FIFO at 805 samples/s, 0 missed |
 | Alert delay | Clear built-in match: on screen a **median 437 ms** after the sound starts (403–490 ms; 18 of 30 recognised sounds live, 0 wrong). Everything else decides 0.8 s after the onset, about 0.87 s. Drawing the alert: 18.4–19.5 ms on the bench, 30–75 ms in the live run |
 | Display | Live view 10.0 fps; urgent strobe plus 10 forced full redraws a second for 12 s: 0 audio blocks dropped |
 | Flash save | 223–266 ms over 101 saves (median 252), longest 304 ms over 1,000 more; across all 1,101: 0 audio blocks dropped, 0 failed read-backs. Restore 2.2 ms |
 | Power | CPU active **12.6%** in a quiet room (was 100%); NPU busy 0.00% when quiet |
 | Boot to Ready | 1.5 s |
-| Memory | ITCM 97.5% (all hot code), MRAM 1.06 MB of 2 MB (model, fonts, cold code) |
+| Memory | ITCM 97.9% (all hot code), MRAM 1.06 MB of 2 MB (model, fonts, cold code) |
 
 ## How it works
 
@@ -159,7 +163,7 @@ Prerequisites (macOS shown; Linux works too):
 
 - Alif DK-E8 on the **PRG USB** port
 - [CMSIS-Toolbox 2.15 + Arm GNU 13.3.1](https://github.com/alifsemi/alif_vscode-template)
-- [Alif SETOOLS 1.112](https://alifsemi.com/support/kits/ensemble-e8devkit/), serial port set in `isp_config_data.cfg` (A0 boards: see the [bring-up notes](docs/bringup-notes.md))
+- [Alif SETOOLS 1.112](https://alifsemi.com/support/kits/ensemble-e8devkit/), serial port set in `isp_config_data.cfg` in the SETOOLS folder (A0 boards: see the [bring-up notes](docs/bringup-notes.md))
 - SEGGER J-Link (the on-board J-Link OB) for logs and host control
 
 ```bash
@@ -203,12 +207,15 @@ the datasets (ESC-50, Speech Commands), which aren't in git.
   keys each time, the examples agree far more closely.
 - **Knocks are felt within about 20 cm** of the board on our table, hence "place me on the table
   by the door".
+- **Teaching quality matters.** Examples that clip or come too close together save a loose profile
+  (threshold 0.50) that sits close to unrelated sounds: in the rehearsal, Keys taught that way was the
+  best match for several knocks. A sound played much louder than when it was taught can also fall
+  below its threshold (the Doorbell taught at volume 44 was only "Maybe" at volume 100, where the laptop
+  clips). The teach screen already flags clipped and "loud room" examples.
 - **Only clear matches meet the 0.5 s alert target.** A clear built-in match alerts in about
   0.44 s. Taught sounds, "Maybe" matches and anything unclear wait for the whole sound: about 0.87 s.
-- Built but not yet checked by hand at the board: sensitivity on the knob, and the backlight
-  turning off in night mode.
-- Not built yet: renaming sounds, per-sound urgency, turning built-ins off, smoke vs CO alarms.
-  See [docs/STATUS.md](docs/STATUS.md).
+- Not built yet: telling a smoke alarm from a CO alarm, and dimming the screen (night mode switches
+  the backlight off). See [docs/STATUS.md](docs/STATUS.md).
 
 ## Board bring-up (done before the project was chosen)
 
