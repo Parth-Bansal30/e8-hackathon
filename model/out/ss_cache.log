@@ -1,0 +1,4 @@
+ESC-50: 2000 clips
+Speech Commands train: 28000 clips, 35 words
+Speech Commands test: 2100 clips, 35 words
+cache built in 22 s
