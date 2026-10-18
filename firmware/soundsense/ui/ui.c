@@ -7,6 +7,13 @@
 
 #include "ui_fonts.h"
 
+/* Screens drawn rarely or at boot live in MRAM, since the fast ITCM is nearly full. */
+#if defined(__arm__)
+#define UI_COLD __attribute__((section(".text.mram"), noinline))
+#else
+#define UI_COLD
+#endif
+
 /* Bold for labels and values, Book for secondary text. */
 #define B (&ui_font_bold)
 #define L (&ui_font_book)
@@ -63,7 +70,7 @@ static gfx_color ink_on(gfx_color bg)
 static uint32_t clock_base;
 static bool clock_set;
 
-void ui_set_clock(uint32_t ms_after_midnight_at_boot)
+UI_COLD void ui_set_clock(uint32_t ms_after_midnight_at_boot)
 {
     clock_base = ms_after_midnight_at_boot;
     clock_set = true;
@@ -431,7 +438,7 @@ void ui_home_draw(const ui_home *h, uint32_t now_ms)
     draw_level(h);
     shown_top[0].label = NULL, shown_db = 9999;   /* the next live update redraws both */
     draw_recent(h, now_ms);
-    footer("UP teach   LEFT timeline   RIGHT stats");
+    footer("UP teach   LEFT timeline   RIGHT stats   DOWN menu");
 }
 
 
@@ -546,7 +553,7 @@ void ui_banner_draw(const ui_event *e, uint32_t now_ms)
 
 /* ---------- timeline ---------- */
 
-void ui_timeline_draw(const ui_event *ev, int n, uint32_t now_ms, int first)
+UI_COLD void ui_timeline_draw(const ui_event *ev, int n, uint32_t now_ms, int first)
 {
     gfx_fill(0, 0, GFX_W, GFX_H, BG);
     char count[24];
@@ -580,7 +587,7 @@ void ui_timeline_draw(const ui_event *ev, int n, uint32_t now_ms, int first)
 
 /* ---------- teaching ---------- */
 
-void ui_teach_draw(const ui_teach *t)
+UI_COLD void ui_teach_draw(const ui_teach *t)
 {
     gfx_fill(0, 0, GFX_W, GFX_H, BG);
     header("Teach a sound", NULL, BG);
@@ -672,7 +679,7 @@ static void tile(int col, int row, const char *value, const char *unit, const ch
     gfx_text(L, x + 18, y + 80, label, MUTED, 18);
 }
 
-void ui_stats_draw(const ui_stats *s)
+UI_COLD void ui_stats_draw(const ui_stats *s)
 {
     char up[32], v[10][16];
     snprintf(up, sizeof up, "up %u:%02u", (unsigned)(s->uptime_s / 3600), (unsigned)(s->uptime_s / 60 % 60));
@@ -703,13 +710,36 @@ void ui_stats_draw(const ui_stats *s)
     footer("All of this runs on the board. Nothing is recorded.");
 }
 
+/* ---------- menu ---------- */
+
+UI_COLD void ui_menu_draw(const ui_menu *m)
+{
+    gfx_fill(0, 0, GFX_W, GFX_H, BG);
+    header(m->title, NULL, MUTED);
+    /* rows shrink to leave room for the note above the footer: 96 .. GFX_H - 140 */
+    const int fit = m->n ? (GFX_H - 140 - 96) / m->n : 72;
+    const int row = fit < 72 ? fit : 72, h = row - 10, px = row >= 64 ? 26 : 22;
+    for (int i = 0; i < m->n; i++) {
+        const int y = 96 + i * row;
+        const bool sel = i == m->sel;
+        gfx_round_rect(16, y, 448, h, 16, sel ? PANEL2 : PANEL);
+        if (sel) gfx_round_frame(16, y, 448, h, 16, 3, YELLOW);
+        const int ty = y + (h - px) / 2 - 2;
+        gfx_text(B, 36, ty, m->item[i], m->danger[i] ? VERMILLION : TEXT, px);
+        if (m->value[i]) {
+            const int w = gfx_text_width(B, m->value[i], px);
+            gfx_text(B, 444 - w, ty, m->value[i], sel ? YELLOW : MUTED, px);
+        }
+    }
+    if (m->note) {
+        gfx_round_rect(16, GFX_H - 128, 448, 64, 16, YELLOW);
+        gfx_text_center(B, GFX_W / 2, GFX_H - 112, m->note, INK, gfx_fit_px(B, m->note, 420, 26));
+    }
+    footer("UP / DOWN move   PRESS choose   LEFT back");
+}
+
 /* ---------- boot self-test ---------- */
 
-#if defined(__arm__)
-#define UI_COLD __attribute__((section(".text.mram"), noinline))   /* boot only: kept out of ITCM */
-#else
-#define UI_COLD
-#endif
 
 UI_COLD static void check_badge(float cx, float cy, ui_check_state st)
 {

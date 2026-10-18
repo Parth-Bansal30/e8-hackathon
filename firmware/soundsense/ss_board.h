@@ -49,6 +49,10 @@ enum { SS_LED_RED = 1u, SS_LED_GREEN = 2u, SS_LED_BLUE = 4u, SS_LED_WHITE = 7u }
 int ss_led_init(void);
 void ss_led_set(int led, uint32_t colour);   /* led 0 or 1; colour = SS_LED_* bits, 0 = off */
 
+/* LCD backlight (GPIO6_1, switched on by the panel driver at display start): on or off only. Dimming
+ * would need PWM from UTIMER4 (P6_1 alt function 4), see docs/GATES-results.md C3 row 5. */
+void ss_backlight(int on);
+
 #ifdef __cplusplus
 }
 #endif

@@ -129,6 +129,18 @@ void ui_banner_draw(const ui_event *e, uint32_t now_ms);
 void ui_timeline_draw(const ui_event *ev, int n, uint32_t now_ms, int first);
 void ui_teach_draw(const ui_teach *t);
 void ui_stats_draw(const ui_stats *s);
+/* A list to pick from (settings, managing sounds): UP/DOWN moves `sel`, press chooses. */
+#define UI_MENU_MAX 12
+typedef struct {
+    const char *title;
+    const char *item[UI_MENU_MAX];   /* "Night mode" */
+    const char *value[UI_MENU_MAX];  /* shown on the right ("On"), or NULL */
+    bool danger[UI_MENU_MAX];        /* destructive (forget a sound): red text */
+    int n, sel;
+    const char *note;                /* highlighted line above the footer, or NULL */
+} ui_menu;
+void ui_menu_draw(const ui_menu *m);
+
 /* Any failed check: "Not ready" and the first failure; else "Ready" once done (warnings shown). */
 void ui_ready_draw(const ui_ready *r);
 

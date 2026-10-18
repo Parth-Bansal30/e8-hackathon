@@ -117,6 +117,14 @@ int ss_led_init(void)
     return 0;
 }
 
+extern ARM_DRIVER_GPIO ARM_Driver_GPIO_(BOARD_LCD_BACKLIGHT_GPIO_PORT);
+
+void ss_backlight(int on)
+{
+    ARM_Driver_GPIO_(BOARD_LCD_BACKLIGHT_GPIO_PORT).SetValue(BOARD_LCD_BACKLIGHT_GPIO_PIN, on ? GPIO_PIN_OUTPUT_STATE_HIGH
+                                                                                         : GPIO_PIN_OUTPUT_STATE_LOW);
+}
+
 void ss_led_set(int led, uint32_t colour)
 {
     if (!leds_ok || led < 0 || led > 1) return;

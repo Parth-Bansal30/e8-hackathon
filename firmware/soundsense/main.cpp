@@ -64,6 +64,7 @@
 #define GATE_DB        6.0f                   /* live encoder only above the noise floor + this */
 #define GATE_HOLD_MS   300                    /* ... and for this long after */
 #define READY_MS       2500                   /* "Ready" screen, then home (stays on a failure) */
+#define NIGHT_DARK_MS  15000                  /* night mode: home screen goes dark after this without a press (A6) */
 
 extern "C" {
 volatile uint32_t ss_cmd, ss_arg;   /* host commands, written over J-Link */
@@ -151,7 +152,7 @@ SS_COLD static void profiles_init(void)
 }
 
 /* Taught profile for a preset: replaces an earlier one of the same name. ex: n int8 examples. */
-static void profile_add(int preset, const float *proto, float thr, const int8_t (*ex)[SS_EMB], int n)
+SS_COLD static void profile_add(int preset, const float *proto, float thr, const int8_t (*ex)[SS_EMB], int n)
 {
     int slot = -1;
     for (int k = 0; k < n_taught; k++)
@@ -174,7 +175,7 @@ static bool store_ok;
 static uint32_t store_repeat;   /* host command 11: saves still to run back to back (C2 row 1) */
 static ss_store_data store_img;
 
-static void store_save(void)
+SS_COLD static void store_save(void)
 {
     if (!store_ok) return;
     memset(&store_img, 0, sizeof(store_img));
@@ -389,7 +390,7 @@ static ui_felt felt_at(uint32_t t, float *mg)
 
 /* ---------- screens ---------- */
 
-enum screen { READY, HOME, ALERT, TIMELINE, STATS, TEACH };
+enum screen { READY, HOME, ALERT, TIMELINE, STATS, TEACH, MENU };
 static screen scr = READY;
 static bool redraw = true;
 
@@ -399,6 +400,11 @@ static ui_event alert_ev, banner_ev;
 static uint32_t alert_t0, alert_last, banner_t0;
 static bool banner_on;
 static int alert_phase, tl_first;
+
+/* Night mode (A6): info sounds are only logged; the home screen goes dark (backlight off, no live view,
+ * no live encoder) NIGHT_DARK_MS after the last press or alert; important and urgent alerts light it. */
+static bool night, dark;
+static uint32_t last_wake;
 
 /* C3: time from a decision to the alert on screen, and what drawing costs (draw = into the back buffer,
  * present = copy of the changed rows to the scanned frame buffer) */
@@ -561,6 +567,8 @@ static void teach_shot(const float *e, float snr, int clipped)
 
 static void alert_raise(ui_event *e)
 {
+    if (e->urgency == UI_INFO && night) return;   /* night: logged in the timeline only, screen stays dark */
+    last_wake = ss_ms();
     if (e->urgency == UI_INFO) {
         banner_ev = *e;
         banner_on = true;
@@ -686,6 +694,134 @@ static void decide(uint32_t onset, uint32_t onset_ms)
     if (scr == HOME) redraw = true;
 }
 
+/* ---------- managing taught sounds (T7) and the menu ---------- */
+
+/* Forget taught sound k (0-based among the taught ones) and save. */
+SS_COLD static void taught_forget(int k)
+{
+    if (k < 0 || k >= n_taught) return;
+    printf("[SS] forgot '%s'\r\n", prof[SS_NUM_BUILTIN + k].lk->label);
+    for (int j = k; j + 1 < n_taught; j++) {
+        memcpy(taught_proto[j], taught_proto[j + 1], sizeof(taught_proto[j]));
+        memcpy(taught_ex[j], taught_ex[j + 1], sizeof(taught_ex[j]));
+        taught_n_ex[j] = taught_n_ex[j + 1];
+        prof[SS_NUM_BUILTIN + j] = prof[SS_NUM_BUILTIN + j + 1];
+        prof[SS_NUM_BUILTIN + j].proto = taught_proto[j];
+    }
+    n_taught--;
+    n_prof = SS_NUM_BUILTIN + n_taught;
+    store_save();
+}
+
+SS_COLD static void taught_forget_all(void)
+{
+    n_taught = 0;
+    n_prof = SS_NUM_BUILTIN;
+    store_save();
+    printf("[SS] taught sounds cleared\r\n");
+}
+
+enum mitem { MI_NIGHT, MI_FORGET, MI_FORGET_ALL, MI_BACK };
+static struct {
+    mitem kind[UI_MENU_MAX];
+    int arg[UI_MENU_MAX];
+    int n, sel, confirm;   /* confirm: row waiting for a second press (forgetting), or -1 */
+    char text[UI_MENU_MAX][32], note[48];
+} menu;
+
+SS_COLD static void menu_build(void)
+{
+    menu.n = 0;
+    menu.kind[menu.n] = MI_NIGHT;
+    menu.arg[menu.n++] = 0;
+    for (int k = 0; k < n_taught; k++) {
+        menu.kind[menu.n] = MI_FORGET;
+        menu.arg[menu.n++] = k;
+    }
+    if (n_taught > 1) {
+        menu.kind[menu.n] = MI_FORGET_ALL;
+        menu.arg[menu.n++] = 0;
+    }
+    menu.kind[menu.n] = MI_BACK;
+    menu.arg[menu.n++] = 0;
+    if (menu.sel >= menu.n) menu.sel = menu.n - 1;
+    menu.confirm = -1;
+}
+
+SS_COLD static void menu_open(void)
+{
+    menu.sel = 0;
+    menu_build();
+    scr = MENU;
+    redraw = true;
+}
+
+SS_COLD static void menu_choose(void)
+{
+    const int i = menu.sel;
+    switch (menu.kind[i]) {
+    case MI_NIGHT:
+        night = !night;
+        printf("[SS] night mode %s\r\n", night ? "on" : "off");
+        break;
+    case MI_FORGET:
+    case MI_FORGET_ALL:
+        if (menu.confirm != i) {   /* forgetting can't be undone: press twice */
+            menu.confirm = i;
+            return;
+        }
+        if (menu.kind[i] == MI_FORGET) taught_forget(menu.arg[i]);
+        else taught_forget_all();
+        menu_build();
+        return;
+    case MI_BACK:
+        scr = HOME;
+        break;
+    }
+    menu.confirm = -1;
+}
+
+SS_COLD static void menu_draw(void)
+{
+    ui_menu m = {};
+    m.title = "Settings";
+    m.n = menu.n;
+    m.sel = menu.sel;
+    for (int i = 0; i < menu.n; i++) {
+        switch (menu.kind[i]) {
+        case MI_NIGHT:
+            m.item[i] = "Night mode";
+            m.value[i] = night ? "On" : "Off";
+            break;
+        case MI_FORGET:
+            snprintf(menu.text[i], sizeof(menu.text[i]), "Forget %s", prof[SS_NUM_BUILTIN + menu.arg[i]].lk->label);
+            m.item[i] = menu.text[i];
+            m.value[i] = "taught";
+            m.danger[i] = true;
+            break;
+        case MI_FORGET_ALL:
+            snprintf(menu.text[i], sizeof(menu.text[i]), "Forget all %d taught", n_taught);
+            m.item[i] = menu.text[i];
+            m.danger[i] = true;
+            break;
+        case MI_BACK:
+            m.item[i] = "Back";
+            break;
+        }
+    }
+    if (menu.confirm >= 0) {
+        const int c = menu.confirm;
+        if (menu.kind[c] == MI_FORGET)
+            snprintf(menu.note, sizeof(menu.note), "Press again to forget %s", prof[SS_NUM_BUILTIN + menu.arg[c]].lk->label);
+        else
+            snprintf(menu.note, sizeof(menu.note), "Press again to forget all %d", n_taught);
+        m.note = menu.note;
+    } else if (menu.kind[menu.sel] == MI_NIGHT) {
+        m.note = night ? "Night: screen dark, info sounds only logged" : "Press for night mode";
+    }
+    ui_menu_draw(&m);
+}
+
 /* ---------- host commands and joystick ---------- */
 
 static uint32_t host_keys;
@@ -726,7 +862,7 @@ static void host_command(void)
     case 1: teach_open((int)(a % N_PRESETS), true); break;
     case 2: teach_save(); break;
     case 3: go_home(); break;
-    case 4: n_taught = 0; n_prof = SS_NUM_BUILTIN; store_save(); printf("[SS] taught sounds cleared\r\n"); break;
+    case 4: taught_forget_all(); break;
     case 5: scr = STATS; redraw = true; break;
     case 6: scr = TIMELINE; tl_first = 0; redraw = true; break;
     case 7: ui_set_clock(a - ss_ms()); redraw = true; break;
@@ -751,7 +887,15 @@ static void on_keys(uint32_t k)
         if (k & SS_JOY_UP) teach_open(0, false);
         else if (k & SS_JOY_LEFT) { scr = TIMELINE; tl_first = 0; redraw = true; }
         else if (k & SS_JOY_RIGHT) { scr = STATS; redraw = true; }
+        else if (k & SS_JOY_DOWN) menu_open();
         else if (k & SS_JOY_CENTER) { banner_on = false; redraw = true; }
+        break;
+    case MENU:
+        if (k & SS_JOY_UP) { if (menu.sel > 0) menu.sel--; menu.confirm = -1; }
+        else if (k & SS_JOY_DOWN) { if (menu.sel + 1 < menu.n) menu.sel++; menu.confirm = -1; }
+        else if (k & (SS_JOY_LEFT | SS_JOY_RIGHT)) scr = HOME;
+        else if (k & SS_JOY_CENTER) menu_choose();
+        redraw = true;
         break;
     case ALERT:
         go_home();
@@ -874,7 +1018,7 @@ static void draw(uint32_t now, bool live_only)
         break;
     case HOME:
         home.listening = true;
-        home.mode = "Home";
+        home.mode = night ? "Night" : "Home";
         home.room_db = ss_audio_block_db();
         home.floor_db = ss_audio_floor_db();
         for (int i = 0; i < 3; i++) home.top[i] = top3[i];
@@ -892,6 +1036,9 @@ static void draw(uint32_t now, bool live_only)
         break;
     case TIMELINE:
         ui_timeline_draw(events, n_events, now, tl_first);
+        break;
+    case MENU:
+        menu_draw();
         break;
     case STATS: {
         ui_stats st;
@@ -1062,7 +1209,8 @@ int main(void)
         if (keys && now - last_key >= 250) {
             last_key = now;
             last_key_ms = now;
-            on_keys(keys);
+            last_wake = now;
+            if (!dark) on_keys(keys);   /* in the dark, a press only lights the screen */
         }
 
         /* onsets: one decision per sound, 0.8 s after it starts */
@@ -1087,7 +1235,7 @@ int main(void)
             const uint32_t t0 = ss_cycles();
             kws_make_input(in, SS_IN_SCALE, SS_IN_ZP);
             feat_us = ss_cyc_to_us(ss_cycles() - t0);
-            const bool npu_on = scr == HOME && any_loud && now - last_loud < GATE_HOLD_MS;
+            const bool npu_on = scr == HOME && !dark && any_loud && now - last_loud < GATE_HOLD_MS;
             if (npu_on) {
                 if (!infer(in, out)) ss_halt("inference");
                 ss_embed(out, e);
@@ -1115,7 +1263,7 @@ int main(void)
                 top3[i].score = (uint8_t)(s[b] < 0 ? 0 : s[b] * 100);
                 top3[i].over_threshold = s[b] >= prof[b].thr;
             }
-            if (scr == HOME && !redraw && now - last_live_draw >= 100) {
+            if (scr == HOME && !redraw && !dark && now - last_live_draw >= 100) {
                 last_live_draw = now;
                 draw(now, true);
             }
@@ -1150,6 +1298,14 @@ int main(void)
                     redraw = true;
                 }
             }
+        }
+        /* night mode: dark on the home screen after a while; a press or an alert lights it again */
+        const bool want_dark = night && scr == HOME && !banner_on && now - last_wake >= NIGHT_DARK_MS;
+        if (want_dark != dark) {
+            dark = want_dark;
+            ss_backlight(!dark);
+            printf("[SS] screen %s\r\n", dark ? "dark (night mode)" : "lit");
+            if (!dark) redraw = true;
         }
         if (now - last_slow >= 250) {
             last_slow = now;

@@ -110,15 +110,15 @@ static void save(const char *name)
 #define NOW (3 * 3600000u + 25 * MIN)
 
 static const ui_event events[] = {
-    {"Doorbell", UI_ICON_DOORBELL, UI_CAT_DOOR, UI_IMPORTANT, false, UI_FELT_NA, 94, 2, NOW - 2 * MIN, 0, false},
-    {"Knock at the door", UI_ICON_KNOCK, UI_CAT_DOOR, UI_IMPORTANT, false, UI_FELT_YES, 88, 3, NOW - 9 * MIN, 0, true},
-    {"Baby crying", UI_ICON_BABY, UI_CAT_FAMILY, UI_IMPORTANT, false, UI_FELT_NA, 91, 1, NOW - 34 * MIN, 6 * MIN, true},
-    {"Kettle", UI_ICON_KETTLE, UI_CAT_APPLIANCE, UI_INFO, false, UI_FELT_NA, 79, 1, NOW - 51 * MIN, 0, true},
-    {"Dog barking", UI_ICON_DOG, UI_CAT_ANIMAL, UI_INFO, true, UI_FELT_NA, 58, 4, NOW - 70 * MIN, 40000, true},
-    {"Smoke alarm", UI_ICON_SMOKE, UI_CAT_SAFETY, UI_URGENT, false, UI_FELT_NA, 97, 1, NOW - 95 * MIN, 25000, true},
-    {"Water running", UI_ICON_WATER, UI_CAT_WATER, UI_INFO, false, UI_FELT_NA, 83, 1, NOW - 130 * MIN, 12 * MIN, true},
-    {"Microwave done", UI_ICON_MICROWAVE, UI_CAT_APPLIANCE, UI_INFO, false, UI_FELT_NA, 86, 1, NOW - 150 * MIN, 0, true},
-    {"Sam's phone", UI_ICON_PHONE, UI_CAT_APPLIANCE, UI_INFO, false, UI_FELT_NA, 81, 1, NOW - 160 * MIN, 0, true},
+    {"Doorbell", UI_ICON_DOORBELL, UI_CAT_DOOR, UI_IMPORTANT, false, UI_FELT_NA, 94, 2, NOW - 2 * MIN, 0, false, 0},
+    {"Knock at the door", UI_ICON_KNOCK, UI_CAT_DOOR, UI_IMPORTANT, false, UI_FELT_YES, 88, 3, NOW - 9 * MIN, 0, true, 0},
+    {"Baby crying", UI_ICON_BABY, UI_CAT_FAMILY, UI_IMPORTANT, false, UI_FELT_NA, 91, 1, NOW - 34 * MIN, 6 * MIN, true, 0},
+    {"Kettle", UI_ICON_KETTLE, UI_CAT_APPLIANCE, UI_INFO, false, UI_FELT_NA, 79, 1, NOW - 51 * MIN, 0, true, 0},
+    {"Dog barking", UI_ICON_DOG, UI_CAT_ANIMAL, UI_INFO, true, UI_FELT_NA, 58, 4, NOW - 70 * MIN, 40000, true, 0},
+    {"Smoke alarm", UI_ICON_SMOKE, UI_CAT_SAFETY, UI_URGENT, false, UI_FELT_NA, 97, 1, NOW - 95 * MIN, 25000, true, 0},
+    {"Water running", UI_ICON_WATER, UI_CAT_WATER, UI_INFO, false, UI_FELT_NA, 83, 1, NOW - 130 * MIN, 12 * MIN, true, 0},
+    {"Microwave done", UI_ICON_MICROWAVE, UI_CAT_APPLIANCE, UI_INFO, false, UI_FELT_NA, 86, 1, NOW - 150 * MIN, 0, true, 0},
+    {"Sam's phone", UI_ICON_PHONE, UI_CAT_APPLIANCE, UI_INFO, false, UI_FELT_NA, 81, 1, NOW - 160 * MIN, 0, true, 0},
 };
 #define N_EVENTS ((int)(sizeof events / sizeof events[0]))
 
@@ -274,6 +274,32 @@ int main(void)
     save("17_alert_escalated_a");
     ui_alert_draw(&smoke, NOW, 1);
     save("18_alert_escalated_b");
+    /* settings menu (A6 night mode, T7 forget a taught sound) */
+    ui_menu menu = {.title = "Settings", .n = 5, .sel = 0};
+    menu.item[0] = "Night mode", menu.value[0] = "Off";
+    menu.item[1] = "Forget Keys", menu.value[1] = "taught", menu.danger[1] = true;
+    menu.item[2] = "Forget Doorbell", menu.value[2] = "taught", menu.danger[2] = true;
+    menu.item[3] = "Forget all 2 taught", menu.danger[3] = true;
+    menu.item[4] = "Back";
+    menu.note = "Press for night mode";
+    ui_menu_draw(&menu);
+    save("19_menu");
+    menu.sel = 2;
+    menu.note = "Press again to forget Doorbell";
+    ui_menu_draw(&menu);
+    save("20_menu_confirm");
+    menu.n = 11;
+    for (int i = 1; i < 9; i++) menu.item[i] = "Forget Microwave", menu.value[i] = "taught", menu.danger[i] = true;
+    menu.item[9] = "Forget all 8 taught", menu.danger[9] = true, menu.value[9] = NULL;
+    menu.item[10] = "Back", menu.danger[10] = false, menu.value[10] = NULL;
+    menu.sel = 9;
+    menu.note = "Press again to forget all 8";
+    ui_menu_draw(&menu);
+    save("21_menu_full");
+    home.mode = "Night";
+    ui_home_draw(&home, NOW);
+    save("22_home_night");
+    home.mode = "Home";
     home.top[0] = (ui_guess){"Doorbell", 94, true};
     home.top[1] = (ui_guess){"Phone ringing", 31, false};
     home.top[2] = (ui_guess){"Microwave", 12, false};

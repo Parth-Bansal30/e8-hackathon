@@ -9,7 +9,7 @@ behind every "Done" are in [GATES-results.md](GATES-results.md).
 | Priority | Total | Done | Partial | Not started |
 |---|---|---|---|---|
 | **P0** (must-have product) | 16 | **15** | 1 (T2) | 0 |
-| **P1** (makes it good) | 16 | 5 | 4 | 7 |
+| **P1** (makes it good) | 16 | 6 | 5 | 5 |
 | **P2** (nice to have) | 20 | 0 | 4 | 16 |
 | **P3** (stretch) | 7 | 0 | 0 | 7 |
 
@@ -66,7 +66,7 @@ examples (they work well live; the offline test uses unseen clips from strangers
 | A3 | Three urgency levels | P0 | Done | Urgent strobe at 1 flash per second (photosensitivity-safe) |
 | A4 | Acknowledge | P0 | Done | Joystick only; touch isn't wired up |
 | A5 | Urgent alerts repeat and escalate | P1 | Done | Urgent alerts stay until a press; after 30 s the strobe doubles to 2 flashes/s (under 3 Hz) and "No response for N" shows |
-| A6 | Night mode | P1 | Not started | Backlight control untested (C3 row 5) |
+| A6 | Night mode | P1 | Done | Menu (DOWN) → Night mode. Home screen goes dark 15 s after the last press (backlight off, live view and live encoder off: CPU active 8.4% vs 12.2%); info sounds only logged; important/urgent alerts light it; a press in the dark only wakes it. Backlight off not yet confirmed by eye |
 | A7 | "Maybe: doorbell?" | P1 | Done | |
 | A8 | Snooze a sound | P2 | Not started | |
 | A9 | Home / Night / Away modes | P2 | Not started | The screen just says "Home mode" |
@@ -81,7 +81,7 @@ examples (they work well live; the offline test uses unseen clips from strangers
 | T4 | Fix mistakes from the timeline | P1 | Not started | The flash record already has room for counter-examples |
 | T5 | Sensitivity on the knob | P1 | Not started | |
 | T6 | Similar-sound warning | P1 | Not started | |
-| T7 | Manage sounds (rename, delete, factory reset) | P1 | Not started | Only "forget all" over J-Link |
+| T7 | Manage sounds (rename, delete, factory reset) | P1 | Partial | Menu: forget one taught sound or all of them (press twice to confirm), saved to flash. No rename, urgency or built-in on/off |
 
 **Timeline**
 
