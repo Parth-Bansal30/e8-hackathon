@@ -52,7 +52,7 @@
 #define HOLDOFF        (KWS_SR * 12 / 10)     /* onsets closer than this to the previous one are the same sound */
 #define MIN_SNR_DB     8.0f                   /* loudest 20 ms over the noise floor, to classify at all */
 #define TEACH_SNR_DB   10.0f
-#define MAYBE_MARGIN   0.05f                  /* under thr + this: "Maybe: x?" */
+#define MAYBE_MARGIN   0.05f                  /* under thr + this: no label (felt knocks: "Maybe: Knock?") */
 #define FELT_WIN_MS    100                    /* IMU knock within this of the audio onset = felt */
 #define KEY_QUIET_MS   800                    /* ignore sounds right after a joystick press (its click and shake) */
 #define MERGE_MS       30000                  /* same sound again within this: one entry, count + 1 */
@@ -902,13 +902,15 @@ static void classify(const float *e, const float *s, float snr, int clipped, uin
     const bool over = s[b] >= thr && !veto;
     const bool loud = snr >= MIN_SNR_DB;
 
+    /* a match only just over its threshold gets no label at all: none is better than a wrong one */
+    const bool sure = s[b] >= thr + MAYBE_MARGIN;
+
     const look *lk = NULL;
     bool maybe = false;
     ui_felt f = UI_FELT_NA;
     float score = s[b];
-    if (loud && over && prof[b].alerting && b != knock_prof) {
+    if (loud && over && sure && prof[b].alerting && b != knock_prof) {
         lk = prof[b].lk;
-        maybe = s[b] < thr + MAYBE_MARGIN;
     } else if (loud && prof[knock_prof].alerting && ((b == knock_prof && over) || felt == UI_FELT_YES)) {
         /* a knock: the encoder says so, or the table felt it (then "maybe" unless both agree) */
         lk = prof[knock_prof].lk;
@@ -920,7 +922,8 @@ static void classify(const float *e, const float *s, float snr, int clipped, uin
            (unsigned long)onset_ms, (double)snr, clipped ? " clipped" : "", prof[b].lk->label, (double)s[b],
            (double)thr, b2 >= 0 ? prof[b2].lk->label : "-", b2 >= 0 ? (double)s[b2] : 0.0,
            felt == UI_FELT_YES ? "yes" : felt == UI_FELT_HEARD_ONLY ? "no" : "n/a", (double)mg,
-           lk ? (maybe ? "maybe " : "") : "", lk ? lk->label : (loud ? "unknown" : "quiet"));
+           lk ? (maybe ? "maybe " : "") : "",
+           lk ? lk->label : !loud ? "quiet" : over && !sure ? "unsure, no label" : "unknown");
     if (veto) printf("[SS] '%s' vetoed: %.2f to a sound marked wrong\r\n", prof[b].lk->label, (double)cxs);
     if (!lk) {
         /* H6: loud, matches nothing, and not talking or room noise (those profiles don't alert) */
