@@ -1,0 +1,919 @@
+[SS] t=88881 +8.2 dB best 'Water running' 0.41 (thr 0.50), 2nd 'Whistle' 0.23, felt no (0.0 mg) -> unknown
+[SS] draw: full max 128375 us + present 3711 us; live view 5.1 fps, max 16089 us
+[SS] stats t=90000 level -51 dB floor -41 dB, npu 1008 us runner 1034 us feat 304 us, 3.7 inf/s, busy 10%, active 17.5% (3803 passes/s, 3754 sleeps/s, 219 us each), npu busy 0.37%, dropped 0, imu 71886 samples 0 errors (times back 105 us, clock +6817 ppm), knocks 89, events 6, saves 0
+[SS] t=90681 +10.7 dB best 'Water running' 0.40 (thr 0.50), 2nd 'Glass breaking' 0.25, felt no (0.0 mg) -> unknown
+[SS] t=92620 +14.8 dB best 'Dog barking' 0.21 (thr 0.52), 2nd 'Whistle' 0.14, felt yes (27.4 mg) -> maybe Knock
+[C3] alert on screen 135445 us after the decision (draw 131678 us, present 3766 us)
+[SS] t=93830 early, 403 ms after the onset
+[SS] t=93830 +14.9 dB best 'Dog barking' 0.58 (thr 0.52), 2nd 'Doorbell' 0.38, felt no (0.0 mg) -> Dog barking
+[SS] t=96887 +8.3 dB best 'Water running' 0.47 (thr 0.50), 2nd 'Whistle' 0.29, felt no (0.0 mg) -> unknown
+[SS] draw: full max 131678 us + present 3766 us; live view 0.0 fps, max 0 us
+[SS] stats t=100000 level -53 dB floor -49 dB, npu 1008 us runner 1034 us feat 303 us, 0.7 inf/s, busy 3%, active 10.5% (4062 passes/s, 4013 sleeps/s, 222 us each), npu busy 0.07%, dropped 0, imu 79942 samples 0 errors (times back 105 us, clock +6686 ppm), knocks 98, events 7, saves 0
+[SS] t=100818 +9.6 dB best 'Glass breaking' 0.25 (thr 0.50), 2nd 'Keys' 0.14, felt no (0.0 mg) -> unknown
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11880 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 999 us, runner 1025 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 1263), copy B valid (seq 1262)
+[STORE] loaded 6 taught sounds from copy A, seq 1263, in 2172 us; built-ins off: 0x0
+[S1] mics: left -43.3 dB (peak 1280), right -53.2 dB (peak 374) over 8000 samples
+[S1] ready after 1280 ms: mics left -43 dB, right -53 dB; npu matches the reference, 1.0 ms; saved sounds 6 taught sounds restored; imu knocks can be felt; lights ok
+[C5] cycle counter through WFI: 100% of wall time -> sleeping between audio blocks
+[SS] listening; 9 built-in sounds
+[SS] knob at 49%: sensitivity as taught until it's turned
+[SS] t=4951 +4.0 dB best 'Keys' 0.45 (thr 0.50), 2nd 'Notification' 0.27, felt no (0.0 mg) -> quiet
+[SS] t=7871 +17.2 dB best 'Water running' 0.43 (thr 0.50), 2nd 'Keys' 0.21, felt yes (168.1 mg) -> maybe Knock
+[C3] alert on screen 126672 us after the decision (draw 123146 us, present 3526 us)
+[SS] draw: full max 123146 us + present 3646 us; live view 5.5 fps, max 15912 us
+[SS] stats t=10000 level -52 dB floor -44 dB, npu 1007 us runner 1034 us feat 303 us, 2.5 inf/s, busy 10%, active 14.0% (3749 passes/s, 3699 sleeps/s, 232 us each), npu busy 0.26%, dropped 0, imu 7617 samples 0 errors (times back 0 us, clock +6831 ppm), knocks 4, events 1, saves 0
+[SS] t=9658 +10.8 dB best 'Water running' 0.48 (thr 0.50), 2nd 'Dog barking' 0.26, felt no (0.0 mg) -> unknown
+[SS] t=11711 +1.5 dB best 'Keys' 0.32 (thr 0.50), 2nd 'Microwave' 0.29, felt yes (50.2 mg) -> quiet
+[SS] t=13003 +16.6 dB best 'Water running' 0.48 (thr 0.50), 2nd 'Whistle' 0.35, felt no (0.0 mg) -> unknown
+[SS] t=13003 what was that? +16.6 dB, matches nothing; UP teaches it
+[SS] t=16471 +13.1 dB best 'Dog barking' 0.35 (thr 0.52), 2nd 'Water running' 0.26, felt no (0.0 mg) -> unknown
+[SS] draw: full max 0 us + present 0 us; live view 0.0 fps, max 0 us
+[SS] stats t=20000 level -47 dB floor -41 dB, npu 1062 us runner 1088 us feat 303 us, 0.8 inf/s, busy 0%, active 8.1% (4180 passes/s, 4130 sleeps/s, 222 us each), npu busy 0.08%, dropped 0, imu 15670 samples 0 errors (times back 138 us, clock +6864 ppm), knocks 20, events 2, saves 0
+[SS] t=20960 +10.8 dB best 'Water running' 0.25 (thr 0.50), 2nd 'Whistle' 0.15, felt no (0.0 mg) -> unknown
+[SS] t=22525 +10.3 dB best 'Dog barking' 0.26 (thr 0.52), 2nd 'Baby crying' 0.25, felt no (0.0 mg) -> unknown
+[C3] alert 'Knock' ended after 15001 ms: 1 full redraws, longest draw 123146 us + present 3526 us, 0 audio blocks dropped
+[SS] t=24155 +16.6 dB best 'Dog barking' 0.45 (thr 0.52), 2nd 'Doorbell' 0.42, felt no (0.0 mg) -> unknown
+[SS] t=24155 what was that? +16.6 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=28077 +8.2 dB best 'Keys' 0.47 (thr 0.50), 2nd 'Microwave' 0.22, felt no (0.0 mg) -> unknown
+[SS] draw: full max 54606 us + present 3791 us; live view 6.0 fps, max 16021 us
+[SS] stats t=30000 level -50 dB floor -48 dB, npu 1008 us runner 1035 us feat 304 us, 2.1 inf/s, busy 7%, active 14.5% (3900 passes/s, 3850 sleeps/s, 221 us each), npu busy 0.21%, dropped 0, imu 23725 samples 0 errors (times back 138 us, clock +7034 ppm), knocks 27, events 2, saves 0
+[SS] t=32675 +11.8 dB best 'Water running' 0.35 (thr 0.50), 2nd 'Dog barking' 0.26, felt yes (25.2 mg) -> maybe Knock
+[C3] alert on screen 125972 us after the decision (draw 122448 us, present 3524 us)
+[SS] draw: full max 122448 us + present 3524 us; live view 3.5 fps, max 15309 us
+[SS] stats t=40000 level -40 dB floor -45 dB, npu 1008 us runner 1034 us feat 303 us, 1.2 inf/s, busy 4%, active 11.5% (4032 passes/s, 3983 sleeps/s, 222 us each), npu busy 0.12%, dropped 0, imu 31779 samples 0 errors (times back 138 us, clock +6971 ppm), knocks 30, events 3, saves 0
+[SS] t=39962 +9.0 dB best 'Keys' 0.56 (thr 0.50), 2nd 'Glass breaking' 0.42, felt no (0.0 mg) -> unknown
+[SS] 'Keys' vetoed: 0.75 to a sound marked wrong
+[SS] t=41227 early, 420 ms after the onset
+[SS] t=41227 +19.2 dB clipped best 'Alarm' 0.92 (thr 0.58), 2nd 'Notification' 0.64, felt no (0.0 mg) -> Alarm
+[C3] alert 'Knock' ended after 8160 ms: 1 full redraws, longest draw 122448 us + present 3524 us, 0 audio blocks dropped
+[C3] alert on screen 31916 us after the decision (draw 28208 us, present 3707 us)
+[SS] t=42458 early, 409 ms after the onset
+[SS] t=42458 +17.7 dB best 'Alarm' 0.92 (thr 0.58), 2nd 'Notification' 0.60, felt no (0.0 mg) -> Alarm
+[C3] alert on screen 33541 us after the decision (draw 29996 us, present 3544 us)
+[SS] t=50235 +20.0 dB best 'Dog barking' 0.25 (thr 0.52), 2nd 'Speech' 0.17, felt no (0.0 mg) -> unknown
+[SS] t=50235 what was that? +20.0 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=51919 +9.7 dB best 'Baby crying' 0.41 (thr 0.57), 2nd 'Water running' 0.38, felt no (0.0 mg) -> unknown
+[SS] t=56275 +14.5 dB best 'Water running' 0.45 (thr 0.50), 2nd 'Dog barking' 0.16, felt no (0.0 mg) -> unknown
+[C3] alert 'Alarm' ended after 16221 ms: 3 full redraws, longest draw 31099 us + present 3707 us, 0 audio blocks dropped
+[SS] t=57549 +8.0 dB best 'Dog barking' 0.24 (thr 0.52), 2nd 'Water running' 0.19, felt no (0.0 mg) -> quiet
+[SS] draw: full max 53281 us + present 3708 us; live view 2.1 fps, max 15670 us
+[SS] stats t=60000 level -53 dB floor -43 dB, npu 1007 us runner 1034 us feat 303 us, 1.4 inf/s, busy 4%, active 10.9% (4008 passes/s, 3958 sleeps/s, 225 us each), npu busy 0.14%, dropped 0, imu 47887 samples 0 errors (times back 138 us, clock +7060 ppm), knocks 32, events 5, saves 0
+[SS] t=71008 +7.9 dB best 'Keys' 0.31 (thr 0.50), 2nd 'Notification' 0.16, felt no (0.0 mg) -> quiet
+[SS] t=76702 +3.9 dB best 'Glass breaking' 0.36 (thr 0.50), 2nd 'Keys' 0.36, felt no (0.0 mg) -> quiet
+[SS] t=79172 +26.7 dB clipped best 'Glass breaking' 0.73 (thr 0.50), 2nd 'Keys' 0.55, felt no (0.0 mg) -> Glass breaking
+[C3] alert 'Knock' ended after 10201 ms: 2 full redraws, longest draw 125997 us + present 3544 us, 0 audio blocks dropped
+[C3] alert on screen 32476 us after the decision (draw 28946 us, present 3528 us)
+[SS] draw: full max 125997 us + present 3537 us; live view 0.0 fps, max 0 us
+[SS] stats t=80022 level -50 dB floor -45 dB, npu 1008 us runner 1034 us feat 307 us, 0.8 inf/s, busy 2%, active 8.6% (4068 passes/s, 4018 sleeps/s, 227 us each), npu busy 0.08%, dropped 0, imu 64018 samples 0 errors (times back 194 us, clock +6966 ppm), knocks 39, events 7, saves 0
+[SS] t=80484 +7.0 dB best 'Water running' 0.47 (thr 0.50), 2nd 'Dog barking' 0.18, felt yes (187.2 mg) -> quiet
+[SS] t=81894 +21.8 dB best 'Keys' 0.42 (thr 0.50), 2nd 'Water running' 0.21, felt yes (62.6 mg) -> maybe Knock
+[C3] alert 'Glass breaking' ended after 2720 ms: 6 full redraws, longest draw 30323 us + present 3781 us, 0 audio blocks dropped
+[C3] alert on screen 126283 us after the decision (draw 122454 us, present 3520 us)
+[SS] t=83167 +23.4 dB best 'Glass breaking' 0.41 (thr 0.50), 2nd 'Knock' 0.29, felt yes (110.8 mg) -> maybe Knock
+[C3] alert on screen 129790 us after the decision (draw 126252 us, present 3538 us)
+[SS] t=86470 +10.4 dB best 'Water running' 0.42 (thr 0.50), 2nd 'Baby crying' 0.34, felt no (0.0 mg) -> unknown
+[SS] t=90104 +15.7 dB best 'Whistle' 0.21 (thr 0.82), 2nd 'Glass breaking' 0.16, felt yes (393.0 mg) -> maybe Knock
+[C3] alert on screen 134037 us after the decision (draw 130449 us, present 3588 us)
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11880 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1025 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 1263), copy B valid (seq 1262)
+[STORE] loaded 6 taught sounds from copy A, seq 1263, in 2172 us; built-ins off: 0x0
+[S1] mics: left -53.7 dB (peak 256), right -59.8 dB (peak 187) over 8000 samples
+[S1] ready after 1483 ms: mics left -54 dB, right -60 dB; npu matches the reference, 1.0 ms; saved sounds 6 taught sounds restored; imu knocks can be felt; lights ok
+[C5] cycle counter through WFI: 100% of wall time -> sleeping between audio blocks
+[SS] listening; 9 built-in sounds
+[SS] knob at 49%: sensitivity as taught until it's turned
+[SS] t=1930 +7.4 dB best 'Dog barking' 0.47 (thr 0.52), 2nd 'Whistle' 0.16, felt no (0.0 mg) -> quiet
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11877 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 999 us, runner 1025 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 1263), copy B valid (seq 1262)
+[STORE] loaded 6 taught sounds from copy A, seq 1263, in 2172 us; built-ins off: 0x0
+[S1] ready after 1483 ms: mics left -54 dB, right -60 dB; npu matches the reference, 1.0 ms; saved sounds 6 taught sounds restored; imu knocks can be felt; lights ok
+[C5] cycle counter through WFI: 100% of wall time -> sleeping between audio blocks
+[SS] listening; 9 built-in sounds
+[SS] knob at 49%: sensitivity as taught until it's turned
+[SS] t=4339 +5.7 dB best 'Keys' 0.25 (thr 0.50), 2nd 'Glass breaking' 0.22, felt no (0.0 mg) -> quiet
+[SS] t=7304 +22.4 dB best 'Phone' 0.45 (thr 0.85), 2nd 'Water running' 0.43, felt no (0.0 mg) -> unknown
+[SS] t=7304 what was that? +22.4 dB, matches nothing; UP teaches it
+[C3] banner on screen 55738 us after the decision (draw 51856 us, present 3571 us)
+[SS] draw: full max 53017 us + present 3571 us; live view 6.7 fps, max 15456 us
+[SS] stats t=10000 level -49 dB floor -48 dB, npu 1005 us runner 1032 us feat 304 us, 3.2 inf/s, busy 12%, active 15.0% (3714 passes/s, 3664 sleeps/s, 231 us each), npu busy 0.32%, dropped 0, imu 7455 samples 0 errors (times back 539 us, clock +7257 ppm), knocks 0, events 1, saves 0
+[SS] t=11615 +6.2 dB best 'Glass breaking' 0.34 (thr 0.50), 2nd 'Water running' 0.31, felt no (0.0 mg) -> quiet
+[SS] t=14125 +5.8 dB best 'Glass breaking' 0.33 (thr 0.50), 2nd 'Keys' 0.28, felt no (0.0 mg) -> quiet
+[SS] t=16862 +16.0 dB best 'Keys' 0.36 (thr 0.50), 2nd 'Microwave' 0.27, felt yes (378.4 mg) -> maybe Knock
+[C3] alert on screen 126006 us after the decision (draw 122464 us, present 3541 us)
+[SS] draw: full max 122464 us + present 3541 us; live view 7.7 fps, max 15341 us
+[SS] stats t=20000 level -53 dB floor -52 dB, npu 1009 us runner 1036 us feat 303 us, 1.3 inf/s, busy 9%, active 14.7% (3741 passes/s, 3692 sleeps/s, 230 us each), npu busy 0.13%, dropped 0, imu 15511 samples 0 errors (times back 539 us, clock +6588 ppm), knocks 2, events 2, saves 0
+[SS] t=26087 +17.7 dB best 'Keys' 0.42 (thr 0.50), 2nd 'Microwave' 0.19, felt no (0.0 mg) -> unknown
+[SS] t=26087 what was that? +17.7 dB, matches nothing (banner shown less than a minute ago)
+[C3] alert 'Knock' ended after 15001 ms: 2 full redraws, longest draw 128650 us + present 3740 us, 0 audio blocks dropped
+[SS] t=32851 +15.1 dB best 'Water running' 0.27 (thr 0.50), 2nd 'Baby crying' 0.15, felt no (0.0 mg) -> unknown
+[SS] t=32851 what was that? +15.1 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=34159 +12.1 dB best 'Doorbell' 0.34 (thr 0.85), 2nd 'Baby crying' 0.24, felt no (0.0 mg) -> unknown
+[SS] t=35577 +11.6 dB best 'Baby crying' 0.20 (thr 0.57), 2nd 'Alarm' 0.19, felt no (0.0 mg) -> unknown
+[SS] t=37177 early, 416 ms after the onset
+[SS] t=37177 +10.1 dB best 'Dog barking' 0.59 (thr 0.52), 2nd 'Water running' 0.44, felt no (0.0 mg) -> Dog barking
+[C3] banner on screen 73542 us after the decision (draw 69833 us, present 3708 us)
+[SS] t=45482 early, 416 ms after the onset
+[SS] t=45482 +17.2 dB best 'Alarm' 0.93 (thr 0.58), 2nd 'Notification' 0.62, felt no (0.0 mg) -> Alarm
+[C3] alert on screen 33529 us after the decision (draw 29998 us, present 3530 us)
+[SS] t=54064 +15.1 dB best 'Keys' 0.51 (thr 0.50), 2nd 'Notification' 0.37, felt yes (53.4 mg) -> maybe Keys
+[C3] alert 'Alarm' ended after 10220 ms: 2 full redraws, longest draw 29998 us + present 3685 us, 0 audio blocks dropped
+[C3] alert on screen 117408 us after the decision (draw 113564 us, present 3534 us)
+[SS] t=60708 +9.1 dB best 'Keys' 0.36 (thr 0.50), 2nd 'Microwave' 0.31, felt yes (101.9 mg) -> maybe Knock
+[C3] alert on screen 129393 us after the decision (draw 125863 us, present 3529 us)
+[SS] t=63205 +11.5 dB best 'Dog barking' 0.30 (thr 0.52), 2nd 'Water running' 0.30, felt no (0.0 mg) -> unknown
+[SS] t=8384 early, 422 ms after the onset
+[SS] t=8384 +19.4 dB clipped best 'Water running' 0.64 (thr 0.50), 2nd 'Keys' 0.50, felt no (0.0 mg) -> Water running
+[C3] banner on screen 66579 us after the decision (draw 62858 us, present 3720 us)
+[SS] draw: full max 122459 us + present 3662 us; live view 2.1 fps, max 14614 us
+[SS] stats t=20000 level -53 dB floor -39 dB, npu 1008 us runner 1035 us feat 366 us, 1.3 inf/s, busy 5%, active 11.6% (3935 passes/s, 3886 sleeps/s, 227 us each), npu busy 0.13%, dropped 0, imu 15511 samples 0 errors (times back 0 us, clock +6870 ppm), knocks 25, events 4, saves 0
+[SS] draw: full max 51475 us + present 3554 us; live view 6.3 fps, max 15254 us
+[SS] stats t=30000 level -52 dB floor -32 dB, npu 1007 us runner 1034 us feat 302 us, 2.0 inf/s, busy 8%, active 14.8% (3800 passes/s, 3750 sleeps/s, 227 us each), npu busy 0.20%, dropped 0, imu 23568 samples 0 errors (times back 0 us, clock +6794 ppm), knocks 34, events 5, saves 0
+[SS] t=31689 +25.2 dB clipped best 'Whistle' 0.83 (thr 0.82), 2nd 'Phone' 0.49, felt no (0.0 mg) -> maybe Whistle
+[C3] alert on screen 113262 us after the decision (draw 109729 us, present 3532 us)
+[SS] t=34768 +16.7 dB best 'Whistle' 0.74 (thr 0.82), 2nd 'Siren' 0.46, felt no (0.0 mg) -> unknown
+[SS] t=34768 what was that? +16.7 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=44975 early, 420 ms after the onset
+[SS] t=44975 +19.2 dB clipped best 'Alarm' 0.93 (thr 0.58), 2nd 'Notification' 0.63, felt no (0.0 mg) -> Alarm
+[C3] alert 'Knock' ended after 3860 ms: 1 full redraws, longest draw 122672 us + present 3529 us, 0 audio blocks dropped
+[C3] alert on screen 31873 us after the decision (draw 28150 us, present 3722 us)
+[SS] t=46208 early, 407 ms after the onset
+[SS] t=46208 +16.8 dB best 'Alarm' 0.93 (thr 0.58), 2nd 'Notification' 0.60, felt no (0.0 mg) -> Alarm
+[C3] alert on screen 33549 us after the decision (draw 30002 us, present 3546 us)
+[C3] alert 'Alarm' ended after 2474 ms: 2 full redraws, longest draw 30002 us + present 3722 us, 0 audio blocks dropped
+[SS] t=47867 skipped (joystick)
+[SS] draw: full max 122672 us + present 3722 us; live view 3.2 fps, max 14074 us
+[SS] stats t=50001 level -54 dB floor -35 dB, npu 1008 us runner 1035 us feat 303 us, 0.8 inf/s, busy 6%, active 12.4% (3914 passes/s, 3865 sleeps/s, 226 us each), npu busy 0.08%, dropped 0, imu 39670 samples 0 errors (times back 22 us, clock +6909 ppm), knocks 47, events 9, saves 0
+[SS] t=57734 early, 421 ms after the onset
+[SS] t=57734 +21.1 dB clipped best 'Glass breaking' 0.62 (thr 0.50), 2nd 'Notification' 0.35, felt no (0.0 mg) -> Glass breaking
+[C3] alert on screen 34402 us after the decision (draw 30387 us, present 3704 us)
+[SS] draw: full max 30387 us + present 3704 us; live view 6.8 fps, max 15470 us
+[SS] stats t=60001 level -54 dB floor -34 dB, npu 1018 us runner 1044 us feat 302 us, 0.3 inf/s, busy 7%, active 13.2% (3854 passes/s, 3804 sleeps/s, 228 us each), npu busy 0.03%, dropped 0, imu 47727 samples 0 errors (times back 22 us, clock +6567 ppm), knocks 55, events 10, saves 0
+[SS] t=67352 skipped (joystick)
+[SS] draw: full max 51572 us + present 3546 us; live view 2.6 fps, max 14410 us
+[SS] stats t=70001 level -53 dB floor -52 dB, npu 1009 us runner 1036 us feat 303 us, 0.6 inf/s, busy 8%, active 14.0% (3797 passes/s, 3748 sleeps/s, 229 us each), npu busy 0.06%, dropped 0, imu 55778 samples 0 errors (times back 216 us, clock +6989 ppm), knocks 58, events 10, saves 0
+[SS] t=84389 skipped (joystick)
+[SS] draw: full max 111256 us + present 3552 us; live view 1.0 fps, max 14559 us
+[SS] stats t=90001 level -54 dB floor -50 dB, npu 1008 us runner 1035 us feat 303 us, 1.2 inf/s, busy 11%, active 20.5% (3520 passes/s, 3474 sleeps/s, 228 us each), npu busy 0.12%, dropped 0, imu 71887 samples 0 errors (times back 216 us, clock +6808 ppm), knocks 133, events 11, saves 2
+[SS] knob: sensitivity 93%, thresholds -0.086
+[SS] knob: sensitivity 86%, thresholds -0.072
+[SS] draw: full max 63641 us + present 3541 us; live view 6.3 fps, max 10344 us
+[SS] stats t=100001 level -54 dB floor -53 dB, npu 1008 us runner 1036 us feat 303 us, 0.1 inf/s, busy 23%, active 28.8% (3131 passes/s, 3088 sleeps/s, 230 us each), npu busy 0.01%, dropped 0, imu 79941 samples 0 errors (times back 216 us, clock +6904 ppm), knocks 161, events 11, saves 2
+[SS] can't mark 'Whistle': that sound was forgotten
+[SS] t=100297 skipped (joystick)
+[SS] can't mark 'Whistle': that sound was forgotten
+[SS] t=105099 +21.8 dB best 'Keys' 0.41 (thr 0.47), 2nd 'Glass breaking' 0.26, felt yes (93.2 mg) -> maybe Knock
+[C3] alert on screen 126314 us after the decision (draw 122459 us, present 3546 us)
+[SS] draw: full max 122459 us + present 3546 us; live view 4.6 fps, max 14449 us
+[SS] stats t=110001 level -53 dB floor -52 dB, npu 1009 us runner 1035 us feat 302 us, 1.6 inf/s, busy 8%, active 14.0% (3800 passes/s, 3751 sleeps/s, 229 us each), npu busy 0.16%, dropped 0, imu 87994 samples 0 errors (times back 216 us, clock +6891 ppm), knocks 185, events 12, saves 2
+[SS] t=110758 early, 412 ms after the onset
+[SS] t=110758 +13.5 dB best 'Water running' 0.57 (thr 0.47), 2nd 'Whistle' 0.33, felt no (0.0 mg) -> Water running
+[C3] banner on screen 73300 us after the decision (draw 69584 us, present 3715 us)
+[SS] t=112204 +9.2 dB best 'Glass breaking' 0.23 (thr 0.47), 2nd 'Keys' 0.22, felt yes (238.9 mg) -> maybe Knock
+[C3] alert on screen 127670 us after the decision (draw 124141 us, present 3528 us)
+[SS] t=113659 +11.6 dB best 'Water running' 0.41 (thr 0.47), 2nd 'Keys' 0.22, felt no (0.0 mg) -> unknown
+[SS] t=117005 +19.9 dB best 'Dog barking' 0.69 (thr 0.49), 2nd 'Water running' 0.25, felt no (0.0 mg) -> Dog barking
+[SS] draw: full max 124141 us + present 3715 us; live view 2.9 fps, max 15435 us
+[SS] stats t=120001 level -50 dB floor -44 dB, npu 1004 us runner 1030 us feat 303 us, 2.5 inf/s, busy 6%, active 12.9% (3985 passes/s, 3936 sleeps/s, 221 us each), npu busy 0.25%, dropped 0, imu 96052 samples 0 errors (times back 216 us, clock +6644 ppm), knocks 194, events 15, saves 2
+[SS] t=119264 +7.6 dB best 'Dog barking' 0.35 (thr 0.49), 2nd 'Water running' 0.25, felt no (0.0 mg) -> quiet
+[SS] t=121115 +17.2 dB best 'Dog barking' 0.42 (thr 0.49), 2nd 'Whistle' 0.27, felt no (0.0 mg) -> unknown
+[SS] t=121115 what was that? +17.2 dB, matches nothing; UP teaches it
+[SS] t=122329 +16.5 dB best 'Water running' 0.39 (thr 0.47), 2nd 'Dog barking' 0.29, felt no (0.0 mg) -> unknown
+[SS] t=122329 what was that? +16.5 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=130789 +8.9 dB best 'Dog barking' 0.34 (thr 0.49), 2nd 'Whistle' 0.32, felt no (0.0 mg) -> unknown
+[SS] t=132749 +9.2 dB best 'Phone' 0.26 (thr 0.82), 2nd 'Speech' 0.24, felt no (0.0 mg) -> unknown
+[SS] t=137923 +13.8 dB best 'Water running' 0.44 (thr 0.47), 2nd 'Dog barking' 0.42, felt no (0.0 mg) -> unknown
+[SS] t=139460 +5.2 dB best 'Dog barking' 0.33 (thr 0.49), 2nd 'Baby crying' 0.18, felt no (0.0 mg) -> quiet
+[C3] alert 'Knock' ended after 27642 ms: 3 full redraws, longest draw 128651 us + present 3726 us, 0 audio blocks dropped
+[SS] t=142175 +13.1 dB best 'Dog barking' 0.64 (thr 0.49), 2nd 'Water running' 0.40, felt no (0.0 mg) -> Dog barking
+[C3] banner on screen 64799 us after the decision (draw 60970 us, present 3520 us)
+[SS] t=143911 +18.6 dB best 'Whistle' 0.27 (thr 0.79), 2nd 'Water running' 0.21, felt no (0.0 mg) -> unknown
+[SS] t=143911 what was that? +18.6 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=145878 +18.1 dB best 'Dog barking' 0.25 (thr 0.49), 2nd 'Speech' 0.14, felt no (0.0 mg) -> unknown
+[SS] t=145878 what was that? +18.1 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=147094 +18.4 dB best 'Water running' 0.48 (thr 0.47), 2nd 'Dog barking' 0.34, felt yes (36.5 mg) -> maybe Water running
+[C3] banner on screen 69462 us after the decision (draw 65811 us, present 3651 us)
+[SS] draw: full max 52712 us + present 3552 us; live view 8.6 fps, max 10345 us
+[SS] stats t=160004 level -54 dB floor -52 dB, npu 1005 us runner 1032 us feat 303 us, 0.0 inf/s, busy 7%, active 13.5% (3817 passes/s, 3767 sleeps/s, 229 us each), npu busy 0.00%, dropped 0, imu 128262 samples 0 errors (times back 221 us, clock +6932 ppm), knocks 232, events 21, saves 2
+[C3] alert on screen 126856 us after the decision (draw 123021 us, present 3526 us)
+[SS] t=165995 +8.2 dB best 'Keys' 0.49 (thr 0.47), 2nd 'Notification' 0.27, felt yes (55.8 mg) -> maybe Knock
+[SS] 'Keys' vetoed: 0.83 to a sound marked wrong
+[SS] t=172640 +10.9 dB best 'Keys' 0.49 (thr 0.47), 2nd 'Glass breaking' 0.30, felt yes (109.1 mg) -> maybe Knock
+[SS] 'Keys' vetoed: 0.80 to a sound marked wrong
+[C3] alert 'Keys' ended after 1340 ms: 1 full redraws, longest draw 24309 us + present 3520 us, 0 audio blocks dropped
+[C3] alert on screen 125992 us after the decision (draw 122466 us, present 3525 us)
+[SS] t=177419 +9.7 dB best 'Keys' 0.50 (thr 0.47), 2nd 'Glass breaking' 0.37, felt yes (80.9 mg) -> maybe Knock
+[SS] 'Keys' vetoed: 0.89 to a sound marked wrong
+[C3] alert on screen 131425 us after the decision (draw 127399 us, present 3716 us)
+[C3] alert on screen 31303 us after the decision (draw 27539 us, present 3763 us)
+[SS] t=191154 +14.9 dB best 'Water running' 0.43 (thr 0.47), 2nd 'Dog barking' 0.39, felt yes (53.7 mg) -> maybe Knock
+[C3] alert on screen 134198 us after the decision (draw 130257 us, present 3631 us)
+[SS] t=201069 +8.0 dB best 'Keys' 0.45 (thr 0.47), 2nd 'Notification' 0.26, felt yes (128.7 mg) -> maybe Knock
+[C3] alert 'Keys' ended after 1280 ms: 1 full redraws, longest draw 111254 us + present 3514 us, 0 audio blocks dropped
+[C3] alert on screen 125992 us after the decision (draw 122455 us, present 3537 us)
+[SS] t=203860 +20.5 dB best 'Baby crying' 0.24 (thr 0.54), 2nd 'Dog barking' 0.18, felt no (0.0 mg) -> unknown
+[SS] t=203860 what was that? +20.5 dB, matches nothing; UP teaches it
+[SS] t=208674 +20.7 dB best 'Dog barking' 0.27 (thr 0.49), 2nd 'Whistle' 0.19, felt no (0.0 mg) -> unknown
+[SS] t=208674 what was that? +20.7 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=210060 early, 421 ms after the onset
+[SS] t=210060 +19.0 dB best 'Water running' 0.53 (thr 0.47), 2nd 'Baby crying' 0.45, felt yes (54.0 mg) -> Water running
+[SS] t=211479 +8.9 dB best 'Water running' 0.55 (thr 0.47), 2nd 'Dog barking' 0.36, felt yes (79.7 mg) -> Water running
+[SS] t=213445 +20.5 dB best 'Speech' 0.30 (thr 0.47), 2nd 'Water running' 0.23, felt yes (115.6 mg) -> maybe Knock
+[C3] alert on screen 131108 us after the decision (draw 127388 us, present 3720 us)
+[SS] t=214659 +13.9 dB best 'Water running' 0.50 (thr 0.47), 2nd 'Dog barking' 0.48, felt no (0.0 mg) -> maybe Water running
+[SS] t=223414 +18.3 dB best 'Speech' 0.25 (thr 0.47), 2nd 'Dog barking' 0.06, felt no (0.0 mg) -> unknown
+[C3] alert 'Knock' ended after 32922 ms: 7 full redraws, longest draw 128447 us + present 3720 us, 0 audio blocks dropped
+[SS] draw: full max 54583 us + present 3527 us; live view 5.1 fps, max 13559 us
+[SS] stats t=240004 level -54 dB floor -52 dB, npu 1005 us runner 1032 us feat 303 us, 0.6 inf/s, busy 4%, active 10.3% (3978 passes/s, 3928 sleeps/s, 228 us each), npu busy 0.06%, dropped 0, imu 192696 samples 0 errors (times back 237 us, clock +6867 ppm), knocks 464, events 32, saves 2
+[SS] t=240843 +15.3 dB best 'Keys' 0.49 (thr 0.47), 2nd 'Notification' 0.24, felt yes (30.2 mg) -> maybe Keys
+[C3] alert on screen 117617 us after the decision (draw 113605 us, present 3702 us)
+[SS] t=243283 +6.2 dB best 'Keys' 0.50 (thr 0.47), 2nd 'Notification' 0.32, felt yes (117.3 mg) -> quiet
+[SS] t=245310 +5.9 dB best 'Keys' 0.46 (thr 0.47), 2nd 'Quiet' 0.24, felt yes (49.4 mg) -> quiet
+[C3] alert on screen 130913 us after the decision (draw 127393 us, present 3520 us)
+[SS] draw: full max 127393 us + present 3544 us; live view 0.0 fps, max 0 us
+[SS] stats t=260004 level -53 dB floor -53 dB, npu 1004 us runner 1030 us feat 302 us, 0.5 inf/s, busy 4%, active 10.5% (3932 passes/s, 3884 sleeps/s, 230 us each), npu busy 0.05%, dropped 0, imu 208801 samples 0 errors (times back 237 us, clock +6891 ppm), knocks 531, events 32, saves 2
+[C3] alert 'Knock' ended after 26222 ms: 5 full redraws, longest draw 127393 us + present 3657 us, 0 audio blocks dropped
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 13745 us
+[SS] stats t=280004 level -44 dB floor -52 dB, npu 1008 us runner 1036 us feat 303 us, 0.1 inf/s, busy 6%, active 12.0% (3888 passes/s, 3838 sleeps/s, 229 us each), npu busy 0.01%, dropped 0, imu 224909 samples 0 errors (times back 237 us, clock +6694 ppm), knocks 532, events 32, saves 2
+[SS] t=287727 +7.6 dB best 'Keys' 0.33 (thr 0.47), 2nd 'Notification' 0.24, felt no (0.0 mg) -> quiet
+[SS] t=310007 +12.2 dB best 'Keys' 0.47 (thr 0.47), 2nd 'Glass breaking' 0.32, felt yes (107.9 mg) -> maybe Knock
+[SS] 'Keys' vetoed: 0.83 to a sound marked wrong
+[SS] t=312076 +14.1 dB best 'Keys' 0.49 (thr 0.47), 2nd 'Notification' 0.30, felt no (0.0 mg) -> unknown
+[SS] 'Keys' vetoed: 0.85 to a sound marked wrong
+[SS] t=316736 +6.7 dB best 'Keys' 0.30 (thr 0.47), 2nd 'Notification' 0.22, felt yes (126.1 mg) -> quiet
+[SS] t=339462 +4.1 dB best 'Whistle' 0.27 (thr 0.79), 2nd 'Water running' 0.24, felt yes (100.3 mg) -> quiet
+[SS] t=343126 +9.1 dB best 'Keys' 0.45 (thr 0.47), 2nd 'Notification' 0.20, felt no (0.0 mg) -> unknown
+[SS] t=344638 +17.4 dB best 'Keys' 0.55 (thr 0.47), 2nd 'Notification' 0.26, felt yes (116.8 mg) -> maybe Knock
+[SS] 'Keys' vetoed: 0.76 to a sound marked wrong
+[C3] alert on screen 125501 us after the decision (draw 121961 us, present 3539 us)
+[SS] t=345885 +17.6 dB best 'Keys' 0.49 (thr 0.47), 2nd 'Notification' 0.27, felt yes (74.4 mg) -> maybe Keys
+[C3] alert 'Knock' ended after 1241 ms: 1 full redraws, longest draw 121961 us + present 3539 us, 0 audio blocks dropped
+[C3] alert on screen 114852 us after the decision (draw 111315 us, present 3536 us)
+[SS] t=353391 +11.6 dB best 'Keys' 0.40 (thr 0.47), 2nd 'Quiet' 0.26, felt yes (121.2 mg) -> maybe Knock
+[C3] alert 'Keys' ended after 2240 ms: 1 full redraws, longest draw 112187 us + present 3543 us, 0 audio blocks dropped
+[C3] alert on screen 126101 us after the decision (draw 122575 us, present 3525 us)
+[SS] t=354872 +11.2 dB best 'Keys' 0.40 (thr 0.47), 2nd 'Notification' 0.16, felt yes (86.6 mg) -> maybe Knock
+[C3] alert on screen 129170 us after the decision (draw 125626 us, present 3543 us)
+[SS] t=356291 +5.1 dB best 'Keys' 0.50 (thr 0.47), 2nd 'Notification' 0.23, felt yes (30.1 mg) -> quiet
+[SS] 'Keys' vetoed: 0.84 to a sound marked wrong
+[SS] t=357607 +11.1 dB best 'Keys' 0.48 (thr 0.47), 2nd 'Notification' 0.28, felt yes (89.1 mg) -> maybe Knock
+[SS] 'Keys' vetoed: 0.75 to a sound marked wrong
+[SS] t=358979 +19.9 dB best 'Keys' 0.49 (thr 0.47), 2nd 'Notification' 0.22, felt yes (140.8 mg) -> maybe Keys
+[C3] alert 'Knock' ended after 5581 ms: 3 full redraws, longest draw 125626 us + present 3543 us, 0 audio blocks dropped
+[C3] alert on screen 114786 us after the decision (draw 111254 us, present 3531 us)
+[SS] draw: full max 126133 us + present 3547 us; live view 0.0 fps, max 0 us
+[SS] stats t=360004 level -53 dB floor -49 dB, npu 1009 us runner 1034 us feat 304 us, 1.4 inf/s, busy 8%, active 14.1% (3804 passes/s, 3757 sleeps/s, 228 us each), npu busy 0.14%, dropped 0, imu 289338 samples 0 errors (times back 237 us, clock +6649 ppm), knocks 673, events 32, saves 2
+[SS] t=362559 +3.9 dB best 'Keys' 0.30 (thr 0.47), 2nd 'Whistle' 0.24, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 0.0 fps, max 0 us
+[SS] stats t=370004 level -54 dB floor -53 dB, npu 1004 us runner 1030 us feat 303 us, 0.3 inf/s, busy 0%, active 6.7% (4112 passes/s, 4062 sleeps/s, 229 us each), npu busy 0.03%, dropped 0, imu 297391 samples 0 errors (times back 237 us, clock +6959 ppm), knocks 677, events 32, saves 2
+[SS] t=369201 +10.2 dB best 'Keys' 0.42 (thr 0.47), 2nd 'Notification' 0.22, felt no (0.0 mg) -> unknown
+[C3] alert 'Keys' ended after 15001 ms: 1 full redraws, longest draw 111254 us + present 3531 us, 0 audio blocks dropped
+[SS] t=374091 +17.4 dB best 'Keys' 0.59 (thr 0.47), 2nd 'Notification' 0.29, felt no (0.0 mg) -> Keys
+[C3] alert on screen 32013 us after the decision (draw 28508 us, present 3504 us)
+[SS] t=375850 +7.6 dB best 'Keys' 0.48 (thr 0.47), 2nd 'Notification' 0.36, felt no (0.0 mg) -> quiet
+[SS] 'Keys' vetoed: 0.79 to a sound marked wrong
+[SS] t=378293 +5.9 dB best 'Keys' 0.39 (thr 0.47), 2nd 'Alarm' 0.25, felt no (0.0 mg) -> quiet
+[SS] t=380513 +6.0 dB best 'Keys' 0.50 (thr 0.47), 2nd 'Glass breaking' 0.34, felt yes (36.0 mg) -> quiet
+[SS] 'Keys' vetoed: 0.86 to a sound marked wrong
+[SS] t=382258 +9.4 dB best 'Keys' 0.42 (thr 0.47), 2nd 'Glass breaking' 0.25, felt no (0.0 mg) -> unknown
+[C3] alert 'Keys' ended after 15001 ms: 2 full redraws, longest draw 28508 us + present 3525 us, 0 audio blocks dropped
+[SS] t=389155 +16.8 dB best 'Keys' 0.56 (thr 0.47), 2nd 'Quiet' 0.33, felt no (0.0 mg) -> unknown
+[SS] 'Keys' vetoed: 0.82 to a sound marked wrong
+[SS] t=389155 what was that? +16.8 dB, matches nothing; UP teaches it
+[C3] banner on screen 67229 us after the decision (draw 63685 us, present 3543 us)
+[SS] draw: full max 63685 us + present 3543 us; live view 0.0 fps, max 13574 us
+[SS] stats t=390039 level -51 dB floor -52 dB, npu 1000 us runner 1027 us feat 303 us, 0.7 inf/s, busy 2%, active 8.2% (4058 passes/s, 4008 sleeps/s, 229 us each), npu busy 0.07%, dropped 0, imu 313533 samples 0 errors (times back 237 us, clock +6902 ppm), knocks 689, events 32, saves 2
+[SS] t=396406 +6.0 dB best 'Keys' 0.45 (thr 0.47), 2nd 'Glass breaking' 0.40, felt no (0.0 mg) -> quiet
+[SS] draw: full max 51304 us + present 3519 us; live view 9.6 fps, max 14377 us
+[SS] stats t=400039 level -53 dB floor -52 dB, npu 1005 us runner 1032 us feat 303 us, 0.6 inf/s, busy 8%, active 14.7% (3772 passes/s, 3722 sleeps/s, 229 us each), npu busy 0.06%, dropped 0, imu 321586 samples 0 errors (times back 237 us, clock +7042 ppm), knocks 690, events 32, saves 2
+[SS] t=399249 +4.1 dB best 'Keys' 0.41 (thr 0.47), 2nd 'Notification' 0.28, felt no (0.0 mg) -> quiet
+[SS] t=404193 +14.7 dB best 'Glass breaking' 0.39 (thr 0.47), 2nd 'Keys' 0.32, felt no (0.0 mg) -> unknown
+[SS] t=407070 +5.6 dB best 'Keys' 0.54 (thr 0.47), 2nd 'Glass breaking' 0.32, felt no (0.0 mg) -> quiet
+[SS] 'Keys' vetoed: 0.84 to a sound marked wrong
+[SS] t=408789 +7.1 dB best 'Keys' 0.28 (thr 0.47), 2nd 'Dog barking' 0.27, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 9.9 fps, max 14461 us
+[SS] stats t=410040 level -53 dB floor -52 dB, npu 1008 us runner 1036 us feat 303 us, 1.4 inf/s, busy 8%, active 13.8% (3806 passes/s, 3756 sleeps/s, 229 us each), npu busy 0.14%, dropped 0, imu 329641 samples 0 errors (times back 237 us, clock +6992 ppm), knocks 690, events 32, saves 2
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 8306 us
+[SS] stats t=420040 level -52 dB floor -52 dB, npu 1008 us runner 1036 us feat 302 us, 0.0 inf/s, busy 7%, active 13.1% (3831 passes/s, 3781 sleeps/s, 229 us each), npu busy 0.00%, dropped 0, imu 337695 samples 0 errors (times back 375 us, clock +7088 ppm), knocks 690, events 32, saves 2
+[SS] t=422045 +5.1 dB best 'Glass breaking' 0.41 (thr 0.47), 2nd 'Keys' 0.38, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 9.0 fps, max 8373 us
+[SS] stats t=440041 level -54 dB floor -53 dB, npu 1005 us runner 1032 us feat 302 us, 0.2 inf/s, busy 6%, active 12.5% (3857 passes/s, 3807 sleeps/s, 229 us each), npu busy 0.02%, dropped 0, imu 353795 samples 0 errors (times back 527 us, clock +6665 ppm), knocks 690, events 32, saves 2
+[SS] t=441000 +15.3 dB best 'Keys' 0.31 (thr 0.47), 2nd 'Notification' 0.25, felt yes (52.6 mg) -> maybe Knock
+[C3] alert on screen 125975 us after the decision (draw 122456 us, present 3518 us)
+[SS] draw: full max 126724 us + present 3527 us; live view 2.3 fps, max 14391 us
+[SS] stats t=460041 level -53 dB floor -51 dB, npu 1005 us runner 1033 us feat 303 us, 1.0 inf/s, busy 4%, active 10.2% (3954 passes/s, 3904 sleeps/s, 229 us each), npu busy 0.10%, dropped 0, imu 369907 samples 0 errors (times back 527 us, clock +6999 ppm), knocks 712, events 32, saves 2
+[SS] t=461282 +7.0 dB best 'Keys' 0.34 (thr 0.47), 2nd 'Notification' 0.25, felt yes (162.1 mg) -> quiet
+[SS] t=465897 +8.0 dB best 'Keys' 0.39 (thr 0.47), 2nd 'Notification' 0.20, felt no (0.0 mg) -> quiet
+[SS] t=477311 +2.5 dB best 'Keys' 0.28 (thr 0.47), 2nd 'Notification' 0.21, felt no (0.0 mg) -> quiet
+[SS] draw: full max 124602 us + present 3537 us; live view 5.8 fps, max 10336 us
+[SS] stats t=480041 level -54 dB floor -53 dB, npu 1009 us runner 1035 us feat 303 us, 0.2 inf/s, busy 6%, active 11.9% (3900 passes/s, 3851 sleeps/s, 228 us each), npu busy 0.02%, dropped 0, imu 386010 samples 0 errors (times back 527 us, clock +7003 ppm), knocks 725, events 32, saves 2
+[SS] draw: full max 0 us + present 0 us; live view 0.0 fps, max 0 us
+[SS] stats t=500041 level -53 dB floor -53 dB, npu 1005 us runner 1032 us feat 303 us, 0.0 inf/s, busy 0%, active 6.6% (4113 passes/s, 4063 sleeps/s, 229 us each), npu busy 0.00%, dropped 0, imu 402118 samples 0 errors (times back 527 us, clock +6958 ppm), knocks 739, events 32, saves 2
+[C3] alert 'Knock' ended after 15001 ms: 2 full redraws, longest draw 130804 us + present 3535 us, 0 audio blocks dropped
+[SS] t=510635 +2.6 dB best 'Keys' 0.37 (thr 0.47), 2nd 'Notification' 0.17, felt no (0.0 mg) -> quiet
+[SS] t=514906 +21.3 dB best 'Keys' 0.45 (thr 0.47), 2nd 'Glass breaking' 0.24, felt no (0.0 mg) -> unknown
+[SS] t=514906 what was that? +21.3 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=519051 +21.7 dB best 'Keys' 0.48 (thr 0.47), 2nd 'Notification' 0.23, felt yes (83.0 mg) -> maybe Knock
+[SS] 'Keys' vetoed: 0.72 to a sound marked wrong
+[C3] alert on screen 128845 us after the decision (draw 125311 us, present 3533 us)
+[SS] draw: full max 125311 us + present 3533 us; live view 7.7 fps, max 14898 us
+[SS] stats t=520041 level -55 dB floor -47 dB, npu 1004 us runner 1030 us feat 306 us, 3.8 inf/s, busy 12%, active 18.0% (3633 passes/s, 3585 sleeps/s, 228 us each), npu busy 0.38%, dropped 0, imu 418232 samples 0 errors (times back 527 us, clock +6877 ppm), knocks 774, events 32, saves 2
+[SS] t=532203 +8.5 dB best 'Dog barking' 0.58 (thr 0.49), 2nd 'Water running' 0.27, felt no (0.0 mg) -> Dog barking
+[SS] t=535099 +11.5 dB best 'Keys' 0.56 (thr 0.47), 2nd 'Glass breaking' 0.30, felt no (0.0 mg) -> unknown
+[SS] 'Keys' vetoed: 0.75 to a sound marked wrong
+[SS] t=538096 +15.1 dB best 'Glass breaking' 0.17 (thr 0.47), 2nd 'Keys' 0.13, felt no (0.0 mg) -> unknown
+[SS] t=538096 what was that? +15.1 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=541914 +4.8 dB best 'Keys' 0.44 (thr 0.47), 2nd 'Glass breaking' 0.28, felt no (0.0 mg) -> quiet
+[SS] t=548237 +3.2 dB best 'Glass breaking' 0.33 (thr 0.47), 2nd 'Keys' 0.33, felt no (0.0 mg) -> quiet
+[SS] draw: full max 122457 us + present 3526 us; live view 1.0 fps, max 14533 us
+[SS] stats t=550041 level -54 dB floor -52 dB, npu 1004 us runner 1030 us feat 303 us, 1.1 inf/s, busy 3%, active 9.0% (4033 passes/s, 3984 sleeps/s, 228 us each), npu busy 0.11%, dropped 0, imu 442387 samples 0 errors (times back 527 us, clock +6586 ppm), knocks 793, events 32, saves 2
+[SS] t=550465 +4.5 dB best 'Keys' 0.35 (thr 0.47), 2nd 'Glass breaking' 0.33, felt no (0.0 mg) -> quiet
+[SS] t=552601 +9.3 dB best 'Keys' 0.28 (thr 0.47), 2nd 'Dog barking' 0.23, felt yes (41.2 mg) -> maybe Knock
+[C3] alert on screen 130566 us after the decision (draw 126728 us, present 3529 us)
+[SS] t=562965 +12.0 dB best 'Keys' 0.22 (thr 0.47), 2nd 'Glass breaking' 0.20, felt yes (46.4 mg) -> maybe Knock
+[C3] alert on screen 130259 us after the decision (draw 126728 us, present 3530 us)
+[SS] draw: full max 124616 us + present 3542 us; live view 1.2 fps, max 10317 us
+[SS] stats t=580041 level -53 dB floor -53 dB, npu 1004 us runner 1030 us feat 302 us, 0.0 inf/s, busy 3%, active 9.1% (3989 passes/s, 3939 sleeps/s, 230 us each), npu busy 0.00%, dropped 0, imu 466548 samples 0 errors (times back 527 us, clock +6916 ppm), knocks 827, events 32, saves 2
+[SS] t=585221 +18.0 dB best 'Keys' 0.52 (thr 0.47), 2nd 'Glass breaking' 0.36, felt no (0.0 mg) -> unknown
+[SS] 'Keys' vetoed: 0.82 to a sound marked wrong
+[SS] t=585221 what was that? +18.0 dB, matches nothing; UP teaches it
+[C3] banner on screen 68928 us after the decision (draw 65409 us, present 3518 us)
+[SS] t=588721 +7.9 dB best 'Keys' 0.49 (thr 0.47), 2nd 'Notification' 0.30, felt no (0.0 mg) -> quiet
+[SS] 'Keys' vetoed: 0.78 to a sound marked wrong
+[SS] draw: full max 65409 us + present 3518 us; live view 9.9 fps, max 14375 us
+[SS] stats t=590041 level -53 dB floor -52 dB, npu 1009 us runner 1036 us feat 302 us, 1.0 inf/s, busy 8%, active 14.2% (3782 passes/s, 3732 sleeps/s, 229 us each), npu busy 0.10%, dropped 0, imu 474602 samples 0 errors (times back 527 us, clock +6839 ppm), knocks 835, events 32, saves 2
+[SS] draw: full max 122459 us + present 3535 us; live view 7.5 fps, max 13633 us
+[SS] stats t=610041 level -54 dB floor -53 dB, npu 1008 us runner 1036 us feat 302 us, 0.7 inf/s, busy 7%, active 12.8% (3847 passes/s, 3797 sleeps/s, 229 us each), npu busy 0.07%, dropped 0, imu 490712 samples 0 errors (times back 527 us, clock +6832 ppm), knocks 847, events 32, saves 2
+[SS] t=613553 +5.0 dB best 'Keys' 0.33 (thr 0.47), 2nd 'Notification' 0.28, felt yes (128.5 mg) -> quiet
+[SS] t=623347 +25.3 dB best 'Keys' 0.59 (thr 0.47), 2nd 'Glass breaking' 0.39, felt yes (50.5 mg) -> maybe Knock
+[SS] 'Keys' vetoed: 0.82 to a sound marked wrong
+[C3] alert on screen 130219 us after the decision (draw 126682 us, present 3536 us)
+[SS] t=633870 +6.2 dB best 'Water running' 0.24 (thr 0.47), 2nd 'Keys' 0.23, felt no (0.0 mg) -> quiet
+[C3] alert 'Knock' ended after 31561 ms: 4 full redraws, longest draw 126682 us + present 3536 us, 0 audio blocks dropped
+[SS] draw: full max 124601 us + present 3550 us; live view 0.8 fps, max 10366 us
+[SS] stats t=640041 level -51 dB floor -53 dB, npu 1004 us runner 1030 us feat 302 us, 0.2 inf/s, busy 3%, active 8.9% (4017 passes/s, 3968 sleeps/s, 229 us each), npu busy 0.02%, dropped 0, imu 514873 samples 0 errors (times back 527 us, clock +6732 ppm), knocks 876, events 32, saves 2
+[SS] t=640278 +11.1 dB best 'Dog barking' 0.59 (thr 0.49), 2nd 'Whistle' 0.21, felt yes (122.2 mg) -> Dog barking
+[C3] banner on screen 68613 us after the decision (draw 65062 us, present 3551 us)
+[SS] t=644234 +6.9 dB best 'Dog barking' 0.56 (thr 0.49), 2nd 'Glass breaking' 0.18, felt no (0.0 mg) -> quiet
+[SS] t=666565 +21.8 dB best 'Baby crying' 0.28 (thr 0.54), 2nd 'Keys' 0.21, felt yes (271.6 mg) -> maybe Knock
+[C3] alert on screen 131674 us after the decision (draw 127642 us, present 3723 us)
+[SS] t=667848 +9.5 dB best 'Dog barking' 0.35 (thr 0.49), 2nd 'Speech' 0.11, felt no (0.0 mg) -> unknown
+[SS] t=672641 +13.9 dB best 'Dog barking' 0.37 (thr 0.49), 2nd 'Water running' 0.21, felt no (0.0 mg) -> unknown
+[SS] t=674282 +7.7 dB best 'Water running' 0.32 (thr 0.47), 2nd 'Baby crying' 0.30, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 0.0 fps, max 0 us
+[SS] stats t=680041 level -52 dB floor -49 dB, npu 1004 us runner 1030 us feat 303 us, 0.7 inf/s, busy 0%, active 7.7% (4245 passes/s, 4195 sleeps/s, 219 us each), npu busy 0.07%, dropped 0, imu 547084 samples 0 errors (times back 527 us, clock +6899 ppm), knocks 889, events 32, saves 2
+[SS] t=679309 +5.7 dB best 'Keys' 0.48 (thr 0.47), 2nd 'Glass breaking' 0.40, felt no (0.0 mg) -> quiet
+[SS] 'Keys' vetoed: 0.88 to a sound marked wrong
+[C3] alert 'Knock' ended after 15001 ms: 1 full redraws, longest draw 127642 us + present 3723 us, 0 audio blocks dropped
+[SS] t=683471 +3.1 dB best 'Keys' 0.40 (thr 0.47), 2nd 'Notification' 0.24, felt no (0.0 mg) -> quiet
+[SS] t=703196 +15.6 dB best 'Keys' 0.35 (thr 0.47), 2nd 'Glass breaking' 0.34, felt yes (21.6 mg) -> maybe Knock
+[C3] alert on screen 126750 us after the decision (draw 123209 us, present 3540 us)
+[SS] t=706107 +7.1 dB best 'Keys' 0.39 (thr 0.47), 2nd 'Quiet' 0.22, felt no (0.0 mg) -> quiet
+[SS] draw: full max 123209 us + present 3540 us; live view 3.9 fps, max 14880 us
+[SS] stats t=710041 level -54 dB floor -53 dB, npu 1004 us runner 1030 us feat 302 us, 1.4 inf/s, busy 5%, active 10.8% (3943 passes/s, 3893 sleeps/s, 229 us each), npu busy 0.14%, dropped 0, imu 571245 samples 0 errors (times back 527 us, clock +6934 ppm), knocks 899, events 32, saves 2
+[C3] alert 'Knock' ended after 15001 ms: 1 full redraws, longest draw 123209 us + present 3540 us, 0 audio blocks dropped
+[SS] draw: full max 52607 us + present 3518 us; live view 0.9 fps, max 14117 us
+[SS] stats t=720041 level -41 dB floor -47 dB, npu 1000 us runner 1031 us feat 303 us, 0.2 inf/s, busy 2%, active 8.1% (4065 passes/s, 4015 sleeps/s, 228 us each), npu busy 0.02%, dropped 0, imu 579301 samples 0 errors (times back 527 us, clock +6644 ppm), knocks 899, events 32, saves 2
+[SS] t=719802 +8.6 dB best 'Baby crying' 0.31 (thr 0.54), 2nd 'Dog barking' 0.20, felt no (0.0 mg) -> unknown
+[SS] t=721331 early, 412 ms after the onset
+[SS] t=721331 +8.0 dB best 'Dog barking' 0.55 (thr 0.49), 2nd 'Baby crying' 0.31, felt no (0.0 mg) -> Dog barking
+[C3] banner on screen 70120 us after the decision (draw 66588 us, present 3532 us)
+[SS] t=723624 +6.2 dB best 'Baby crying' 0.39 (thr 0.54), 2nd 'Water running' 0.32, felt no (0.0 mg) -> quiet
+[SS] draw: full max 66588 us + present 3538 us; live view 9.1 fps, max 15959 us
+[SS] stats t=730041 level -52 dB floor -51 dB, npu 1008 us runner 1035 us feat 303 us, 2.5 inf/s, busy 11%, active 17.0% (3720 passes/s, 3670 sleeps/s, 225 us each), npu busy 0.25%, dropped 0, imu 587353 samples 0 errors (times back 527 us, clock +6867 ppm), knocks 899, events 32, saves 2
+[SS] t=738016 +6.1 dB best 'Keys' 0.21 (thr 0.47), 2nd 'Dog barking' 0.20, felt no (0.0 mg) -> quiet
+[SS] t=739922 +9.3 dB best 'Keys' 0.21 (thr 0.47), 2nd 'Water running' 0.10, felt yes (133.1 mg) -> maybe Knock
+[C3] alert on screen 125998 us after the decision (draw 122454 us, present 3543 us)
+[SS] t=743103 +12.0 dB best 'Whistle' 0.56 (thr 0.79), 2nd 'Doorbell' 0.34, felt yes (32.1 mg) -> maybe Knock
+[C3] alert on screen 132172 us after the decision (draw 128454 us, present 3718 us)
+[SS] t=748947 +10.8 dB best 'Keys' 0.48 (thr 0.47), 2nd 'Dog barking' 0.31, felt no (0.0 mg) -> maybe Keys
+[C3] alert 'Knock' ended after 9021 ms: 2 full redraws, longest draw 128454 us + present 3718 us, 0 audio blocks dropped
+[C3] alert on screen 115263 us after the decision (draw 111748 us, present 3515 us)
+[SS] draw: full max 128454 us + present 3718 us; live view 0.6 fps, max 13953 us
+[SS] stats t=750041 level -35 dB floor -40 dB, npu 1008 us runner 1034 us feat 303 us, 1.1 inf/s, busy 5%, active 11.5% (3996 passes/s, 3947 sleeps/s, 224 us each), npu busy 0.11%, dropped 0, imu 603465 samples 0 errors (times back 527 us, clock +6968 ppm), knocks 902, events 32, saves 2
+[SS] t=753125 +10.4 dB best 'Doorbell' 0.35 (thr 0.82), 2nd 'Keys' 0.30, felt no (0.0 mg) -> unknown
+[SS] t=754348 +5.0 dB best 'Keys' 0.34 (thr 0.47), 2nd 'Doorbell' 0.21, felt no (0.0 mg) -> quiet
+[SS] t=758947 +7.7 dB best 'Keys' 0.39 (thr 0.47), 2nd 'Dog barking' 0.25, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 0.0 fps, max 0 us
+[SS] stats t=760041 level -54 dB floor -39 dB, npu 1008 us runner 1034 us feat 304 us, 0.8 inf/s, busy 0%, active 7.5% (4126 passes/s, 4076 sleeps/s, 226 us each), npu busy 0.08%, dropped 0, imu 611519 samples 0 errors (times back 527 us, clock +7002 ppm), knocks 902, events 32, saves 2
+[SS] t=762083 +8.3 dB best 'Dog barking' 0.26 (thr 0.49), 2nd 'Keys' 0.12, felt no (0.0 mg) -> unknown
+[C3] alert 'Keys' ended after 15001 ms: 1 full redraws, longest draw 111748 us + present 3515 us, 0 audio blocks dropped
+[SS] t=764450 +8.2 dB best 'Dog barking' 0.32 (thr 0.49), 2nd 'Keys' 0.23, felt no (0.0 mg) -> unknown
+[SS] t=771473 +11.4 dB best 'Dog barking' 0.34 (thr 0.49), 2nd 'Keys' 0.18, felt no (0.0 mg) -> unknown
+[SS] t=773658 +8.2 dB best 'Keys' 0.32 (thr 0.47), 2nd 'Dog barking' 0.20, felt no (0.0 mg) -> unknown
+[SS] t=774927 +8.6 dB best 'Whistle' 0.19 (thr 0.79), 2nd 'Baby crying' 0.12, felt no (0.0 mg) -> unknown
+[SS] t=777143 +11.9 dB best 'Keys' 0.19 (thr 0.47), 2nd 'Dog barking' 0.18, felt no (0.0 mg) -> unknown
+[SS] t=778488 +6.2 dB best 'Whistle' 0.18 (thr 0.79), 2nd 'Dog barking' 0.16, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 9.6 fps, max 14977 us
+[SS] stats t=780041 level -46 dB floor -40 dB, npu 1007 us runner 1034 us feat 303 us, 4.1 inf/s, busy 11%, active 17.3% (3728 passes/s, 3678 sleeps/s, 224 us each), npu busy 0.41%, dropped 0, imu 627626 samples 0 errors (times back 527 us, clock +6740 ppm), knocks 902, events 32, saves 2
+[SS] t=780218 +7.5 dB best 'Dog barking' 0.24 (thr 0.49), 2nd 'Water running' 0.22, felt no (0.0 mg) -> quiet
+[SS] t=782056 +9.1 dB best 'Water running' 0.41 (thr 0.47), 2nd 'Keys' 0.28, felt no (0.0 mg) -> unknown
+[SS] draw: full max 0 us + present 0 us; live view 9.4 fps, max 14953 us
+[SS] stats t=800041 level -44 dB floor -41 dB, npu 1007 us runner 1034 us feat 304 us, 3.8 inf/s, busy 10%, active 16.9% (3727 passes/s, 3677 sleeps/s, 226 us each), npu busy 0.38%, dropped 0, imu 643735 samples 0 errors (times back 527 us, clock +7022 ppm), knocks 902, events 32, saves 2
+[SS] t=799535 +7.9 dB best 'Keys' 0.30 (thr 0.47), 2nd 'Notification' 0.28, felt no (0.0 mg) -> quiet
+[SS] t=801864 +6.6 dB best 'Alarm' 0.34 (thr 0.55), 2nd 'Keys' 0.32, felt no (0.0 mg) -> quiet
+[SS] t=803970 +10.6 dB best 'Dog barking' 0.41 (thr 0.49), 2nd 'Keys' 0.32, felt no (0.0 mg) -> unknown
+[SS] t=805503 +9.9 dB best 'Notification' 0.06 (thr 0.47), 2nd 'Keys' 0.05, felt no (0.0 mg) -> unknown
+[SS] t=807125 +9.3 dB best 'Dog barking' 0.20 (thr 0.49), 2nd 'Whistle' 0.08, felt no (0.0 mg) -> unknown
+[SS] draw: full max 0 us + present 0 us; live view 9.6 fps, max 15218 us
+[SS] stats t=810041 level -32 dB floor -39 dB, npu 1007 us runner 1034 us feat 304 us, 3.9 inf/s, busy 10%, active 17.3% (3749 passes/s, 3699 sleeps/s, 223 us each), npu busy 0.39%, dropped 0, imu 651786 samples 0 errors (times back 527 us, clock +6620 ppm), knocks 902, events 32, saves 2
+[SS] t=809612 +9.7 dB best 'Water running' 0.42 (thr 0.47), 2nd 'Baby crying' 0.31, felt no (0.0 mg) -> unknown
+[SS] t=819614 +12.9 dB best 'Dog barking' 0.42 (thr 0.49), 2nd 'Whistle' 0.24, felt no (0.0 mg) -> unknown
+[SS] t=829788 +10.0 dB best 'Water running' 0.40 (thr 0.47), 2nd 'Whistle' 0.30, felt no (0.0 mg) -> unknown
+[SS] t=850085 +14.7 dB best 'Whistle' 0.19 (thr 0.79), 2nd 'Phone' 0.18, felt no (0.0 mg) -> unknown
+[SS] t=861366 +9.5 dB best 'Dog barking' 0.35 (thr 0.49), 2nd 'Whistle' 0.22, felt no (0.0 mg) -> unknown
+[SS] t=864224 +7.4 dB best 'Water running' 0.55 (thr 0.47), 2nd 'Dog barking' 0.22, felt no (0.0 mg) -> quiet
+[SS] t=866138 +18.9 dB best 'Doorbell' 0.22 (thr 0.82), 2nd 'Whistle' 0.18, felt no (0.0 mg) -> unknown
+[SS] t=866138 what was that? +18.9 dB, matches nothing (banner shown less than a minute ago)
+[SS] draw: full max 55147 us + present 3724 us; live view 9.8 fps, max 15767 us
+[SS] stats t=870045 level -53 dB floor -40 dB, npu 1006 us runner 1033 us feat 302 us, 3.6 inf/s, busy 11%, active 18.5% (3732 passes/s, 3682 sleeps/s, 221 us each), npu busy 0.36%, dropped 0, imu 700113 samples 0 errors (times back 527 us, clock +7019 ppm), knocks 902, events 32, saves 2
+[SS] t=871536 +13.3 dB best 'Water running' 0.34 (thr 0.47), 2nd 'Dog barking' 0.32, felt no (0.0 mg) -> unknown
+[SS] t=873136 +8.2 dB best 'Water running' 0.29 (thr 0.47), 2nd 'Whistle' 0.21, felt no (0.0 mg) -> unknown
+[SS] t=876061 +15.8 dB best 'Dog barking' 0.36 (thr 0.49), 2nd 'Baby crying' 0.21, felt no (0.0 mg) -> unknown
+[SS] t=876061 what was that? +15.8 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=878638 +7.2 dB best 'Water running' 0.28 (thr 0.47), 2nd 'Baby crying' 0.19, felt no (0.0 mg) -> quiet
+[SS] t=879865 +14.3 dB best 'Water running' 0.29 (thr 0.47), 2nd 'Dog barking' 0.28, felt no (0.0 mg) -> unknown
+[SS] t=881725 +14.4 dB best 'Dog barking' 0.28 (thr 0.49), 2nd 'Whistle' 0.22, felt no (0.0 mg) -> unknown
+[SS] t=883005 +17.2 dB best 'Dog barking' 0.33 (thr 0.49), 2nd 'Water running' 0.18, felt no (0.0 mg) -> unknown
+[SS] t=883005 what was that? +17.2 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=885334 +11.9 dB best 'Water running' 0.33 (thr 0.47), 2nd 'Baby crying' 0.30, felt no (0.0 mg) -> unknown
+[SS] t=895252 +16.4 dB best 'Water running' 0.39 (thr 0.47), 2nd 'Dog barking' 0.24, felt no (0.0 mg) -> unknown
+[SS] t=895252 what was that? +16.4 dB, matches nothing; UP teaches it
+[C3] banner on screen 72908 us after the decision (draw 69365 us, present 3542 us)
+[SS] t=906563 +6.8 dB best 'Notification' 0.40 (thr 0.47), 2nd 'Keys' 0.39, felt no (0.0 mg) -> quiet
+[SS] t=912971 +10.6 dB best 'Water running' 0.34 (thr 0.47), 2nd 'Keys' 0.26, felt no (0.0 mg) -> unknown
+[SS] t=915606 +9.2 dB best 'Keys' 0.38 (thr 0.47), 2nd 'Notification' 0.24, felt no (0.0 mg) -> unknown
+[SS] t=917434 +8.8 dB best 'Water running' 0.27 (thr 0.47), 2nd 'Whistle' 0.23, felt no (0.0 mg) -> unknown
+[SS] t=917434 +8.8 dB best 'Water running' 0.27 (thr 0.47), 2nd 'Whistle' 0.23, felt no (0.0 mg) -> unknown
+[SS] t=919201 +6.6 dB best 'Baby crying' 0.09 (thr 0.54), 2nd 'Whistle' 0.04, felt no (0.0 mg) -> quiet
+[SS] draw: full max 65399 us + present 3525 us; live view 8.9 fps, max 15739 us
+[SS] stats t=920045 level -53 dB floor -39 dB, npu 1007 us runner 1034 us feat 304 us, 4.9 inf/s, busy 11%, active 18.1% (3698 passes/s, 3648 sleeps/s, 224 us each), npu busy 0.50%, dropped 0, imu 740380 samples 0 errors (times back 527 us, clock +7020 ppm), knocks 908, events 32, saves 2
+[SS] t=921717 +6.5 dB best 'Keys' 0.21 (thr 0.47), 2nd 'Glass breaking' 0.18, felt no (0.0 mg) -> quiet
+[SS] t=925613 +10.1 dB best 'Water running' 0.28 (thr 0.47), 2nd 'Dog barking' 0.25, felt no (0.0 mg) -> unknown
+[SS] t=928375 +7.3 dB best 'Siren' 0.37 (thr 0.56), 2nd 'Whistle' 0.24, felt no (0.0 mg) -> quiet
+[SS] draw: full max 57944 us + present 3715 us; live view 9.1 fps, max 15412 us
+[SS] stats t=930045 level -38 dB floor -38 dB, npu 1007 us runner 1034 us feat 304 us, 4.0 inf/s, busy 11%, active 18.1% (3704 passes/s, 3655 sleeps/s, 224 us each), npu busy 0.40%, dropped 0, imu 748436 samples 0 errors (times back 651 us, clock +7006 ppm), knocks 908, events 32, saves 2
+[SS] t=934675 +4.5 dB best 'Water running' 0.28 (thr 0.47), 2nd 'Whistle' 0.20, felt no (0.0 mg) -> quiet
+[SS] t=938455 +11.7 dB best 'Baby crying' 0.20 (thr 0.54), 2nd 'Water running' 0.19, felt no (0.0 mg) -> unknown
+[SS] draw: full max 0 us + present 0 us; live view 9.9 fps, max 15712 us
+[SS] stats t=940045 level -48 dB floor -37 dB, npu 1062 us runner 1156 us feat 433 us, 3.3 inf/s, busy 11%, active 18.3% (3792 passes/s, 3742 sleeps/s, 218 us each), npu busy 0.33%, dropped 0, imu 756487 samples 0 errors (times back 651 us, clock +7093 ppm), knocks 912, events 32, saves 2
+[SS] t=941991 +12.0 dB best 'Doorbell' 0.34 (thr 0.82), 2nd 'Alarm' 0.31, felt no (0.0 mg) -> unknown
+[SS] t=943804 +7.8 dB best 'Keys' 0.40 (thr 0.47), 2nd 'Doorbell' 0.37, felt no (0.0 mg) -> quiet
+[SS] t=945120 +12.3 dB best 'Dog barking' 0.60 (thr 0.49), 2nd 'Water running' 0.39, felt no (0.0 mg) -> Dog barking
+[C3] banner on screen 73232 us after the decision (draw 69574 us, present 3657 us)
+[SS] t=946377 early, 411 ms after the onset
+[SS] t=946377 +11.5 dB best 'Dog barking' 0.57 (thr 0.49), 2nd 'Water running' 0.38, felt no (0.0 mg) -> Dog barking
+[C3] banner on screen 69735 us after the decision (draw 65659 us, present 3765 us)
+[SS] t=950360 +7.7 dB best 'Water running' 0.64 (thr 0.47), 2nd 'Dog barking' 0.31, felt no (0.0 mg) -> quiet
+[SS] t=951578 early, 412 ms after the onset
+[SS] t=951578 +8.4 dB best 'Water running' 0.57 (thr 0.47), 2nd 'Dog barking' 0.38, felt no (0.0 mg) -> Water running
+[SS] t=953013 +7.2 dB best 'Water running' 0.41 (thr 0.47), 2nd 'Whistle' 0.30, felt no (0.0 mg) -> quiet
+[SS] t=954326 +7.0 dB best 'Whistle' 0.35 (thr 0.79), 2nd 'Water running' 0.31, felt no (0.0 mg) -> quiet
+[SS] t=957441 +6.6 dB best 'Baby crying' 0.16 (thr 0.54), 2nd 'Dog barking' 0.15, felt no (0.0 mg) -> quiet
+[SS] draw: full max 110915 us + present 3660 us; live view 6.4 fps, max 16116 us
+[SS] stats t=960045 level -51 dB floor -41 dB, npu 1008 us runner 1034 us feat 304 us, 2.7 inf/s, busy 9%, active 15.9% (3829 passes/s, 3779 sleeps/s, 222 us each), npu busy 0.27%, dropped 0, imu 772593 samples 0 errors (times back 651 us, clock +7128 ppm), knocks 915, events 32, saves 2
+[SS] t=959382 +7.0 dB best 'Siren' 0.33 (thr 0.56), 2nd 'Water running' 0.24, felt no (0.0 mg) -> quiet
+[SS] t=961373 +6.7 dB best 'Water running' 0.27 (thr 0.47), 2nd 'Dog barking' 0.22, felt no (0.0 mg) -> quiet
+[SS] t=966748 +13.3 dB best 'Glass breaking' 0.45 (thr 0.47), 2nd 'Keys' 0.43, felt no (0.0 mg) -> unknown
+[SS] t=968935 +5.9 dB best 'Water running' 0.46 (thr 0.47), 2nd 'Whistle' 0.12, felt no (0.0 mg) -> quiet
+[SS] t=971816 +17.6 dB best 'Dog barking' 0.36 (thr 0.49), 2nd 'Doorbell' 0.22, felt no (0.0 mg) -> unknown
+[SS] t=971816 what was that? +17.6 dB, matches nothing; UP teaches it
+[SS] t=973031 +11.6 dB best 'Dog barking' 0.36 (thr 0.49), 2nd 'Speech' 0.32, felt no (0.0 mg) -> unknown
+[SS] t=974902 +9.7 dB best 'Dog barking' 0.34 (thr 0.49), 2nd 'Water running' 0.25, felt no (0.0 mg) -> unknown
+[SS] t=977981 +9.6 dB best 'Water running' 0.52 (thr 0.47), 2nd 'Whistle' 0.36, felt no (0.0 mg) -> Water running
+[SS] t=979199 +12.2 dB best 'Dog barking' 0.29 (thr 0.49), 2nd 'Whistle' 0.19, felt no (0.0 mg) -> unknown
+[SS] draw: full max 0 us + present 0 us; live view 0.0 fps, max 0 us
+[SS] stats t=980045 level -39 dB floor -40 dB, npu 1000 us runner 1030 us feat 304 us, 1.0 inf/s, busy 0%, active 9.1% (4346 passes/s, 4296 sleeps/s, 211 us each), npu busy 0.10%, dropped 0, imu 788701 samples 0 errors (times back 651 us, clock +6971 ppm), knocks 920, events 32, saves 2
+[C3] alert 'Knock' ended after 15001 ms: 1 full redraws, longest draw 122258 us + present 3545 us, 0 audio blocks dropped
+[SS] t=981370 +10.1 dB best 'Keys' 0.42 (thr 0.47), 2nd 'Glass breaking' 0.29, felt yes (107.9 mg) -> maybe Knock
+[C3] alert on screen 129882 us after the decision (draw 126340 us, present 3541 us)
+[SS] t=982912 +10.8 dB best 'Keys' 0.37 (thr 0.47), 2nd 'Baby crying' 0.31, felt no (0.0 mg) -> unknown
+[SS] t=984177 +13.1 dB best 'Keys' 0.65 (thr 0.47), 2nd 'Glass breaking' 0.23, felt yes (65.8 mg) -> Keys
+[C3] alert 'Knock' ended after 2820 ms: 1 full redraws, longest draw 126340 us + present 3541 us, 0 audio blocks dropped
+[C3] alert on screen 28100 us after the decision (draw 24250 us, present 3540 us)
+[C3] alert on screen 125795 us after the decision (draw 122267 us, present 3527 us)
+[SS] t=993091 +18.0 dB best 'Dog barking' 0.45 (thr 0.49), 2nd 'Water running' 0.42, felt no (0.0 mg) -> unknown
+[SS] t=993091 what was that? +18.0 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=1006430 +13.1 dB best 'Dog barking' 0.49 (thr 0.49), 2nd 'Phone' 0.33, felt no (0.0 mg) -> unknown
+[C3] banner on screen 74690 us after the decision (draw 71038 us, present 3652 us)
+[SS] t=1042501 +20.1 dB best 'Dog barking' 0.46 (thr 0.49), 2nd 'Water running' 0.25, felt no (0.0 mg) -> unknown
+[SS] t=1042501 what was that? +20.1 dB, matches nothing; UP teaches it
+[SS] draw: full max 70096 us + present 3657 us; live view 9.2 fps, max 16202 us
+[SS] stats t=1050045 level -40 dB floor -42 dB, npu 1006 us runner 1033 us feat 299 us, 3.7 inf/s, busy 12%, active 20.1% (3746 passes/s, 3697 sleeps/s, 216 us each), npu busy 0.37%, dropped 0, imu 845082 samples 0 errors (times back 651 us, clock +6937 ppm), knocks 970, events 32, saves 2
+[SS] t=1049280 +6.5 dB best 'Water running' 0.33 (thr 0.47), 2nd 'Notification' 0.19, felt no (0.0 mg) -> quiet
+[SS] t=1051411 +15.6 dB best 'Dog barking' 0.43 (thr 0.49), 2nd 'Keys' 0.13, felt no (0.0 mg) -> unknown
+[SS] t=1051411 what was that? +15.6 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=1060409 +8.5 dB best 'Water running' 0.54 (thr 0.47), 2nd 'Dog barking' 0.38, felt no (0.0 mg) -> Water running
+[SS] draw: full max 127716 us + present 3720 us; live view 4.3 fps, max 15799 us
+[SS] stats t=1070045 level -52 dB floor -43 dB, npu 1008 us runner 1034 us feat 303 us, 3.0 inf/s, busy 8%, active 15.7% (3897 passes/s, 3847 sleeps/s, 219 us each), npu busy 0.30%, dropped 0, imu 861187 samples 0 errors (times back 651 us, clock +6630 ppm), knocks 978, events 32, saves 2
+[SS] t=1087167 +10.0 dB best 'Water running' 0.29 (thr 0.47), 2nd 'Whistle' 0.28, felt no (0.0 mg) -> unknown
+[SS] t=1089889 +8.0 dB best 'Water running' 0.22 (thr 0.47), 2nd 'Dog barking' 0.13, felt no (0.0 mg) -> unknown
+[SS] urgent 'Glass breaking' unanswered for 30 s: escalating
+[SS] draw: full max 40583 us + present 3707 us; live view 0.0 fps, max 0 us
+[SS] stats t=1100045 level -37 dB floor -50 dB, npu 1008 us runner 1035 us feat 299 us, 0.2 inf/s, busy 7%, active 13.6% (3831 passes/s, 3783 sleeps/s, 228 us each), npu busy 0.02%, dropped 0, imu 885349 samples 0 errors (times back 651 us, clock +6981 ppm), knocks 978, events 32, saves 2
+[SS] t=1099794 +14.8 dB best 'Dog barking' 0.32 (thr 0.49), 2nd 'Water running' 0.11, felt no (0.0 mg) -> unknown
+[SS] t=1101075 +16.6 dB best 'Dog barking' 0.44 (thr 0.49), 2nd 'Water running' 0.37, felt no (0.0 mg) -> unknown
+[SS] t=1101075 what was that? +16.6 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=1104217 +10.2 dB best 'Dog barking' 0.32 (thr 0.49), 2nd 'Speech' 0.26, felt no (0.0 mg) -> unknown
+[SS] t=1106286 +8.9 dB best 'Dog barking' 0.33 (thr 0.49), 2nd 'Speech' 0.27, felt no (0.0 mg) -> unknown
+[SS] t=1114930 +17.0 dB best 'Baby crying' 0.06 (thr 0.54), 2nd 'Dog barking' 0.03, felt no (0.0 mg) -> unknown
+[SS] t=1114930 what was that? +17.0 dB, matches nothing; UP teaches it
+[SS] t=1123984 +28.5 dB best 'Glass breaking' 0.46 (thr 0.47), 2nd 'Keys' 0.33, felt yes (31.3 mg) -> maybe Knock
+[C3] alert 'Glass breaking' ended after 55186 ms: 162 full redraws, longest draw 40583 us + present 3765 us, 0 audio blocks dropped
+[C3] alert on screen 126318 us after the decision (draw 122460 us, present 3549 us)
+[SS] draw: full max 0 us + present 0 us; live view 9.9 fps, max 15699 us
+[SS] stats t=1150053 level -53 dB floor -47 dB, npu 1008 us runner 1035 us feat 303 us, 1.0 inf/s, busy 7%, active 13.5% (3826 passes/s, 3776 sleeps/s, 229 us each), npu busy 0.10%, dropped 0, imu 925626 samples 0 errors (times back 651 us, clock +6719 ppm), knocks 985, events 32, saves 2
+[SS] t=1154578 +10.9 dB best 'Keys' 0.39 (thr 0.47), 2nd 'Notification' 0.22, felt no (0.0 mg) -> unknown
+[SS] draw: full max 0 us + present 0 us; live view 8.9 fps, max 15026 us
+[SS] stats t=1160054 level -55 dB floor -53 dB, npu 1007 us runner 1034 us feat 303 us, 1.2 inf/s, busy 7%, active 13.8% (3820 passes/s, 3770 sleeps/s, 228 us each), npu busy 0.12%, dropped 0, imu 933673 samples 0 errors (times back 651 us, clock +7127 ppm), knocks 985, events 32, saves 2
+[SS] draw: full max 0 us + present 0 us; live view 7.9 fps, max 8378 us
+[SS] stats t=1170054 level -52 dB floor -53 dB, npu 1007 us runner 1034 us feat 303 us, 0.0 inf/s, busy 5%, active 11.5% (3884 passes/s, 3834 sleeps/s, 230 us each), npu busy 0.00%, dropped 0, imu 941726 samples 0 errors (times back 651 us, clock +6886 ppm), knocks 985, events 32, saves 2
+[SS] t=1171495 +13.0 dB best 'Water running' 0.20 (thr 0.47), 2nd 'Baby crying' 0.16, felt no (0.0 mg) -> unknown
+[SS] draw: full max 0 us + present 0 us; live view 9.9 fps, max 15219 us
+[SS] stats t=1190063 level -42 dB floor -50 dB, npu 1000 us runner 1031 us feat 299 us, 0.2 inf/s, busy 7%, active 12.9% (3798 passes/s, 3748 sleeps/s, 232 us each), npu busy 0.02%, dropped 0, imu 957849 samples 0 errors (times back 651 us, clock +7001 ppm), knocks 985, events 32, saves 2
+[SS] t=1189914 +7.8 dB best 'Water running' 0.46 (thr 0.47), 2nd 'Baby crying' 0.18, felt no (0.0 mg) -> quiet
+[SS] t=1194354 +14.4 dB best 'Baby crying' 0.32 (thr 0.54), 2nd 'Doorbell' 0.29, felt no (0.0 mg) -> unknown
+[SS] t=1196384 +8.6 dB best 'Water running' 0.35 (thr 0.47), 2nd 'Dog barking' 0.28, felt no (0.0 mg) -> unknown
+[SS] t=1198261 +6.7 dB best 'Water running' 0.28 (thr 0.47), 2nd 'Baby crying' 0.24, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 9.2 fps, max 15745 us
+[SS] stats t=1200063 level -52 dB floor -47 dB, npu 1005 us runner 1032 us feat 303 us, 3.6 inf/s, busy 9%, active 16.5% (3784 passes/s, 3734 sleeps/s, 223 us each), npu busy 0.36%, dropped 0, imu 965900 samples 0 errors (times back 651 us, clock +6810 ppm), knocks 985, events 32, saves 2
+[SS] t=1202391 +6.8 dB best 'Water running' 0.30 (thr 0.47), 2nd 'Baby crying' 0.26, felt no (0.0 mg) -> quiet
+[SS] t=1205449 +9.9 dB best 'Water running' 0.51 (thr 0.47), 2nd 'Baby crying' 0.19, felt no (0.0 mg) -> maybe Water running
+[C3] banner on screen 67675 us after the decision (draw 63855 us, present 3510 us)
+[SS] t=1208417 +21.8 dB best 'Dog barking' 0.45 (thr 0.49), 2nd 'Keys' 0.27, felt no (0.0 mg) -> unknown
+[SS] t=1208417 what was that? +21.8 dB, matches nothing; UP teaches it
+[C3] banner on screen 76599 us after the decision (draw 72868 us, present 3731 us)
+[SS] draw: full max 72868 us + present 3731 us; live view 9.6 fps, max 16159 us
+[SS] stats t=1210063 level -24 dB floor -37 dB, npu 999 us runner 1025 us feat 304 us, 3.0 inf/s, busy 11%, active 18.1% (3702 passes/s, 3653 sleeps/s, 224 us each), npu busy 0.30%, dropped 0, imu 973949 samples 0 errors (times back 696 us, clock +6837 ppm), knocks 985, events 32, saves 2
+[SS] t=1210017 +12.6 dB best 'Dog barking' 0.40 (thr 0.49), 2nd 'Baby crying' 0.14, felt no (0.0 mg) -> unknown
+[SS] t=1217389 +6.9 dB best 'Water running' 0.28 (thr 0.47), 2nd 'Whistle' 0.19, felt no (0.0 mg) -> quiet
+[SS] draw: full max 52544 us + present 3539 us; live view 9.4 fps, max 15846 us
+[SS] stats t=1220063 level -52 dB floor -52 dB, npu 1004 us runner 1030 us feat 302 us, 1.8 inf/s, busy 9%, active 15.6% (3755 passes/s, 3705 sleeps/s, 227 us each), npu busy 0.18%, dropped 0, imu 982005 samples 0 errors (times back 696 us, clock +7012 ppm), knocks 985, events 32, saves 2
+[SS] t=1222310 +6.5 dB best 'Keys' 0.44 (thr 0.47), 2nd 'Water running' 0.29, felt no (0.0 mg) -> quiet
+[SS] t=1224377 +5.1 dB best 'Keys' 0.32 (thr 0.47), 2nd 'Notification' 0.20, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 8.3 fps, max 14601 us
+[SS] stats t=1230063 level -53 dB floor -52 dB, npu 1004 us runner 1031 us feat 303 us, 1.3 inf/s, busy 7%, active 13.1% (3820 passes/s, 3770 sleeps/s, 230 us each), npu busy 0.13%, dropped 0, imu 990061 samples 0 errors (times back 696 us, clock +6664 ppm), knocks 985, events 32, saves 2
+[SS] t=1231919 +4.7 dB best 'Keys' 0.37 (thr 0.47), 2nd 'Notification' 0.25, felt no (0.0 mg) -> quiet
+[SS] t=1248657 +6.7 dB best 'Dog barking' 0.33 (thr 0.49), 2nd 'Water running' 0.30, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 0.0 fps, max 0 us
+[SS] stats t=1250063 level -52 dB floor -52 dB, npu 1004 us runner 1030 us feat 302 us, 0.6 inf/s, busy 0%, active 6.8% (4063 passes/s, 4013 sleeps/s, 232 us each), npu busy 0.06%, dropped 0, imu 1006170 samples 0 errors (times back 696 us, clock +6955 ppm), knocks 1009, events 32, saves 2
+[SS] draw: full max 52866 us + present 3519 us; live view 7.0 fps, max 10397 us
+[SS] stats t=1260063 level -51 dB floor -52 dB, npu 1008 us runner 1035 us feat 302 us, 0.2 inf/s, busy 6%, active 12.0% (3869 passes/s, 3819 sleeps/s, 230 us each), npu busy 0.02%, dropped 0, imu 1014223 samples 0 errors (times back 696 us, clock +6713 ppm), knocks 1017, events 32, saves 2
+[SS] t=1261850 +14.7 dB best 'Dog barking' 0.31 (thr 0.49), 2nd 'Keys' 0.15, felt no (0.0 mg) -> unknown
+[SS] t=1267160 +22.1 dB best 'Siren' 0.57 (thr 0.56), 2nd 'Water running' 0.44, felt no (0.0 mg) -> maybe Siren
+[C3] alert on screen 114746 us after the decision (draw 111211 us, present 3534 us)
+[SS] t=1268577 +18.0 dB best 'Siren' 0.58 (thr 0.56), 2nd 'Water running' 0.44, felt no (0.0 mg) -> maybe Siren
+[C3] alert on screen 118082 us after the decision (draw 114548 us, present 3534 us)
+[SS] draw: full max 114548 us + present 3534 us; live view 6.5 fps, max 15705 us
+[SS] stats t=1270063 level -49 dB floor -39 dB, npu 1008 us runner 1034 us feat 303 us, 2.0 inf/s, busy 8%, active 14.8% (3802 passes/s, 3753 sleeps/s, 226 us each), npu busy 0.20%, dropped 0, imu 1022272 samples 0 errors (times back 696 us, clock +6889 ppm), knocks 1023, events 32, saves 2
+[SS] t=1275900 +4.4 dB best 'Keys' 0.29 (thr 0.47), 2nd 'Alarm' 0.25, felt no (0.0 mg) -> quiet
+[SS] t=1288230 +5.9 dB best 'Water running' 0.28 (thr 0.47), 2nd 'Whistle' 0.21, felt no (0.0 mg) -> quiet
+[SS] draw: full max 112130 us + present 3536 us; live view 5.1 fps, max 14644 us
+[SS] stats t=1290063 level -54 dB floor -52 dB, npu 1004 us runner 1031 us feat 302 us, 1.3 inf/s, busy 6%, active 12.2% (3878 passes/s, 3829 sleeps/s, 229 us each), npu busy 0.13%, dropped 0, imu 1038380 samples 0 errors (times back 696 us, clock +6780 ppm), knocks 1036, events 32, saves 2
+[SS] t=1291737 +12.8 dB best 'Water running' 0.50 (thr 0.47), 2nd 'Dog barking' 0.38, felt no (0.0 mg) -> maybe Water running
+[C3] banner on screen 66277 us after the decision (draw 62726 us, present 3550 us)
+[SS] draw: full max 62726 us + present 3550 us; live view 9.4 fps, max 14779 us
+[SS] stats t=1300063 level -52 dB floor -53 dB, npu 1009 us runner 1036 us feat 302 us, 0.6 inf/s, busy 8%, active 14.1% (3779 passes/s, 3729 sleeps/s, 230 us each), npu busy 0.06%, dropped 0, imu 1046433 samples 0 errors (times back 696 us, clock +6913 ppm), knocks 1037, events 32, saves 2
+[SS] t=1304186 +23.4 dB best 'Keys' 0.52 (thr 0.47), 2nd 'Notification' 0.28, felt no (0.0 mg) -> Keys
+[C3] alert on screen 28787 us after the decision (draw 25189 us, present 3597 us)
+[SS] t=1306685 +13.2 dB best 'Keys' 0.41 (thr 0.47), 2nd 'Notification' 0.24, felt yes (104.8 mg) -> maybe Knock
+[C3] alert 'Keys' ended after 2500 ms: 1 full redraws, longest draw 25189 us + present 3597 us, 0 audio blocks dropped
+[C3] alert on screen 125825 us after the decision (draw 122294 us, present 3530 us)
+[SS] draw: full max 130250 us + present 3647 us; live view 4.9 fps, max 15373 us
+[SS] stats t=1310063 level -46 dB floor -43 dB, npu 1007 us runner 1035 us feat 304 us, 1.6 inf/s, busy 7%, active 13.4% (3862 passes/s, 3813 sleeps/s, 227 us each), npu busy 0.16%, dropped 0, imu 1054487 samples 0 errors (times back 696 us, clock +7063 ppm), knocks 1059, events 32, saves 2
+[SS] t=1318362 +8.6 dB best 'Keys' 0.23 (thr 0.47), 2nd 'Whistle' 0.17, felt no (0.0 mg) -> unknown
+[SS] t=1331952 +19.7 dB best 'Keys' 0.44 (thr 0.47), 2nd 'Glass breaking' 0.19, felt no (0.0 mg) -> unknown
+[SS] t=1331952 what was that? +19.7 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=1334044 +12.5 dB best 'Water running' 0.20 (thr 0.47), 2nd 'Whistle' 0.11, felt no (0.0 mg) -> unknown
+[SS] t=1335705 +28.7 dB clipped best 'Keys' 0.48 (thr 0.47), 2nd 'Glass breaking' 0.34, felt yes (66.9 mg) -> maybe Keys
+[C3] alert 'Knock' ended after 29024 ms: 9 full redraws, longest draw 130250 us + present 3647 us, 0 audio blocks dropped
+[C3] alert on screen 114788 us after the decision (draw 111248 us, present 3539 us)
+[SS] t=1350715 +26.8 dB best 'Keys' 0.51 (thr 0.47), 2nd 'Notification' 0.36, felt no (0.0 mg) -> maybe Keys
+[C3] alert 'Knock' ended after 7321 ms: 1 full redraws, longest draw 122455 us + present 3533 us, 0 audio blocks dropped
+[SS] t=1355888 +15.6 dB best 'Baby crying' 0.33 (thr 0.54), 2nd 'Phone' 0.31, felt no (0.0 mg) -> unknown
+[SS] t=1355888 what was that? +15.6 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=1358663 +6.9 dB best 'Keys' 0.48 (thr 0.47), 2nd 'Notification' 0.39, felt no (0.0 mg) -> quiet
+[SS] draw: full max 111248 us + present 3533 us; live view 0.0 fps, max 0 us
+[SS] stats t=1360063 level -9 dB floor -35 dB, npu 1008 us runner 1034 us feat 304 us, 1.0 inf/s, busy 3%, active 9.7% (4088 passes/s, 4039 sleeps/s, 223 us each), npu busy 0.10%, dropped 0, imu 1094760 samples 0 errors (times back 696 us, clock +6894 ppm), knocks 1108, events 32, saves 2
+[SS] t=1359955 +24.0 dB clipped best 'Whistle' 0.69 (thr 0.79), 2nd 'Siren' 0.47, felt no (0.0 mg) -> unknown
+[SS] t=1359955 what was that? +24.0 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=1366719 +23.1 dB clipped best 'Whistle' 0.82 (thr 0.79), 2nd 'Phone' 0.52, felt no (0.0 mg) -> maybe Whistle
+[C3] alert on screen 113256 us after the decision (draw 109732 us, present 3523 us)
+[SS] t=1378000 +15.0 dB best 'Water running' 0.38 (thr 0.47), 2nd 'Dog barking' 0.37, felt no (0.0 mg) -> unknown
+[SS] t=1384623 +11.7 dB best 'Dog barking' 0.34 (thr 0.49), 2nd 'Baby crying' 0.27, felt no (0.0 mg) -> unknown
+[SS] t=1394627 +11.2 dB best 'Water running' 0.51 (thr 0.47), 2nd 'Dog barking' 0.33, felt no (0.0 mg) -> maybe Water running
+[C3] banner on screen 74681 us after the decision (draw 71016 us, present 3665 us)
+[SS] t=1399079 +19.3 dB best 'Baby crying' 0.28 (thr 0.54), 2nd 'Dog barking' 0.25, felt no (0.0 mg) -> unknown
+[SS] t=1399079 what was that? +19.3 dB, matches nothing (banner shown less than a minute ago)
+[SS] draw: full max 71016 us + present 3665 us; live view 9.1 fps, max 15916 us
+[SS] stats t=1400063 level -30 dB floor -35 dB, npu 1007 us runner 1034 us feat 304 us, 5.3 inf/s, busy 14%, active 21.3% (3632 passes/s, 3582 sleeps/s, 219 us each), npu busy 0.53%, dropped 0, imu 1126974 samples 0 errors (times back 696 us, clock +7034 ppm), knocks 1115, events 32, saves 2
+[SS] t=1402001 +11.3 dB best 'Dog barking' 0.37 (thr 0.49), 2nd 'Doorbell' 0.02, felt no (0.0 mg) -> unknown
+[SS] t=1404165 +16.7 dB best 'Water running' 0.59 (thr 0.47), 2nd 'Baby crying' 0.25, felt no (0.0 mg) -> Water running
+[C3] banner on screen 74048 us after the decision (draw 70386 us, present 3661 us)
+[SS] t=1405799 +9.5 dB best 'Baby crying' 0.39 (thr 0.54), 2nd 'Dog barking' 0.26, felt no (0.0 mg) -> unknown
+[SS] t=1407678 +9.6 dB best 'Whistle' 0.26 (thr 0.79), 2nd 'Water running' 0.22, felt no (0.0 mg) -> unknown
+[SS] draw: full max 70386 us + present 3661 us; live view 9.6 fps, max 15885 us
+[SS] stats t=1410072 level -15 dB floor -23 dB, npu 1062 us runner 1094 us feat 367 us, 5.0 inf/s, busy 13%, active 21.1% (3724 passes/s, 3674 sleeps/s, 214 us each), npu busy 0.50%, dropped 0, imu 1135038 samples 0 errors (times back 696 us, clock +7013 ppm), knocks 1122, events 32, saves 2
+[SS] t=1409931 +8.6 dB best 'Water running' 0.31 (thr 0.47), 2nd 'Dog barking' 0.23, felt yes (68.0 mg) -> maybe Knock
+[C3] alert on screen 132306 us after the decision (draw 128581 us, present 3725 us)
+[SS] t=1411486 +6.5 dB best 'Water running' 0.31 (thr 0.47), 2nd 'Dog barking' 0.20, felt no (0.0 mg) -> quiet
+[SS] t=1415291 +7.8 dB best 'Water running' 0.37 (thr 0.47), 2nd 'Siren' 0.30, felt yes (118.7 mg) -> quiet
+[SS] t=1417036 +6.1 dB best 'Water running' 0.40 (thr 0.47), 2nd 'Speech' 0.18, felt no (0.0 mg) -> quiet
+[SS] t=1419011 +10.6 dB best 'Dog barking' 0.26 (thr 0.49), 2nd 'Baby crying' 0.19, felt no (0.0 mg) -> unknown
+[SS] draw: full max 128581 us + present 3725 us; live view 0.5 fps, max 15855 us
+[SS] stats t=1420072 level -52 dB floor -27 dB, npu 1061 us runner 1092 us feat 304 us, 1.5 inf/s, busy 2%, active 11.7% (4309 passes/s, 4260 sleeps/s, 207 us each), npu busy 0.15%, dropped 0, imu 1143091 samples 0 errors (times back 696 us, clock +6941 ppm), knocks 1133, events 32, saves 2
+[SS] t=1420422 +7.3 dB best 'Water running' 0.31 (thr 0.47), 2nd 'Baby crying' 0.20, felt no (0.0 mg) -> quiet
+[SS] t=1421636 +6.0 dB best 'Water running' 0.29 (thr 0.47), 2nd 'Notification' 0.14, felt no (0.0 mg) -> quiet
+[SS] t=1424636 +7.3 dB best 'Water running' 0.44 (thr 0.47), 2nd 'Baby crying' 0.29, felt no (0.0 mg) -> quiet
+[C3] alert 'Knock' ended after 15001 ms: 1 full redraws, longest draw 128581 us + present 3725 us, 0 audio blocks dropped
+[SS] t=1426164 +8.8 dB best 'Water running' 0.37 (thr 0.47), 2nd 'Baby crying' 0.27, felt no (0.0 mg) -> unknown
+[SS] t=1427434 +9.6 dB best 'Dog barking' 0.39 (thr 0.49), 2nd 'Water running' 0.17, felt no (0.0 mg) -> unknown
+[SS] t=1428871 +10.1 dB best 'Siren' 0.29 (thr 0.56), 2nd 'Water running' 0.25, felt no (0.0 mg) -> unknown
+[SS] draw: full max 53587 us + present 3726 us; live view 4.1 fps, max 15833 us
+[SS] stats t=1430072 level -15 dB floor -26 dB, npu 1006 us runner 1034 us feat 305 us, 3.0 inf/s, busy 6%, active 15.4% (4149 passes/s, 4100 sleeps/s, 206 us each), npu busy 0.30%, dropped 0, imu 1151141 samples 0 errors (times back 696 us, clock +6680 ppm), knocks 1140, events 32, saves 2
+[SS] t=1433179 +8.7 dB best 'Water running' 0.43 (thr 0.47), 2nd 'Baby crying' 0.16, felt no (0.0 mg) -> unknown
+[SS] t=1437953 +6.1 dB best 'Water running' 0.53 (thr 0.47), 2nd 'Keys' 0.33, felt no (0.0 mg) -> quiet
+[SS] t=1440070 +12.3 dB best 'Doorbell' 0.17 (thr 0.82), 2nd 'Speech' 0.17, felt no (0.0 mg) -> unknown
+[SS] t=1441418 +10.0 dB best 'Water running' 0.28 (thr 0.47), 2nd 'Dog barking' 0.17, felt no (0.0 mg) -> unknown
+[SS] t=1447341 +8.9 dB best 'Water running' 0.44 (thr 0.47), 2nd 'Whistle' 0.28, felt no (0.0 mg) -> unknown
+[SS] draw: full max 0 us + present 0 us; live view 9.5 fps, max 15648 us
+[SS] stats t=1450072 level -24 dB floor -29 dB, npu 1000 us runner 1032 us feat 304 us, 4.8 inf/s, busy 12%, active 20.3% (3867 passes/s, 3818 sleeps/s, 208 us each), npu busy 0.48%, dropped 0, imu 1167251 samples 0 errors (times back 696 us, clock +6907 ppm), knocks 1150, events 32, saves 2
+[SS] t=1449649 +15.6 dB best 'Baby crying' 0.28 (thr 0.54), 2nd 'Water running' 0.23, felt no (0.0 mg) -> unknown
+[SS] t=1449649 what was that? +15.6 dB, matches nothing; UP teaches it
+[C3] banner on screen 71195 us after the decision (draw 67424 us, present 3770 us)
+[SS] t=1450973 +8.4 dB best 'Dog barking' 0.29 (thr 0.49), 2nd 'Water running' 0.22, felt no (0.0 mg) -> unknown
+[SS] t=1457089 +7.2 dB best 'Water running' 0.27 (thr 0.47), 2nd 'Doorbell' 0.23, felt no (0.0 mg) -> quiet
+[SS] t=1458305 +8.4 dB best 'Dog barking' 0.18 (thr 0.49), 2nd 'Speech' 0.07, felt no (0.0 mg) -> unknown
+[SS] draw: full max 67424 us + present 3770 us; live view 9.7 fps, max 15784 us
+[SS] stats t=1460072 level -35 dB floor -27 dB, npu 1000 us runner 1030 us feat 366 us, 5.4 inf/s, busy 13%, active 21.7% (3773 passes/s, 3724 sleeps/s, 210 us each), npu busy 0.55%, dropped 0, imu 1175303 samples 0 errors (times back 696 us, clock +6891 ppm), knocks 1150, events 32, saves 2
+[SS] t=1459587 +11.4 dB best 'Siren' 0.20 (thr 0.56), 2nd 'Water running' 0.17, felt no (0.0 mg) -> unknown
+[SS] t=1461109 +8.3 dB best 'Water running' 0.50 (thr 0.47), 2nd 'Speech' 0.18, felt no (0.0 mg) -> maybe Water running
+[C3] banner on screen 66764 us after the decision (draw 63164 us, present 3599 us)
+[SS] t=1465002 +10.4 dB best 'Water running' 0.50 (thr 0.47), 2nd 'Siren' 0.32, felt no (0.0 mg) -> maybe Water running
+[C3] banner on screen 68593 us after the decision (draw 64934 us, present 3658 us)
+[SS] t=1466213 +9.5 dB best 'Water running' 0.50 (thr 0.47), 2nd 'Baby crying' 0.31, felt no (0.0 mg) -> maybe Water running
+[C3] banner on screen 72687 us after the decision (draw 69081 us, present 3605 us)
+[SS] t=1474944 +8.7 dB best 'Water running' 0.28 (thr 0.47), 2nd 'Baby crying' 0.20, felt no (0.0 mg) -> unknown
+[SS] t=1487773 +14.5 dB best 'Keys' 0.54 (thr 0.47), 2nd 'Glass breaking' 0.29, felt yes (31.4 mg) -> maybe Knock
+[SS] 'Keys' vetoed: 0.77 to a sound marked wrong
+[C3] alert on screen 130318 us after the decision (draw 126787 us, present 3530 us)
+[SS] t=1500812 +11.3 dB best 'Keys' 0.39 (thr 0.47), 2nd 'Dog barking' 0.29, felt no (0.0 mg) -> unknown
+[SS] t=1507921 +13.6 dB best 'Keys' 0.59 (thr 0.47), 2nd 'Notification' 0.24, felt no (0.0 mg) -> Keys
+[C3] alert 'Knock' ended after 1920 ms: 1 full redraws, longest draw 128783 us + present 3635 us, 0 audio blocks dropped
+[C3] alert on screen 29430 us after the decision (draw 25405 us, present 3715 us)
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11880 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1025 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 1265), copy B valid (seq 1264)
+[STORE] loaded 5 taught sounds from copy A, seq 1265, in 1854 us; built-ins off: 0x0
+[S1] mics: left -37.9 dB (peak 4096), right -39.4 dB (peak 5797) over 8000 samples
+[S1] ready after 1483 ms: mics left -38 dB, right -39 dB; npu matches the reference, 1.0 ms; saved sounds 5 taught sounds restored; imu knocks can be felt; lights ok
+[C5] cycle counter through WFI: 100% of wall time -> sleeping between audio blocks
+[SS] listening; 9 built-in sounds
+[SS] knob at 64%: sensitivity as taught until it's turned
+[SS] t=3520 +6.6 dB best 'Water running' 0.66 (thr 0.50), 2nd 'Baby crying' 0.33, felt no (0.0 mg) -> quiet
+[SS] t=4726 early, 420 ms after the onset
+[SS] t=4726 +14.9 dB best 'Water running' 0.67 (thr 0.50), 2nd 'Dog barking' 0.28, felt no (0.0 mg) -> Water running
+[C3] banner on screen 60035 us after the decision (draw 56371 us, present 3663 us)
+[SS] t=8033 +8.2 dB best 'Water running' 0.46 (thr 0.50), 2nd 'Dog barking' 0.19, felt yes (26.3 mg) -> maybe Knock
+[C3] alert on screen 129216 us after the decision (draw 125554 us, present 3661 us)
+[SS] draw: full max 125554 us + present 3727 us; live view 5.5 fps, max 15841 us
+[SS] stats t=10000 level -45 dB floor -42 dB, npu 1008 us runner 1035 us feat 303 us, 3.7 inf/s, busy 13%, active 18.0% (3958 passes/s, 3909 sleeps/s, 209 us each), npu busy 0.37%, dropped 0, imu 7459 samples 0 errors (times back 121 us, clock +6890 ppm), knocks 9, events 2, saves 0
+[SS] t=9349 +5.7 dB best 'Water running' 0.45 (thr 0.50), 2nd 'Baby crying' 0.27, felt no (0.0 mg) -> quiet
+[SS] t=10794 early, 415 ms after the onset
+[SS] t=10794 +9.5 dB best 'Water running' 0.55 (thr 0.50), 2nd 'Dog barking' 0.40, felt no (0.0 mg) -> Water running
+[SS] t=13216 +4.6 dB best 'Dog barking' 0.45 (thr 0.52), 2nd 'Water running' 0.39, felt no (0.0 mg) -> quiet
+[SS] t=18571 +12.8 dB best 'Water running' 0.46 (thr 0.50), 2nd 'Dog barking' 0.42, felt yes (151.4 mg) -> maybe Knock
+[C3] alert on screen 135692 us after the decision (draw 132047 us, present 3644 us)
+[SS] draw: full max 132047 us + present 3685 us; live view 0.0 fps, max 0 us
+[SS] stats t=20000 level -32 dB floor -37 dB, npu 1008 us runner 1034 us feat 304 us, 1.2 inf/s, busy 4%, active 13.0% (4141 passes/s, 4093 sleeps/s, 212 us each), npu busy 0.12%, dropped 0, imu 15510 samples 0 errors (times back 140 us, clock +6744 ppm), knocks 52, events 4, saves 0
+[SS] t=19984 early, 405 ms after the onset
+[SS] t=19984 +15.9 dB best 'Water running' 0.55 (thr 0.50), 2nd 'Dog barking' 0.43, felt yes (729.5 mg) -> Water running
+[SS] t=22629 early, 421 ms after the onset
+[SS] t=22629 +15.9 dB best 'Water running' 0.57 (thr 0.50), 2nd 'Glass breaking' 0.29, felt no (0.0 mg) -> Water running
+[SS] draw: full max 131895 us + present 3707 us; live view 0.0 fps, max 0 us
+[SS] stats t=30000 level -42 dB floor -35 dB, npu 1008 us runner 1034 us feat 362 us, 1.1 inf/s, busy 4%, active 13.3% (4260 passes/s, 4212 sleeps/s, 205 us each), npu busy 0.11%, dropped 0, imu 23562 samples 0 errors (times back 140 us, clock +7069 ppm), knocks 77, events 10, saves 0
+[SS] t=29263 +14.5 dB best 'Dog barking' 0.42 (thr 0.52), 2nd 'Keys' 0.29, felt yes (1176.6 mg) -> maybe Knock
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11882 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1025 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 1265), copy B valid (seq 1264)
+[STORE] loaded 5 taught sounds from copy A, seq 1265, in 1854 us; built-ins off: 0x0
+[S1] mics: left -39.3 dB (peak 2048), right -43.4 dB (peak 2618) over 8000 samples
+[S1] ready after 1483 ms: mics left -39 dB, right -43 dB; npu matches the reference, 1.0 ms; saved sounds 5 taught sounds restored; imu knocks can be felt; lights ok
+[C5] cycle counter through WFI: 100% of wall time -> sleeping between audio blocks
+[SS] listening; 9 built-in sounds
+[C5] cycle counter through WFI: 100% of wall time -> sleeping between audio blocks
+[SS] listening; 9 built-in sounds
+[SS] knob at 64%: sensitivity as taught until it's turned
+[SS] t=1820 +14.6 dB best 'Water running' 0.38 (thr 0.50), 2nd 'Glass breaking' 0.38, felt no (0.0 mg) -> unknown
+[SS] t=3698 +13.2 dB best 'Water running' 0.43 (thr 0.50), 2nd 'Baby crying' 0.26, felt no (0.0 mg) -> unknown
+[SS] t=6281 +12.2 dB best 'Water running' 0.41 (thr 0.50), 2nd 'Siren' 0.24, felt no (0.0 mg) -> unknown
+[SS] t=9095 +10.5 dB best 'Whistle' 0.39 (thr 0.82), 2nd 'Dog barking' 0.25, felt no (0.0 mg) -> unknown
+[SS] draw: full max 55483 us + present 3729 us; live view 6.9 fps, max 15974 us
+[SS] stats t=10000 level -28 dB floor -30 dB, npu 999 us runner 1030 us feat 300 us, 6.0 inf/s, busy 13%, active 17.6% (3893 passes/s, 3843 sleeps/s, 214 us each), npu busy 0.61%, dropped 0, imu 1719 samples 738 errors (times back 0 us, clock +0 ppm), knocks 1, events 0, saves 0
+[SS] t=11494 +12.5 dB best 'Water running' 0.44 (thr 0.50), 2nd 'Dog barking' 0.31, felt yes (151.5 mg) -> maybe Knock
+[C3] alert on screen 131545 us after the decision (draw 127762 us, present 3782 us)
+[SS] t=13402 +3.9 dB best 'Water running' 0.52 (thr 0.50), 2nd 'Dog barking' 0.47, felt yes (519.9 mg) -> quiet
+[SS] t=22711 +11.1 dB best 'Water running' 0.47 (thr 0.50), 2nd 'Baby crying' 0.28, felt yes (111.6 mg) -> maybe Knock
+[C3] alert on screen 136391 us after the decision (draw 132730 us, present 3661 us)
+[SS] draw: full max 132730 us + present 3661 us; live view 0.0 fps, max 0 us
+[SS] stats t=30000 level -40 dB floor -41 dB, npu 1066 us runner 1092 us feat 300 us, 1.0 inf/s, busy 3%, active 12.0% (4200 passes/s, 4151 sleeps/s, 211 us each), npu busy 0.10%, dropped 0, imu 17827 samples 738 errors (times back 145219 us, clock +7031 ppm), knocks 41, events 1, saves 0
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 16033 us
+[SS] stats t=50000 level -39 dB floor -41 dB, npu 1007 us runner 1035 us feat 304 us, 0.8 inf/s, busy 9%, active 16.3% (3851 passes/s, 3801 sleeps/s, 220 us each), npu busy 0.08%, dropped 0, imu 33941 samples 738 errors (times back 145219 us, clock +7016 ppm), knocks 41, events 1, saves 0
+[SS] t=51416 +5.0 dB best 'Water running' 0.45 (thr 0.50), 2nd 'Dog barking' 0.27, felt no (0.0 mg) -> quiet
+[SS] t=53765 +8.8 dB best 'Dog barking' 0.48 (thr 0.52), 2nd 'Doorbell' 0.35, felt no (0.0 mg) -> unknown
+[SS] t=55839 +5.9 dB best 'Dog barking' 0.52 (thr 0.52), 2nd 'Water running' 0.20, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 15887 us
+[SS] stats t=70000 level -45 dB floor -41 dB, npu 1007 us runner 1034 us feat 362 us, 1.8 inf/s, busy 10%, active 18.3% (3913 passes/s, 3863 sleeps/s, 211 us each), npu busy 0.18%, dropped 0, imu 50045 samples 738 errors (times back 145219 us, clock +7191 ppm), knocks 41, events 1, saves 0
+[SS] t=83492 +3.7 dB best 'Water running' 0.51 (thr 0.50), 2nd 'Baby crying' 0.25, felt no (0.0 mg) -> quiet
+[SS] t=85273 +3.4 dB best 'Water running' 0.40 (thr 0.50), 2nd 'Baby crying' 0.07, felt no (0.0 mg) -> quiet
+[SS] t=87800 +7.8 dB best 'Dog barking' 0.32 (thr 0.52), 2nd 'Whistle' 0.21, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 9.9 fps, max 16027 us
+[SS] stats t=90008 level -47 dB floor -41 dB, npu 1000 us runner 1027 us feat 303 us, 1.5 inf/s, busy 9%, active 17.3% (3965 passes/s, 3915 sleeps/s, 211 us each), npu busy 0.15%, dropped 0, imu 66164 samples 738 errors (times back 145219 us, clock +7048 ppm), knocks 41, events 1, saves 0
+[SS] t=99761 +7.7 dB best 'Water running' 0.43 (thr 0.50), 2nd 'Baby crying' 0.34, felt no (0.0 mg) -> quiet
+[SS] t=144634 +16.3 dB best 'Water running' 0.39 (thr 0.50), 2nd 'Glass breaking' 0.26, felt no (0.0 mg) -> unknown
+[SS] t=144634 what was that? +16.3 dB, matches nothing; UP teaches it
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 15758 us
+[SS] stats t=170026 level -36 dB floor -37 dB, npu 1000 us runner 1031 us feat 366 us, 2.2 inf/s, busy 10%, active 18.0% (3858 passes/s, 3808 sleeps/s, 215 us each), npu busy 0.22%, dropped 0, imu 130611 samples 738 errors (times back 145219 us, clock +6930 ppm), knocks 41, events 2, saves 0
+[SS] t=170127 +13.1 dB best 'Keys' 0.36 (thr 0.50), 2nd 'Dog barking' 0.27, felt no (0.0 mg) -> unknown
+[SS] t=174831 +7.0 dB best 'Water running' 0.51 (thr 0.50), 2nd 'Dog barking' 0.26, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 9.8 fps, max 16044 us
+[SS] stats t=180031 level -40 dB floor -39 dB, npu 1004 us runner 1031 us feat 304 us, 2.0 inf/s, busy 10%, active 18.5% (3895 passes/s, 3845 sleeps/s, 211 us each), npu busy 0.20%, dropped 0, imu 138672 samples 738 errors (times back 145219 us, clock +6796 ppm), knocks 51, events 2, saves 0
+[SS] t=181142 +5.8 dB best 'Water running' 0.37 (thr 0.50), 2nd 'Baby crying' 0.24, felt yes (29.7 mg) -> quiet
+[SS] t=182881 +14.5 dB best 'Dog barking' 0.30 (thr 0.52), 2nd 'Water running' 0.27, felt no (0.0 mg) -> unknown
+[SS] t=186311 +5.8 dB best 'Dog barking' 0.38 (thr 0.52), 2nd 'Baby crying' 0.30, felt no (0.0 mg) -> quiet
+[SS] t=187888 +13.5 dB best 'Dog barking' 0.49 (thr 0.52), 2nd 'Water running' 0.33, felt no (0.0 mg) -> unknown
+[SS] t=196372 +13.3 dB best 'Water running' 0.60 (thr 0.50), 2nd 'Dog barking' 0.22, felt no (0.0 mg) -> Water running
+[C3] banner on screen 71192 us after the decision (draw 67554 us, present 3637 us)
+[SS] t=198866 +6.8 dB best 'Water running' 0.63 (thr 0.50), 2nd 'Baby crying' 0.28, felt no (0.0 mg) -> quiet
+[SS] t=203230 +9.1 dB best 'Water running' 0.51 (thr 0.50), 2nd 'Dog barking' 0.26, felt yes (71.1 mg) -> maybe Water running
+[C3] banner on screen 72658 us after the decision (draw 69004 us, present 3653 us)
+[SS] draw: full max 69004 us + present 3653 us; live view 9.8 fps, max 16116 us
+[SS] stats t=210031 level -44 dB floor -43 dB, npu 1000 us runner 1028 us feat 303 us, 1.2 inf/s, busy 11%, active 18.9% (3852 passes/s, 3802 sleeps/s, 213 us each), npu busy 0.12%, dropped 0, imu 162830 samples 738 errors (times back 145219 us, clock +7076 ppm), knocks 63, events 3, saves 0
+[SS] t=213962 +4.2 dB best 'Water running' 0.46 (thr 0.50), 2nd 'Glass breaking' 0.29, felt yes (30.4 mg) -> quiet
+[SS] t=215602 +6.2 dB best 'Glass breaking' 0.28 (thr 0.50), 2nd 'Water running' 0.27, felt no (0.0 mg) -> quiet
+[SS] t=218009 +5.9 dB best 'Water running' 0.37 (thr 0.50), 2nd 'Baby crying' 0.33, felt no (0.0 mg) -> quiet
+[SS] t=223045 +2.9 dB best 'Water running' 0.31 (thr 0.50), 2nd 'Keys' 0.23, felt no (0.0 mg) -> quiet
+[SS] t=225665 +4.0 dB best 'Water running' 0.27 (thr 0.50), 2nd 'Keys' 0.26, felt no (0.0 mg) -> quiet
+[SS] t=228792 +5.7 dB best 'Dog barking' 0.46 (thr 0.52), 2nd 'Water running' 0.40, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 9.9 fps, max 15847 us
+[SS] stats t=230031 level -41 dB floor -39 dB, npu 1000 us runner 1025 us feat 305 us, 1.9 inf/s, busy 9%, active 16.8% (3852 passes/s, 3802 sleeps/s, 218 us each), npu busy 0.19%, dropped 0, imu 178943 samples 738 errors (times back 145219 us, clock +6736 ppm), knocks 64, events 3, saves 0
+[SS] t=235181 +5.0 dB best 'Water running' 0.41 (thr 0.50), 2nd 'Glass breaking' 0.37, felt no (0.0 mg) -> quiet
+[SS] t=242031 +6.9 dB best 'Water running' 0.27 (thr 0.50), 2nd 'Baby crying' 0.25, felt no (0.0 mg) -> quiet
+[SS] t=244515 +7.1 dB best 'Water running' 0.47 (thr 0.50), 2nd 'Dog barking' 0.24, felt no (0.0 mg) -> quiet
+[SS] t=246585 +5.2 dB best 'Baby crying' 0.40 (thr 0.57), 2nd 'Water running' 0.28, felt no (0.0 mg) -> quiet
+[SS] t=247934 early, 414 ms after the onset
+[SS] t=247934 +8.9 dB best 'Water running' 0.64 (thr 0.50), 2nd 'Baby crying' 0.26, felt no (0.0 mg) -> Water running
+[C3] banner on screen 70898 us after the decision (draw 67317 us, present 3580 us)
+[SS] t=249207 +12.8 dB best 'Water running' 0.32 (thr 0.50), 2nd 'Dog barking' 0.31, felt no (0.0 mg) -> unknown
+[SS] draw: full max 67317 us + present 3580 us; live view 9.7 fps, max 16056 us
+[SS] stats t=250047 level -26 dB floor -37 dB, npu 999 us runner 1025 us feat 304 us, 4.6 inf/s, busy 12%, active 19.1% (3686 passes/s, 3637 sleeps/s, 222 us each), npu busy 0.46%, dropped 0, imu 195066 samples 738 errors (times back 145219 us, clock +7238 ppm), knocks 65, events 4, saves 0
+[SS] t=250434 +6.5 dB best 'Water running' 0.48 (thr 0.50), 2nd 'Dog barking' 0.27, felt no (0.0 mg) -> quiet
+[SS] t=252708 +8.7 dB best 'Glass breaking' 0.13 (thr 0.50), 2nd 'Baby crying' 0.11, felt no (0.0 mg) -> unknown
+[SS] t=256484 +7.0 dB best 'Baby crying' 0.55 (thr 0.57), 2nd 'Water running' 0.44, felt no (0.0 mg) -> quiet
+[SS] t=257879 +8.2 dB best 'Baby crying' 0.29 (thr 0.57), 2nd 'Water running' 0.28, felt no (0.0 mg) -> unknown
+[SS] draw: full max 53520 us + present 3725 us; live view 9.7 fps, max 16158 us
+[SS] stats t=260049 level -46 dB floor -41 dB, npu 1008 us runner 1035 us feat 304 us, 2.7 inf/s, busy 11%, active 19.0% (3821 passes/s, 3771 sleeps/s, 214 us each), npu busy 0.27%, dropped 0, imu 203122 samples 738 errors (times back 145219 us, clock +6958 ppm), knocks 67, events 4, saves 0
+[SS] t=260508 +6.3 dB best 'Water running' 0.39 (thr 0.50), 2nd 'Dog barking' 0.28, felt no (0.0 mg) -> quiet
+[SS] t=262172 +4.1 dB best 'Baby crying' 0.39 (thr 0.57), 2nd 'Dog barking' 0.39, felt no (0.0 mg) -> quiet
+[SS] t=264659 +4.1 dB best 'Water running' 0.42 (thr 0.50), 2nd 'Keys' 0.18, felt no (0.0 mg) -> quiet
+[SS] t=266323 +9.1 dB best 'Water running' 0.60 (thr 0.50), 2nd 'Baby crying' 0.23, felt no (0.0 mg) -> Water running
+[C3] banner on screen 69273 us after the decision (draw 65616 us, present 3657 us)
+[SS] t=268258 +12.7 dB best 'Water running' 0.41 (thr 0.50), 2nd 'Dog barking' 0.38, felt no (0.0 mg) -> unknown
+[SS] t=270316 +5.3 dB best 'Water running' 0.32 (thr 0.50), 2nd 'Dog barking' 0.24, felt no (0.0 mg) -> quiet
+[SS] t=272580 +7.3 dB best 'Baby crying' 0.48 (thr 0.57), 2nd 'Water running' 0.41, felt no (0.0 mg) -> quiet
+[C3] banner on screen 71966 us after the decision (draw 68247 us, present 3718 us)
+[SS] t=277198 +14.4 dB best 'Water running' 0.40 (thr 0.50), 2nd 'Dog barking' 0.34, felt no (0.0 mg) -> unknown
+[SS] t=278600 +7.6 dB best 'Baby crying' 0.45 (thr 0.57), 2nd 'Water running' 0.30, felt no (0.0 mg) -> quiet
+[SS] draw: full max 68247 us + present 3721 us; live view 9.7 fps, max 15983 us
+[SS] stats t=280049 level -43 dB floor -34 dB, npu 1007 us runner 1034 us feat 305 us, 5.0 inf/s, busy 13%, active 21.5% (3744 passes/s, 3694 sleeps/s, 212 us each), npu busy 0.51%, dropped 0, imu 219230 samples 738 errors (times back 145219 us, clock +7158 ppm), knocks 67, events 5, saves 0
+[SS] t=284046 +8.6 dB best 'Water running' 0.43 (thr 0.50), 2nd 'Dog barking' 0.30, felt no (0.0 mg) -> unknown
+[SS] t=285467 +7.1 dB best 'Water running' 0.40 (thr 0.50), 2nd 'Whistle' 0.24, felt no (0.0 mg) -> quiet
+[SS] t=288409 +9.1 dB best 'Water running' 0.49 (thr 0.50), 2nd 'Baby crying' 0.24, felt no (0.0 mg) -> unknown
+[SS] t=295225 +11.3 dB best 'Water running' 0.46 (thr 0.50), 2nd 'Baby crying' 0.34, felt no (0.0 mg) -> unknown
+[SS] draw: full max 0 us + present 0 us; live view 9.9 fps, max 15980 us
+[SS] stats t=300049 level -45 dB floor -43 dB, npu 1007 us runner 1034 us feat 304 us, 1.6 inf/s, busy 9%, active 16.6% (3790 passes/s, 3740 sleeps/s, 223 us each), npu busy 0.16%, dropped 0, imu 235339 samples 738 errors (times back 145219 us, clock +7063 ppm), knocks 69, events 5, saves 0
+[SS] t=306165 +3.9 dB best 'Water running' 0.59 (thr 0.50), 2nd 'Baby crying' 0.25, felt no (0.0 mg) -> quiet
+[SS] t=314970 +6.7 dB best 'Water running' 0.26 (thr 0.50), 2nd 'Dog barking' 0.22, felt no (0.0 mg) -> quiet
+[SS] t=317176 +7.0 dB best 'Water running' 0.45 (thr 0.50), 2nd 'Dog barking' 0.24, felt no (0.0 mg) -> quiet
+[SS] draw: full max 68988 us + present 3772 us; live view 9.7 fps, max 16230 us
+[SS] stats t=320052 level -45 dB floor -37 dB, npu 1007 us runner 1034 us feat 304 us, 3.3 inf/s, busy 12%, active 19.8% (3765 passes/s, 3715 sleeps/s, 215 us each), npu busy 0.33%, dropped 0, imu 251449 samples 738 errors (times back 145219 us, clock +7044 ppm), knocks 70, events 7, saves 0
+[SS] t=322198 +2.7 dB best 'Water running' 0.63 (thr 0.50), 2nd 'Keys' 0.22, felt no (0.0 mg) -> quiet
+[SS] t=323747 +15.0 dB best 'Water running' 0.54 (thr 0.50), 2nd 'Baby crying' 0.28, felt no (0.0 mg) -> maybe Water running
+[C3] banner on screen 69128 us after the decision (draw 65239 us, present 3579 us)
+[SS] t=325221 +12.6 dB best 'Dog barking' 0.38 (thr 0.52), 2nd 'Water running' 0.23, felt no (0.0 mg) -> unknown
+[SS] t=327722 +11.7 dB best 'Water running' 0.36 (thr 0.50), 2nd 'Baby crying' 0.27, felt no (0.0 mg) -> unknown
+[SS] t=329063 +8.3 dB best 'Water running' 0.41 (thr 0.50), 2nd 'Dog barking' 0.36, felt yes (57.2 mg) -> maybe Knock
+[SS] t=7023 +7.5 dB best 'Baby crying' 0.46 (thr 0.57), 2nd 'Dog barking' 0.35, felt no (0.0 mg) -> quiet
+[SS] t=8278 +3.8 dB best 'Water running' 0.55 (thr 0.50), 2nd 'Whistle' 0.25, felt no (0.0 mg) -> quiet
+[SS] draw: full max 54970 us + present 3722 us; live view 6.7 fps, max 16212 us
+[SS] stats t=10000 level -39 dB floor -42 dB, npu 1008 us runner 1035 us feat 304 us, 3.0 inf/s, busy 12%, active 16.5% (3856 passes/s, 3806 sleeps/s, 219 us each), npu busy 0.30%, dropped 0, imu 7458 samples 0 errors (times back 0 us, clock +6936 ppm), knocks 3, events 1, saves 0
+[SS] t=13820 +7.9 dB best 'Water running' 0.43 (thr 0.50), 2nd 'Dog barking' 0.28, felt no (0.0 mg) -> quiet
+[SS] t=17765 +16.2 dB best 'Water running' 0.24 (thr 0.50), 2nd 'Dog barking' 0.22, felt no (0.0 mg) -> unknown
+[SS] t=17765 what was that? +16.2 dB, matches nothing; UP teaches it
+[C3] banner on screen 70080 us after the decision (draw 64951 us, present 3715 us)
+[SS] t=19091 +11.0 dB best 'Water running' 0.43 (thr 0.50), 2nd 'Dog barking' 0.25, felt yes (44.2 mg) -> maybe Knock
+[C3] alert on screen 131048 us after the decision (draw 127398 us, present 3648 us)
+[SS] draw: full max 127398 us + present 3715 us; live view 9.4 fps, max 15928 us
+[SS] stats t=20031 level -39 dB floor -34 dB, npu 1005 us runner 1032 us feat 307 us, 4.7 inf/s, busy 14%, active 21.9% (3704 passes/s, 3655 sleeps/s, 213 us each), npu busy 0.47%, dropped 0, imu 15495 samples 0 errors (times back 0 us, clock +7244 ppm), knocks 8, events 3, saves 0
+[SS] t=20562 +10.7 dB best 'Keys' 0.30 (thr 0.50), 2nd 'Glass breaking' 0.12, felt no (0.0 mg) -> unknown
+[SS] t=26442 +4.9 dB best 'Water running' 0.50 (thr 0.50), 2nd 'Baby crying' 0.34, felt no (0.0 mg) -> quiet
+[SS] t=32771 +9.4 dB best 'Water running' 0.42 (thr 0.50), 2nd 'Dog barking' 0.28, felt no (0.0 mg) -> unknown
+[SS] t=45483 +6.7 dB best 'Keys' 0.44 (thr 0.50), 2nd 'Glass breaking' 0.35, felt no (0.0 mg) -> quiet
+[SS] t=49185 +13.5 dB best 'Water running' 0.45 (thr 0.50), 2nd 'Baby crying' 0.37, felt no (0.0 mg) -> unknown
+[SS] draw: full max 0 us + present 0 us; live view 10.0 fps, max 15849 us
+[SS] stats t=50031 level -40 dB floor -38 dB, npu 1000 us runner 1032 us feat 304 us, 3.7 inf/s, busy 10%, active 17.6% (3799 passes/s, 3749 sleeps/s, 219 us each), npu busy 0.37%, dropped 0, imu 39701 samples 0 errors (times back 157 us, clock +7190 ppm), knocks 12, events 4, saves 0
+[SS] t=58184 +3.8 dB best 'Water running' 0.58 (thr 0.50), 2nd 'Baby crying' 0.26, felt no (0.0 mg) -> quiet
+[SS] t=87437 +3.0 dB best 'Glass breaking' 0.37 (thr 0.50), 2nd 'Water running' 0.33, felt no (0.0 mg) -> quiet
+[SS] t=96067 +6.8 dB best 'Baby crying' 0.40 (thr 0.57), 2nd 'Water running' 0.38, felt no (0.0 mg) -> quiet
+[SS] t=97269 +4.6 dB best 'Water running' 0.55 (thr 0.50), 2nd 'Glass breaking' 0.18, felt no (0.0 mg) -> quiet
+[SS] t=98623 +9.9 dB best 'Water running' 0.28 (thr 0.50), 2nd 'Whistle' 0.27, felt no (0.0 mg) -> unknown
+[SS] draw: full max 0 us + present 0 us; live view 9.9 fps, max 16213 us
+[SS] stats t=100034 level -36 dB floor -40 dB, npu 1007 us runner 1034 us feat 304 us, 3.2 inf/s, busy 10%, active 17.7% (3809 passes/s, 3759 sleeps/s, 218 us each), npu busy 0.32%, dropped 0, imu 79980 samples 0 errors (times back 175 us, clock +7014 ppm), knocks 20, events 6, saves 0
+[SS] t=100743 +6.7 dB best 'Water running' 0.46 (thr 0.50), 2nd 'Baby crying' 0.32, felt no (0.0 mg) -> quiet
+[SS] t=114675 +6.7 dB best 'Water running' 0.49 (thr 0.50), 2nd 'Baby crying' 0.30, felt no (0.0 mg) -> quiet
+[SS] t=117261 +7.2 dB best 'Dog barking' 0.38 (thr 0.52), 2nd 'Water running' 0.23, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 9.7 fps, max 15865 us
+[SS] stats t=120057 level -34 dB floor -37 dB, npu 1000 us runner 1032 us feat 367 us, 2.4 inf/s, busy 10%, active 18.2% (3886 passes/s, 3836 sleeps/s, 213 us each), npu busy 0.24%, dropped 0, imu 96107 samples 0 errors (times back 175 us, clock +6797 ppm), knocks 24, events 6, saves 0
+[SS] t=119350 +12.8 dB best 'Water running' 0.59 (thr 0.50), 2nd 'Dog barking' 0.24, felt no (0.0 mg) -> Water running
+[C3] banner on screen 73568 us after the decision (draw 69791 us, present 3776 us)
+[SS] t=123476 +5.5 dB best 'Water running' 0.56 (thr 0.50), 2nd 'Baby crying' 0.37, felt no (0.0 mg) -> quiet
+[SS] t=125473 +7.6 dB best 'Water running' 0.56 (thr 0.50), 2nd 'Dog barking' 0.38, felt no (0.0 mg) -> quiet
+[SS] t=127672 +16.6 dB best 'Baby crying' 0.37 (thr 0.57), 2nd 'Water running' 0.27, felt no (0.0 mg) -> unknown
+[SS] t=127672 what was that? +16.6 dB, matches nothing (banner shown less than a minute ago)
+[SS] t=131042 +7.7 dB best 'Dog barking' 0.47 (thr 0.52), 2nd 'Whistle' 0.32, felt no (0.0 mg) -> quiet
+[SS] t=134315 +8.3 dB best 'Water running' 0.45 (thr 0.50), 2nd 'Keys' 0.18, felt no (0.0 mg) -> unknown
+[SS] t=136963 +6.8 dB best 'Dog barking' 0.44 (thr 0.52), 2nd 'Baby crying' 0.32, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 9.7 fps, max 15932 us
+[SS] stats t=140064 level -36 dB floor -37 dB, npu 1000 us runner 1027 us feat 367 us, 3.0 inf/s, busy 10%, active 19.2% (3929 passes/s, 3879 sleeps/s, 208 us each), npu busy 0.30%, dropped 0, imu 112222 samples 0 errors (times back 175 us, clock +7049 ppm), knocks 25, events 8, saves 0
+[SS] t=139323 +7.2 dB best 'Dog barking' 0.39 (thr 0.52), 2nd 'Baby crying' 0.21, felt no (0.0 mg) -> quiet
+[SS] t=140753 +6.5 dB best 'Water running' 0.30 (thr 0.50), 2nd 'Baby crying' 0.30, felt no (0.0 mg) -> quiet
+[SS] t=146266 +6.5 dB best 'Water running' 0.48 (thr 0.50), 2nd 'Baby crying' 0.23, felt no (0.0 mg) -> quiet
+[SS] t=155593 +7.7 dB best 'Water running' 0.21 (thr 0.50), 2nd 'Dog barking' 0.13, felt no (0.0 mg) -> quiet
+[SS] t=158668 +10.3 dB best 'Water running' 0.38 (thr 0.50), 2nd 'Whistle' 0.20, felt no (0.0 mg) -> unknown
+[SS] draw: full max 0 us + present 0 us; live view 9.8 fps, max 16024 us
+[SS] stats t=160078 level -41 dB floor -39 dB, npu 1000 us runner 1032 us feat 304 us, 2.4 inf/s, busy 10%, active 18.7% (3945 passes/s, 3895 sleeps/s, 208 us each), npu busy 0.24%, dropped 0, imu 128342 samples 0 errors (times back 328 us, clock +7098 ppm), knocks 31, events 8, saves 0
+[SS] t=162263 +6.1 dB best 'Water running' 0.36 (thr 0.50), 2nd 'Glass breaking' 0.24, felt no (0.0 mg) -> quiet
+[SS] t=163767 +11.7 dB best 'Water running' 0.23 (thr 0.50), 2nd 'Baby crying' 0.18, felt no (0.0 mg) -> unknown
+[SS] t=172656 +7.3 dB best 'Dog barking' 0.35 (thr 0.52), 2nd 'Water running' 0.31, felt no (0.0 mg) -> quiet
+[SS] t=175360 +6.3 dB best 'Water running' 0.38 (thr 0.50), 2nd 'Baby crying' 0.29, felt no (0.0 mg) -> quiet
+[SS] draw: full max 0 us + present 0 us; live view 9.9 fps, max 16019 us
+[SS] stats t=180091 level -44 dB floor -43 dB, npu 1007 us runner 1034 us feat 304 us, 1.7 inf/s, busy 9%, active 17.5% (3897 passes/s, 3847 sleeps/s, 214 us each), npu busy 0.17%, dropped 0, imu 144454 samples 0 errors (times back 328 us, clock +6806 ppm), knocks 41, events 8, saves 0
+[SS] t=181685 +9.1 dB best 'Water running' 0.41 (thr 0.50), 2nd 'Dog barking' 0.34, felt no (0.0 mg) -> unknown
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11882 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 1000 us, runner 1025 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 1265), copy B valid (seq 1264)
+[STORE] loaded 5 taught sounds from copy A, seq 1265, in 1854 us; built-ins off: 0x0
+[S1] mics: left -34.5 dB (peak 4480), right -41.7 dB (peak 1683) over 8000 samples
+[S1] ready after 1482 ms: mics left -34 dB, right -42 dB; npu matches the reference, 1.0 ms; saved sounds 5 taught sounds restored; imu knocks can be felt; lights ok
+[C5] cycle counter through WFI: 100% of wall time -> sleeping between audio blocks
+[SS] listening; 9 built-in sounds
+[SS] knob at 64%: sensitivity as taught until it's turned
+[SS] t=2017 +5.6 dB best 'Water running' 0.35 (thr 0.50), 2nd 'Baby crying' 0.22, felt no (0.0 mg) -> quiet
+[SS] t=4107 +8.5 dB best 'Water running' 0.35 (thr 0.50), 2nd 'Baby crying' 0.32, felt no (0.0 mg) -> unknown
+[SS] t=5426 +12.5 dB best 'Water running' 0.41 (thr 0.50), 2nd 'Dog barking' 0.36, felt no (0.0 mg) -> unknown
+
+[SS] Sound Sense starting
+[ET] ExecuTorch runtime initialized
+[ET] Ethos-U85 initialized at 0x49042000
+[ET] Model registered (240224 bytes)
+[C1] self-test: features 11877 us, 0/1960 inputs differ from Python (max 0 LSB); output on the host input max diff 1 LSB; ours vs host cos 0.9996; best 'dog' 0.79 (expected 'dog'); npu 999 us, runner 1026 us (mean of 10); model 240224 bytes
+[STORE] copy A valid (seq 1265), copy B valid (seq 1264)
+[STORE] loaded 5 taught sounds from copy A, seq 1265, in 1854 us; built-ins off: 0x0
+[SS] t=2277 +7.8 dB best 'Dog barking' 0.45 (thr 0.52), 2nd 'Water running' 0.20, felt no (0.0 mg) -> quiet
+[SS] t=6443 +10.2 dB best 'Dog barking' 0.50 (thr 0.52), 2nd 'Water running' 0.26, felt no (0.0 mg) -> unknown
+[SS] draw: full max 55465 us + present 3662 us; live view 6.9 fps, max 15770 us
+[SS] stats t=10000 level -42 dB floor -27 dB, npu 1000 us runner 1026 us feat 371 us, 4.1 inf/s, busy 12%, active 18.8% (3986 passes/s, 3936 sleeps/s, 206 us each), npu busy 0.42%, dropped 0, imu 7457 samples 0 errors (times back 0 us, clock +7441 ppm), knocks 0, events 0, saves 0
+[SS] t=15569 +8.1 dB best 'Water running' 0.27 (thr 0.50), 2nd 'Dog barking' 0.09, felt no (0.0 mg) -> unknown
+[SS] t=31089 +17.9 dB best 'Water running' 0.29 (thr 0.50), 2nd 'Speech' 0.23, felt no (0.0 mg) -> unknown
+[SS] t=31089 what was that? +17.9 dB, matches nothing; UP teaches it
+[SS] draw: full max 53303 us + present 3655 us; live view 9.8 fps, max 15980 us
+[SS] stats t=50000 level -29 dB floor -27 dB, npu 1007 us runner 1034 us feat 300 us, 2.9 inf/s, busy 11%, active 20.4% (3934 passes/s, 3884 sleeps/s, 205 us each), npu busy 0.29%, dropped 0, imu 39680 samples 0 errors (times back 199 us, clock +6852 ppm), knocks 3, events 3, saves 0
+[SS] t=74643 +14.8 dB best 'Dog barking' 0.42 (thr 0.52), 2nd 'Baby crying' 0.26, felt no (0.0 mg) -> unknown
+[SS] t=77313 +10.2 dB best 'Dog barking' 0.44 (thr 0.52), 2nd 'Water running' 0.31, felt no (0.0 mg) -> unknown
