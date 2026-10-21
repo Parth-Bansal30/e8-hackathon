@@ -345,3 +345,5 @@ settings it found (`--set 0 1` puts back all built-ins on and the taught sound a
 - A profile built from the first 5 key onsets gets a threshold of 0.807.
 - All 10 key onsets score 0.85 to 0.97 and are accepted. The claps (0.16 to 0.36) and the room background (−0.06 to 0.16) are all rejected.
 - **Built-in false alerts, before anything is taught:** 7 of 10 key onsets clear the "water" threshold, and 3 of 16 claps clear "glass". G3 should count these.
+
+- 2026-10-21: no new gate runs. The live video take is logged in docs/gates/video_takes_2.log (Keys threshold 0.47, 6 taught sounds restored).

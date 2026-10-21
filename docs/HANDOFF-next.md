@@ -408,3 +408,13 @@ alerts as Phone (0.94, 0.95), but a clipped play missed. See `gates/teach_phone.
   until then, the hash in SUBMISSION.md stays `32177ea`.
 - Whistle was taught by whistling: thr 0.822, test whistles accepted 9 of 13. The board holds 6 taught sounds (store seq
   1260). See `gates/teach_whistle.txt`, which also gives the one-line recipe for adding more names.
+
+## 2026-10-21 board wrap-up (usage limit hit)
+
+- Final submission video: `video_out/sound_sense_final_submission.mp4` (4:20, untracked). It is the narrated Lessac cut up to 0:12.8, then the owner's live take, then the rest of the narrated cut. The owner uploads it to Vimeo and pastes the link into Devpost.
+- Open, owner's call:
+  - The video's end card says v1.1-judged / 1d5fe72. It should say v1.2-judged / 0d8b0f1.
+  - The Keys threshold is 0.47, below 0.60, so HANDOFF-video C2 says to Forget Keys.
+  - Confirm which 6 sounds are taught; Notification may be one of them.
+- Still parked, because they need sound in the room: items 7-10 and item 1 (8 examples per taught sound).
+- The RTT logger for the video take is stopped. Its log is in docs/gates/video_takes_2.log.
